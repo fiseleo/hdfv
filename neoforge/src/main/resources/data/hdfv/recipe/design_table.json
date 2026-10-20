@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PPP",
+    "WCW",
+    "W W"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "W": {
+      "tag": "minecraft:planks"
+    },
+    "C": {
+      "tag": "c:player_workstations/crafting_tables"
+    }
+  },
+  "result": {
+    "id": "hdfv:design_table",
+    "count": 1
+  }
+}

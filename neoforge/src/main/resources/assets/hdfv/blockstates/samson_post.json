@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/samson_post"
+    },
+    "formed=true": {
+      "model": "hdfv:block/samson_post_formed"
+    }
+  }
+}

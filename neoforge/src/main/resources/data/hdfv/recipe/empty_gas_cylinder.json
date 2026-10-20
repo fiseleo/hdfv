@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_tube"
+    },
+    {
+      "item": "hdfv:valve_body"
+    }
+  ],
+  "result": {
+    "id": "hdfv:empty_gas_cylinder",
+    "count": 1
+  }
+}

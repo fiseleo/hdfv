@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "SCS",
+    "CGC",
+    "SCS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "C": {
+      "item": "minecraft:light_gray_concrete"
+    },
+    "G": {
+      "tag": "c:gravels"
+    }
+  },
+  "result": {
+    "id": "hdfv:apron_concrete",
+    "count": 8
+  }
+}

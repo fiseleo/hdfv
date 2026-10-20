@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:bed_casting"
+    },
+    {
+      "item": "hdfv:ground_slideway"
+    },
+    {
+      "item": "hdfv:steel_plate"
+    }
+  ],
+  "result": {
+    "id": "hdfv:machine_bed",
+    "count": 2
+  }
+}

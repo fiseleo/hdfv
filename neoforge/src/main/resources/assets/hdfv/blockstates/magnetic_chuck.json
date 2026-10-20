@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/magnetic_chuck"
+    },
+    "formed=true": {
+      "model": "hdfv:block/magnetic_chuck_formed"
+    }
+  }
+}

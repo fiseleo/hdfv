@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "GGG",
+    " L ",
+    " S "
+  ],
+  "key": {
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "L": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "S": {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "steel"
+      }
+    }
+  },
+  "result": {
+    "id": "hdfv:airfield_approach",
+    "count": 2
+  }
+}

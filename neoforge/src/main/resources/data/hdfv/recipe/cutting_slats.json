@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:steel_plate"
+    }
+  ],
+  "result": {
+    "id": "hdfv:cutting_slats",
+    "count": 2
+  }
+}

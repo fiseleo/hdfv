@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:copper_wire"
+    },
+    {
+      "item": "hdfv:copper_wire"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    }
+  ],
+  "result": {
+    "id": "hdfv:magnetic_chuck",
+    "count": 1
+  }
+}

@@ -1,0 +1,29 @@
+newmtl concrete
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #concrete
+
+newmtl paint_yellow
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #paint_yellow
+
+newmtl steel
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #steel
+
+newmtl lens_white
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #lens_white
+
+newmtl dark_steel
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #dark_steel

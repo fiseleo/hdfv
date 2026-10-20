@@ -1,0 +1,29 @@
+newmtl dark_steel
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #dark_steel
+
+newmtl steel
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #steel
+
+newmtl paint_yellow
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #paint_yellow
+
+newmtl glow
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #glow
+
+newmtl vent
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #vent

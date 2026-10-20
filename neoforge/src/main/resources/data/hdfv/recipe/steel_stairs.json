@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:steel_tube"
+    }
+  ],
+  "result": {
+    "id": "hdfv:steel_stairs",
+    "count": 4
+  }
+}

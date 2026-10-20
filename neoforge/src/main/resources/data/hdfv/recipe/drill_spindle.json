@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:forged_shaft"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:bronze_bushing"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:cast_pulley"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:drill_spindle",
+    "count": 1
+  },
+  "seconds": 576
+}

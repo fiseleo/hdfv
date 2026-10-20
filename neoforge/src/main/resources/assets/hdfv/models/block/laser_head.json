@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/laser_head_side",
+    "top": "hdfv:block/laser_head_top",
+    "bottom": "hdfv:block/laser_head_top"
+  }
+}

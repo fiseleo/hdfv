@@ -1,0 +1,185 @@
+world AeroCore HDFV QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.22 before / after / off: the same views each time. Shot names start with TAG (tools/autoshot/README.md: copy with
+# TAG replaced by b22, a22 or o22 into the client folder's aerocore-autoshot.txt). Measured scenes first (no line-up
+# vehicles about: they load the server), then the line-up, then the design screens.
+mark TAG start
+cmd gamemode spectator @p
+cmd gamerule doDaylightCycle false
+cmd gamerule doWeatherCycle false
+cmd time set 6000
+cmd weather clear
+clouds off
+# --- the profiled machines (formed multiblocks, the machining families), measured once baked
+cmd tp @p 76 122 270 facing 76 100 222
+wait 1800
+shot TAG-discard
+fps
+wait 300
+fps
+shot TAG-machines
+cmd tp @p 63.4 102.3 202.8 facing 63.5 101.2 200.4
+wait 200
+shot TAG-grinder-close
+# --- the parked vehicles
+cmd tp @p 75 66 300 facing 75 66 250
+wait 900
+fps
+wait 200
+fps
+shot TAG-parked
+# --- 0.20's tower on its pad in the air (130 141 226, 10 courses): outside, the cab, at night
+cmd tp @p 130 150 205 facing 130 150 230
+wait 300
+fps
+shot TAG-tower
+cmd tp @p 130.5 154 236.2 facing 130.5 154.6 229
+wait 80
+fps
+shot TAG-tower-cab
+cmd time set 18000
+cmd tp @p 130 150 205 facing 130 150 230
+wait 60
+shot TAG-tower-night
+cmd time set 6000
+wait 10
+# --- a line-up pad in the air (x 160-220, z 180-230, y 150), fresh vehicles on it each run; the player there first
+# (from the spawn its chunks are not loaded: fill and spawn would fail)
+cmd tp @p 190 162 168 facing 190 151 207
+wait 200
+cmd kill @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70]
+cmd fill 160 150 180 220 150 230 minecraft:smooth_stone
+cmd fill 160 151 180 220 160 230 minecraft:air
+wait 20
+cmd execute positioned 176 151 190 rotated -90 0 run hdfv dev drive spawn semi
+cmd execute positioned 185 151 205 rotated -90 0 run aerocore vehicle spawn sedan
+cmd execute positioned 203 151 205 rotated -90 0 run aerocore vehicle spawn helicopter
+cmd execute positioned 175 151 220 rotated -90 0 run aerocore vehicle spawn seaplane
+cmd execute positioned 200 151 222 rotated -90 0 run aerocore vehicle spawn cruiser
+wait 2400
+fps
+wait 200
+fps
+shot TAG-lineup
+# the sedan (about 189 151 205, facing east): three-quarter front, front, a wheel, the glass
+cmd tp @p 195.5 152.6 201.2 facing 189.5 151.6 205
+wait 40
+shot TAG-sedan-34
+cmd tp @p 195.2 151.9 205 facing 189.5 151.5 205
+wait 20
+shot TAG-sedan-front
+cmd tp @p 191.4 151.5 201.6 facing 190.6 151.3 204
+wait 20
+shot TAG-sedan-wheel
+cmd tp @p 186.5 152.8 201.5 facing 188.8 152.1 205
+wait 20
+shot TAG-sedan-glass
+# the semi: tractor three-quarter, the tanks and steps side
+cmd tp @p 189 153 185 facing 181 151.8 190
+wait 20
+shot TAG-semi-34
+cmd tp @p 178 152 184.5 facing 178 151.4 190
+wait 20
+shot TAG-semi-side
+# the helicopter, the seaplane, the boat
+cmd tp @p 212 154 199 facing 207 152 205
+wait 20
+shot TAG-heli-34
+cmd tp @p 186 155 213 facing 179 152 220
+wait 20
+shot TAG-seaplane-34
+cmd tp @p 181 152.4 222 facing 179 152.2 218
+wait 20
+shot TAG-seaplane-wing
+cmd tp @p 211 154 216 facing 204 152 222
+wait 20
+shot TAG-boat-34
+# night: lights on
+cmd time set 18000
+cmd execute positioned 189 152 205 run aerocore vehicle control lights 2
+cmd execute positioned 181 152 190 run aerocore vehicle control lights 2
+wait 60
+cmd tp @p 190 162 168 facing 190 151 207
+wait 20
+shot TAG-night-lineup
+cmd tp @p 195.5 152.6 201.2 facing 189.5 151.6 205
+wait 20
+shot TAG-night-sedan
+cmd time set 6000
+# take the line-up away
+cmd kill @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70]
+cmd fill 160 150 180 220 160 230 minecraft:air
+wait 10
+# --- design screens (the studio light): bodies, aircraft, engines
+client hdfvdev design sedan_body overview
+wait 100
+client hdfvdev page overview
+wait 20
+client hdfvdev cutaway off
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -40 10
+wait 40
+gui TAG-design-sedan
+client hdfvdev close
+wait 10
+client hdfvdev design cab_over_body overview
+wait 100
+client hdfvdev page overview
+wait 20
+client hdfvdev cutaway off
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -40 10
+wait 40
+gui TAG-design-cab
+client hdfvdev close
+wait 10
+client hdfvdev design seaplane_wing overview
+wait 100
+client hdfvdev page overview
+wait 20
+client hdfvdev cutaway off
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -30 25
+wait 40
+gui TAG-design-wing
+client hdfvdev close
+wait 10
+client hdfvdev design helicopter_fuselage overview
+wait 100
+client hdfvdev page overview
+wait 20
+client hdfvdev cutaway off
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -40 10
+wait 40
+gui TAG-design-heli
+client hdfvdev close
+wait 10
+client hdfvdev design inline_four overview
+wait 120
+client hdfvdev cutaway off
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 40
+gui TAG-design-inline4
+client hdfvdev close
+wait 10
+client hdfvdev design j79 overview
+wait 160
+client hdfvdev cutaway off
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 40
+gui TAG-design-j79
+client hdfvdev close
+wait 10
+mark TAG end
+quit

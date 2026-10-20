@@ -1,0 +1,40 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:copper_wire"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "c:glass_panes"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "c:dusts/redstone"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:hydraulic_cylinder"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:refit_shop_controller",
+    "count": 1
+  },
+  "seconds": 801
+}

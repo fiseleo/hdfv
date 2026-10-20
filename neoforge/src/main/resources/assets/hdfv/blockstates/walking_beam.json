@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/walking_beam"
+    },
+    "formed=true": {
+      "model": "hdfv:block/walking_beam_formed"
+    }
+  }
+}

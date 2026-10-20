@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/fume_extractor_side",
+    "top": "hdfv:block/fume_extractor_top",
+    "bottom": "hdfv:block/fume_extractor_top"
+  }
+}

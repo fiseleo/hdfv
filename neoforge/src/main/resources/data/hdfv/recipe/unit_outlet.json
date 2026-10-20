@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:valve_body"
+    },
+    {
+      "item": "hdfv:steel_plate"
+    }
+  ],
+  "result": {
+    "id": "hdfv:unit_outlet",
+    "count": 2
+  }
+}

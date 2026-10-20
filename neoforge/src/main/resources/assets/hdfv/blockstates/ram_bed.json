@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/ram_bed"
+    },
+    "formed=true": {
+      "model": "hdfv:block/ram_bed_formed"
+    }
+  }
+}

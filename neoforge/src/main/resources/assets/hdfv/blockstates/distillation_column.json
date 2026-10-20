@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/distillation_column"
+    },
+    "facing=east": {
+      "model": "hdfv:block/distillation_column",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/distillation_column",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/distillation_column",
+      "y": 270
+    }
+  }
+}

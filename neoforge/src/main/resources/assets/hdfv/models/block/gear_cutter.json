@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "hdfv:block/gear_cutter_top",
+    "front": "hdfv:block/gear_cutter_front",
+    "side": "hdfv:block/gear_cutter_side"
+  }
+}

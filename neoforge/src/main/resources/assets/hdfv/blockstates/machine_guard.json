@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/machine_guard"
+    },
+    "formed=true": {
+      "model": "hdfv:block/machine_guard_formed"
+    }
+  }
+}

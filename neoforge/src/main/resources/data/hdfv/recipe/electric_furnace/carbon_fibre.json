@@ -1,0 +1,16 @@
+{
+  "type": "hdfv:electric_furnace",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:coal_tar"
+      },
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "hdfv:carbon_fibre",
+    "count": 1
+  },
+  "kwh": 20.83
+}

@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "hdfv:block/cable_duct"
+      }
+    }
+  ]
+}

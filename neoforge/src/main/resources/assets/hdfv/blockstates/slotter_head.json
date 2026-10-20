@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/slotter_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/slotter_head_formed"
+    }
+  }
+}

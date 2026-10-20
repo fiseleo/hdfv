@@ -1,0 +1,25 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/aluminium"
+      },
+      "count": 9
+    },
+    {
+      "ingredient": {
+        "tag": "c:gems/quartz"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 9,
+    "components": {
+      "hdfv:alloy": "aluminium_cast"
+    }
+  },
+  "ticks": 900
+}

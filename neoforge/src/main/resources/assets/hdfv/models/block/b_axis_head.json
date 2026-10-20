@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/b_axis_head_side",
+    "top": "hdfv:block/b_axis_head_top",
+    "bottom": "hdfv:block/b_axis_head_top"
+  }
+}

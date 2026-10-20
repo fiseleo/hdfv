@@ -1,0 +1,37 @@
+{
+  "type": "hdfv:electric_furnace",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:titanium_sponge"
+      },
+      "count": 9
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/aluminium"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:argon_cylinder"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 10,
+    "components": {
+      "hdfv:alloy": "titanium"
+    }
+  },
+  "kwh": 55.89,
+  "byproducts": [
+    {
+      "id": "hdfv:empty_gas_cylinder",
+      "count": 1
+    }
+  ]
+}

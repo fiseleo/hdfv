@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "steel"
+      }
+    },
+    {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "steel"
+      }
+    }
+  ],
+  "result": {
+    "id": "hdfv:steel_rivets",
+    "count": 1
+  }
+}

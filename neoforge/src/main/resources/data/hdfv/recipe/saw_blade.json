@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "alloy_steel"
+      }
+    },
+    {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "alloy_steel"
+      }
+    },
+    {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "alloy_steel"
+      }
+    }
+  ],
+  "result": {
+    "id": "hdfv:saw_blade",
+    "count": 1
+  }
+}

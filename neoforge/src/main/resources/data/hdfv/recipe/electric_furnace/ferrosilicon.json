@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:electric_furnace",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:sands"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/iron"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:coke"
+      },
+      "count": 3
+    }
+  ],
+  "result": {
+    "id": "hdfv:ferrosilicon",
+    "count": 1
+  },
+  "kwh": 82.61
+}

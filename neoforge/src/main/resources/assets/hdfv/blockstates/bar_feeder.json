@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/bar_feeder"
+    },
+    "formed=true": {
+      "model": "hdfv:block/bar_feeder_formed"
+    }
+  }
+}

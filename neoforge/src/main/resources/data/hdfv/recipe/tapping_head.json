@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:spindle"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:cut_gear"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:tapping_head",
+    "count": 1
+  },
+  "seconds": 546
+}

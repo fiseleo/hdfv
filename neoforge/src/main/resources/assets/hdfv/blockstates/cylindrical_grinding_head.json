@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/cylindrical_grinding_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/cylindrical_grinding_head_formed"
+    }
+  }
+}

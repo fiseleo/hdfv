@@ -1,0 +1,25 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/copper"
+      },
+      "count": 3
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/tin"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 4,
+    "components": {
+      "hdfv:alloy": "bronze"
+    }
+  },
+  "ticks": 400
+}

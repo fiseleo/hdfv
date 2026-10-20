@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/holding_sign.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/dark_steel",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "concrete": "hdfv:block/machine/concrete",
+    "paint_red": "hdfv:block/machine/paint_red",
+    "sign_hold": "hdfv:block/machine/sign_hold"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:frame_casting"
+    },
+    {
+      "item": "hdfv:cut_gear"
+    },
+    {
+      "item": "hdfv:cut_gear"
+    }
+  ],
+  "result": {
+    "id": "hdfv:gear_table",
+    "count": 2
+  }
+}

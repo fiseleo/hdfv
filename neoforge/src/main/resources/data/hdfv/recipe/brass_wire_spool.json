@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:copper_wire"
+    },
+    {
+      "tag": "c:ingots/zinc"
+    },
+    {
+      "tag": "c:rods/wooden"
+    }
+  ],
+  "result": {
+    "id": "hdfv:brass_wire_spool",
+    "count": 1
+  }
+}

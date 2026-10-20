@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "tag": "c:chains"
+    }
+  ],
+  "result": {
+    "id": "hdfv:roller_shutter",
+    "count": 6
+  }
+}

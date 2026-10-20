@@ -1,0 +1,34 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:cut_gear"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:spindle"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:electric_motor_unit"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:threader",
+    "count": 1
+  },
+  "seconds": 876
+}

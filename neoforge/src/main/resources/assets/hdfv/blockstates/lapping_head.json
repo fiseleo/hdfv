@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/lapping_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/lapping_head_formed"
+    }
+  }
+}

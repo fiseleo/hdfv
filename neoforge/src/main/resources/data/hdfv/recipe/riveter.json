@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:hydraulic_cylinder"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:pump_unit"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:riveter",
+    "count": 1
+  },
+  "seconds": 777
+}

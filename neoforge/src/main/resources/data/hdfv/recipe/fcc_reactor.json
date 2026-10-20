@@ -1,0 +1,34 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:bricks"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_tube"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:valve_body"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:fcc_reactor",
+    "count": 1
+  },
+  "seconds": 1008
+}

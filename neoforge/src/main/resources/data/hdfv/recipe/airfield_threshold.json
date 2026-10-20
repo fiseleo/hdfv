@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "NGR",
+    " L ",
+    " S "
+  ],
+  "key": {
+    "N": {
+      "tag": "c:dyes/green"
+    },
+    "R": {
+      "tag": "c:dyes/red"
+    },
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "L": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "S": {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "steel"
+      }
+    }
+  },
+  "result": {
+    "id": "hdfv:airfield_threshold",
+    "count": 4
+  }
+}

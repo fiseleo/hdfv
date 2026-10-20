@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:electric_furnace",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:raw_ilmenite"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:coke"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:titanium_slag",
+    "count": 1
+  },
+  "kwh": 19.45,
+  "byproducts": [
+    {
+      "id": "minecraft:iron_nugget",
+      "count": 6
+    }
+  ]
+}

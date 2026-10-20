@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "hdfv:block/unit_outlet",
+    "north": "hdfv:block/unit_outlet",
+    "south": "hdfv:block/unit_outlet",
+    "east": "hdfv:block/unit_outlet_valve",
+    "west": "hdfv:block/unit_outlet_valve",
+    "up": "hdfv:block/vessel_head",
+    "down": "hdfv:block/vessel_head"
+  }
+}

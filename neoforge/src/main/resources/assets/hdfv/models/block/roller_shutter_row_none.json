@@ -1,0 +1,9 @@
+{
+  "textures": {
+    "particle": "hdfv:block/roller_shutter",
+    "curtain": "hdfv:block/roller_shutter",
+    "trim": "hdfv:block/roller_shutter_trim",
+    "head": "hdfv:block/roller_shutter_head"
+  },
+  "elements": []
+}

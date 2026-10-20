@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/chamfering_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/chamfering_head_formed"
+    }
+  }
+}

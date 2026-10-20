@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/drill_spindle"
+    },
+    "formed=true": {
+      "model": "hdfv:block/drill_spindle_formed"
+    }
+  }
+}

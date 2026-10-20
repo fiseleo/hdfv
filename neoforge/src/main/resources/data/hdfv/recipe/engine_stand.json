@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:forged_shaft"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "hdfv:engine_stand",
+    "count": 1
+  },
+  "seconds": 948
+}

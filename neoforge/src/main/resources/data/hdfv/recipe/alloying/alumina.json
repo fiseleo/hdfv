@@ -1,0 +1,16 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:bauxite"
+      },
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "hdfv:alumina",
+    "count": 2
+  },
+  "ticks": 400
+}

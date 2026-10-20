@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/b_axis_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/b_axis_head_formed"
+    }
+  }
+}

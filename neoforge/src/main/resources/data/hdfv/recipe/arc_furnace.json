@@ -1,0 +1,40 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:transformer"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 6
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:bricks"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:copper_wire"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:electrode"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:arc_furnace",
+    "count": 1
+  },
+  "seconds": 1710
+}

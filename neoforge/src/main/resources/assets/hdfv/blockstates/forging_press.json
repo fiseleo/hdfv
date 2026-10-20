@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,formed=false": {
+      "model": "hdfv:block/forging_press"
+    },
+    "facing=north,formed=true": {
+      "model": "hdfv:block/forging_press"
+    },
+    "facing=east,formed=false": {
+      "model": "hdfv:block/forging_press",
+      "y": 90
+    },
+    "facing=east,formed=true": {
+      "model": "hdfv:block/forging_press",
+      "y": 90
+    },
+    "facing=south,formed=false": {
+      "model": "hdfv:block/forging_press",
+      "y": 180
+    },
+    "facing=south,formed=true": {
+      "model": "hdfv:block/forging_press",
+      "y": 180
+    },
+    "facing=west,formed=false": {
+      "model": "hdfv:block/forging_press",
+      "y": 270
+    },
+    "facing=west,formed=true": {
+      "model": "hdfv:block/forging_press",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:coal_tar"
+      },
+      "count": 3
+    }
+  ],
+  "result": {
+    "id": "hdfv:epoxy_resin",
+    "count": 1
+  },
+  "ticks": 300
+}

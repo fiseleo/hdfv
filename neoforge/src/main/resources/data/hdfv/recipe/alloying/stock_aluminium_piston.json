@@ -1,0 +1,31 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/aluminium"
+      },
+      "count": 8
+    },
+    {
+      "ingredient": {
+        "tag": "c:gems/quartz"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/copper"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 10,
+    "components": {
+      "hdfv:alloy": "aluminium_piston"
+    }
+  },
+  "ticks": 1000
+}

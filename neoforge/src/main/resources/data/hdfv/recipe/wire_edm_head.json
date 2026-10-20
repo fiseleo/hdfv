@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:servo_motor"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:linear_guide"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:wire_edm_head",
+    "count": 1
+  },
+  "seconds": 875
+}

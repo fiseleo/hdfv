@@ -1,0 +1,34 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:transformer"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:control_board"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:linear_guide"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:copper_wire"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:plasma_head",
+    "count": 1
+  },
+  "seconds": 871
+}

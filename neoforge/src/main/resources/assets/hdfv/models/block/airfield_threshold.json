@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/airfield_threshold.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/dark_steel",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "paint_yellow": "hdfv:block/machine/paint_yellow",
+    "steel": "hdfv:block/machine/steel",
+    "lens_green": "hdfv:block/machine/lens_green",
+    "lens_red": "hdfv:block/machine/lens_red"
+  }
+}

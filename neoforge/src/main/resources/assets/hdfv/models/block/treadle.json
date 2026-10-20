@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/treadle.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/wood",
+    "wood": "hdfv:block/machine/wood",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "cast_iron": "hdfv:block/machine/cast_iron",
+    "steel": "hdfv:block/machine/steel"
+  }
+}

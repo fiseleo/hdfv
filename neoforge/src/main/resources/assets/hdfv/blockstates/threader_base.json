@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/threader_base"
+    },
+    "formed=true": {
+      "model": "hdfv:block/threader_base_formed"
+    }
+  }
+}

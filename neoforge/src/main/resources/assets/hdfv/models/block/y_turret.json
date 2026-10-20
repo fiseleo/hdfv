@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/y_turret_side",
+    "top": "hdfv:block/y_turret_top",
+    "bottom": "hdfv:block/y_turret_top"
+  }
+}

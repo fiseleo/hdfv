@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/airfield_taxi_edge.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/dark_steel",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "steel": "hdfv:block/machine/steel",
+    "paint_yellow": "hdfv:block/machine/paint_yellow",
+    "lens_blue": "hdfv:block/machine/lens_blue"
+  }
+}

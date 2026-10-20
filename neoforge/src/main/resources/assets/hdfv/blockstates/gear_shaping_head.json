@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/gear_shaping_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/gear_shaping_head_formed"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "values": [
+    "hdfv:bauxite_ore",
+    "hdfv:ilmenite_ore",
+    "hdfv:nickel_ore",
+    "hdfv:chromite_ore",
+    "hdfv:magnesite_ore",
+    "hdfv:tin_ore",
+    "hdfv:zinc_ore",
+    "hdfv:garnet_ore"
+  ]
+}

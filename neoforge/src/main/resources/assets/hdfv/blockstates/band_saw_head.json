@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/band_saw_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/band_saw_head_formed"
+    }
+  }
+}

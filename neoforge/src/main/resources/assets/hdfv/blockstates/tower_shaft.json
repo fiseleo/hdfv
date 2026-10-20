@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/tower_shaft"
+    },
+    "formed=true": {
+      "model": "hdfv:block/tower_shaft_formed"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BCB",
+    "CNC",
+    "BCB"
+  ],
+  "key": {
+    "B": {
+      "item": "hdfv:bauxite"
+    },
+    "C": {
+      "item": "minecraft:clay_ball"
+    },
+    "N": {
+      "tag": "c:nuggets/iron"
+    }
+  },
+  "result": {
+    "id": "hdfv:grinding_wheel",
+    "count": 1
+  }
+}

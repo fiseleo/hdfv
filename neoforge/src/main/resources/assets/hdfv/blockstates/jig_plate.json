@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/jig_plate"
+    },
+    "formed=true": {
+      "model": "hdfv:block/jig_plate_formed"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/vulcanizer.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/cast_iron",
+    "cast_iron": "hdfv:block/machine/cast_iron",
+    "steel": "hdfv:block/machine/steel",
+    "paint_red": "hdfv:block/machine/paint_red",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "copper": "hdfv:block/machine/copper",
+    "hazard": "hdfv:block/machine/hazard",
+    "gauge": "hdfv:block/machine/gauge"
+  }
+}

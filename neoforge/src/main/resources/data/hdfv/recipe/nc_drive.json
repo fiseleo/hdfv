@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:servo_motor"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:control_board"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:nc_drive",
+    "count": 1
+  },
+  "seconds": 635
+}

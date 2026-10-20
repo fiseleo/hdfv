@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/threader_base_side",
+    "top": "hdfv:block/threader_base_top",
+    "bottom": "hdfv:block/threader_base_top"
+  }
+}

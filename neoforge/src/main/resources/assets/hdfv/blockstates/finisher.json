@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "facing=north,formed=false": {
+      "model": "hdfv:block/finisher"
+    },
+    "facing=north,formed=true": {
+      "model": "hdfv:block/finisher_formed"
+    },
+    "facing=east,formed=false": {
+      "model": "hdfv:block/finisher",
+      "y": 90
+    },
+    "facing=east,formed=true": {
+      "model": "hdfv:block/finisher_formed"
+    },
+    "facing=south,formed=false": {
+      "model": "hdfv:block/finisher",
+      "y": 180
+    },
+    "facing=south,formed=true": {
+      "model": "hdfv:block/finisher_formed"
+    },
+    "facing=west,formed=false": {
+      "model": "hdfv:block/finisher",
+      "y": 270
+    },
+    "facing=west,formed=true": {
+      "model": "hdfv:block/finisher_formed"
+    }
+  }
+}

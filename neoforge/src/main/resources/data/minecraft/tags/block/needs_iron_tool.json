@@ -1,0 +1,10 @@
+{
+  "values": [
+    "hdfv:ilmenite_ore",
+    "hdfv:deepslate_ilmenite_ore",
+    "hdfv:nickel_ore",
+    "hdfv:deepslate_nickel_ore",
+    "hdfv:chromite_ore",
+    "hdfv:deepslate_chromite_ore"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/paint_booth_exhaust"
+    },
+    "facing=east": {
+      "model": "hdfv:block/paint_booth_exhaust",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/paint_booth_exhaust",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/paint_booth_exhaust",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "hdfv:block/paint_booth_exhaust",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "hdfv:block/paint_booth_exhaust",
+      "x": 90
+    }
+  }
+}

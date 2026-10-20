@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/steady_rest"
+    },
+    "formed=true": {
+      "model": "hdfv:block/steady_rest_formed"
+    }
+  }
+}

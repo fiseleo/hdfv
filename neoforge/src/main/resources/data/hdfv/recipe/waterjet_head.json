@@ -1,0 +1,34 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:pump_unit"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:hydraulic_cylinder"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:linear_guide"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "c:gems/diamond"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:waterjet_head",
+    "count": 1
+  },
+  "seconds": 828
+}

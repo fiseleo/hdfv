@@ -1,0 +1,34 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:turned_shaft"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:cast_gear"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:bronze_bushing"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:boring_head",
+    "count": 1
+  },
+  "seconds": 735
+}

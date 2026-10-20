@@ -1,0 +1,22 @@
+{
+  "type": "hdfv:electrolysis",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:gunpowders"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "c:dusts/redstone"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:ammonium_perchlorate",
+    "count": 1
+  },
+  "kwh": 8.087
+}

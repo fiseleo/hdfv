@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "tag": "c:glass_panes"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    },
+    {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "steel"
+      }
+    },
+    {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "steel"
+      }
+    }
+  ],
+  "result": {
+    "id": "hdfv:interior_lamp",
+    "count": 2
+  }
+}

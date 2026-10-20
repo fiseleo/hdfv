@@ -1,0 +1,15 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/electrolysis_cell_on.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/dark_steel",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "steel": "hdfv:block/machine/steel",
+    "glow": "hdfv:block/machine/glow",
+    "soot": "hdfv:block/machine/soot",
+    "copper": "hdfv:block/machine/copper",
+    "panel": "hdfv:block/machine/panel"
+  }
+}

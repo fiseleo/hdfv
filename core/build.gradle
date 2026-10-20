@@ -1,0 +1,14 @@
+plugins { id 'java-library' }
+
+base { archivesName = 'hdfv-core' }
+dependencies {
+    // The game JAR of AeroCore carries the same classes, so the physics JAR is for compiling and tests only.
+    compileOnly "dev.mcmod.aerocore:aerocore-physics:${rootProject.aerocore_version}"
+    testImplementation "dev.mcmod.aerocore:aerocore-physics:${rootProject.aerocore_version}"
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// 0.11: asset checks (FinishAssetsTest and others) read the mod's resources and the Blender specs from the project root
+tasks.named('test') { systemProperty 'hdfv.root', rootProject.projectDir.absolutePath }

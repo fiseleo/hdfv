@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/auto_loader"
+    },
+    "formed=true": {
+      "model": "hdfv:block/auto_loader_formed"
+    }
+  }
+}

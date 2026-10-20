@@ -1,0 +1,40 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:gear_train"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:electric_motor_unit"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:forged_crank"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:cast_pulley"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:pump_jack",
+    "count": 1
+  },
+  "seconds": 948
+}

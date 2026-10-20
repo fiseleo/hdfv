@@ -1,0 +1,9 @@
+{
+  "textures": {
+    "particle": "hdfv:block/hangar_door",
+    "curtain": "hdfv:block/hangar_door",
+    "trim": "hdfv:block/hangar_door_trim",
+    "head": "hdfv:block/hangar_door_head"
+  },
+  "elements": []
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/laser_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/laser_head_formed"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/fuel_dispenser.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/concrete",
+    "concrete": "hdfv:block/machine/concrete",
+    "paint_red": "hdfv:block/machine/paint_red",
+    "screen": "hdfv:block/machine/screen",
+    "paint_white": "hdfv:block/machine/paint_white",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "plastic": "hdfv:block/machine/plastic",
+    "steel": "hdfv:block/machine/steel",
+    "rubber": "hdfv:block/machine/rubber"
+  }
+}

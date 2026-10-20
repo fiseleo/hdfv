@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/battery.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/paint_grey",
+    "paint_grey": "hdfv:block/machine/paint_grey",
+    "vent": "hdfv:block/machine/vent",
+    "gauge": "hdfv:block/machine/gauge",
+    "label": "hdfv:block/machine/label",
+    "hazard": "hdfv:block/machine/hazard",
+    "paint_red": "hdfv:block/machine/paint_red",
+    "copper": "hdfv:block/machine/copper",
+    "plastic": "hdfv:block/machine/plastic",
+    "rubber": "hdfv:block/machine/rubber"
+  }
+}

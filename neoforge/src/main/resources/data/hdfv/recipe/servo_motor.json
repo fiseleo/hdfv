@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:electric_motor_unit"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:control_board"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:ball_bearing"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:servo_motor",
+    "count": 1
+  },
+  "seconds": 646
+}

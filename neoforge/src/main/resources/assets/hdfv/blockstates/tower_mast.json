@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/tower_mast"
+    },
+    "formed=true": {
+      "model": "hdfv:block/tower_mast_formed"
+    }
+  }
+}

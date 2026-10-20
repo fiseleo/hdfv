@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/airfield_turf_side",
+    "top": "hdfv:block/airfield_turf_top",
+    "bottom": "minecraft:block/dirt"
+  }
+}

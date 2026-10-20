@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "top": "hdfv:block/asphalt",
+    "particle": "hdfv:block/asphalt"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        16,
+        8
+      ],
+      "to": [
+        8,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            8,
+            8,
+            16
+          ],
+          "texture": "#top",
+          "cullface": "up"
+        }
+      }
+    }
+  ]
+}

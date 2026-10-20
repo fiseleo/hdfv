@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "hdfv:block/cracking_furnace",
+    "end": "hdfv:block/fired_heater_side"
+  }
+}

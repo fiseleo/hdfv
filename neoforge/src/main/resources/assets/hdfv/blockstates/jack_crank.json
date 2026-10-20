@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/jack_crank"
+    },
+    "formed=true": {
+      "model": "hdfv:block/jack_crank_formed"
+    }
+  }
+}

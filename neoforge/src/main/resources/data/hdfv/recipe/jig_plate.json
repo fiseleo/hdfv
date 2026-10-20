@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:fastener_kit"
+    }
+  ],
+  "result": {
+    "id": "hdfv:jig_plate",
+    "count": 1
+  }
+}

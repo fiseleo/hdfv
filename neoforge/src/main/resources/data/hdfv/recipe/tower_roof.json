@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:copper_wire"
+    }
+  ],
+  "result": {
+    "id": "hdfv:tower_roof",
+    "count": 4
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/steam_engine.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/cast_iron",
+    "cast_iron": "hdfv:block/machine/cast_iron",
+    "paint_green": "hdfv:block/machine/paint_green",
+    "brass": "hdfv:block/machine/brass",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "soot": "hdfv:block/machine/soot",
+    "gauge": "hdfv:block/machine/gauge",
+    "steel": "hdfv:block/machine/steel",
+    "copper": "hdfv:block/machine/copper"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:epoxy_resin"
+    },
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "tag": "c:nuggets/iron"
+    }
+  ],
+  "result": {
+    "id": "hdfv:paint_can",
+    "count": 2
+  }
+}

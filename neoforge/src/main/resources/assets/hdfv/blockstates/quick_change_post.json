@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/quick_change_post"
+    },
+    "formed=true": {
+      "model": "hdfv:block/quick_change_post_formed"
+    }
+  }
+}

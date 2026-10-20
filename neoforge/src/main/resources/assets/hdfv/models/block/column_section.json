@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "hdfv:block/column_section",
+    "end": "hdfv:block/column_cap"
+  }
+}

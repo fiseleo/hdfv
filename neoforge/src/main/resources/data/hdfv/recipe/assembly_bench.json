@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "WCW",
+    "W W"
+  ],
+  "key": {
+    "S": {
+      "type": "neoforge:components",
+      "items": "hdfv:stock",
+      "components": {
+        "hdfv:alloy": "steel"
+      }
+    },
+    "W": {
+      "tag": "minecraft:planks"
+    },
+    "C": {
+      "tag": "c:player_workstations/crafting_tables"
+    }
+  },
+  "result": {
+    "id": "hdfv:assembly_bench",
+    "count": 1
+  }
+}

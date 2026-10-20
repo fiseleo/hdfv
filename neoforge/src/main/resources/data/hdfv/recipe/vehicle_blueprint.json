@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BB",
+    "BB"
+  ],
+  "key": {
+    "B": {
+      "item": "hdfv:blank_blueprint"
+    }
+  },
+  "result": {
+    "id": "hdfv:vehicle_blueprint",
+    "count": 1
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:ground_slideway"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:spindle"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:electric_motor_unit"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:leadscrew"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:finisher",
+    "count": 1
+  },
+  "seconds": 903
+}

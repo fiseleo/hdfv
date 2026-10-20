@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "facing=north,formed=false": {
+      "model": "hdfv:block/ram_machine"
+    },
+    "facing=north,formed=true": {
+      "model": "hdfv:block/ram_machine_formed"
+    },
+    "facing=east,formed=false": {
+      "model": "hdfv:block/ram_machine",
+      "y": 90
+    },
+    "facing=east,formed=true": {
+      "model": "hdfv:block/ram_machine_formed"
+    },
+    "facing=south,formed=false": {
+      "model": "hdfv:block/ram_machine",
+      "y": 180
+    },
+    "facing=south,formed=true": {
+      "model": "hdfv:block/ram_machine_formed"
+    },
+    "facing=west,formed=false": {
+      "model": "hdfv:block/ram_machine",
+      "y": 270
+    },
+    "facing=west,formed=true": {
+      "model": "hdfv:block/ram_machine_formed"
+    }
+  }
+}

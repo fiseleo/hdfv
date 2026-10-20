@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/waterjet_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/waterjet_head_formed"
+    }
+  }
+}

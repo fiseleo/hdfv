@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/mitre_vise"
+    },
+    "formed=true": {
+      "model": "hdfv:block/mitre_vise_formed"
+    }
+  }
+}

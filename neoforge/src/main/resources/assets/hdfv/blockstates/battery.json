@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/battery"
+    },
+    "facing=east": {
+      "model": "hdfv:block/battery",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/battery",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/battery",
+      "y": 270
+    }
+  }
+}

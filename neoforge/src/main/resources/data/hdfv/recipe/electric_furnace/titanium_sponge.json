@@ -1,0 +1,44 @@
+{
+  "type": "hdfv:electric_furnace",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:titanium_slag"
+      },
+      "count": 5
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/magnesium"
+      },
+      "count": 3
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:coke"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:argon_cylinder"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:titanium_sponge",
+    "count": 3
+  },
+  "kwh": 450.0,
+  "byproducts": [
+    {
+      "id": "hdfv:magnesium_chloride",
+      "count": 3
+    },
+    {
+      "id": "hdfv:empty_gas_cylinder",
+      "count": 1
+    }
+  ]
+}

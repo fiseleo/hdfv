@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "tag": "c:glass_panes"
+    }
+  ],
+  "result": {
+    "id": "hdfv:machine_guard",
+    "count": 2
+  }
+}

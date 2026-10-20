@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/apron_floodlight.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/concrete",
+    "concrete": "hdfv:block/machine/concrete",
+    "paint_grey": "hdfv:block/machine/paint_grey",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "lens_clear": "hdfv:block/machine/lens_clear"
+  }
+}

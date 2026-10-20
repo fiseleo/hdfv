@@ -1,0 +1,19 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/air_separation_unit.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/dark_steel",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "insulation": "hdfv:block/machine/insulation",
+    "paint_blue": "hdfv:block/machine/paint_blue",
+    "steel": "hdfv:block/machine/steel",
+    "frost": "hdfv:block/machine/frost",
+    "paint_white": "hdfv:block/machine/paint_white",
+    "brass": "hdfv:block/machine/brass",
+    "paint_green": "hdfv:block/machine/paint_green",
+    "panel": "hdfv:block/machine/panel",
+    "gauge": "hdfv:block/machine/gauge"
+  }
+}

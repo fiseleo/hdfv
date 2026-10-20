@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:ingots/chromium"
+    },
+    {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "alloy_steel"
+      }
+    },
+    {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "alloy_steel"
+      }
+    }
+  ],
+  "result": {
+    "id": "hdfv:hss_tool_set",
+    "count": 1
+  }
+}

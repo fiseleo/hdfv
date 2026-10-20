@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:frame_casting"
+    },
+    {
+      "item": "hdfv:cut_gear"
+    },
+    {
+      "item": "hdfv:turned_shaft"
+    }
+  ],
+  "result": {
+    "id": "hdfv:gear_top",
+    "count": 2
+  }
+}

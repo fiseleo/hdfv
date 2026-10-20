@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/cross_rail"
+    },
+    "formed=true": {
+      "model": "hdfv:block/cross_rail_formed"
+    }
+  }
+}

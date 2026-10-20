@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "KK",
+    "KK"
+  ],
+  "key": {
+    "K": {
+      "item": "hdfv:coke"
+    }
+  },
+  "result": {
+    "id": "hdfv:electrode",
+    "count": 1
+  }
+}

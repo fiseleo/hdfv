@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "GGG",
+    "DDD"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:short_grass"
+    },
+    "D": {
+      "item": "minecraft:dirt"
+    }
+  },
+  "result": {
+    "id": "hdfv:airfield_turf",
+    "count": 3
+  }
+}

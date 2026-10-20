@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/internal_grinding_head_side",
+    "top": "hdfv:block/internal_grinding_head_top",
+    "bottom": "hdfv:block/internal_grinding_head_top"
+  }
+}

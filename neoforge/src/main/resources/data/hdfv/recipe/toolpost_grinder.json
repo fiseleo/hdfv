@@ -1,0 +1,22 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:electric_motor_unit"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:grinding_wheel"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:toolpost_grinder",
+    "count": 1
+  },
+  "seconds": 528
+}

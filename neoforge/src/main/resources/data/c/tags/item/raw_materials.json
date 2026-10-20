@@ -1,0 +1,12 @@
+{
+  "values": [
+    "#c:raw_materials/bauxite",
+    "#c:raw_materials/ilmenite",
+    "#c:raw_materials/nickel",
+    "#c:raw_materials/chromite",
+    "#c:raw_materials/magnesite",
+    "#c:raw_materials/tin",
+    "#c:raw_materials/zinc",
+    "#c:raw_materials/garnet"
+  ]
+}

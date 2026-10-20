@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/gear_top"
+    },
+    "formed=true": {
+      "model": "hdfv:block/gear_top_formed"
+    }
+  }
+}

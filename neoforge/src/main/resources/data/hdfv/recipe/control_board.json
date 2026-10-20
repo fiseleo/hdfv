@@ -1,0 +1,34 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:circuit_board"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "c:gems/quartz"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "tag": "c:nuggets/gold"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "c:dusts/redstone"
+      },
+      "count": 4
+    }
+  ],
+  "result": {
+    "id": "hdfv:control_board",
+    "count": 1
+  },
+  "seconds": 784
+}

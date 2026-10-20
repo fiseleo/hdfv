@@ -1,0 +1,58 @@
+{
+  "textures": {
+    "particle": "hdfv:block/dock_gate",
+    "curtain": "hdfv:block/dock_gate",
+    "trim": "hdfv:block/dock_gate_trim",
+    "head": "hdfv:block/dock_gate_head"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        5.0
+      ],
+      "to": [
+        16,
+        16,
+        11.0
+      ],
+      "faces": {
+        "north": {
+          "texture": "#curtain",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#curtain",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#trim",
+          "cullface": "east"
+        },
+        "west": {
+          "texture": "#trim",
+          "cullface": "west"
+        },
+        "up": {
+          "texture": "#trim",
+          "cullface": "up"
+        },
+        "down": {
+          "texture": "#trim",
+          "cullface": "down"
+        }
+      }
+    }
+  ]
+}

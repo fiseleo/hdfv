@@ -1,0 +1,37 @@
+{
+  "type": "hdfv:electric_furnace",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/nickel"
+      },
+      "count": 6
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/chromium"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/aluminium"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:netherite_scrap"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 8,
+    "components": {
+      "hdfv:alloy": "cmsx_4"
+    }
+  },
+  "kwh": 31.25
+}

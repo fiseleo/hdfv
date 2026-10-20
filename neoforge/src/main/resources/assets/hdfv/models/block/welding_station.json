@@ -1,0 +1,17 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/welding_station.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/steel",
+    "steel": "hdfv:block/machine/steel",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "paint_blue": "hdfv:block/machine/paint_blue",
+    "panel": "hdfv:block/machine/panel",
+    "vent": "hdfv:block/machine/vent",
+    "paint_green": "hdfv:block/machine/paint_green",
+    "brass": "hdfv:block/machine/brass",
+    "rubber": "hdfv:block/machine/rubber"
+  }
+}

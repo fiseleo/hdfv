@@ -1,0 +1,25 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:glass_fibre"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:epoxy_resin"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 1,
+    "components": {
+      "hdfv:alloy": "gfrp"
+    }
+  },
+  "ticks": 100
+}

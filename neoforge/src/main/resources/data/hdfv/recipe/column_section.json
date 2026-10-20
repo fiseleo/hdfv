@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:steel_tube"
+    },
+    {
+      "item": "hdfv:valve_body"
+    }
+  ],
+  "result": {
+    "id": "hdfv:column_section",
+    "count": 2
+  }
+}

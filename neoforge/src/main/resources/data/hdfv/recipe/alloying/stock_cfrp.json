@@ -1,0 +1,25 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:carbon_fibre"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:epoxy_resin"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 1,
+    "components": {
+      "hdfv:alloy": "cfrp"
+    }
+  },
+  "ticks": 100
+}

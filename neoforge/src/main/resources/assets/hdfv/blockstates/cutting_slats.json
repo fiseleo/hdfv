@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/cutting_slats"
+    },
+    "formed=true": {
+      "model": "hdfv:block/cutting_slats_formed"
+    }
+  }
+}

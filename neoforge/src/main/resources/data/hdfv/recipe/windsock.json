@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "TOW",
+    "T  "
+  ],
+  "key": {
+    "T": {
+      "item": "hdfv:steel_tube"
+    },
+    "O": {
+      "item": "minecraft:orange_wool"
+    },
+    "W": {
+      "item": "minecraft:white_wool"
+    }
+  },
+  "result": {
+    "id": "hdfv:windsock",
+    "count": 1
+  }
+}

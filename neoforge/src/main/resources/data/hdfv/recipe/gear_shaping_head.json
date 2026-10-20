@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:forged_crank"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:spindle"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:gear_shaping_head",
+    "count": 1
+  },
+  "seconds": 558
+}

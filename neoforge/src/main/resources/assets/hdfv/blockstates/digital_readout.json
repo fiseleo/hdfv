@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/digital_readout"
+    },
+    "formed=true": {
+      "model": "hdfv:block/digital_readout_formed"
+    }
+  }
+}

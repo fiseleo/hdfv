@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:electric_furnace",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:titanium_sponge"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:argon_cylinder"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:titanium_ingot",
+    "count": 1
+  },
+  "kwh": 5.589,
+  "byproducts": [
+    {
+      "id": "hdfv:empty_gas_cylinder",
+      "count": 1
+    }
+  ]
+}

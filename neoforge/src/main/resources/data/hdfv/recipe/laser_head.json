@@ -1,0 +1,40 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:control_board"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:transformer"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:linear_guide"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "c:gems/diamond"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "c:gems/quartz"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:laser_head",
+    "count": 1
+  },
+  "seconds": 766
+}

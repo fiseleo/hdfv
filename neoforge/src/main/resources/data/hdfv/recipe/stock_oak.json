@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:oak_log"
+    },
+    {
+      "item": "minecraft:oak_log"
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 1,
+    "components": {
+      "hdfv:alloy": "oak"
+    }
+  }
+}

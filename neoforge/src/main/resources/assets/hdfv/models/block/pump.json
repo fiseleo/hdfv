@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/pump.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/paint_blue",
+    "paint_blue": "hdfv:block/machine/paint_blue",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "paint_grey": "hdfv:block/machine/paint_grey",
+    "label": "hdfv:block/machine/label"
+  }
+}

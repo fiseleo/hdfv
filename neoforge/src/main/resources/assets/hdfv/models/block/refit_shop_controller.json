@@ -1,0 +1,17 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/refit_shop_controller.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/dark_steel",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "hazard": "hdfv:block/machine/hazard",
+    "paint_blue": "hdfv:block/machine/paint_blue",
+    "screen": "hdfv:block/machine/screen",
+    "steel": "hdfv:block/machine/steel",
+    "paint_red": "hdfv:block/machine/paint_red",
+    "paint_yellow": "hdfv:block/machine/paint_yellow",
+    "glow": "hdfv:block/machine/glow"
+  }
+}

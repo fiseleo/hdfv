@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/forging_press.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/cast_iron",
+    "cast_iron": "hdfv:block/machine/cast_iron",
+    "hazard": "hdfv:block/machine/hazard",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "steel": "hdfv:block/machine/steel",
+    "paint_green": "hdfv:block/machine/paint_green",
+    "label": "hdfv:block/machine/label",
+    "rubber": "hdfv:block/machine/rubber",
+    "paint_grey": "hdfv:block/machine/paint_grey",
+    "panel": "hdfv:block/machine/panel"
+  }
+}

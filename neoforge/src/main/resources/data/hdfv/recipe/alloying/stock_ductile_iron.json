@@ -1,0 +1,31 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/iron"
+      },
+      "count": 8
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:coal"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/magnesium"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 9,
+    "components": {
+      "hdfv:alloy": "ductile_iron"
+    }
+  },
+  "ticks": 900
+}

@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:spindle_head"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:servo_motor"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:cut_gear"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:b_axis_head",
+    "count": 1
+  },
+  "seconds": 658
+}

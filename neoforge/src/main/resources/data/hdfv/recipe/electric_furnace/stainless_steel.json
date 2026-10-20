@@ -1,0 +1,31 @@
+{
+  "type": "hdfv:electric_furnace",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/iron"
+      },
+      "count": 6
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:ferrochrome"
+      },
+      "count": 3
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/nickel"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 10,
+    "components": {
+      "hdfv:alloy": "stainless_steel"
+    }
+  },
+  "kwh": 39.89
+}

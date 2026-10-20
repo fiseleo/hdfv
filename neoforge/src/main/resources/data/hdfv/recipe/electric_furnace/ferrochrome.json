@@ -1,0 +1,22 @@
+{
+  "type": "hdfv:electric_furnace",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:chromite"
+      },
+      "count": 3
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:coke"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:ferrochrome",
+    "count": 1
+  },
+  "kwh": 35.46
+}

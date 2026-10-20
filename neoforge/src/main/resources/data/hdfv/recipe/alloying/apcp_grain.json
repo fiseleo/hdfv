@@ -1,0 +1,36 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:ammonium_perchlorate"
+      },
+      "count": 14
+    },
+    {
+      "ingredient": {
+        "type": "neoforge:components",
+        "items": "hdfv:stock_bit",
+        "components": {
+          "hdfv:alloy": "aluminium_cast"
+        }
+      },
+      "count": 3
+    },
+    {
+      "ingredient": {
+        "type": "neoforge:components",
+        "items": "hdfv:stock_bit",
+        "components": {
+          "hdfv:alloy": "rubber"
+        }
+      },
+      "count": 3
+    }
+  ],
+  "result": {
+    "id": "hdfv:apcp_grain",
+    "count": 20
+  },
+  "ticks": 600
+}

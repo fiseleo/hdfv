@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:cast_pulley"
+    }
+  ],
+  "result": {
+    "id": "hdfv:horsehead",
+    "count": 1
+  }
+}

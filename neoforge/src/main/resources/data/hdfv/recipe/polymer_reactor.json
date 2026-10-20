@@ -1,0 +1,34 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 3
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:electric_motor_unit"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:valve_body"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:heat_exchanger"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:polymer_reactor",
+    "count": 1
+  },
+  "seconds": 1101
+}

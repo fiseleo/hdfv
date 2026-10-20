@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_tube"
+    }
+  ],
+  "result": {
+    "id": "hdfv:fluid_pipe",
+    "count": 4
+  }
+}

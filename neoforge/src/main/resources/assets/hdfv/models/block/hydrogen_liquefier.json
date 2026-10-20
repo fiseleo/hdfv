@@ -1,0 +1,16 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/hydrogen_liquefier.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/dark_steel",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "insulation": "hdfv:block/machine/insulation",
+    "paint_blue": "hdfv:block/machine/paint_blue",
+    "frost": "hdfv:block/machine/frost",
+    "steel": "hdfv:block/machine/steel",
+    "panel": "hdfv:block/machine/panel",
+    "gauge": "hdfv:block/machine/gauge"
+  }
+}

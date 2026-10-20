@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:frame_casting"
+    },
+    {
+      "item": "hdfv:forged_shaft"
+    }
+  ],
+  "result": {
+    "id": "hdfv:cross_rail",
+    "count": 2
+  }
+}

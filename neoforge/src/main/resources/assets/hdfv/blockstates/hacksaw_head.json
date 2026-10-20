@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/hacksaw_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/hacksaw_head_formed"
+    }
+  }
+}

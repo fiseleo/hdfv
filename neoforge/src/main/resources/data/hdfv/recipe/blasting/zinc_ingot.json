@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "ingredient": {
+    "item": "hdfv:raw_zinc"
+  },
+  "result": {
+    "id": "hdfv:zinc_ingot"
+  },
+  "experience": 0.7,
+  "cookingtime": 100
+}

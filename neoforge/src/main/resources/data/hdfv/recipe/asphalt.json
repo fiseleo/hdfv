@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "GGG",
+    "GBG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "tag": "c:gravels"
+    },
+    "B": {
+      "item": "hdfv:bitumen"
+    }
+  },
+  "result": {
+    "id": "hdfv:asphalt",
+    "count": 8
+  }
+}

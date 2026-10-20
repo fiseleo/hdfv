@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:ingots/steel"
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 1,
+    "components": {
+      "hdfv:alloy": "steel"
+    }
+  }
+}

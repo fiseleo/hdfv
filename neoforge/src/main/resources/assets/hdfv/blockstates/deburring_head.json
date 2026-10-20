@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/deburring_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/deburring_head_formed"
+    }
+  }
+}

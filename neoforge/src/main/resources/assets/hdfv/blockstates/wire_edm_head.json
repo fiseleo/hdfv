@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/wire_edm_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/wire_edm_head_formed"
+    }
+  }
+}

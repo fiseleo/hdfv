@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/shaving_head_side",
+    "top": "hdfv:block/shaving_head_top",
+    "bottom": "hdfv:block/shaving_head_top"
+  }
+}

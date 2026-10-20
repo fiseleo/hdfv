@@ -1,0 +1,502 @@
+{
+  "hdfv:brushed_steel": {
+    "texture": "hdfv:textures/part/brushed_steel.png",
+    "tile": 0.2,
+    "gloss": 0.581,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/brushed_steel_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:stainless": {
+    "texture": "hdfv:textures/part/stainless.png",
+    "tile": 0.15,
+    "gloss": 0.731,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/stainless_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:machined_steel": {
+    "texture": "hdfv:textures/part/machined_steel.png",
+    "tile": 0.08,
+    "gloss": 0.701,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/machined_steel_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:cast_iron": {
+    "texture": "hdfv:textures/part/cast_iron.png",
+    "tile": 0.3,
+    "gloss": 0.24,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/cast_iron_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:cast_aluminium": {
+    "texture": "hdfv:textures/part/cast_aluminium.png",
+    "tile": 0.3,
+    "gloss": 0.34,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/cast_aluminium_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:forged_steel": {
+    "texture": "hdfv:textures/part/forged_steel.png",
+    "tile": 0.25,
+    "gloss": 0.395,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/forged_steel_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:titanium": {
+    "texture": "hdfv:textures/part/titanium.png",
+    "tile": 0.2,
+    "gloss": 0.544,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/titanium_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:inconel": {
+    "texture": "hdfv:textures/part/inconel.png",
+    "tile": 0.2,
+    "gloss": 0.444,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/inconel_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:single_crystal": {
+    "texture": "hdfv:textures/part/single_crystal.png",
+    "tile": 0.05,
+    "gloss": 0.798,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/single_crystal_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:copper": {
+    "texture": "hdfv:textures/part/copper.png",
+    "tile": 0.15,
+    "gloss": 0.609,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/copper_n.png",
+      "normalStrength": 1.0,
+      "glossScale": 1.1
+    }
+  },
+  "hdfv:brass": {
+    "texture": "hdfv:textures/part/brass.png",
+    "tile": 0.15,
+    "gloss": 0.609,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/brass_n.png",
+      "normalStrength": 1.0,
+      "glossScale": 1.1
+    }
+  },
+  "hdfv:bronze": {
+    "texture": "hdfv:textures/part/bronze.png",
+    "tile": 0.2,
+    "gloss": 0.459,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/bronze_n.png",
+      "normalStrength": 1.0,
+      "glossScale": 1.05
+    }
+  },
+  "hdfv:carbon_weave": {
+    "texture": "hdfv:textures/part/carbon_weave.png",
+    "tile": 0.03,
+    "gloss": 0.782,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/carbon_weave_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:gfrp": {
+    "texture": "hdfv:textures/part/gfrp.png",
+    "tile": 0.15,
+    "gloss": 0.499,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/gfrp_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:rubber": {
+    "texture": "hdfv:textures/part/rubber.png",
+    "tile": 0.08,
+    "gloss": 0.12,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/rubber_n.png",
+      "normalStrength": 1.0,
+      "glossScale": 0.85
+    }
+  },
+  "hdfv:paint": {
+    "texture": "hdfv:textures/part/paint.png",
+    "tile": 0.5,
+    "gloss": 0.608,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/paint_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:paint_worn": {
+    "texture": "hdfv:textures/part/paint_worn.png",
+    "tile": 0.4,
+    "gloss": 0.481,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/paint_worn_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:graphite": {
+    "texture": "hdfv:textures/part/graphite.png",
+    "tile": 0.06,
+    "gloss": 0.151,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/graphite_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:ceramic": {
+    "texture": "hdfv:textures/part/ceramic.png",
+    "tile": 0.1,
+    "gloss": 0.2,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/ceramic_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:braided_hose": {
+    "texture": "hdfv:textures/part/braided_hose.png",
+    "tile": 0.012,
+    "gloss": 0.602,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/braided_hose_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:plastic": {
+    "texture": "hdfv:textures/part/plastic.png",
+    "tile": 0.1,
+    "gloss": 0.452,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/plastic_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:propellant": {
+    "texture": "hdfv:textures/part/propellant.png",
+    "tile": 0.06,
+    "gloss": 0.2,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/propellant_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:glass": {
+    "texture": "hdfv:textures/part/glass.png",
+    "tile": 0.5,
+    "gloss": 0.95,
+    "metal": 0,
+    "fresnel": 0.85,
+    "beautify": {
+      "shading": 2,
+      "glass": "reflective",
+      "farGlass": 0.85
+    }
+  },
+  "hdfv:paint_gloss": {
+    "texture": "hdfv:textures/part/paint_gloss.png",
+    "tile": 0.5,
+    "gloss": 0.758,
+    "metal": 0,
+    "clearcoat": 0.9,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/paint_gloss_n.png",
+      "normalStrength": 1.0,
+      "glossScale": 1.1
+    }
+  },
+  "hdfv:paint_metallic": {
+    "texture": "hdfv:textures/part/paint_metallic.png",
+    "tile": 0.25,
+    "gloss": 0.7,
+    "metal": 0.4,
+    "clearcoat": 0.9,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/paint_metallic_n.png",
+      "normalStrength": 1.0,
+      "glossScale": 1.05
+    }
+  },
+  "hdfv:paint_pearl": {
+    "texture": "hdfv:textures/part/paint_pearl.png",
+    "tile": 0.25,
+    "gloss": 0.75,
+    "metal": 0.15,
+    "clearcoat": 0.9,
+    "flip": 0.6,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/paint_pearl_n.png",
+      "normalStrength": 1.0,
+      "glossScale": 1.05
+    }
+  },
+  "hdfv:paint_matte": {
+    "texture": "hdfv:textures/part/paint_matte.png",
+    "tile": 0.5,
+    "gloss": 0.128,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/paint_matte_n.png",
+      "normalStrength": 1.0,
+      "glossScale": 0.85
+    }
+  },
+  "hdfv:chrome": {
+    "texture": "hdfv:textures/part/chrome.png",
+    "tile": 0.3,
+    "gloss": 0.967,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/chrome_n.png",
+      "normalStrength": 1.0,
+      "glossScale": 1.1
+    }
+  },
+  "hdfv:tyre": {
+    "texture": "hdfv:textures/part/tyre.png",
+    "tile": 0.05,
+    "gloss": 0.18,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/tyre_n.png",
+      "normalStrength": 1.0,
+      "glossScale": 0.85
+    }
+  },
+  "hdfv:leather": {
+    "texture": "hdfv:textures/part/leather.png",
+    "tile": 0.12,
+    "gloss": 0.348,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/leather_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:fabric": {
+    "texture": "hdfv:textures/part/fabric.png",
+    "tile": 0.02,
+    "gloss": 0.093,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/fabric_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:carpet": {
+    "texture": "hdfv:textures/part/carpet.png",
+    "tile": 0.05,
+    "gloss": 0.05,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/carpet_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:dash_plastic": {
+    "texture": "hdfv:textures/part/dash_plastic.png",
+    "tile": 0.04,
+    "gloss": 0.2,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/dash_plastic_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:teak": {
+    "texture": "hdfv:textures/part/teak.png",
+    "tile": 1.0,
+    "gloss": 0.294,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/teak_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:antifouling": {
+    "texture": "hdfv:textures/part/antifouling.png",
+    "tile": 0.3,
+    "gloss": 0.099,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/antifouling_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:nonskid": {
+    "texture": "hdfv:textures/part/nonskid.png",
+    "tile": 0.1,
+    "gloss": 0.208,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/nonskid_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:aluminium_skin": {
+    "texture": "hdfv:textures/part/aluminium_skin.png",
+    "tile": 1.0,
+    "gloss": 0.551,
+    "metal": 1,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/aluminium_skin_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:lamp_clear": {
+    "texture": "hdfv:textures/part/lamp_clear.png",
+    "tile": 0.1,
+    "gloss": 0.93,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/lamp_clear_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:lamp_red": {
+    "texture": "hdfv:textures/part/lamp_red.png",
+    "tile": 0.1,
+    "gloss": 0.93,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/lamp_red_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:lamp_amber": {
+    "texture": "hdfv:textures/part/lamp_amber.png",
+    "tile": 0.1,
+    "gloss": 0.93,
+    "metal": 0,
+    "beautify": {
+      "shading": 2,
+      "normal": "hdfv:textures/part/lamp_amber_n.png",
+      "normalStrength": 1.0
+    }
+  },
+  "hdfv:board_formed_concrete": {
+    "texture": "hdfv:textures/part/board_formed_concrete.png",
+    "tile": 1.2,
+    "gloss": 0.12,
+    "metal": 0,
+    "shading": 2,
+    "normalStrength": 1.0,
+    "normal": "hdfv:textures/part/board_formed_concrete_n.png",
+    "beautify": {
+      "shading": 2
+    }
+  },
+  "hdfv:tower_glass": {
+    "texture": "hdfv:textures/part/tower_glass.png",
+    "tile": 1.0,
+    "gloss": 0.95,
+    "metal": 0,
+    "fresnel": 0.85,
+    "shading": 2,
+    "glass": "reflective",
+    "farGlass": 0.8,
+    "beautify": {
+      "shading": 2,
+      "farGlass": 0.85
+    }
+  },
+  "hdfv:fx_flame": {
+    "texture": "hdfv:textures/part/fx_flame.png",
+    "tile": 0.5,
+    "gloss": 0.0,
+    "metal": 0
+  },
+  "hdfv:fx_prop_blur": {
+    "texture": "hdfv:textures/part/fx_prop_blur.png",
+    "tile": 0.3,
+    "gloss": 0.5,
+    "metal": 0
+  },
+  "hdfv:glyphs": {
+    "texture": "hdfv:textures/part/glyphs.png",
+    "tile": 1.0,
+    "gloss": 0.6,
+    "metal": 0,
+    "cutout": 0.25
+  }
+}

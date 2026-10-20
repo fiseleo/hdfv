@@ -1,0 +1,40 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:heat_exchanger"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:pump_unit"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:control_board"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:valve_body"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:distillation_column",
+    "count": 1
+  },
+  "seconds": 1228
+}

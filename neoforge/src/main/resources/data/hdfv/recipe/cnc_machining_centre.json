@@ -1,0 +1,58 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:bed_casting"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:ground_slideway"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:ball_screw"
+      },
+      "count": 3
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:servo_motor"
+      },
+      "count": 3
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:spindle"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:control_board"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:electric_motor_unit"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:cnc_machining_centre",
+    "count": 1
+  },
+  "seconds": 2084
+}

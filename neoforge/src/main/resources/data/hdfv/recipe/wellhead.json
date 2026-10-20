@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:valve_body"
+    },
+    {
+      "item": "hdfv:valve_body"
+    },
+    {
+      "item": "hdfv:valve_body"
+    },
+    {
+      "item": "hdfv:steel_tube"
+    }
+  ],
+  "result": {
+    "id": "hdfv:wellhead",
+    "count": 1
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/rotary_table"
+    },
+    "formed=true": {
+      "model": "hdfv:block/rotary_table_formed"
+    }
+  }
+}

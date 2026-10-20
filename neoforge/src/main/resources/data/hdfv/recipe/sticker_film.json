@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:polyethylene"
+    },
+    {
+      "item": "hdfv:polyethylene"
+    }
+  ],
+  "result": {
+    "id": "hdfv:sticker_film",
+    "count": 4
+  }
+}

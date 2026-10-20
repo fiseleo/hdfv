@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "GRG",
+    " L ",
+    " S "
+  ],
+  "key": {
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "R": {
+      "tag": "c:dyes/red"
+    },
+    "L": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "S": {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "steel"
+      }
+    }
+  },
+  "result": {
+    "id": "hdfv:airfield_obstruction",
+    "count": 2
+  }
+}

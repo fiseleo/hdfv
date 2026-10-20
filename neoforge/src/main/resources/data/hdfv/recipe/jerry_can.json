@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "P",
+    "B"
+  ],
+  "key": {
+    "P": {
+      "item": "hdfv:steel_plate"
+    },
+    "B": {
+      "tag": "c:buckets/empty"
+    }
+  },
+  "result": {
+    "id": "hdfv:jerry_can",
+    "count": 1
+  }
+}

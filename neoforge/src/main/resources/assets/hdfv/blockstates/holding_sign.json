@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/holding_sign"
+    },
+    "facing=east": {
+      "model": "hdfv:block/holding_sign",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/holding_sign",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/holding_sign",
+      "y": 270
+    }
+  }
+}

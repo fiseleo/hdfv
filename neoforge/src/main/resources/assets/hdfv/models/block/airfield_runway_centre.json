@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/airfield_runway_centre.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/steel",
+    "steel": "hdfv:block/machine/steel",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "lens_white": "hdfv:block/machine/lens_white"
+  }
+}

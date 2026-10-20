@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "LLL",
+    " T ",
+    " T "
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "T": {
+      "item": "hdfv:steel_tube"
+    }
+  },
+  "result": {
+    "id": "hdfv:apron_floodlight",
+    "count": 1
+  }
+}

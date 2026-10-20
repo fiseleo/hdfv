@@ -1,0 +1,40 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:gear_train"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:electric_motor_unit"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:cast_pulley"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:drilling_rig",
+    "count": 1
+  },
+  "seconds": 1206
+}

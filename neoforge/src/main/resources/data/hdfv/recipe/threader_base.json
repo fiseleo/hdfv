@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:bed_casting"
+    },
+    {
+      "item": "hdfv:frame_casting"
+    }
+  ],
+  "result": {
+    "id": "hdfv:threader_base",
+    "count": 2
+  }
+}

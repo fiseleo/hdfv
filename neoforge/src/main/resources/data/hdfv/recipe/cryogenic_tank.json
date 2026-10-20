@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:fluid_tank"
+    },
+    {
+      "tag": "c:ingots/nickel"
+    },
+    {
+      "tag": "c:ingots/nickel"
+    },
+    {
+      "tag": "c:ingots/nickel"
+    },
+    {
+      "tag": "c:ingots/nickel"
+    },
+    {
+      "item": "hdfv:glass_fibre"
+    },
+    {
+      "item": "hdfv:glass_fibre"
+    },
+    {
+      "item": "hdfv:glass_fibre"
+    },
+    {
+      "item": "hdfv:glass_fibre"
+    }
+  ],
+  "result": {
+    "id": "hdfv:cryogenic_tank",
+    "count": 1
+  }
+}

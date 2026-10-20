@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/dividing_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/dividing_head_formed"
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "variants": {
+    "axis=x,edge=0,top=false": {
+      "model": "hdfv:block/hangar_door_row_full"
+    },
+    "axis=x,edge=0,top=true": {
+      "model": "hdfv:block/hangar_door_top_full"
+    },
+    "axis=x,edge=1,top=false": {
+      "model": "hdfv:block/hangar_door_row_0"
+    },
+    "axis=x,edge=1,top=true": {
+      "model": "hdfv:block/hangar_door_top_0"
+    },
+    "axis=x,edge=2,top=false": {
+      "model": "hdfv:block/hangar_door_row_4"
+    },
+    "axis=x,edge=2,top=true": {
+      "model": "hdfv:block/hangar_door_top_4"
+    },
+    "axis=x,edge=3,top=false": {
+      "model": "hdfv:block/hangar_door_row_8"
+    },
+    "axis=x,edge=3,top=true": {
+      "model": "hdfv:block/hangar_door_top_9"
+    },
+    "axis=x,edge=4,top=false": {
+      "model": "hdfv:block/hangar_door_row_12"
+    },
+    "axis=x,edge=4,top=true": {
+      "model": "hdfv:block/hangar_door_top_9"
+    },
+    "axis=x,edge=5,top=false": {
+      "model": "hdfv:block/hangar_door_row_none"
+    },
+    "axis=x,edge=5,top=true": {
+      "model": "hdfv:block/hangar_door_top_9"
+    },
+    "axis=z,edge=0,top=false": {
+      "model": "hdfv:block/hangar_door_row_full",
+      "y": 90
+    },
+    "axis=z,edge=0,top=true": {
+      "model": "hdfv:block/hangar_door_top_full",
+      "y": 90
+    },
+    "axis=z,edge=1,top=false": {
+      "model": "hdfv:block/hangar_door_row_0",
+      "y": 90
+    },
+    "axis=z,edge=1,top=true": {
+      "model": "hdfv:block/hangar_door_top_0",
+      "y": 90
+    },
+    "axis=z,edge=2,top=false": {
+      "model": "hdfv:block/hangar_door_row_4",
+      "y": 90
+    },
+    "axis=z,edge=2,top=true": {
+      "model": "hdfv:block/hangar_door_top_4",
+      "y": 90
+    },
+    "axis=z,edge=3,top=false": {
+      "model": "hdfv:block/hangar_door_row_8",
+      "y": 90
+    },
+    "axis=z,edge=3,top=true": {
+      "model": "hdfv:block/hangar_door_top_9",
+      "y": 90
+    },
+    "axis=z,edge=4,top=false": {
+      "model": "hdfv:block/hangar_door_row_12",
+      "y": 90
+    },
+    "axis=z,edge=4,top=true": {
+      "model": "hdfv:block/hangar_door_top_9",
+      "y": 90
+    },
+    "axis=z,edge=5,top=false": {
+      "model": "hdfv:block/hangar_door_row_none",
+      "y": 90
+    },
+    "axis=z,edge=5,top=true": {
+      "model": "hdfv:block/hangar_door_top_9",
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/drilling_rig"
+    },
+    "facing=east": {
+      "model": "hdfv:block/drilling_rig",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/drilling_rig",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/drilling_rig",
+      "y": 270
+    }
+  }
+}

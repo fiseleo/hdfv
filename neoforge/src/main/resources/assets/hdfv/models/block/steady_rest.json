@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/steady_rest_side",
+    "top": "hdfv:block/steady_rest_top",
+    "bottom": "hdfv:block/steady_rest_top"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:frame_casting"
+    },
+    {
+      "item": "hdfv:ground_slideway"
+    },
+    {
+      "item": "hdfv:turned_shaft"
+    }
+  ],
+  "result": {
+    "id": "hdfv:gear_column",
+    "count": 2
+  }
+}

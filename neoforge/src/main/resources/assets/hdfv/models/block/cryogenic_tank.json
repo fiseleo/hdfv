@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/cryogenic_tank.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/insulation",
+    "insulation": "hdfv:block/machine/insulation",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "frost": "hdfv:block/machine/frost",
+    "gauge": "hdfv:block/machine/gauge",
+    "brass": "hdfv:block/machine/brass"
+  }
+}

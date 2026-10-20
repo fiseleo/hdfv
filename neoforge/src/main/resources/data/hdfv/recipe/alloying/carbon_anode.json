@@ -1,0 +1,22 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:coke"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:coal_tar"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:carbon_anode",
+    "count": 1
+  },
+  "ticks": 300
+}

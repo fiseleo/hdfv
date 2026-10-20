@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/slotter_head_side",
+    "top": "hdfv:block/slotter_head_top",
+    "bottom": "hdfv:block/slotter_head_top"
+  }
+}

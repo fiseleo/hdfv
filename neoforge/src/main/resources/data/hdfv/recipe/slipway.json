@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "R R",
+    "WWW"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:rail"
+    },
+    "W": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "id": "hdfv:slipway",
+    "count": 6
+  }
+}

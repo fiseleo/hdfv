@@ -1,0 +1,19 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:synthetic_rubber"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 1,
+    "components": {
+      "hdfv:alloy": "rubber"
+    }
+  },
+  "ticks": 100
+}

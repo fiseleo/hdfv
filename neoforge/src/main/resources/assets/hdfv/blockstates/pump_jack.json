@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/pump_jack"
+    },
+    "facing=east": {
+      "model": "hdfv:block/pump_jack",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/pump_jack",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/pump_jack",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "SSS",
+    "SGS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "G": {
+      "tag": "c:glass_panes"
+    }
+  },
+  "result": {
+    "id": "hdfv:tower_shaft",
+    "count": 8
+  }
+}

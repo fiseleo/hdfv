@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/saw_bed_side",
+    "top": "hdfv:block/saw_bed_top",
+    "bottom": "hdfv:block/saw_bed_top"
+  }
+}

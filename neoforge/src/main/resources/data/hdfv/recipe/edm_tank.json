@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "tag": "c:glass_blocks"
+    }
+  ],
+  "result": {
+    "id": "hdfv:edm_tank",
+    "count": 1
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:chromium_oxide"
+      },
+      "count": 3
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/aluminium"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:chromium_ingot",
+    "count": 2
+  },
+  "ticks": 200,
+  "byproduct": {
+    "id": "hdfv:alumina",
+    "count": 2
+  }
+}

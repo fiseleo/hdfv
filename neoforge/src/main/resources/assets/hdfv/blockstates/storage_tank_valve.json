@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/storage_tank_valve"
+    },
+    "facing=east": {
+      "model": "hdfv:block/storage_tank_valve",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/storage_tank_valve",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/storage_tank_valve",
+      "y": 270
+    }
+  }
+}

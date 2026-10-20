@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:steel_tube"
+      },
+      "count": 6
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:bricks"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:valve_body"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:cracking_furnace",
+    "count": 1
+  },
+  "seconds": 1080
+}

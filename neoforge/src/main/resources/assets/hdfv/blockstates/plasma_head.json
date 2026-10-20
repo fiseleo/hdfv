@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/plasma_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/plasma_head_formed"
+    }
+  }
+}

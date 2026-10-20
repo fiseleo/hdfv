@@ -1,0 +1,22 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:forged_crank"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:gear_train"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:jack_crank",
+    "count": 1
+  },
+  "seconds": 609
+}

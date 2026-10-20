@@ -1,0 +1,25 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/magnesium"
+      },
+      "count": 9
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/aluminium"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 10,
+    "components": {
+      "hdfv:alloy": "magnesium"
+    }
+  },
+  "ticks": 1000
+}

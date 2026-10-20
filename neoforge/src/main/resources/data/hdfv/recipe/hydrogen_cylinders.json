@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:carbon_fibre"
+    },
+    {
+      "item": "hdfv:carbon_fibre"
+    },
+    {
+      "item": "hdfv:carbon_fibre"
+    },
+    {
+      "item": "hdfv:carbon_fibre"
+    },
+    {
+      "item": "hdfv:epoxy_resin"
+    },
+    {
+      "item": "hdfv:epoxy_resin"
+    },
+    {
+      "item": "hdfv:polyethylene"
+    },
+    {
+      "item": "hdfv:polyethylene"
+    },
+    {
+      "item": "hdfv:valve_body"
+    }
+  ],
+  "result": {
+    "id": "hdfv:hydrogen_cylinders",
+    "count": 1
+  }
+}

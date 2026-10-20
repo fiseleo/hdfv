@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/derrick"
+    },
+    "formed=true": {
+      "model": "hdfv:block/derrick"
+    }
+  }
+}

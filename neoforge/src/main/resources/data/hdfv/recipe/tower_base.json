@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "SSS",
+    "SPS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stone_bricks"
+    },
+    "P": {
+      "item": "hdfv:steel_plate"
+    }
+  },
+  "result": {
+    "id": "hdfv:tower_base",
+    "count": 8
+  }
+}

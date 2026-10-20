@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:control_board"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:copper_wire"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:geophone",
+    "count": 1
+  },
+  "seconds": 520
+}

@@ -1,0 +1,69 @@
+plugins { id 'base' }
+
+// Build outputs on this computer's disk (%USERPROFILE%\.mcmod\build\hdfv-<checkout>\<project>), not in the network folder:
+// the development game loads hdfv's ~2,400 class and resource files and the Minecraft JARs from the build folders at
+// every start, each file a few round trips over the network drive (Tailscale): 20 s on the direct link, 5 minutes when it
+// falls back to a relay (2026-10-18, the user: 「載入非常慢」). The two computers sharing the folder also stop
+// overwriting each other's outputs. One folder per checkout (a hash of its path), so worktrees do not share one.
+// -Phdfv_local_build=false keeps them in the project's build folders.
+def localBuild = providers.gradleProperty('hdfv_local_build').getOrElse('true') != 'false'
+def checkout = java.security.MessageDigest.getInstance('SHA-256').digest(rootProject.projectDir.canonicalPath.toLowerCase(Locale.ROOT).getBytes('UTF-8'))
+        .encodeHex().toString().substring(0, 8)
+def localBuildRoot = new File(System.getProperty('user.home'), ".mcmod/build/${rootProject.name}-${checkout}")
+
+allprojects {
+    group = 'dev.mcmod.hdfv'
+    version = rootProject.mod_version
+    if (localBuild) { layout.buildDirectory = new File(localBuildRoot, project == rootProject ? 'root' : project.name) }
+}
+
+tasks.register('showBuildDirectories') {
+    def where = allprojects.collectEntries { [(it.path): it.layout.buildDirectory.get().asFile] }
+    doLast { where.each { path, dir -> println "${path}: ${dir}" } }
+}
+
+// AeroCore, the physics prerequisite, comes from its local Maven folder (AeroCore: .\dev.ps1 publish).
+def aerocoreRepo = rootProject.file(providers.gradleProperty('aerocore_repo').getOrElse('../AeroCore/build/repo'))
+if (localBuild) {
+    // Gradle uses a folder repository's JARs where they are (it does not cache them), so the game would read AeroCore
+    // over the network: the version in use is mirrored next to the build outputs, copied again when AeroCore republishes it.
+    def mirror = new File(localBuildRoot, 'aerocore-repo')
+    def group = new File(aerocoreRepo, 'dev/mcmod/aerocore')
+    group.listFiles()?.findAll { it.isDirectory() }?.each { artifact ->
+        def from = new File(artifact, rootProject.aerocore_version)
+        def to = new File(mirror, "dev/mcmod/aerocore/${artifact.name}/${rootProject.aerocore_version}")
+        from.listFiles()?.findAll { it.isFile() }?.each { f ->
+            def t = new File(to, f.name)
+            if (t.length() != f.length() || t.lastModified() != f.lastModified()) {
+                to.mkdirs()
+                java.nio.file.Files.copy(f.toPath(), t.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING, java.nio.file.StandardCopyOption.COPY_ATTRIBUTES)
+            }
+        }
+    }
+    aerocoreRepo = mirror
+}
+
+subprojects {
+    repositories {
+        maven {
+            name = 'AeroCore'
+            url = aerocoreRepo.toURI()
+        }
+        mavenCentral()
+    }
+    plugins.withId('java') {
+        java {
+            toolchain.languageVersion = JavaLanguageVersion.of(21)
+            withSourcesJar()
+        }
+        tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+        tasks.withType(Test).configureEach { useJUnitPlatform() }
+        tasks.withType(AbstractArchiveTask).configureEach {
+            preserveFileTimestamps = false
+            reproducibleFileOrder = true
+        }
+    }
+}
+
+tasks.named('build') { dependsOn ':core:build', ':neoforge:build' }
+tasks.named('clean') { dependsOn ':core:clean', ':neoforge:clean' }

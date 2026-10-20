@@ -1,0 +1,22 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:electric_motor_unit"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:paint_booth_exhaust",
+    "count": 2
+  },
+  "seconds": 549
+}

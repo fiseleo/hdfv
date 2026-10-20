@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:electrical_steel"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:copper_wire"
+      },
+      "count": 3
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:transformer",
+    "count": 1
+  },
+  "seconds": 753
+}

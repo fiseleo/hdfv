@@ -1,0 +1,22 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:steel_tube"
+      },
+      "count": 6
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:heat_exchanger",
+    "count": 1
+  },
+  "seconds": 948
+}

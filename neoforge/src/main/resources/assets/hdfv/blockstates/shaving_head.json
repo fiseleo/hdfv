@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/shaving_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/shaving_head_formed"
+    }
+  }
+}

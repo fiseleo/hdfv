@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "hdfv:block/distillation_column_front",
+    "side": "hdfv:block/refinery_controller_side",
+    "top": "hdfv:block/refinery_controller_top"
+  }
+}

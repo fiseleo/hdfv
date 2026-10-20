@@ -1,0 +1,25 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/iron"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:coke"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 4,
+    "components": {
+      "hdfv:alloy": "steel"
+    }
+  },
+  "ticks": 400
+}

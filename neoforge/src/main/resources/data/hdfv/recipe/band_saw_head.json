@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:cast_pulley"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:saw_blade"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:band_saw_head",
+    "count": 1
+  },
+  "seconds": 615
+}

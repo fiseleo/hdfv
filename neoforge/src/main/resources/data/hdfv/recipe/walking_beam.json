@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:steel_plate"
+    },
+    {
+      "item": "hdfv:steel_tube"
+    },
+    {
+      "item": "hdfv:steel_tube"
+    },
+    {
+      "item": "hdfv:steel_tube"
+    }
+  ],
+  "result": {
+    "id": "hdfv:walking_beam",
+    "count": 3
+  }
+}

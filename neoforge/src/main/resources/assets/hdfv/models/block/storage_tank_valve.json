@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "hdfv:block/storage_tank_valve_front",
+    "side": "hdfv:block/storage_tank_wall",
+    "top": "hdfv:block/storage_tank_wall"
+  }
+}

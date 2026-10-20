@@ -1,0 +1,25 @@
+{
+  "type": "hdfv:electric_furnace",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/iron"
+      },
+      "count": 8
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:coke"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 8,
+    "components": {
+      "hdfv:alloy": "steel"
+    }
+  },
+  "kwh": 31.91
+}

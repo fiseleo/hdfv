@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/impact_riveter_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/impact_riveter_head_formed"
+    }
+  }
+}

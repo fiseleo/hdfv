@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "hdfv:block/nc_drive"
+    }
+  }
+}

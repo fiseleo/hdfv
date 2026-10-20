@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/jack_base"
+    },
+    "formed=true": {
+      "model": "hdfv:block/jack_base_formed"
+    }
+  }
+}

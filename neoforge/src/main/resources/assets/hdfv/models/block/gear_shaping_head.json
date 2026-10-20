@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/gear_shaping_head_side",
+    "top": "hdfv:block/gear_shaping_head_top",
+    "bottom": "hdfv:block/gear_shaping_head_top"
+  }
+}

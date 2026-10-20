@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/saw_bed"
+    },
+    "formed=true": {
+      "model": "hdfv:block/saw_bed_formed"
+    }
+  }
+}

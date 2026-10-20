@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:frame_casting"
+    },
+    {
+      "item": "hdfv:frame_casting"
+    }
+  ],
+  "result": {
+    "id": "hdfv:planer_upright",
+    "count": 2
+  }
+}

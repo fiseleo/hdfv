@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:copper_wire"
+    },
+    {
+      "item": "hdfv:copper_wire"
+    },
+    [
+      {
+        "item": "hdfv:synthetic_rubber"
+      },
+      {
+        "item": "hdfv:polypropylene"
+      }
+    ]
+  ],
+  "result": {
+    "id": "hdfv:cable",
+    "count": 8
+  }
+}

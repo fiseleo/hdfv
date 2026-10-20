@@ -1,0 +1,46 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:bed_casting"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:forged_shaft"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:cast_gear"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:forged_crank"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:bronze_bushing"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:planer",
+    "count": 1
+  },
+  "seconds": 1260
+}

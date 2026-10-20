@@ -1,0 +1,91 @@
+{
+  "textures": {
+    "particle": "hdfv:block/roller_shutter",
+    "curtain": "hdfv:block/roller_shutter",
+    "trim": "hdfv:block/roller_shutter_trim",
+    "head": "hdfv:block/roller_shutter_head"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        4,
+        6.0
+      ],
+      "to": [
+        16,
+        5,
+        10.0
+      ],
+      "faces": {
+        "north": {
+          "texture": "#trim"
+        },
+        "south": {
+          "texture": "#trim"
+        },
+        "east": {
+          "texture": "#trim",
+          "cullface": "east"
+        },
+        "west": {
+          "texture": "#trim",
+          "cullface": "west"
+        },
+        "up": {
+          "texture": "#trim"
+        },
+        "down": {
+          "texture": "#trim"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        5,
+        7.0
+      ],
+      "to": [
+        16,
+        16,
+        9.0
+      ],
+      "faces": {
+        "north": {
+          "texture": "#curtain",
+          "uv": [
+            0,
+            4,
+            16,
+            15
+          ]
+        },
+        "south": {
+          "texture": "#curtain",
+          "uv": [
+            0,
+            4,
+            16,
+            15
+          ]
+        },
+        "east": {
+          "texture": "#trim",
+          "cullface": "east"
+        },
+        "west": {
+          "texture": "#trim",
+          "cullface": "west"
+        },
+        "up": {
+          "texture": "#trim",
+          "cullface": "up"
+        },
+        "down": {
+          "texture": "#trim"
+        }
+      }
+    }
+  ]
+}

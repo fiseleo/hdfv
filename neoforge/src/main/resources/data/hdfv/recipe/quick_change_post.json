@@ -1,0 +1,22 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:fastener_kit"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:quick_change_post",
+    "count": 1
+  },
+  "seconds": 531
+}

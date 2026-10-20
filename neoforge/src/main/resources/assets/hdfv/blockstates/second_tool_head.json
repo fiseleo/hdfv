@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/second_tool_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/second_tool_head_formed"
+    }
+  }
+}

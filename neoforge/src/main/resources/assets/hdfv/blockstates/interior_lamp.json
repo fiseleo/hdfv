@@ -1,0 +1,48 @@
+{
+  "variants": {
+    "facing=down,lit=false": {
+      "model": "hdfv:block/interior_lamp_ceiling"
+    },
+    "facing=up,lit=false": {
+      "model": "hdfv:block/interior_lamp_ceiling",
+      "x": 180
+    },
+    "facing=north,lit=false": {
+      "model": "hdfv:block/interior_lamp_wall"
+    },
+    "facing=east,lit=false": {
+      "model": "hdfv:block/interior_lamp_wall",
+      "y": 90
+    },
+    "facing=south,lit=false": {
+      "model": "hdfv:block/interior_lamp_wall",
+      "y": 180
+    },
+    "facing=west,lit=false": {
+      "model": "hdfv:block/interior_lamp_wall",
+      "y": 270
+    },
+    "facing=down,lit=true": {
+      "model": "hdfv:block/interior_lamp_ceiling_on"
+    },
+    "facing=up,lit=true": {
+      "model": "hdfv:block/interior_lamp_ceiling_on",
+      "x": 180
+    },
+    "facing=north,lit=true": {
+      "model": "hdfv:block/interior_lamp_wall_on"
+    },
+    "facing=east,lit=true": {
+      "model": "hdfv:block/interior_lamp_wall_on",
+      "y": 90
+    },
+    "facing=south,lit=true": {
+      "model": "hdfv:block/interior_lamp_wall_on",
+      "y": 180
+    },
+    "facing=west,lit=true": {
+      "model": "hdfv:block/interior_lamp_wall_on",
+      "y": 270
+    }
+  }
+}

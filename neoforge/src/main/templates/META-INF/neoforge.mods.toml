@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="hdfv"
+version="${mod_version}"
+displayName="High Degree of Freedom Vehicles"
+description='''
+Design every part yourself - engines from block and crank to turbine and nozzle, hulls, propellers - machine them,
+and build vehicles for sea, land and air from them. Physics by AeroCore.
+'''
+
+[[dependencies.hdfv]]
+modId="neoforge"
+type="required"
+versionRange="[${neo_version},21.2)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.hdfv]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.hdfv]]
+modId="aerocore"
+type="required"
+versionRange="[${aerocore_version},${aerocore_next})"
+ordering="AFTER"
+side="BOTH"

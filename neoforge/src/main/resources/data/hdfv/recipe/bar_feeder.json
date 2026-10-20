@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:linear_guide"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:electric_motor_unit"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_tube"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:bar_feeder",
+    "count": 1
+  },
+  "seconds": 606
+}

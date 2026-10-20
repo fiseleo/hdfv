@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SPS",
+    "S S",
+    "SBS"
+  ],
+  "key": {
+    "S": {
+      "type": "neoforge:components",
+      "items": "hdfv:stock",
+      "components": {
+        "hdfv:alloy": "steel"
+      }
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "B": {
+      "tag": "c:storage_blocks/iron"
+    }
+  },
+  "result": {
+    "id": "hdfv:forging_press",
+    "count": 1
+  }
+}

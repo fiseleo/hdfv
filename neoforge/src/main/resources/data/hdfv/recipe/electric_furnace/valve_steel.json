@@ -1,0 +1,37 @@
+{
+  "type": "hdfv:electric_furnace",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/iron"
+      },
+      "count": 6
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:ferrochrome"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/nickel"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:coke"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 9,
+    "components": {
+      "hdfv:alloy": "valve_steel"
+    }
+  },
+  "kwh": 35.9
+}

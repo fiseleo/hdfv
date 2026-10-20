@@ -1,0 +1,22 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "c:gunpowders"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:sugar"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:knsb_grain",
+    "count": 3
+  },
+  "ticks": 200
+}

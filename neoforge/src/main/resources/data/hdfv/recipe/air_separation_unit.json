@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:heat_exchanger"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:electric_motor_unit"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:air_separation_unit",
+    "count": 1
+  },
+  "seconds": 1020
+}

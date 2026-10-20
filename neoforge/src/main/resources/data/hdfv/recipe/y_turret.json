@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:turret"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:linear_guide"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:servo_motor"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:y_turret",
+    "count": 1
+  },
+  "seconds": 664
+}

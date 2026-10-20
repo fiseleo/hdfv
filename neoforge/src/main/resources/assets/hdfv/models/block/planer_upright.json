@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/planer_upright_side",
+    "top": "hdfv:block/planer_upright_top",
+    "bottom": "hdfv:block/planer_upright_top"
+  }
+}

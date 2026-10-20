@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/fcc_reactor"
+    },
+    "formed=true": {
+      "model": "hdfv:block/fcc_reactor"
+    }
+  }
+}

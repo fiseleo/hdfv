@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/shaper_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/shaper_head_formed"
+    }
+  }
+}

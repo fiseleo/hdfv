@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "hdfv:raw_garnet"
+    }
+  ],
+  "processing_time": 150,
+  "results": [
+    {
+      "id": "hdfv:garnet_abrasive",
+      "count": 4
+    },
+    {
+      "id": "hdfv:garnet_abrasive",
+      "chance": 0.5
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+world AeroCore HDFV QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.22 close-ups of the models (TAG as in compare-0.22.txt): the line-up pad again, each vehicle near and low.
+# The camera is placed from each vehicle where it stands (execute at the one nearest its spawn point), each facing +x;
+# tp sets the feet (the eye is 1.62 m up) and aims facing from them, and the view is 102 degrees wide at 16:9, so the
+# cameras stand close; the tractor is picked where it stands (the semi spawn leaves the trailer at the spawn point);
+# their positions are logged before and after.
+mark TAG start
+cmd gamemode spectator @p
+cmd gamerule doDaylightCycle false
+cmd gamerule doWeatherCycle false
+cmd time set 6000
+cmd weather clear
+clouds off
+cmd tp @p 190 162 168 facing 190 151 207
+wait 200
+cmd kill @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70]
+cmd fill 160 150 180 220 150 230 minecraft:smooth_stone
+cmd fill 160 151 180 220 160 230 minecraft:air
+wait 20
+cmd execute positioned 176 151 190 rotated -90 0 run hdfv dev drive spawn semi
+cmd execute positioned 185 151 205 rotated -90 0 run aerocore vehicle spawn sedan
+cmd execute positioned 203 151 205 rotated -90 0 run aerocore vehicle spawn helicopter
+cmd execute positioned 175 151 220 rotated -90 0 run aerocore vehicle spawn seaplane
+cmd execute positioned 200 151 222 rotated -90 0 run aerocore vehicle spawn cruiser
+# brakes on, again once they are built (left free they crept 4-8 m east in two minutes)
+wait 40
+cmd execute as @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] at @s run aerocore vehicle control brake 1
+wait 1200
+cmd execute as @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] at @s run aerocore vehicle control brake 1
+wait 1160
+cmd execute as @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] run data get entity @s Pos
+shot TAG-c-discard
+# the sedan
+cmd execute at @e[type=aerocore:part_vehicle,x=185,y=151,z=205,distance=..12,sort=nearest,limit=1] run tp @p ~4.6 150.33 ~0 facing ~1.8 149.98 ~0
+wait 40
+shot TAG-c-sedan-front
+cmd execute at @e[type=aerocore:part_vehicle,x=185,y=151,z=205,distance=..12,sort=nearest,limit=1] run tp @p ~4 150.73 ~2.7 facing ~1.4 149.98 ~0.4
+wait 20
+shot TAG-c-sedan-front34
+cmd execute at @e[type=aerocore:part_vehicle,x=185,y=151,z=205,distance=..12,sort=nearest,limit=1] run tp @p ~-5 150.78 ~-2.5 facing ~-2.2 149.98 ~-0.3
+wait 20
+shot TAG-c-sedan-rear34
+cmd execute at @e[type=aerocore:part_vehicle,x=185,y=151,z=205,distance=..12,sort=nearest,limit=1] run tp @p ~1.4 149.83 ~2.3 facing ~1.4 149.71 ~0.8
+wait 20
+shot TAG-c-sedan-wheel
+cmd execute at @e[type=aerocore:part_vehicle,x=185,y=151,z=205,distance=..12,sort=nearest,limit=1] run tp @p ~0.3 150.98 ~1.7 facing ~0.9 150.33 ~-0.2
+wait 20
+shot TAG-c-sedan-top
+# the semi's tractor
+cmd execute at @e[type=aerocore:part_vehicle,x=184,y=152,z=190,distance=..5,sort=nearest,limit=1] run tp @p ~7.5 150.98 ~2.8 facing ~3.5 150.38 ~0
+wait 20
+shot TAG-c-semi-front
+cmd execute at @e[type=aerocore:part_vehicle,x=184,y=152,z=190,distance=..5,sort=nearest,limit=1] run tp @p ~2.2 149.98 ~3.5 facing ~2.2 149.88 ~0.8
+wait 20
+shot TAG-c-semi-side
+# the helicopter's rotor head and tail, the seaplane's nose and wing, the boat's bow and deck
+cmd execute at @e[type=aerocore:part_vehicle,x=203,y=151,z=205,distance=..12,sort=nearest,limit=1] run tp @p ~1.8 153.38 ~1.8 facing ~0 152.28 ~0
+wait 20
+shot TAG-c-heli-head
+cmd execute at @e[type=aerocore:part_vehicle,x=203,y=151,z=205,distance=..12,sort=nearest,limit=1] run tp @p ~-5.5 151.98 ~3 facing ~-6.5 151.58 ~0
+wait 20
+shot TAG-c-heli-tail
+cmd execute at @e[type=aerocore:part_vehicle,x=175,y=151,z=220,distance=..12,sort=nearest,limit=1] run tp @p ~4.2 152.28 ~2.2 facing ~1.8 151.68 ~0
+wait 20
+shot TAG-c-seaplane-nose
+cmd execute at @e[type=aerocore:part_vehicle,x=175,y=151,z=220,distance=..12,sort=nearest,limit=1] run tp @p ~-1.5 153.78 ~3.5 facing ~0.2 152.38 ~2.8
+wait 20
+shot TAG-c-seaplane-wing
+cmd execute at @e[type=aerocore:part_vehicle,x=200,y=151,z=222,distance=..12,sort=nearest,limit=1] run tp @p ~2.5 151.38 ~2.2 facing ~-0.8 150.28 ~0
+wait 20
+shot TAG-c-boat-bow
+cmd execute at @e[type=aerocore:part_vehicle,x=200,y=151,z=222,distance=..12,sort=nearest,limit=1] run tp @p ~-1 152.58 ~2.4 facing ~-2.6 150.58 ~0
+wait 20
+shot TAG-c-boat-deck
+# the sedan's front wheels steered full left (0.22: the axle rig's wheels are its pieces; before, they were baked with
+# the body and stayed straight)
+cmd execute at @e[type=aerocore:part_vehicle,x=185,y=151,z=205,distance=..12,sort=nearest,limit=1] run aerocore vehicle control steer 1
+wait 40
+cmd execute at @e[type=aerocore:part_vehicle,x=185,y=151,z=205,distance=..12,sort=nearest,limit=1] run tp @p ~4 150.73 ~2.7 facing ~1.4 149.98 ~0.4
+wait 20
+shot TAG-c-sedan-steer
+cmd execute at @e[type=aerocore:part_vehicle,x=185,y=151,z=205,distance=..12,sort=nearest,limit=1] run aerocore vehicle control steer 0
+# night: the sedan's lamps from the front and the back
+cmd time set 18000
+cmd execute positioned 185 152 205 run aerocore vehicle control lights 2
+wait 60
+cmd execute at @e[type=aerocore:part_vehicle,x=185,y=151,z=205,distance=..12,sort=nearest,limit=1] run tp @p ~4.6 150.33 ~1 facing ~1.8 149.98 ~0
+wait 20
+shot TAG-c-night-front
+cmd execute at @e[type=aerocore:part_vehicle,x=185,y=151,z=205,distance=..12,sort=nearest,limit=1] run tp @p ~-5.3 150.58 ~-1.6 facing ~-2.4 149.98 ~0
+wait 20
+shot TAG-c-night-rear
+cmd execute as @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] run data get entity @s Pos
+cmd time set 6000
+cmd kill @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70]
+cmd fill 160 150 180 220 160 230 minecraft:air
+wait 10
+mark TAG end
+quit

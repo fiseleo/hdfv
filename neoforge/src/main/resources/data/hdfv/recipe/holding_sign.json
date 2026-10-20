@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "RWR",
+    " S "
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:red_concrete"
+    },
+    "W": {
+      "tag": "c:dyes/white"
+    },
+    "S": {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "steel"
+      }
+    }
+  },
+  "result": {
+    "id": "hdfv:holding_sign",
+    "count": 2
+  }
+}

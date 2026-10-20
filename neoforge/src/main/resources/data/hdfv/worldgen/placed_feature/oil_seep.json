@@ -1,0 +1,8 @@
+{
+  "feature": "hdfv:oil_seep",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

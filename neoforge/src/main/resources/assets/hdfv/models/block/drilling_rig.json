@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "hdfv:block/drilling_rig_front",
+    "side": "hdfv:block/drilling_rig_side",
+    "top": "hdfv:block/drilling_rig_side"
+  }
+}

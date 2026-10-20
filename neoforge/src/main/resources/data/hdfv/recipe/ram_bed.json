@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:bed_casting"
+    },
+    {
+      "item": "hdfv:planed_slideway"
+    }
+  ],
+  "result": {
+    "id": "hdfv:ram_bed",
+    "count": 2
+  }
+}

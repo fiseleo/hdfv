@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/airfield_approach"
+    },
+    "facing=east": {
+      "model": "hdfv:block/airfield_approach",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/airfield_approach",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/airfield_approach",
+      "y": 270
+    }
+  }
+}

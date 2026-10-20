@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/thread_milling_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/thread_milling_head_formed"
+    }
+  }
+}

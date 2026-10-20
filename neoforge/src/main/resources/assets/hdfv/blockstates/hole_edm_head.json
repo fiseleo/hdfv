@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/hole_edm_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/hole_edm_head_formed"
+    }
+  }
+}

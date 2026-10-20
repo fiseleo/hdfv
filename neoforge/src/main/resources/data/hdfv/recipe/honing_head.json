@@ -1,0 +1,34 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:spindle"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:honing_stones"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:hydraulic_cylinder"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:honing_head",
+    "count": 1
+  },
+  "seconds": 675
+}

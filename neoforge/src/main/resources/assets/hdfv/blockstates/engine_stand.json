@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/engine_stand"
+    },
+    "facing=east": {
+      "model": "hdfv:block/engine_stand",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/engine_stand",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/engine_stand",
+      "y": 270
+    }
+  }
+}

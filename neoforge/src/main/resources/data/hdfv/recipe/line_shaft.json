@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:forged_shaft"
+    }
+  ],
+  "result": {
+    "id": "hdfv:line_shaft",
+    "count": 3
+  }
+}

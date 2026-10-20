@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:planed_slideway"
+    },
+    {
+      "item": "hdfv:frame_casting"
+    }
+  ],
+  "result": {
+    "id": "hdfv:mill_table",
+    "count": 2
+  }
+}

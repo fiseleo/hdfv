@@ -1,0 +1,34 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:cut_gear"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:turned_shaft"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:ball_bearing"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:gear_train",
+    "count": 1
+  },
+  "seconds": 1053
+}

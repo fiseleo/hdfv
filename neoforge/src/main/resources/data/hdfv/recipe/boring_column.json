@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:frame_casting"
+    },
+    {
+      "item": "hdfv:planed_slideway"
+    },
+    {
+      "item": "hdfv:forged_shaft"
+    }
+  ],
+  "result": {
+    "id": "hdfv:boring_column",
+    "count": 2
+  }
+}

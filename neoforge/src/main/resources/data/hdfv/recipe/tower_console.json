@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:control_board"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "tag": "c:glass_panes"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:tower_console",
+    "count": 1
+  },
+  "seconds": 638
+}

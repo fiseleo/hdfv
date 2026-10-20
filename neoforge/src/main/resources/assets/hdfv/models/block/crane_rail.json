@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "hdfv:block/crane_rail",
+    "bottom": "hdfv:block/crane_rail",
+    "side": "hdfv:block/crane_rail_side"
+  }
+}

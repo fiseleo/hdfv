@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:servo_motor"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:transformer"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:precision_spindle"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:hole_edm_head",
+    "count": 1
+  },
+  "seconds": 697
+}

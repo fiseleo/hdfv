@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:ingots/titanium"
+    },
+    {
+      "item": "hdfv:coke"
+    },
+    {
+      "tag": "c:ingots/nickel"
+    }
+  ],
+  "result": {
+    "id": "hdfv:cermet_tool_set",
+    "count": 1
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/creative_power"
+    },
+    "facing=east": {
+      "model": "hdfv:block/creative_power",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/creative_power",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/creative_power",
+      "y": 270
+    }
+  }
+}

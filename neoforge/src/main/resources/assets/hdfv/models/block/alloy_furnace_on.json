@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/alloy_furnace_on.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/firebrick",
+    "firebrick": "hdfv:block/machine/firebrick",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "glow": "hdfv:block/machine/glow"
+  }
+}

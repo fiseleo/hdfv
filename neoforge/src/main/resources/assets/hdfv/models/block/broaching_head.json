@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/broaching_head_side",
+    "top": "hdfv:block/broaching_head_top",
+    "bottom": "hdfv:block/broaching_head_top"
+  }
+}

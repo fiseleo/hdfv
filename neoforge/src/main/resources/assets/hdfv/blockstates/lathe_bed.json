@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/lathe_bed"
+    },
+    "formed=true": {
+      "model": "hdfv:block/lathe_bed_formed"
+    }
+  }
+}

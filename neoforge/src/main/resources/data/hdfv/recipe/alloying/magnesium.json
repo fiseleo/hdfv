@@ -1,0 +1,22 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:magnesia"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:ferrosilicon"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:magnesium_ingot",
+    "count": 1
+  },
+  "ticks": 600
+}

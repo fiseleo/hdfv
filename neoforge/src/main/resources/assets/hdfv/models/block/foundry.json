@@ -1,0 +1,17 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/foundry.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/cast_iron",
+    "cast_iron": "hdfv:block/machine/cast_iron",
+    "paint_grey": "hdfv:block/machine/paint_grey",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "steel": "hdfv:block/machine/steel",
+    "firebrick": "hdfv:block/machine/firebrick",
+    "soot": "hdfv:block/machine/soot",
+    "gauge": "hdfv:block/machine/gauge",
+    "panel": "hdfv:block/machine/panel"
+  }
+}

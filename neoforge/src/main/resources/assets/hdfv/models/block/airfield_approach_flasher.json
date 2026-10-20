@@ -1,0 +1,15 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/airfield_approach_flasher.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/concrete",
+    "concrete": "hdfv:block/machine/concrete",
+    "paint_yellow": "hdfv:block/machine/paint_yellow",
+    "paint_grey": "hdfv:block/machine/paint_grey",
+    "lens_xenon": "hdfv:block/machine/lens_xenon",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "hazard": "hdfv:block/machine/hazard"
+  }
+}

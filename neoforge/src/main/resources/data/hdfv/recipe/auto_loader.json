@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:servo_motor"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "c:chests/wooden"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:auto_loader",
+    "count": 1
+  },
+  "seconds": 616
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/ecm_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/ecm_head_formed"
+    }
+  }
+}

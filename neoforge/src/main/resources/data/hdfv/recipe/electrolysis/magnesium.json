@@ -1,0 +1,16 @@
+{
+  "type": "hdfv:electrolysis",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:magnesium_chloride"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:magnesium_ingot",
+    "count": 1
+  },
+  "kwh": 129.73
+}

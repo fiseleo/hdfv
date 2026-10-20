@@ -1,0 +1,16 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:magnesite"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:magnesia",
+    "count": 1
+  },
+  "ticks": 400
+}

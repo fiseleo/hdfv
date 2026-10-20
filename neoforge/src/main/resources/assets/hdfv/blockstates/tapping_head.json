@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/tapping_head"
+    },
+    "formed=true": {
+      "model": "hdfv:block/tapping_head_formed"
+    }
+  }
+}

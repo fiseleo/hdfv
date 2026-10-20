@@ -1,0 +1,22 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:coal_tar"
+      },
+      "count": 3
+    },
+    {
+      "ingredient": {
+        "tag": "c:gunpowders"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:synthetic_rubber",
+    "count": 2
+  },
+  "ticks": 400
+}

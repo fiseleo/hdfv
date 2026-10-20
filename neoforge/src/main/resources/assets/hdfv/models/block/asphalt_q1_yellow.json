@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "top": "hdfv:block/airfield_line_yellow",
+    "particle": "hdfv:block/airfield_line_yellow"
+  },
+  "elements": [
+    {
+      "from": [
+        8,
+        16,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        8
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            8,
+            0,
+            16,
+            8
+          ],
+          "texture": "#top",
+          "cullface": "up"
+        }
+      }
+    }
+  ]
+}

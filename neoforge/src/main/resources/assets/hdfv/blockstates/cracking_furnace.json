@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/cracking_furnace"
+    },
+    "formed=true": {
+      "model": "hdfv:block/cracking_furnace"
+    }
+  }
+}

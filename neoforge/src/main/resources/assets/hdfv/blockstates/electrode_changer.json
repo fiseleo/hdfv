@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/electrode_changer"
+    },
+    "formed=true": {
+      "model": "hdfv:block/electrode_changer_formed"
+    }
+  }
+}

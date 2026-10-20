@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/diamond_dresser"
+    },
+    "formed=true": {
+      "model": "hdfv:block/diamond_dresser_formed"
+    }
+  }
+}

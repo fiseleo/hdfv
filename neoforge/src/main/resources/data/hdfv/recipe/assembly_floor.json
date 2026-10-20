@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "SSS",
+    "SYS",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "Y": {
+      "tag": "c:dyes/yellow"
+    }
+  },
+  "result": {
+    "id": "hdfv:assembly_floor",
+    "count": 8
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "hdfv:block/threader_top",
+    "front": "hdfv:block/threader_front",
+    "side": "hdfv:block/threader_side"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "formed=false": {
+      "model": "hdfv:block/storage_tank_wall"
+    },
+    "formed=true": {
+      "model": "hdfv:block/storage_tank_wall"
+    }
+  }
+}

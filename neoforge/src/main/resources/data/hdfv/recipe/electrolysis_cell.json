@@ -1,0 +1,40 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:transformer"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:carbon_anode"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:copper_wire"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:bricks"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:electrolysis_cell",
+    "count": 1
+  },
+  "seconds": 1500
+}

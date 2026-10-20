@@ -1,0 +1,22 @@
+{
+  "type": "hdfv:electrolysis",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:alumina"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:carbon_anode"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:aluminium_ingot",
+    "count": 1
+  },
+  "kwh": 129.98
+}

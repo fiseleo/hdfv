@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "facing=north,formed=false": {
+      "model": "hdfv:block/boring_mill"
+    },
+    "facing=north,formed=true": {
+      "model": "hdfv:block/boring_mill_formed"
+    },
+    "facing=east,formed=false": {
+      "model": "hdfv:block/boring_mill",
+      "y": 90
+    },
+    "facing=east,formed=true": {
+      "model": "hdfv:block/boring_mill_formed"
+    },
+    "facing=south,formed=false": {
+      "model": "hdfv:block/boring_mill",
+      "y": 180
+    },
+    "facing=south,formed=true": {
+      "model": "hdfv:block/boring_mill_formed"
+    },
+    "facing=west,formed=false": {
+      "model": "hdfv:block/boring_mill",
+      "y": 270
+    },
+    "facing=west,formed=true": {
+      "model": "hdfv:block/boring_mill_formed"
+    }
+  }
+}

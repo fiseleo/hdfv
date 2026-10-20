@@ -1,0 +1,16 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/composite_oven.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/paint_grey",
+    "paint_grey": "hdfv:block/machine/paint_grey",
+    "insulation": "hdfv:block/machine/insulation",
+    "steel": "hdfv:block/machine/steel",
+    "dark_steel": "hdfv:block/machine/dark_steel",
+    "copper": "hdfv:block/machine/copper",
+    "gauge": "hdfv:block/machine/gauge",
+    "panel": "hdfv:block/machine/panel"
+  }
+}

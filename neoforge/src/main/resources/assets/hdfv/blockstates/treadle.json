@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/treadle"
+    },
+    "facing=east": {
+      "model": "hdfv:block/treadle",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/treadle",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/treadle",
+      "y": 270
+    }
+  }
+}

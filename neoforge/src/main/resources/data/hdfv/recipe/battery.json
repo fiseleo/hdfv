@@ -1,0 +1,34 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 6
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/nickel"
+      },
+      "count": 6
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:copper_wire"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:polypropylene"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:battery",
+    "count": 1
+  },
+  "seconds": 1572
+}

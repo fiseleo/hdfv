@@ -1,0 +1,15 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": [
+    "hdfv:ore_bauxite",
+    "hdfv:ore_ilmenite",
+    "hdfv:ore_nickel",
+    "hdfv:ore_chromite",
+    "hdfv:ore_magnesite",
+    "hdfv:ore_tin",
+    "hdfv:ore_zinc",
+    "hdfv:ore_garnet"
+  ],
+  "step": "underground_ores"
+}

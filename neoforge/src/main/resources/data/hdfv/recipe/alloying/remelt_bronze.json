@@ -1,0 +1,23 @@
+{
+  "type": "hdfv:alloying",
+  "ingredients": [
+    {
+      "ingredient": {
+        "type": "neoforge:components",
+        "items": "hdfv:stock_bit",
+        "components": {
+          "hdfv:alloy": "bronze"
+        }
+      },
+      "count": 10
+    }
+  ],
+  "result": {
+    "id": "hdfv:stock",
+    "count": 1,
+    "components": {
+      "hdfv:alloy": "bronze"
+    }
+  },
+  "ticks": 100
+}

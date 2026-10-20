@@ -1,0 +1,40 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:frame_casting"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:linear_guide"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:servo_motor"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:control_board"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:transformer"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:electro_machine",
+    "count": 1
+  },
+  "seconds": 1262
+}

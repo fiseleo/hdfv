@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:frame_casting"
+    },
+    {
+      "item": "hdfv:ground_slideway"
+    }
+  ],
+  "result": {
+    "id": "hdfv:finisher_column",
+    "count": 2
+  }
+}

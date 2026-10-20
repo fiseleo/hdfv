@@ -1,0 +1,9 @@
+{
+  "textures": {
+    "particle": "hdfv:block/dock_gate",
+    "curtain": "hdfv:block/dock_gate",
+    "trim": "hdfv:block/dock_gate_trim",
+    "head": "hdfv:block/dock_gate_head"
+  },
+  "elements": []
+}

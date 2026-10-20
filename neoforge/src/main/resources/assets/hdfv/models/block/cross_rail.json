@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "hdfv:block/cross_rail_side",
+    "top": "hdfv:block/cross_rail_top",
+    "bottom": "hdfv:block/cross_rail_top"
+  }
+}
