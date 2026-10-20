@@ -1,9 +1,14 @@
-plugins { id 'java-library' }
+plugins {
+    id 'java-library'
+    // 0.24: TestCars and SoundBench (unit tests and the development runs' dev source set, not the release JAR)
+    id 'java-test-fixtures'
+}
 
 base { archivesName = 'hdfv-core' }
 dependencies {
     // The game JAR of AeroCore carries the same classes, so the physics JAR is for compiling and tests only.
     compileOnly "dev.mcmod.aerocore:aerocore-physics:${rootProject.aerocore_version}"
+    testFixturesCompileOnly "dev.mcmod.aerocore:aerocore-physics:${rootProject.aerocore_version}"
     testImplementation "dev.mcmod.aerocore:aerocore-physics:${rootProject.aerocore_version}"
     testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter'

@@ -1,16 +1,13 @@
 package dev.mcmod.hdfv.neoforge;
 
-import dev.mcmod.hdfv.neoforge.design.DesignGameTests;
 import dev.mcmod.hdfv.neoforge.design.DesignNetwork;
 import dev.mcmod.hdfv.neoforge.vehicle.HdfvVehicleCommands;
-import dev.mcmod.hdfv.neoforge.vehicle.VehicleGameTests;
 import dev.mcmod.hdfv.part.HdfvParts;
 import net.minecraft.commands.Commands;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import net.neoforged.neoforge.event.RegisterGameTestsEvent;
 
 /** High Degree of Freedom Vehicles: player-designed parts and vehicles on AeroCore's physics. */
 @Mod(Hdfv.MOD_ID)
@@ -44,41 +41,12 @@ public final class Hdfv {
         HdfvParticles.register(modBus);
         modBus.addListener(DesignNetwork::register);
         modBus.addListener(dev.mcmod.hdfv.neoforge.paint.DecalNetwork::register);
-        if (Boolean.getBoolean("hdfv.gametests")) {
-            modBus.addListener((RegisterGameTestsEvent event) -> {
-                event.register(VehicleGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.vehicle.AircraftGameTests.class);
-                event.register(DesignGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.material.MaterialGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.material.RecipeGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.machine.MachineGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.assembly.AssemblyGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.multiblock.MultiblockGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.fluid.FluidGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.fluid.HydrogenGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.power.PowerGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.multiblock.CncGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.petroleum.PetroleumGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.petroleum.RefineryGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.petroleum.PetroleumScreenGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.fuel.FuelGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.fuel.ServicingGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.machine.ToolGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.machine.MachiningGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.paint.DecalGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.paint.PaintBoothGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.refit.RefitShopGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.vehicle.DriveGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.vehicle.ChassisGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.truck.TruckGameTests.class);
-                event.register(dev.mcmod.hdfv.neoforge.airport.AirportGameTests.class);
-            });
-        }
+        // 0.24: GameTests and /hdfv dev are in the dev source set (development runs only, not in the release JAR)
         NeoForge.EVENT_BUS.addListener(Hdfv::registerCommands);
     }
 
     private static void registerCommands(RegisterCommandsEvent event) {
-        event.getDispatcher().register(Commands.literal(MOD_ID).then(HdfvVehicleCommands.tree()).then(dev.mcmod.hdfv.neoforge.assembly.AssemblyDevCommands.tree())
+        event.getDispatcher().register(Commands.literal(MOD_ID).then(HdfvVehicleCommands.tree())
                 .then(dev.mcmod.hdfv.neoforge.paint.DecalCommands.tree()));
     }
 }

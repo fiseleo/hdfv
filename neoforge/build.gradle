@@ -5,6 +5,22 @@ plugins {
 
 base { archivesName = 'hdfv-neoforge-1.21.1' }
 evaluationDependsOn(':core')
+
+// 0.24: development-only code stays out of the release JAR (jar and sourcesJar take main and core only). The dev
+// source set (the GameTests and their structures, /hdfv dev, /hdfvdev) and core's test fixtures (TestCars, SoundBench)
+// are part of hdfv in the development runs only; AeroCore's development tools (AutoShot, the window on monitor 2) come
+// as their own mod, aerocore_devtools.
+sourceSets {
+    dev {
+        compileClasspath += sourceSets.main.output + project(':core').sourceSets.testFixtures.output
+        runtimeClasspath += sourceSets.main.output + project(':core').sourceSets.testFixtures.output
+    }
+}
+configurations {
+    devImplementation.extendsFrom implementation
+    devCompileOnly.extendsFrom compileOnly
+    devRuntimeOnly.extendsFrom runtimeOnly
+}
 repositories {
     // JEI (Just Enough Items): its API to compile hdfv's optional plugin, the mod itself in the development runs.
     maven {
@@ -26,6 +42,8 @@ dependencies {
     implementation project(':core')
     // AeroCore's game JAR (its physics API inside); a required mod at run time.
     implementation "dev.mcmod.aerocore:aerocore-neoforge-1.21.1:${rootProject.aerocore_version}"
+    // 0.24: AeroCore's development tools (AutoShot, DevWindow, /aerocoredev), a mod of their own, in the development runs only
+    devRuntimeOnly "dev.mcmod.aerocore:aerocore-devtools-1.21.1:${rootProject.aerocore_version}"
     // JEI is optional for players: hdfv only adds a plugin JEI loads when it is installed.
     compileOnly "mezz.jei:jei-1.21.1-common-api:${rootProject.jei_version}"
     compileOnly "mezz.jei:jei-1.21.1-neoforge-api:${rootProject.jei_version}"
@@ -100,15 +118,19 @@ neoForge {
         configureEach {
             systemProperty 'java.io.tmpdir', localTemp.absolutePath
             systemProperty 'jdk.net.unixdomain.tmpdir', localTemp.absolutePath
+            sourceSet = sourceSets.dev   // main, core, and the development code (0.24)
         }
     }
     mods {
         hdfv {
             sourceSet sourceSets.main
+            sourceSet sourceSets.dev
             sourceSet project(':core').sourceSets.main
+            sourceSet project(':core').sourceSets.testFixtures
         }
     }
 }
+neoForge.addModdingDependenciesTo(sourceSets.dev)
 
 tasks.matching { it.name == 'runClient' || it.name == 'runClient2' }.configureEach { task ->
     def folder = task.name == 'runClient2' ? 'client2' : 'client'
@@ -146,3 +168,18 @@ neoForge.ideSyncTask generateModMetadata
 // One JAR for players: the platform-independent core inside the mod.
 tasks.named('jar') { from project(':core').sourceSets.main.output }
 tasks.named('sourcesJar') { from project(':core').sourceSets.main.allSource }
+
+// 0.24: the release JAR must not carry development code (it belongs in the dev source set or core's test fixtures)
+def verifyReleaseJar = tasks.register('verifyReleaseJar') {
+    def jarFile = tasks.named('jar').flatMap { it.archiveFile }
+    inputs.file jarFile
+    doLast {
+        def names = new java.util.zip.ZipFile(jarFile.get().asFile).withCloseable { zip -> zip.entries().findAll { !it.directory }.collect { it.name } }
+        def development = names.findAll {
+            it ==~ /.*\/(AutoShot|DevWindow|\w*Dev\w*Commands|\w*GameTests?|ClipCheck|TestCars|SoundBench|OilFieldCommands|HdfvDev)(\$.*)?\.class/ ||
+                    it.startsWith('data/hdfv/structure/')
+        }
+        if (development) { throw new GradleException("Development code in the release JAR: ${development}") }
+    }
+}
+tasks.named('build') { dependsOn verifyReleaseJar }
