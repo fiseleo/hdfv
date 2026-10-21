@@ -1,14 +1,20 @@
 modLoader="javafml"
 loaderVersion="[4,)"
-license="All Rights Reserved"
+license="LGPL-3.0-only"
+issueTrackerURL="https://github.com/fiseleo/hdfv/issues"
 
 [[mods]]
 modId="hdfv"
 version="${mod_version}"
 displayName="High Degree of Freedom Vehicles"
+authors="fiseleo"
+credits="Physics by AeroCore."
+displayURL="https://github.com/fiseleo/hdfv"
+logoFile="hdfv_logo.png"
 description='''
-Design every part yourself - engines from block and crank to turbine and nozzle, hulls, propellers - machine them,
-and build vehicles for sea, land and air from them. Physics by AeroCore.
+Design every part yourself - engines from block and crank to turbine and nozzle, wings, hulls, bodies, chassis,
+wheels and gearboxes - make them in a workshop of real machine tools, and build vehicles for land, sea and air in
+assembly rooms. The Vehicle Engineering Handbook and the advancements show the way.
 '''
 
 [[dependencies.hdfv]]
@@ -30,4 +36,20 @@ modId="aerocore"
 type="required"
 versionRange="[${aerocore_version},${aerocore_next})"
 ordering="AFTER"
+side="BOTH"
+
+# optional: recipes and information pages in JEI
+[[dependencies.hdfv]]
+modId="jei"
+type="optional"
+versionRange="[19.0,)"
+ordering="NONE"
+side="BOTH"
+
+# optional: Create's crushing, mixing and pressing for some of hdfv's materials
+[[dependencies.hdfv]]
+modId="create"
+type="optional"
+versionRange="[6.0,)"
+ordering="NONE"
 side="BOTH"

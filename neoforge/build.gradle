@@ -168,6 +168,8 @@ neoForge.ideSyncTask generateModMetadata
 // One JAR for players: the platform-independent core inside the mod.
 tasks.named('jar') { from project(':core').sourceSets.main.output }
 tasks.named('sourcesJar') { from project(':core').sourceSets.main.allSource }
+// 0.24: the licence (LGPL-3.0-only, with the GPL it builds on) and the MDK template's notice go with every JAR
+tasks.withType(Jar).configureEach { from(rootProject.files('COPYING', 'COPYING.LESSER', 'TEMPLATE_LICENSE.txt')) }
 
 // 0.24: the release JAR must not carry development code (it belongs in the dev source set or core's test fixtures)
 def verifyReleaseJar = tasks.register('verifyReleaseJar') {
@@ -180,6 +182,8 @@ def verifyReleaseJar = tasks.register('verifyReleaseJar') {
                     it.startsWith('data/hdfv/structure/')
         }
         if (development) { throw new GradleException("Development code in the release JAR: ${development}") }
+        def missing = ['COPYING', 'COPYING.LESSER', 'META-INF/neoforge.mods.toml'].findAll { !names.contains(it) }
+        if (missing) { throw new GradleException("The release JAR lacks ${missing}") }
     }
 }
 tasks.named('build') { dependsOn verifyReleaseJar }
