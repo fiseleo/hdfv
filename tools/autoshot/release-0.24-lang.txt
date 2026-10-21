@@ -1,0 +1,48 @@
+world AeroCore Release QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.24 release: the handbook and the advancements in another language (the client's options.txt lang set before
+# the run; LANG in the names replaced by zh_tw or zh_cn), then AeroCore's sea from the QA world's beach (the sea is to
+# the west of the spawn at 13.8 65 245.6) for its gallery.
+mark LANG start
+cmd gamemode spectator @p
+cmd gamerule doDaylightCycle false
+cmd gamerule doWeatherCycle false
+cmd time set 6000
+cmd weather clear
+cmd tp @p 253 151.2 228.6 facing 253 149.7 225.5
+wait 100
+client hdfv handbook start
+wait 40
+gui LANG-handbook-start
+client hdfv handbook lathe
+wait 30
+gui LANG-handbook-lathe
+client hdfv handbook driving
+wait 20
+gui LANG-handbook-driving
+client hdfv handbook car_factory
+wait 120
+gui LANG-handbook-car
+client hdfvdev close
+wait 10
+key key.advancements tap
+wait 40
+gui LANG-advancements
+client hdfvdev close
+wait 10
+cmd tp @p 12 70 245 facing -40 63 250
+wait 400
+shot LANG-sea-noon
+cmd time set 12300
+wait 60
+shot LANG-sea-sunset
+cmd weather thunder
+wait 400
+shot LANG-sea-storm
+cmd weather clear
+cmd time set 6000
+wait 20
+mark LANG end
+quit

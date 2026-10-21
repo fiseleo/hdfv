@@ -153,6 +153,17 @@
     「機器在組裝台組，建材用工作台」；相容「標籤＋Create 條件配方」（開發環境裝 Create 驗證）；「同意，一版做完」。
   - 計畫：共用筆記資料夾的 `recipes-0.23-plan.md`（原 本機計畫檔 `tiered-forging-recipes.md`）；0.22 的配方盤點在同一處的
     `hdfv-recipe-inventory-0.22.md`。做法與規則見〈約定〉的「合成配方與科技樹」。
+- 0.24.0（2026-10-21；AeroCore 0.41）：新手教學與第一次對外發布（Beta）。使用者 2026-10-20「加入新手教學 我要發布要到外面」，
+  2026-10-21「AutoShot 可能要移除」。選擇：
+  - 教學：進度樹、自己寫的指南書、第一次進入的提示與 JEI 說明頁；主線詳細、分支各一章。
+  - 語言：繁中、英文、簡中（新增 zh_cn）。
+  - 發布：
+    - 0.x、標 Beta；Modrinth、CurseForge、GitHub Releases。
+    - 公開 hdfv 原始碼，commit 由代理整理，每次推送先問。
+    - 授權兩個專案都 LGPL-3.0（`-only`）。
+    - 發布頁要說明、截圖、Logo，不做影片。
+  - AutoShot：從發布的 JAR 拿掉，開發環境保留（AeroCore 的 `aerocore_devtools`；hdfv 的 `neoforge/src/dev`，見〈約定〉的「開發用程式」）。
+  - 計畫：本機計畫檔 `snoopy-gathering-fog.md`；進度在共用筆記資料夾的 `release-0.41-0.24-progress.md`。
 - 下一步：0.6 的 H4～H6 剩下的（變速箱的試算圖、路面坡道方塊）。
 
 ## 固定開發基底
@@ -167,7 +178,8 @@
 | Mod ID／Java package | `hdfv`／`dev.mcmod.hdfv` |
 | AeroCore | `gradle.properties` 的 `aerocore_version`，由 `../AeroCore/build/repo` 取用 |
 
-版本號以 `gradle.properties` 為準。不要為一般功能順便升級 Minecraft、NeoForge、Gradle 或 Java。授權尚未決定（`All Rights Reserved`）。
+版本號以 `gradle.properties` 為準。不要為一般功能順便升級 Minecraft、NeoForge、Gradle 或 Java。
+授權：0.24 起 LGPL-3.0-only（使用者 2026-10-20 選擇；`COPYING.LESSER`、`COPYING`；MDK 範本的 `TEMPLATE_LICENSE.txt` 是 MIT），三個檔都打包進 JAR。
 
 ## 工作目錄與本機資料
 
@@ -197,7 +209,12 @@ AeroCore 有改動時先在 AeroCore 執行 `.\dev.ps1 build publish`，再在�
 .\dev.ps1 :core:test
 .\dev.ps1 :neoforge:runGameTestServer
 .\dev.ps1 :neoforge:runClient
+py -3 tools/tutorial.py      # 0.24：教學的進度與語言鍵
+py -3 tools/zh_cn.py         # 0.24：改過 zh_tw（語言檔或手冊）之後重做 zh_cn
 ```
+
+正式版環境的載入測試（0.24）：AeroCore 的 `scripts/release-test/release_test.py`（`setup`、`server <base|jei|create>`、
+`client <base|jei> [計畫]`、`multiplayer [計畫]`），裝在 `%USERPROFILE%\.mcmod\release-test`，不碰使用者的 `.minecraft` 與啟動器。
 
 網路磁碟的未簽署腳本被拒絕時：`powershell -NoProfile -ExecutionPolicy Bypass -File .\dev.ps1 build`。
 輸出導到檔案時用背景執行再讀記錄檔（Gradle daemon 會佔住 stdout）。
@@ -249,7 +266,14 @@ AeroCore 有改動時先在 AeroCore 執行 `.\dev.ps1 build publish`，再在�
 | `neoforge/.../airport/` | 0.20：`HdfvAirports`（方塊、物品、選單、地物）、`TowerBlockEntity`（電、ATIS、跑道、管制、迴路、泛光燈、接手）、`AirfieldData`（燈具、跑道頭、塔台、泛光燈、生成的規劃、舊區域）、`AirTraffic`（區塊票、燈的同步）、`AirportNetwork`（呼叫、指令、狀態、畫面、燈）、`AirportClientState`、`TowerMenu`、`TowerView`、`FixtureBlock`、`MarkedSurfaceBlock`（0.8 的柏油也是它）、`LinePaintItem`、`AirfieldBlocks`、`WindsockBlockEntity`、`AirportFeature`（每個區塊放自己那片）、`AirportWorldgen`（規劃快取、地形探測、舊區域清單、登記）、`AirportDevCommands`（`/hdfv dev airport`）、`AirportGameTests`；0.21 塔內的方塊（`steel_stairs`、`steel_column`、`steel_grating`、`interior_lamp`、`cable_duct`、`tower_floor`，`HdfvAirports.INSIDE`） |
 | `neoforge/.../client/`（0.20） | `TowerRenderer`（塔台整座，細節 64／256 m、看到 384 m）、`WindsockRenderer`、`TowerScreen`、`AtcHud`、`AtcControls`、`AtcWords`、`AirfieldLights`（→ AeroCore `FieldLamps`）、`model/AirfieldKit`；`MachineMeshes` 可指定細節距離 |
 | `tools/airport_assets.py`、`tools/blender/airfield_blocks.py`、`tools/blender/airfield_kit.py` | 0.20 機場資產（方塊狀態、模型、掉落、標籤、生成資料、16 px 原圖、村民衣服、兩份語言檔就地插入；`AirportAssetsTest`；0.23 起配方由 `tools/recipes.py` 寫）、燈具等方塊的 OBJ（`BlockModelTest`）、塔台零件組（`DetailKitTest`）；`textures.py` 0.20 起可輸出法線貼圖（`board_formed_concrete_n`） |
-| `neoforge/.../compat/` | `HdfvJeiPlugin`、`AlloyingCategory`、`RefiningCategory`（0.8）、`MachiningCategory`（0.17：每個頭一頁）、`AssemblingCategory`、`SmeltingCategory`（0.23：組裝台、電弧爐、電解槽）：JEI 外掛（只在裝了 JEI 時載入） |
+| `neoforge/.../compat/` | `HdfvJeiPlugin`、`AlloyingCategory`、`RefiningCategory`（0.8）、`MachiningCategory`（0.17：每個頭一頁）、`AssemblingCategory`、`SmeltingCategory`（0.23：組裝台、電弧爐、電解槽）：JEI 外掛（只在裝了 JEI 時載入）；0.24 `JeiLink`（手冊點物品開 JEI 配方） |
+| `core/.../handbook/` | 0.24 `HandbookText`：手冊頁面的格式（標頭、段落、`{items}`、`{image}`、`{recipe}`、`{design}`、`{see}`、行內 `{key}`、`{item}`、粗體）與 `structure`（各語言要一致的部分） |
+| `neoforge/.../tutorial/` | 0.24 新手教學：`HdfvTutorial`（手冊物品、`hdfv:milestone` 觸發的登記、玩家附件 `hdfv:tutorial`、第一次登入給手冊與歡迎訊息、`/hdfv handbook`、進度同步封包）、`Milestone`（觸發）、`Milestones`（事件一覽與呼叫入口）、`DriveTracker`（每秒累計開車距離、速度、高度、馬赫）、`TutorialData` |
+| `neoforge/.../client/HandbookScreen`、`HandbookPages` | 0.24 手冊畫面與頁面讀取（依語言、缺的退回 en_us、資源重載時重讀） |
+| `assets/hdfv/handbook/<語言>/*.md`、`data/hdfv/advancement/tutorial/` | 0.24 手冊頁面（24 篇；en_us 與 zh_tw 手寫，zh_cn 由 `tools/zh_cn.py` 產生）、進度（`tools/tutorial.py` 產生） |
+| `tools/tutorial.py`、`tools/zh_cn.py`、`tools/zh_cn_terms.json` | 0.24 進度與教學語言鍵的產生器；繁轉簡（OpenCC tw2sp＋術語表） |
+| `neoforge/src/dev`、core 的 `src/testFixtures` | 0.24 開發用程式（只在開發 run 載入，不進發布的 JAR）：所有 `*GameTests`、GameTest 結構、`/hdfv dev` 與它拉進來的指令、`/hdfvdev`、`ClipCheck`、`HdfvDev`（登記）；`TestCars`、`SoundBench` |
+| `release/` | 0.24 發布頁的文字（`page.md` 三語、`summary.txt`、各版的 `notes-*.md`、`checklist.md`）；圖示與截圖在本機 `%USERPROFILE%\.mcmod\release\hdfv` |
 
 hdfv 的遊戲 JAR 包含 core；執行時不要再放 AeroCore 的 physics JAR（AeroCore 遊戲 JAR 已含同樣的套件，重複會讓模組層衝突）。
 
@@ -872,6 +896,31 @@ hdfv 的遊戲 JAR 包含 core；執行時不要再放 AeroCore 的 physics JAR�
   - GameTest（`RecipeGameTests`，批次 `recipes`）：組裝台用鑄鍛件組出第一台車床（少一個鑄齒輪時組不出車床）、鍛壓機軋板只在成品與料頭都放得下時開工、
     車床車軸並退回切屑、電弧爐與電解槽吃電出料、漏斗進出合金爐、裝了 Create 時它的配方有載入、遊戲中的科技樹涵蓋每個配方的產物。
     新的 GameTest 類別要加 `@PrefixGameTestTemplate(false)`（模板名稱不帶類別前綴）；0.23 開發時漏了，GameTest 伺服器在啟動時就崩潰。
+- 開發用程式（0.24，使用者「AutoShot 可能要移除」→ 選「從發布的 JAR 拿掉，開發環境保留」）：
+  - 只給開發用的東西放 `neoforge/src/dev`（同一個 mod、同 package，只在開發 run 載入）或 core 的 `src/testFixtures`，不放 `src/main`：
+    GameTest 類別與結構、`/hdfv dev` 的子指令、`/hdfvdev`、測試車、離線的聲音工具。新的 GameTest 類別在 `HdfvDev.GameTests` 登記。
+  - `src/main` 可以留給它們用的小掛鉤（畫面的 `dev*` 方法、`StandDevCommands` 的欄位、`SoundDebug` 的開關），但不能引用 dev 的類別。
+  - AutoShot、開發視窗（第 2 個螢幕、不搶焦點）、`/aerocoredev` 是 AeroCore 的 `aerocore_devtools` mod（`aerocore-devtools-1.21.1`，
+    `devRuntimeOnly`），開發 run 一起載入；它不會發布，也不能被正式程式依賴。
+  - `build` 會跑 `verifyReleaseJar`：發布的 JAR 出現開發用類別、GameTest 結構，或少了授權檔，就失敗。
+- 新手教學（0.24）：
+  - 新物品、新機器或新玩法要想一下：手冊要不要補一段、要不要一個進度、JEI 說明頁有沒有。手冊頁面三種語言的結構要一樣
+    （`HandbookTest`：篇目、區塊種類與參數、行內的按鍵與物品），引用的東西要存在；en_us、zh_tw 手寫，改完 `py -3 tools/zh_cn.py`。
+  - 進度一律由 `tools/tutorial.py` 產生（它會刪掉沒寫到的檔）。原版能判斷的用 `inventory_changed`；其他用 `hdfv:milestone`
+    （`Milestones` 列出事件與觸發位置），事件在伺服器端、有玩家時才觸發；沒有玩家的（噴油、煉油）給附近的玩家。
+  - 手冊的圖放 `assets/hdfv/textures/gui/handbook/<名稱>.png`，320×180（`HandbookTest` 檢查），圖裡不放字（三種語言共用）；
+    用 AutoShot 在 QA 世界拍，`tools/autoshot/release-0.24.txt` 是 0.24 的計畫。
+  - GameTest 要玩家時用 `new ServerPlayer(server, level, profile, ClientInformation.createDefault())`：`makeMockServerPlayerInLevel`
+    會讓玩家加入伺服器，其他 Mod 的登入處理送封包給假連線，GameTest 伺服器崩潰；NeoForge 的 `FakePlayer` 的進度不載入，觸發不到。
+    沒有連線的玩家不送訊息（`welcome`、`sendProgress` 已檢查）。
+- 三種語言（0.24）：en_us、zh_tw、zh_cn 的鍵與順序一樣（`LangParityTest`；zh_cn 不能有繁體字）。新增語言鍵照舊由產生器插在 en_us 與 zh_tw
+  的錨點後；zh_cn 不手改，改 `tools/zh_cn_terms.json`（術語、OpenCC 的誤轉：「設計畫面」被斷成「设计划面」、「呼叫」變「调用」、
+  「遮蔽」變「屏蔽」），再跑 `tools/zh_cn.py`。「畫面」在 hdfv 幾乎都是介面（→「界面」）；指算出的畫面時換個說法。
+- 對外發布（0.24，兩個專案一起）：
+  - 版本：0.x、Beta；hdfv 對 AeroCore 的相依範圍是 `[aerocore_version, 下一個小版本)`，AeroCore 改小版本時 hdfv 要跟著發。
+  - 公開的檔案不放使用者資料夾、網路資料夾位址、電腦名稱、`.claude` 路徑（實際值寫在工作區 `Z:\MCMod\AGENTS.md`）。
+  - 發布前：`build`、`:core:test`、GameTest、正式版環境的載入測試（`release_test.py` 的伺服器三種組合、客戶端有沒有 JEI、多人），
+    `release/checklist.md` 照著走。推送、建倉庫、上傳到平台都是公開動作，每一步先經使用者同意；帳號與憑證由使用者自己處理。
 - 網路磁碟上 Gradle 的建置快取偶爾還原失敗（「Failed to load cache entry ... Cannot create directory」或「error while writing ...class」）：
   加 `--no-build-cache` 重跑；仍失敗時 `.\dev.ps1 --stop` 停掉 Gradle 常駐程序再跑。2026-10-18 起建置輸出在本機（見〈工作目錄與本機資料〉），
   用 `-Phdfv_local_build=false` 時才會再遇到。
@@ -895,10 +944,18 @@ hdfv 的遊戲 JAR 包含 core；執行時不要再放 AeroCore 的 physics JAR�
      FOV 70 是垂直的，16:9 水平約 102°，近拍要站得很近。載具實體的位置不是車身中間（轎車約在前軸、船在船首附近、`semi` 把拖車留在生成點），
      用 `execute at <載具> run tp @p ~dx y ~dz facing ~dx y ~dz` 取景，每次都一樣；`aerocore vehicle control handbrake 1` 拉手煞車。
    - 新舊模型對照時，先把要改的檔案留一份舊版，拍「之前」時換回去，確認 `compileJava UP-TO-DATE`（和上次的舊版一模一樣）再相信那組截圖。
+   - 0.24 的發布截圖（`tools/autoshot/release-0.24.txt`、`release-0.24-lang.txt`；正式版的 `production-0.24.txt`、`production-mp-0.24.txt`）：
+     - 要玩家的指令（`hdfv dev open`、`hdfvdev ...`）用 `client` 送；`cmd` 以伺服器身分執行，沒有玩家。
+     - 設計畫面的 3D 預覽要 `hdfvdev page overview`、`hdfvdev enlarge on` 才拍得到整個零件；畫面之間用 `hdfvdev close` 關掉。
+     - 拍過 `gui` 之後的第一張 `shot` 會帶到聊天欄，要裁掉或先拍一張丟掉。
+     - 進度畫面打開時停在 Create 的分頁：拍 hdfv 的進度與各語言時用 `-Phdfv_create=false`。
+     - 正式版沒有 `/hdfvdev`（在 dev 原始碼集），關不掉畫面；`key` 只在沒有畫面時打得開，所以按鍵打開的排前面，
+       之後的用指令疊上去（`client hdfv handbook <篇>`）。
 4. 交付前執行 `build`，更新文件與版本，報告實際完成、實際測試與未驗證項目。
 
 | 版本 | 日期／電腦 | JUnit（core） | GameTest | 客戶端 |
 | --- | --- | --- | --- | --- |
+| 0.24.0 | 2026-10-21，原開發機；AeroCore 0.41.0 | 391 全過（新增 6：`HandbookTest`（三種語言的篇目與結構一樣；引用的物品、進度、配方、圖都存在；圖 320×180）、`LangParityTest`（三份語言檔的鍵與順序一樣、zh_cn 沒有繁體專用字）；core 的 `test` 把 mod 的資源與 `tools/**/*.json` 列為輸入，只改資源也會重跑） | 142 全過（新增 `TutorialGameTests` 4：教學的進度都載入、`hdfv:milestone` 給等著它的進度、新玩家只拿到一次手冊、手冊引用的物品與配方存在），裝著 Create 6.0.11 | 開發客戶端 AutoShot（`tools/autoshot/release-0.24.txt`、`release-0.24-lang.txt`，QA 世界的複本 `AeroCore Release QA`）：0.23 的世界打開後舊玩家拿到手冊與歡迎訊息；手冊三種語言、進度、JEI 說明頁；第一輪手冊在 hdfv 自訂配方上 `/ by zero` 崩潰，已修。正式版 NeoForge 21.1.252 的乾淨環境（AeroCore `scripts/release-test/release_test.py`，`production-0.24.txt`、`production-mp-0.24.txt`）：伺服器只有兩個 mod、加 JEI、加 JEI 與 Create 都起得來、沒有可疑的行；客戶端有 JEI、沒有 JEI 都正常（歡迎、轎車、手冊、JEI）；多人連線拿到手冊、進度同步。0.22 的比較場景：機器 115～116、停車 113～114、塔台 119 FPS（0.22：114、111、119），整合伺服器 tick 54～57 ms（0.22 同場景 58～70 ms）。未驗證：裝 Create 的正式版客戶端；改裝、烤漆、卡車、高速、船的手冊圖沒有拍 |
 | 0.23.0 | 2026-10-20，原開發機；AeroCore 0.40.0 | 385 全過（新增 10：`ComponentRouteTest` 4（每種標準件一個工件、質量等於設計、那一級的機器做得到；圖紙是自己種類的範例；路線等於 `routes-0.23-components.json`；名稱都在）、`RecipeRulesTest` 3（每個配方的產物都做得出來；階段錨點的順序；組裝台的工時是零件的規則、中間件的質量等於它的料）、`MetallurgyRecipesTest` 2（每批的 kWh 對 AeroCore 2 % 內；每 kg 的電在工廠的範圍）、`RefiningTest.theReformerMakesMethanolOfLpgAndWater`；`DesignEditorTest` 的參數數量下限對只有種類的標準件是 1） | 138 全過，裝著 Create 6.0.11（載入 3154 個配方，沒有解析錯誤；新增 `RecipeGameTests` 7：組裝台用鑄鍛件組出第一台車床、少一個鑄齒輪時組不出、鍛壓機軋板只在成品與料頭都放得下時開工、車床退回切屑、電弧爐與電解槽吃電出料、漏斗進出合金爐、Create 的配方有載入、遊戲中的科技樹涵蓋每個產物） | 未開客戶端：JEI 的組裝、電爐、電解頁與物品提示的截圖，以及用 0.22 的 QA 存檔在 0.23 開，都等使用者同意再做 |
 | 0.21.0 | 2026-10-20，原開發機；AeroCore 0.38.0（不變） | 373 全過（`AirportPlannerTest` 改寫成三級：大機場少見、中小補上（合成平原上大機場的比例在上限內）、每一級自成一體（跑道寬、塔台、燈、蓄電池、風向袋）、0.20 兩份規劃的地面雜湊凍結、`VERSION 2` 大中小各一份凍結（0.21 發佈前因床掉頭改過一次）、塔內：每層一階、每階朝走上來的方向且往上三格淨空、最上一階在活門、中柱連續、四格格柵、電纜槽連成一條且每顆蓄電池在上面、從門口走得到床頭旁與管制員的位置；`RunwayTest` 的 `distanceTo`；`DetailKitTest` 的新零件組件；`AirportAssetsTest` 的新方塊） | 131 全過（新增：中型塔台的四顆蓄電池讓它成形並有電；小機場沒有塔台、放得出風向袋；有碰撞的玩家實體從塔底走上管制室再走下來（兩種高度）；照 0.21.0 擺的塔（樓梯、格柵、床）在塔台跑起來後修好；生成的塔台測試加上室內燈亮、樓梯、電纜槽、管制室的光源方塊） | 密度：無視窗伺服器＋RCON，三個新世界（種子 `hdfv-0.21-a`／`b`／`c`）各 25 個區域：大 2／1／2、中 3／2／3、小 6／11／7，75 個區域共大 5 座（約每 15 個區域一座，間距約 12 km）、中小 32 座；一個區域規劃最多 4.8 秒。遊戲中（使用者同意「現在可以」；本機專用伺服器＋Dev，`AeroCore Airport QA 21a`，`server.properties` 暫改、之後從備份還原成 `AeroCore MP QA`）三輪：中型（550 m × 18 m、6 段塔台、4 顆蓄電池）、大型（900 m、16 段、8 顆）、小型（400 m 與 250 m，沒有塔台與燈，`view tower_close` 回「This airport has no tower」）；空拍、停機坪、跑道頭、風向袋；塔底大廳與機房、螺旋梯、活門與欄杆、管制室內裝（白天、夜晚）、夜裡從外面看塔與管制室天花板。找到並修掉：小機場每個區塊的放置都在塔台那步丟 NullPointerException（280 次，風向袋與等待標誌沒放；`AirportFeature.tower`、`placeTower`、`goto`，新 GameTest）；夜裡窗燈全暗（客戶端的 `Level.getSkyDarken()` 只在進世界時算，改用 `ClientLevel.getSkyDarken(partial)`），之後調亮並加管制室天花板的微光；塔底的牆整面發黑（遮蔽，塔底也 `split`）；使用者自己在「新的世界」裡走螺旋梯「上不去 下不來」（轉角那一階的方向、第四階上方的格柵；新 GameTest 讓玩家實體真的走一趟，舊配置在第一個轉角卡住；已生成的塔載入後自己修好）；生成的管制員從不認領床、夜裡站在門外（床頭被牆、蓄電池格與第二階圍住；床頭改朝大廳後，在無視窗伺服器用 RCON 把 21a 那座的床照新配置擺好：當場有 `home`，`time set 13000` 後 `SleepingX/Z` 是床頭、床 `occupied=true`）；開發鏡頭 `aerial`、`apron` 依停機坪的位置縮放。單人 `AeroCore HDFV QA`：同一份計畫一進世界（還在烘焙 100 個網格）機器場景 99,391 面、送出 8.36 ms（0.20 同計畫 99,603 面、8.52 ms）；烘焙完後機器場景 97 FPS、約 10.4 萬面、送出 5.75 ms（這個場景 0.20 沒有烘焙完的數字可比）；0.20 放在空中的 10 段塔台（現在畫出 0.21 的內裝）119 FPS、6.7 萬面、1.10 ms，管制室裡 119 FPS、1.2 萬面、0.44 ms。截圖 `compare-0.21\`（before 是 0.20 的 a20d、a20q）。已知：夜裡的窗燈只是淡淡的加色燈罩（沒有泛光）、格柵在亮處偏白、樓梯從下面看是灰色方塊，留給 0.22 美化；0.20 與 21a 世界裡已生成的塔照舊（梯子、舊的床方向）；BodyTest 的計時基準與 GameTest 同時跑時會超時（單獨跑通過）。未確認：修好後真人走螺旋梯（GameTest 的玩家實體走得上去）、多人（Dev2）、塔台畫面在中型塔台、定翼機起降。多了三個測試世界 `AeroCore Airport QA 21a`、`21b`、`21c`（`%USERPROFILE%\.mcmod\runs\hdfv\server`），使用者的「新的世界」沒動 |
 | 0.22.0 | 2026-10-20，原開發機；AeroCore 0.39.0 | 375 全過（新增 `FinishAssetsTest.everyFinishHasABeautifiedLookAndItsNormalMap`（每種材質都有 `beautify` 與同尺寸的法線貼圖、紅綠平均在中間）、`MemberTextureTest`（328 張成員方塊貼圖 128 px、透明處和 16 px 原圖一樣、不透明處的平均亮度差 6 % 內）；`BlockModelTest` 改 128 px） | 131 全過 | `AutoShot`（第 2 個螢幕，使用者同意「這版的驗證都不用再問」）。開工前用 0.21／AeroCore 0.38 拍 `compare-0.22\before\`（b22）與效能基準；美化著色關掉（o22）和 before 比：管制室逐像素相同，其他只差在水面、旋翼與轉台（會動的東西）。近拍計畫 `tools/autoshot/closeups-0.22.txt`（16 個視角，舊模型的 before 要把改過的檔案換回 0.21 版、確認 `compileJava UP-TO-DATE`）：關掉（`closeups-off`）與開著（`closeups-on`）。找到並修掉：法線貼圖的凹陷每種材質都 0.3，車漆像布（改成依起伏）；機翼的凹槽把主翼封起來後控制面整片被剔掉（以鉸鏈為原點、烘焙時疊在翼根；改在靜止位置烘焙、繞鉸鏈轉；0.21 其實也只有翼根一段看得到）；控制面依顏色配到切削鋼（藍色金屬感，改用主翼的材質）；世界中的車輪從 0.15 起不轉不轉向（`WheelRig` 的 `add` 留在件 0；近拍 `sedan-steer` 前輪轉了）；車輪改成件後排列場景送出 6.0 → 11 ms、FPS 92 → 58（AeroCore 0.39 的 `PartGpu` 每次重套著色器，改成每種材質一次並把 GPU 門檻降到 32）；燈罩光暈初版只有幾個淡點（調大調亮）。效能（同一份計畫、烘焙完、第二次量測；b22 → a22）：機器 112 → 114 FPS、送出 4.32 → 3.55 ms、14.9 萬面；停放 95 → 111 FPS、2.73 → 1.93 ms；塔台 119 → 119、0.99 → 0.87 ms；管制室 119 → 119、0.40 → 0.38 ms；排列（壓力測試）95 → 113 FPS、5.75 → 4.47 ms、40.4 → 34.7 萬面；伺服器 tick 不變。方塊圖集 2048×1024 → 4096×2048。機場（本機專用伺服器＋Dev，`AeroCore Airport QA 21a`，`server.properties` 暫改、之後從備份還原成 `AeroCore MP QA`）：中型塔台白天的塔底、開放式樓梯、活門格柵、管制室，夜晚開與關（`compare-0.22\airport*`）。已知：QA 世界的船停在陸上時每次傾角不同（截圖差很多，與模型無關）；排列場景的 GPU 繪製呼叫 378 → 997（FPS 反而較高）。未確認：Fabulous 畫質、多人、`/hdfvdev faces` 與新的細節材質（`panel_gap`、`rivet_row`…）沒做、機加工零件組的倒角沒做、空氣筒沒做 |

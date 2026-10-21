@@ -1,0 +1,1 @@
+Design every part yourself - engines, wings, hulls, bodies, chassis, gearboxes - make it on real machine tools and CNC, and build cars, trucks, aircraft, helicopters and boats. Physics by AeroCore.

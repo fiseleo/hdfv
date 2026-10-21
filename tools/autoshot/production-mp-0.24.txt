@@ -1,0 +1,15 @@
+server localhost:25565
+monitor 2
+size 1280 720
+wait 200
+# hdfv 0.24 release check: a clean production client joins the clean production server (release_test.py multiplayer).
+mark mp start
+gui mp-joined
+key key.advancements tap
+wait 40
+gui mp-advancements
+client hdfv handbook start
+wait 40
+gui mp-handbook
+mark mp end
+quit

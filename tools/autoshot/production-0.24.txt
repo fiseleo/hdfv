@@ -1,0 +1,36 @@
+world AeroCore Production QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.24 release check in a clean production NeoForge (AeroCore's scripts/release-test/release_test.py client):
+# the 0.23 QA world opened with the release JARs; the welcome, the handbook, the advancements, a vehicle, a design.
+mark prod start
+wait 30
+gui prod-welcome
+cmd gamemode spectator @p
+cmd time set 6000
+cmd weather clear
+cmd tp @p 190 162 168 facing 190 151 207
+wait 200
+cmd fill 160 150 180 220 150 230 minecraft:smooth_stone
+cmd fill 160 151 180 220 160 230 minecraft:air
+cmd hdfv vehicle samples
+wait 20
+cmd execute positioned 185 151 205 rotated -90 0 run aerocore vehicle spawn sedan
+wait 1200
+cmd tp @p 195.5 152.6 201.2 facing 189.5 151.6 205
+wait 40
+shot prod-sedan
+# a key opens a screen only while none is open (AutoShot taps the key mapping; production has no /hdfvdev close):
+# the inventory first, then the handbook by command over it
+key key.inventory tap
+wait 40
+gui prod-inventory
+client hdfv handbook design
+wait 120
+gui prod-handbook-design
+client hdfv handbook lathe
+wait 30
+gui prod-handbook-lathe
+mark prod end
+quit

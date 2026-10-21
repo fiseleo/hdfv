@@ -1,6 +1,6 @@
-# High Degree of Freedom Vehicles（hdfv）
+# High Degree of Freedom Vehicles 開發紀錄（舊 README，0.1～0.23）
 
-Minecraft Java 1.21.1／NeoForge 的載具 Mod，Mod ID `hdfv`。前置是同一個工作區的 [AeroCore](../AeroCore)（0.28 起）。
+Minecraft Java 1.21.1／NeoForge 的載具 Mod，Mod ID `hdfv`。前置是同一個工作區的 [AeroCore](https://github.com/fiseleo/aerocore)（0.28 起）。
 
 ## 方向（使用者 2026-10-11 決定）
 

@@ -1,0 +1,189 @@
+world AeroCore Release QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.24 release: the handbook's pictures and the release pages' screenshots (tools/autoshot/README.md), in a copy of
+# the QA world. First the welcome a player gets joining with 0.24 (the chat shows it a few seconds), then the scenes:
+# the QA world's own (machines, tower, a line-up of vehicles), new ones on a pad in the air east of the line-up
+# (x 240-300, z 180-230, y 150), the screens (design, room, machine), the handbook and the advancements.
+mark r24 start
+wait 30
+gui r24-welcome
+cmd gamemode spectator @p
+cmd gamerule doDaylightCycle false
+cmd gamerule doWeatherCycle false
+cmd time set 6000
+cmd weather clear
+clouds off
+# --- the QA world's machines and tower
+cmd tp @p 76 122 270 facing 76 100 222
+wait 900
+shot r24-machines
+cmd tp @p 63.4 102.3 202.8 facing 63.5 101.2 200.4
+wait 200
+shot r24-grinder
+cmd tp @p 130 150 205 facing 130 150 230
+wait 300
+shot r24-tower
+# --- the line-up
+cmd tp @p 190 162 168 facing 190 151 207
+wait 200
+cmd kill @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70]
+cmd fill 160 150 180 220 150 230 minecraft:smooth_stone
+cmd fill 160 151 180 220 160 230 minecraft:air
+wait 20
+cmd execute positioned 176 151 190 rotated -90 0 run hdfv dev drive spawn semi
+cmd execute positioned 185 151 205 rotated -90 0 run aerocore vehicle spawn sedan
+cmd execute positioned 203 151 205 rotated -90 0 run aerocore vehicle spawn helicopter
+cmd execute positioned 175 151 220 rotated -90 0 run aerocore vehicle spawn seaplane
+cmd execute positioned 200 151 222 rotated -90 0 run aerocore vehicle spawn cruiser
+wait 40
+cmd execute as @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] at @s run aerocore vehicle control brake 1
+wait 2400
+cmd execute as @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] at @s run aerocore vehicle control handbrake 1
+shot r24-lineup
+cmd tp @p 195.5 152.6 201.2 facing 189.5 151.6 205
+wait 40
+shot r24-sedan
+cmd tp @p 189 153 185 facing 181 151.8 190
+wait 20
+shot r24-semi
+cmd tp @p 212 154 199 facing 207 152 205
+wait 20
+shot r24-heli
+cmd tp @p 186 155 213 facing 179 152 220
+wait 20
+shot r24-seaplane
+cmd tp @p 211 154 216 facing 204 152 222
+wait 20
+shot r24-boat
+cmd time set 18000
+cmd execute positioned 189 152 205 run aerocore vehicle control lights 2
+cmd execute positioned 181 152 190 run aerocore vehicle control lights 2
+wait 60
+cmd tp @p 195.5 152.6 201.2 facing 189.5 151.6 205
+wait 20
+shot r24-night
+cmd time set 6000
+wait 10
+# --- the new pad: a lathe, a CNC, an engine on its stand, the first furnaces, a car factory, a distillation column
+cmd tp @p 270 165 175 facing 270 151 205
+wait 200
+cmd fill 240 150 180 300 150 230 minecraft:smooth_stone
+cmd fill 240 151 180 300 175 230 minecraft:air
+wait 20
+cmd execute positioned 245 151 190 rotated -90 0 run hdfv dev place lathe pulley 3
+cmd execute positioned 245 151 205 rotated -90 0 run hdfv dev place cnc
+cmd hdfv dev stand 247 151 220 inline_four
+cmd setblock 250 151 225 hdfv:alloy_furnace[facing=south]
+cmd setblock 252 151 225 hdfv:foundry[facing=south]
+cmd setblock 254 151 225 hdfv:forging_press[facing=south]
+cmd setblock 256 151 225 hdfv:assembly_bench[facing=south]
+# a car factory as the assembly GameTests build one (8 by 5 by 4 inside), a sedan 60 % built in it
+cmd fill 262 149 186 277 150 196 minecraft:stone
+cmd fill 263 150 187 272 155 193 minecraft:stone
+cmd fill 264 151 188 271 154 192 minecraft:air
+cmd fill 264 150 188 271 150 192 hdfv:assembly_floor
+cmd fill 264 155 190 271 155 190 hdfv:crane_rail
+cmd fill 272 151 189 272 153 191 hdfv:roller_shutter
+cmd setblock 264 151 188 hdfv:welding_station
+cmd setblock 263 151 190 hdfv:car_factory_controller[facing=east]
+cmd setblock 271 151 192 minecraft:chest
+cmd setblock 271 151 188 minecraft:chest
+wait 20
+cmd hdfv dev layout 263 151 190 sedan
+cmd hdfv dev build 263 151 190 0.6
+cmd execute positioned 285 151 205 rotated -90 0 run hdfv dev place distillation_column
+wait 1200
+cmd tp @p 245.5 151 186.5 facing 250 149.9 190
+wait 60
+shot r24-lathe
+cmd tp @p 244.5 151.5 201.5 facing 249.5 151 206
+wait 60
+shot r24-cnc
+cmd tp @p 245.2 151.3 218.2 facing 247.5 150.2 220.5
+wait 60
+shot r24-engine-stand
+cmd tp @p 253 151.2 228.6 facing 253 149.7 225.5
+wait 40
+shot r24-furnaces
+cmd tp @p 270.6 152.6 188.4 facing 266.5 151.6 190.5
+wait 60
+shot r24-car-factory
+cmd tp @p 281 152 199 facing 288.5 155 205.5
+wait 60
+shot r24-distillation
+# --- the screens: design (an engine, a car body), the room's layout, the lathe's
+client hdfvdev design inline_four overview
+wait 140
+client hdfvdev page overview
+wait 20
+client hdfvdev cutaway off
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 40
+gui r24-design-engine
+client hdfvdev close
+wait 10
+client hdfvdev design sedan_body overview
+wait 120
+client hdfvdev page overview
+wait 20
+client hdfvdev cutaway off
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -40 10
+wait 40
+gui r24-design-body
+client hdfvdev close
+wait 10
+cmd tp @p 268 151 190 facing 263 151.6 190
+wait 20
+client hdfv dev open 263 151 190
+wait 40
+gui r24-room-screen
+client hdfvdev close
+wait 10
+cmd tp @p 246 151 188 facing 248 151.5 190
+wait 20
+client hdfv dev open 248 152 190
+wait 40
+gui r24-lathe-screen
+client hdfvdev close
+wait 10
+# --- the handbook and the advancements
+cmd tp @p 253 151.5 230 facing 253 151.2 225.5
+client hdfv handbook start
+wait 40
+gui r24-handbook-start
+client hdfv handbook lathe
+wait 20
+gui r24-handbook-lathe
+client hdfv handbook design
+wait 120
+gui r24-handbook-design
+client hdfv handbook driving
+wait 20
+gui r24-handbook-driving
+client hdfv handbook ores
+wait 20
+gui r24-handbook-ores
+client hdfv handbook car_factory
+wait 120
+gui r24-handbook-car
+client hdfvdev close
+wait 10
+key key.advancements tap
+wait 40
+gui r24-advancements
+client hdfvdev close
+wait 10
+key key.inventory tap
+wait 40
+gui r24-jei
+client hdfvdev close
+wait 10
+mark r24 end
+quit
