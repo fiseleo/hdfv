@@ -1,0 +1,27 @@
+{
+  "parent": "hdfv:tutorial/car_factory",
+  "display": {
+    "icon": {
+      "id": "hdfv:vehicle_blueprint"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.first_car.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.first_car.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "rolled_out": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "rolled_out",
+        "kind": "car"
+      }
+    }
+  }
+}

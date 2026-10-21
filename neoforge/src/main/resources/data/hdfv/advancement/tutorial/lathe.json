@@ -1,0 +1,27 @@
+{
+  "parent": "hdfv:tutorial/component",
+  "display": {
+    "icon": {
+      "id": "hdfv:lathe"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.lathe.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.lathe.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "formed": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "formed",
+        "kind": "lathe"
+      }
+    }
+  }
+}

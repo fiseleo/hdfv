@@ -1,0 +1,26 @@
+{
+  "parent": "hdfv:tutorial/airborne",
+  "display": {
+    "icon": {
+      "id": "hdfv:control_tower"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.cleared.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.cleared.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "atc_cleared": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "atc_cleared"
+      }
+    }
+  }
+}

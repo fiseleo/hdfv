@@ -114,6 +114,7 @@ public final class Hitching {
             if (result == Hitch.Result.OK) {
                 Couplings.Result done = couple(tractor, r, true);
                 if (done != Couplings.Result.OK) { say(tractor, "hdfv.hitch.refused", done.name()); }
+                else { dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(tractor.getFirstPassenger(), "coupled", ""); }   // 0.24: the tutorial
                 return;
             }
             if (d < best) { best = d; nearest = r; why = result; }

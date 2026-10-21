@@ -1,0 +1,26 @@
+{
+  "parent": "hdfv:tutorial/gusher",
+  "display": {
+    "icon": {
+      "id": "hdfv:distillation_column"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.refined.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.refined.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "refined": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "refined"
+      }
+    }
+  }
+}

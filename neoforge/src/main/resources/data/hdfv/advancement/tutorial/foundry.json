@@ -1,0 +1,48 @@
+{
+  "parent": "hdfv:tutorial/steel",
+  "display": {
+    "icon": {
+      "id": "hdfv:foundry"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.foundry.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.foundry.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has_foundry": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "hdfv:foundry"
+          }
+        ]
+      }
+    },
+    "has_forging_press": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "hdfv:forging_press"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_foundry"
+    ],
+    [
+      "has_forging_press"
+    ]
+  ]
+}

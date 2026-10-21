@@ -408,6 +408,7 @@ public final class RefitShopBlockEntity extends BlockEntity implements MenuProvi
         working = true;
         for (RoomScan.Door d : scan.doors()) { RoomDoorBlock.setOpen(level, new BlockPos(d.minX(), d.minY(), d.minZ()), false); }
         changed();
+        if (player != null) { dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(player, "refit_started"); }   // 0.24: the tutorial
         return null;
     }
 

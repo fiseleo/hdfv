@@ -59,6 +59,13 @@ public final class MachineMenu extends AbstractContainerMenu {
         for (int i = 0; i < 2; i++) {
             addSlot(new Slot(container, out + i, OUTPUT_X + 18 * i, OUTPUT_Y) {
                 @Override public boolean mayPlace(ItemStack s) { return false; }
+                @Override public void onTake(net.minecraft.world.entity.player.Player player, ItemStack taken) {
+                    super.onTake(player, taken);
+                    // 0.24: the tutorial's "machined" milestone (a finished part, a standard component, or a workpiece between steps)
+                    String kind = taken.is(HdfvMachines.PART.get()) ? "part" : taken.is(HdfvMachines.WORKPIECE.get()) ? "workpiece"
+                            : dev.mcmod.hdfv.neoforge.material.HdfvComponents.COMPONENTS.values().stream().anyMatch(c -> taken.is(c.get())) ? "component" : "other";
+                    dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(player, "machined", kind);
+                }
             });
         }
         // the CNC and (0.9) the manual machine tools have two lines more (axes; size, drive, accessories)

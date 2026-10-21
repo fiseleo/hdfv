@@ -68,7 +68,12 @@ public final class MachineBlock extends BaseEntityBlock implements dev.mcmod.hdf
 
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!level.isClientSide && player instanceof ServerPlayer sp && level.getBlockEntity(pos) instanceof MachineBlockEntity be) {
-            if (be.multiblock() != null) { be.multiblock().check(sp.serverLevel()); }
+            if (be.multiblock() != null) {
+                be.multiblock().check(sp.serverLevel());
+                if (be.multiblock().formed()) {   // 0.24: the tutorial's "formed" milestone, by the machine's block
+                    dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(sp, "formed", net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock()).getPath());
+                }
+            }
             sp.openMenu(be, buf -> { buf.writeBlockPos(pos); buf.writeVarInt(station.ordinal()); });
         }
         return InteractionResult.sidedSuccess(level.isClientSide);

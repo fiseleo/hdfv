@@ -1,0 +1,42 @@
+{
+  "display": {
+    "icon": {
+      "id": "hdfv:handbook"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.root.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.root.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "hdfv:textures/block/assembly_floor.png"
+  },
+  "criteria": {
+    "has": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hdfv:handbook",
+              "hdfv:design_table",
+              "hdfv:design_tablet",
+              "hdfv:bauxite",
+              "hdfv:raw_ilmenite",
+              "hdfv:raw_nickel",
+              "hdfv:chromite",
+              "hdfv:magnesite",
+              "hdfv:raw_tin",
+              "hdfv:raw_zinc",
+              "hdfv:raw_garnet"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

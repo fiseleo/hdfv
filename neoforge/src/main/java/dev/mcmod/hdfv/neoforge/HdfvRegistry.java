@@ -47,6 +47,7 @@ public final class HdfvRegistry {
             .title(Component.translatable("itemGroup.hdfv"))
             .icon(() -> new ItemStack(DESIGN_TABLE_ITEM.get()))
             .displayItems((parameters, output) -> {
+                dev.mcmod.hdfv.neoforge.tutorial.HdfvTutorial.tab(output);
                 output.accept(DESIGN_TABLE_ITEM.get());
                 output.accept(DESIGN_TABLET.get());
                 output.accept(BLANK_BLUEPRINT.get());

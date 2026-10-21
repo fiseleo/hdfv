@@ -1,0 +1,26 @@
+{
+  "parent": "hdfv:tutorial/prospected",
+  "display": {
+    "icon": {
+      "id": "hdfv:drilling_rig"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.gusher.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.gusher.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "gusher": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "gusher"
+      }
+    }
+  }
+}

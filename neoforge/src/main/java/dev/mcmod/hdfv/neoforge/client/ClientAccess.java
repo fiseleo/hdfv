@@ -30,6 +30,15 @@ public final class ClientAccess {
         Minecraft.getInstance().setScreen(new DesignScreen(null, Blueprints.Target.NEW, null));
     }
 
+    /** 0.24: opens the handbook at an entry ("": where it was last). */
+    public static void openHandbook(String entry) { Minecraft.getInstance().setScreen(new HandbookScreen(entry)); }
+
+    /** 0.24: the hdfv advancements the player has done (the handbook ticks their entries). */
+    public static void handbookProgress(java.util.List<String> done) {
+        HandbookScreen.DONE.clear();
+        HandbookScreen.DONE.addAll(done);
+    }
+
     /** The server's answer to a save: on the design screen if it is open, else over the hotbar. */
     public static void saved(Blueprints.Result result) {
         Minecraft minecraft = Minecraft.getInstance();

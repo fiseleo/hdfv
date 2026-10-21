@@ -1,0 +1,27 @@
+{
+  "parent": "hdfv:tutorial/shipyard",
+  "display": {
+    "icon": {
+      "id": "hdfv:shipyard_controller"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.first_boat.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.first_boat.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "rolled_out": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "rolled_out",
+        "kind": "boat"
+      }
+    }
+  }
+}

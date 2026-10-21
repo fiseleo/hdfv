@@ -1,0 +1,30 @@
+{
+  "parent": "hdfv:tutorial/steam_engine",
+  "display": {
+    "icon": {
+      "id": "hdfv:generator"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.electricity.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.electricity.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "hdfv:generator"
+          }
+        ]
+      }
+    }
+  }
+}

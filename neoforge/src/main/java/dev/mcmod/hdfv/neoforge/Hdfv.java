@@ -36,6 +36,7 @@ public final class Hdfv {
         dev.mcmod.hdfv.neoforge.refit.HdfvRefit.register(modBus);
         dev.mcmod.hdfv.neoforge.machining.HdfvMachining.register(modBus);
         dev.mcmod.hdfv.neoforge.airport.HdfvAirports.register(modBus);
+        dev.mcmod.hdfv.neoforge.tutorial.HdfvTutorial.register(modBus);
         modBus.addListener(dev.mcmod.hdfv.neoforge.sound.SoundSync::register);
         dev.mcmod.hdfv.neoforge.sound.FarSignatures.register();
         HdfvParticles.register(modBus);
@@ -46,7 +47,7 @@ public final class Hdfv {
     }
 
     private static void registerCommands(RegisterCommandsEvent event) {
-        event.getDispatcher().register(Commands.literal(MOD_ID).then(HdfvVehicleCommands.tree())
+        event.getDispatcher().register(Commands.literal(MOD_ID).then(HdfvVehicleCommands.tree()).then(dev.mcmod.hdfv.neoforge.tutorial.HdfvTutorial.command())
                 .then(dev.mcmod.hdfv.neoforge.paint.DecalCommands.tree()));
     }
 }

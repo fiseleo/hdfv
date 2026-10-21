@@ -23,6 +23,7 @@ public final class HdfvConfig {
     private static final ModConfigSpec.DoubleValue CHIP_RECOVERY;
     private static final ModConfigSpec.IntValue DECAL_PER_PLAYER, DECAL_TOTAL, DECAL_BYTES, DECAL_SIDE;
     private static final ModConfigSpec.BooleanValue AIRPORTS, FLAT_AIRPORTS, TOWER_TICKETS, LARGE_AIRPORTS, MEDIUM_AIRPORTS, SMALL_AIRPORTS;
+    private static final ModConfigSpec.BooleanValue GIVE_HANDBOOK, WELCOME;
     /** The stickers' defaults: uploads allowed, 64 pictures a player, 2048 on the server. */
     public static final int DEFAULT_DECALS_PER_PLAYER = 64, DEFAULT_DECALS_TOTAL = 2048;
     /** The default: 1 FE is 1 kJ of work time. */
@@ -60,8 +61,18 @@ public final class HdfvConfig {
         TOWER_TICKETS = b.comment("Whether a control tower keeps its chunk ticking while an aircraft is within twice its radio range (its lights and control work then)")
                 .define("towerTickets", true);
         b.pop();
+        b.comment("The new-player tutorial (0.24): the handbook and the welcome a player gets on joining for the first time").push("tutorial");
+        GIVE_HANDBOOK = b.comment("Whether a player joining for the first time gets the handbook (it can also be crafted: a book and a blank blueprint)")
+                .define("giveHandbook", true);
+        WELCOME = b.comment("Whether a player joining for the first time gets the welcome in the chat (the handbook, the advancements, a few keys)")
+                .define("welcome", true);
+        b.pop();
         SPEC = b.build();
     }
+
+    /** Whether a player joining for the first time gets the handbook, and the welcome (0.24). */
+    public static boolean giveHandbook() { return !SPEC.isLoaded() || GIVE_HANDBOOK.get(); }
+    public static boolean welcome() { return !SPEC.isLoaded() || WELCOME.get(); }
 
     public static double kgPerIngot() { return SPEC.isLoaded() ? KG_PER_INGOT.get() : Pace.KG_PER_INGOT; }
     public static double ticksPerWorkHour() { return SPEC.isLoaded() ? TICKS_PER_WORK_HOUR.get() : Pace.TICKS_PER_WORK_HOUR; }

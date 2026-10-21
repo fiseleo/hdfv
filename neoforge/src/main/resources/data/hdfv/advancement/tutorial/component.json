@@ -1,0 +1,42 @@
+{
+  "parent": "hdfv:tutorial/assembly_bench",
+  "display": {
+    "icon": {
+      "id": "hdfv:bed_casting"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.component.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.component.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hdfv:steel_plate",
+              "hdfv:electrical_steel",
+              "hdfv:copper_wire",
+              "hdfv:bed_casting",
+              "hdfv:frame_casting",
+              "hdfv:cylinder_casting",
+              "hdfv:cast_gear",
+              "hdfv:cast_pulley",
+              "hdfv:bronze_bushing",
+              "hdfv:forged_shaft",
+              "hdfv:forged_crank"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

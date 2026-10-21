@@ -1,0 +1,30 @@
+{
+  "parent": "hdfv:tutorial/machined",
+  "display": {
+    "icon": {
+      "id": "hdfv:cut_gear"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.precision.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.precision.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "hdfv:cut_gear"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "parent": "hdfv:tutorial/root",
+  "display": {
+    "icon": {
+      "id": "hdfv:bauxite"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.ores.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.ores.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hdfv:bauxite",
+              "hdfv:raw_ilmenite",
+              "hdfv:raw_nickel",
+              "hdfv:chromite",
+              "hdfv:magnesite",
+              "hdfv:raw_tin",
+              "hdfv:raw_zinc",
+              "hdfv:raw_garnet"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -51,7 +51,10 @@ public final class FuelDispenserBlock extends BaseEntityBlock {
 
     @Override protected InteractionResult useWithoutItem(BlockState s, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof FuelDispenserBlockEntity be) {
-            if (player.isSecondaryUseActive()) { player.displayClientMessage(be.use(), true); }
+            if (player.isSecondaryUseActive()) {
+                player.displayClientMessage(be.use(), true);
+                dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(player, "fuelled", "dispenser");   // 0.24: the tutorial
+            }
             else if (player instanceof net.minecraft.server.level.ServerPlayer sp) { dev.mcmod.hdfv.neoforge.petroleum.PetroleumMenu.open(sp, be, s.getBlock().getName()); }
         }
         return InteractionResult.sidedSuccess(level.isClientSide);

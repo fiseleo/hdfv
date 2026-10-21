@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "hdfv:blank_blueprint"
+    }
+  ],
+  "result": {
+    "id": "hdfv:handbook",
+    "count": 1
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "parent": "hdfv:tutorial/first_aircraft",
+  "display": {
+    "icon": {
+      "id": "hdfv:control_tower"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.control_tower.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.control_tower.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "hdfv:control_tower"
+          }
+        ]
+      }
+    }
+  }
+}

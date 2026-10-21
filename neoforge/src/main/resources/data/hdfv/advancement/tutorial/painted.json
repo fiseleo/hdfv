@@ -1,0 +1,26 @@
+{
+  "parent": "hdfv:tutorial/first_car",
+  "display": {
+    "icon": {
+      "id": "hdfv:paint_can"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.painted.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.painted.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "painted": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "painted"
+      }
+    }
+  }
+}

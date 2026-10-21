@@ -1,0 +1,28 @@
+{
+  "parent": "hdfv:tutorial/first_aircraft",
+  "display": {
+    "icon": {
+      "id": "hdfv:hangar_controller"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.airborne.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.airborne.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "height": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "height",
+        "kind": "aircraft",
+        "at_least": 50
+      }
+    }
+  }
+}

@@ -286,6 +286,10 @@ public class RefineryUnitBlockEntity extends ControllerBlockEntity implements Co
         burntKg += kg * y.burnt();
         state = State.RUNNING;
         setChanged();
+        // 0.24: the tutorial's "refined" milestone, for whoever is near a unit making something (every 5 s)
+        if (made > 0 && level instanceof net.minecraft.server.level.ServerLevel server && server.getGameTime() % 100 == 0) {
+            dev.mcmod.hdfv.neoforge.tutorial.Milestones.near(server, worldPosition, 16, "refined");
+        }
     }
 
     private void drain(String fluid, double litres) {

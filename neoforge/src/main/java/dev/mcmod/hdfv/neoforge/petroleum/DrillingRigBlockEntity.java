@@ -92,6 +92,9 @@ public final class DrillingRigBlockEntity extends ControllerBlockEntity implemen
                 level.setBlock(well, HdfvPetroleum.WELLHEAD.get().defaultBlockState(), Block.UPDATE_ALL);
                 dev.mcmod.hdfv.neoforge.sound.SoundSync.event(level, net.minecraft.world.phys.Vec3.atCenterOf(well), dev.mcmod.hdfv.sound.MachineSound.Event.GUSHER, 0);
                 state = State.STRUCK_OIL;
+                if (level instanceof net.minecraft.server.level.ServerLevel server) {   // 0.24: the tutorial (whoever is near the rig)
+                    dev.mcmod.hdfv.neoforge.tutorial.Milestones.near(server, well, 32, "gusher");
+                }
             } else {
                 state = State.DRY_HOLE;
             }

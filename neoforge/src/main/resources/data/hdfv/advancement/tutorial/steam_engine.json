@@ -1,0 +1,30 @@
+{
+  "parent": "hdfv:tutorial/treadle",
+  "display": {
+    "icon": {
+      "id": "hdfv:steam_engine"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.steam_engine.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.steam_engine.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "hdfv:steam_engine"
+          }
+        ]
+      }
+    }
+  }
+}

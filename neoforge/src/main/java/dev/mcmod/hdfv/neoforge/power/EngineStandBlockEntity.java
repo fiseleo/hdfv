@@ -49,6 +49,8 @@ public final class EngineStandBlockEntity extends PowerBlockEntity implements Sh
     private volatile EngineUnit ready;
     private int governor = 2;
     private boolean wantRunning;
+    /** 0.24: who last started it (not saved), for the tutorial's "engine_running" milestone once it runs. */
+    private java.util.UUID startedBy;
     private double pendingLoadW, owedLitres, burntLitres, ratedW;
     private State state = State.EMPTY;
     /** 0.11: the view last sent, and how many were sent (a steady engine sends none: GameTest). */
@@ -166,6 +168,12 @@ public final class EngineStandBlockEntity extends PowerBlockEntity implements Sh
         if (state != State.OUT_OF_FUEL && state != State.TRIPPED || wantRunning) {
             state = !u.running() ? State.STOPPED : u.engaged() ? State.RUNNING : State.STARTING;
         }
+        if (state == State.RUNNING && startedBy != null && level instanceof net.minecraft.server.level.ServerLevel server) {
+            if (server.getPlayerByUUID(startedBy) instanceof net.minecraft.server.level.ServerPlayer p) {
+                dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(p, "engine_running");
+            }
+            startedBy = null;
+        }
         ShaftNetworks.tick(level, worldPosition);
         setChanged();
     }
@@ -234,7 +242,7 @@ public final class EngineStandBlockEntity extends PowerBlockEntity implements Sh
             if (!wantRunning && (ready == null || !ready.running())) { governor = (governor + 1) % GOVERNOR.length; build(); }
         } else {
             wantRunning = !wantRunning;
-            if (wantRunning) { state = State.STOPPED; }
+            if (wantRunning) { state = State.STOPPED; startedBy = player.getUUID(); }
         }
         setChanged();
         return true;

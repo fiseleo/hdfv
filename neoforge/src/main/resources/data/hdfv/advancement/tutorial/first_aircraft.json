@@ -1,0 +1,27 @@
+{
+  "parent": "hdfv:tutorial/hangar",
+  "display": {
+    "icon": {
+      "id": "hdfv:hangar_controller"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.first_aircraft.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.first_aircraft.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "rolled_out": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "rolled_out",
+        "kind": "aircraft"
+      }
+    }
+  }
+}

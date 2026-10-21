@@ -1,0 +1,27 @@
+{
+  "parent": "hdfv:tutorial/precision",
+  "display": {
+    "icon": {
+      "id": "hdfv:cnc_machining_centre"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.cnc.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.cnc.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "formed": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "formed",
+        "kind": "cnc_machining_centre"
+      }
+    }
+  }
+}

@@ -191,8 +191,12 @@ public final class AirportNetwork {
         Atis a = tower.atis();
         if (a != null) { t.put("Atis", atis(a)); }
         StatusPayload payload = new StatusPayload(v.getId(), t);
+        boolean cleared = x.instruction() == Atc.Instruction.CLEARED_TAKEOFF || x.instruction() == Atc.Instruction.CLEARED_LAND;
         for (Entity passenger : v.getPassengers()) {
-            if (passenger instanceof ServerPlayer sp) { PacketDistributor.sendToPlayer(sp, payload); }
+            if (passenger instanceof ServerPlayer sp) {
+                PacketDistributor.sendToPlayer(sp, payload);
+                if (cleared) { dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(sp, "atc_cleared"); }   // 0.24: the tutorial
+            }
         }
     }
 

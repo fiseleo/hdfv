@@ -1,0 +1,26 @@
+{
+  "parent": "hdfv:tutorial/on_the_road",
+  "display": {
+    "icon": {
+      "id": "hdfv:car_factory_controller"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.coupled.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.coupled.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "coupled": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "coupled"
+      }
+    }
+  }
+}

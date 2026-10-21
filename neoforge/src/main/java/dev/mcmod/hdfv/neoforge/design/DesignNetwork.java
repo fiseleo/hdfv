@@ -41,7 +41,12 @@ public final class DesignNetwork {
         var registrar = event.registrar("1");
         registrar.playToServer(SavePayload.TYPE, SavePayload.STREAM_CODEC, (payload, context) -> {
             if (!(context.player() instanceof ServerPlayer player)) { return; }
-            PacketDistributor.sendToPlayer(player, new SavedPayload(Blueprints.save(player, payload.json(), payload.target())));
+            Blueprints.Result result = Blueprints.save(player, payload.json(), payload.target());
+            PacketDistributor.sendToPlayer(player, new SavedPayload(result));
+            if (result == Blueprints.Result.SAVED || result == Blueprints.Result.OVERWRITTEN) {   // 0.24: the tutorial's "design_saved", by family
+                dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(player, "design_saved",
+                        dev.mcmod.hdfv.neoforge.tutorial.HdfvTutorial.family(Designs.read(payload.json()).type()));
+            }
         });
         registrar.playToClient(SavedPayload.TYPE, SavedPayload.STREAM_CODEC, (payload, context) -> ClientAccess.saved(payload.result()));
     }

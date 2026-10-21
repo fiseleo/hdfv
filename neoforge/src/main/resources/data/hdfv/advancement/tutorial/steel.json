@@ -1,0 +1,30 @@
+{
+  "parent": "hdfv:tutorial/alloy_furnace",
+  "display": {
+    "icon": {
+      "id": "hdfv:stock"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.steel.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.steel.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "hdfv:stock"
+          }
+        ]
+      }
+    }
+  }
+}

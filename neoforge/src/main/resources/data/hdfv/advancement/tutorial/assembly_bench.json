@@ -1,0 +1,30 @@
+{
+  "parent": "hdfv:tutorial/foundry",
+  "display": {
+    "icon": {
+      "id": "hdfv:assembly_bench"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.assembly_bench.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.assembly_bench.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "hdfv:assembly_bench"
+          }
+        ]
+      }
+    }
+  }
+}

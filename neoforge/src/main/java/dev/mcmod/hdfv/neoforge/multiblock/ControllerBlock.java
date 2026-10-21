@@ -65,6 +65,9 @@ public final class ControllerBlock extends BaseEntityBlock implements PatternBlo
     @Override protected InteractionResult useWithoutItem(BlockState s, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (level instanceof ServerLevel server && level.getBlockEntity(pos) instanceof ControllerBlockEntity be) {
             be.multiblock().check(server);
+            if (be.multiblock().formed() && player instanceof net.minecraft.server.level.ServerPlayer sp) {   // 0.24: the tutorial's "formed" milestone
+                dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(sp, "formed", net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(s.getBlock()).getPath());
+            }
             // a controller with its own screen (0.20: the control tower)
             if (be instanceof Screened screened && !player.isSecondaryUseActive() && player instanceof net.minecraft.server.level.ServerPlayer sp) {
                 screened.openScreen(sp);

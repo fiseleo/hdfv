@@ -1,0 +1,27 @@
+{
+  "parent": "hdfv:tutorial/electricity",
+  "display": {
+    "icon": {
+      "id": "hdfv:geophone"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.prospected.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.prospected.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "prospected": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "prospected",
+        "kind": "field"
+      }
+    }
+  }
+}

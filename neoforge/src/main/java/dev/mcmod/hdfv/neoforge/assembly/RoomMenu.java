@@ -60,6 +60,9 @@ public final class RoomMenu extends AbstractContainerMenu {
             default -> null;
         };
         if (refused != null) { player.displayClientMessage(refused, false); }
+        else if (id == LAUNCH) {   // 0.24: the tutorial's "rolled_out" milestone (the vehicle is finished and on its way out)
+            dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(player, "rolled_out", dev.mcmod.hdfv.neoforge.tutorial.HdfvTutorial.kind(controller.room));
+        }
         return true;
     }
 

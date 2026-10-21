@@ -300,6 +300,7 @@ public final class PaintBoothBlockEntity extends BlockEntity implements MenuProv
         working = true;
         for (RoomScan.Door d : scan.doors()) { RoomDoorBlock.setOpen(level, new BlockPos(d.minX(), d.minY(), d.minZ()), false); }
         changed();
+        if (player != null) { dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(player, "painted"); }   // 0.24: the tutorial
         return null;
     }
 

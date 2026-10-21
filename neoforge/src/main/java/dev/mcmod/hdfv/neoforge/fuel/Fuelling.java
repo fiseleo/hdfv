@@ -149,6 +149,7 @@ public final class Fuelling {
         int put = fill(v, fluid, out.getAmount());
         h.drain(put, IFluidHandler.FluidAction.EXECUTE);
         give(player, e.getHand(), held, h.getContainer());
+        dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(player, "fuelled", "can");   // 0.24: the tutorial
         player.displayClientMessage(Component.translatable("hdfv.fuel.poured", put, name(fluid), Math.round(litres(v)), Math.round(capacityLitres(v))), true);
     }
 

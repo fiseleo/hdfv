@@ -37,6 +37,7 @@ public final class GeophoneItem extends Item {
                     Component.translatable(f.naturalRate(produced) > 0 ? "hdfv.geophone.flows" : "hdfv.geophone.pump"),
                     Math.round(Math.hypot(dx, dz)), Component.translatable("hdfv.geophone." + way)), false);
         }
+        dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(c.getPlayer(), "prospected", f == null ? "none" : "field");   // 0.24: the tutorial
         return InteractionResult.CONSUME;
     }
 

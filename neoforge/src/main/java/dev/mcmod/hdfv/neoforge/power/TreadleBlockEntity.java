@@ -28,8 +28,11 @@ public final class TreadleBlockEntity extends PowerBlockEntity implements ShaftE
         if (level == null) { return; }
         if (clock++ % 10 == 0) {
             AABB on = new AABB(worldPosition.above()).inflate(0.1, 0, 0.1);
-            pedalled = !level.getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class, on,
-                    e -> e.isAlive() && !e.isSpectator() && (e instanceof Player || e instanceof net.minecraft.world.entity.npc.Villager)).isEmpty();
+            var riders = level.getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class, on,
+                    e -> e.isAlive() && !e.isSpectator() && (e instanceof Player || e instanceof net.minecraft.world.entity.npc.Villager));
+            pedalled = !riders.isEmpty();
+            // 0.24: the tutorial's "pedalled" milestone, once the treadle turns a line
+            if (rpm > 5) { for (var e : riders) { dev.mcmod.hdfv.neoforge.tutorial.Milestones.reach(e, "pedalled", ""); } }
         }
         ShaftNetworks.tick(level, worldPosition);
         dev.mcmod.hdfv.neoforge.sound.SoundSync.report(this, pedalled && rpm > 5 ? dev.mcmod.hdfv.sound.MachineSound.treadle(rpm, true) : null);

@@ -1,0 +1,26 @@
+{
+  "parent": "hdfv:tutorial/assembly_bench",
+  "display": {
+    "icon": {
+      "id": "hdfv:treadle"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.treadle.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.treadle.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "pedalled": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "pedalled"
+      }
+    }
+  }
+}

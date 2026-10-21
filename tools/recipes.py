@@ -233,6 +233,8 @@ def dye(c):
 def t0():
     shaped('design_table', ['PPP', 'WCW', 'W W'], {'P': 'minecraft:paper', 'W': PLANKS, 'C': '#c:player_workstations/crafting_tables'}, cls=None)
     shapeless('blank_blueprint', ['minecraft:paper', 'minecraft:paper', dye('blue')], 2)
+    # 0.24: the tutorial's handbook (new players get one; a lost one is a book and a blank blueprint)
+    shapeless('handbook', ['minecraft:book', H('blank_blueprint')])
     # the tablet is a computer: a control board behind its screen
     shaped('design_tablet', ['G', 'B', 'P'], {'G': PANE, 'B': BOARD, 'P': PLATE}, cls='electronic')
     shaped('vehicle_blueprint', ['BB', 'BB'], {'B': H('blank_blueprint')})

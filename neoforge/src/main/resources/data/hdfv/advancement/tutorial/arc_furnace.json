@@ -1,0 +1,30 @@
+{
+  "parent": "hdfv:tutorial/electricity",
+  "display": {
+    "icon": {
+      "id": "hdfv:arc_furnace"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.arc_furnace.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.arc_furnace.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "hdfv:arc_furnace"
+          }
+        ]
+      }
+    }
+  }
+}

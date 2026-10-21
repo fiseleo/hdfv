@@ -1,0 +1,26 @@
+{
+  "parent": "hdfv:tutorial/lathe",
+  "display": {
+    "icon": {
+      "id": "hdfv:workpiece"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.machined.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.machined.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "machined": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "machined"
+      }
+    }
+  }
+}

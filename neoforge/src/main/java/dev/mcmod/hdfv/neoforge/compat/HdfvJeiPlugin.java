@@ -42,6 +42,11 @@ import java.util.function.Function;
 public final class HdfvJeiPlugin implements IModPlugin {
     @Override public ResourceLocation getPluginUid() { return ResourceLocation.fromNamespaceAndPath(Hdfv.MOD_ID, "jei"); }
 
+    /** 0.24: the handbook shows an item's recipes in JEI (JeiLink). */
+    @Override public void onRuntimeAvailable(mezz.jei.api.runtime.IJeiRuntime runtime) { JeiLink.runtime = runtime; }
+
+    @Override public void onRuntimeUnavailable() { JeiLink.runtime = null; }
+
     private static void subtype(ISubtypeRegistration r, Item item, Function<ItemStack, String> key) {
         r.registerSubtypeInterpreter(item, new ISubtypeInterpreter<>() {
             @Override public Object getSubtypeData(ItemStack stack, UidContext context) { return key.apply(stack); }
@@ -149,6 +154,15 @@ public final class HdfvJeiPlugin implements IModPlugin {
         registration.addRecipes(RefiningCategory.TYPE, List.of(new dev.mcmod.hdfv.petroleum.Refining.Yield("liquefier", Map.of("hydrogen", 1.0),
                 Map.of("liquid_hydrogen", 1.0), 0, dev.mcmod.hdfv.fluid.HydrogenStorage.LIQUEFACTION_J_PER_KG)));
         for (var e : INFO.entrySet()) { registration.addIngredientInfo(e.getKey().get(), Component.translatable("hdfv.jei." + e.getValue())); }
+        // 0.24: the tutorial: the handbook, and the blocks that had no page (each points to the handbook)
+        Component more = Component.translatable("hdfv.jei.more_in_handbook");
+        registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.tutorial.HdfvTutorial.HANDBOOK.get(), Component.translatable("hdfv.jei.handbook"));
+        registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.material.HdfvMaterials.ALLOY_FURNACE.get(), Component.translatable("hdfv.jei.alloy_furnace"), more);
+        registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.smelting.HdfvSmelting.ARC_FURNACE.get(), Component.translatable("hdfv.jei.smelter"), more);
+        registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.smelting.HdfvSmelting.ELECTROLYSIS_CELL.get(), Component.translatable("hdfv.jei.smelter"), more);
+        registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.paint.HdfvPaint.CONTROLLER.get(), Component.translatable("hdfv.jei.paint_booth"), more);
+        registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.refit.HdfvRefit.CONTROLLER.get(), Component.translatable("hdfv.jei.refit_shop"), more);
+        registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.airport.HdfvAirports.TOWER.get(), Component.translatable("hdfv.jei.control_tower"), more);
     }
 
     /** The machine tools' members (0.9). */
