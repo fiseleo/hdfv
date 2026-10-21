@@ -9,6 +9,8 @@ advancement: hdfv:tutorial/root
 
 高自由度載具的玩法像工程師一樣造車：每個零件都由你自己設計，在真正的機床工坊裡做出來，再到組裝室把載具組起來。從引擎到輪胎、機翼、船身，物理都由 AeroCore 計算。
 
+{image lineup}
+
 ## 接下來的路
 - 挖新礦、冶煉；在合金爐做焦炭和鋼。
 - 鑄造、鍛造第一批標準件；在{item hdfv:assembly_bench}把第一批機床組起來。

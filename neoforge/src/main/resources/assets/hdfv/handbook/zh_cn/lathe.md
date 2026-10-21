@@ -11,6 +11,8 @@ advancement: hdfv:tutorial/lathe
 - 下排：左边是驱动座（接天轴的{item hdfv:pulley_drive}，或接电线的{item hdfv:motor_drive}），右边接一到六格{item hdfv:lathe_bed}：每格一米床身。
 - 上排：{item hdfv:lathe}方块在驱动座正上方（床头座）；床身上方可以放附件，尾端放尾座。
 
+{image lathe}
+
 对车床方块按使用：它会检查图样并成形。床身越长能做越长的工件；放不下时它会告诉你。钻床和刨床也是这样盖（JEI 会列出每台的图样与大小）。
 
 {items hdfv:pulley_drive hdfv:lathe_bed hdfv:lathe hdfv:carbon_tool_set}

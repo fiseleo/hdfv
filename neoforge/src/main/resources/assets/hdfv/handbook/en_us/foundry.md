@@ -9,6 +9,8 @@ advancement: hdfv:tutorial/foundry
 
 Machines are not crafted whole: they are fitted together from **standard components** on the {item hdfv:assembly_bench}. The first components are grade A, castings and forgings that only the {item hdfv:foundry} and the {item hdfv:forging_press} make. Those three are made at the crafting table.
 
+{image furnaces}
+
 {recipe hdfv:foundry}
 
 {recipe hdfv:forging_press}

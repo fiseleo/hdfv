@@ -42,7 +42,7 @@ def convert(text):
 def write(path, text):
     old = open(path, encoding='utf-8').read() if os.path.exists(path) else None
     if old != text:
-        os.makedirs(os.path.dirname(path), exist_ok=True)
+        os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
         with open(path, 'w', encoding='utf-8', newline='\n') as f:
             f.write(text)
         return 1

@@ -9,6 +9,8 @@ advancement: hdfv:tutorial/foundry
 
 机器不是直接合成出来的：它们在{item hdfv:assembly_bench}用**标准件**组起来。第一批标准件是 A 级，只有{item hdfv:foundry}和{item hdfv:forging_press}做得出来的铸件和锻件。这三台用工作台做。
 
+{image furnaces}
+
 {recipe hdfv:foundry}
 
 {recipe hdfv:forging_press}

@@ -9,6 +9,8 @@ advancement: hdfv:tutorial/root
 
 High Degree of Freedom Vehicles is about building vehicles the way engineers do: you design every part yourself, make it in a workshop of real machine tools, and put the vehicle together in an assembly room. Its physics, from engines to tyres, wings and hulls, is AeroCore's.
 
+{image lineup}
+
 ## The road ahead
 - Mine the new ores and smelt them; make coke and steel in the alloy furnace.
 - Cast and forge the first standard components; fit the first machine tools together on the {item hdfv:assembly_bench}.

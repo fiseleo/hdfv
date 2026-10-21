@@ -154,12 +154,18 @@ public final class HandbookScreen extends Screen {
                 g.renderItem(icon(e.icon()), 0, 0);
                 g.pose().popPose();
                 int right = px + LIST_W - 6 - (done(e) ? 10 : 0);
-                g.drawString(font, font.plainSubstrByWidth(e.title(), right - (px + 22)), px + 22, y + 3, e == entry ? 0xFFFFFFFF : TEXT);
+                g.drawString(font, fit(e.title(), right - (px + 22)), px + 22, y + 3, e == entry ? 0xFFFFFFFF : TEXT);
                 if (done(e)) { g.drawString(font, "✔", px + LIST_W - 14, y + 3, DONE_TICK); }
             }
             y += ROW;
         }
         g.disableScissor();
+    }
+
+    /** A title cut to a width, with an ellipsis where it was cut. */
+    private String fit(String title, int width) {
+        if (font.width(title) <= width) { return title; }
+        return font.plainSubstrByWidth(title, width - font.width("…")) + "…";
     }
 
     private Entry listAt(double mx, double my) {
@@ -322,10 +328,10 @@ public final class HandbookScreen extends Screen {
             Component missing = Component.translatable("hdfv.handbook.no_recipe", id).withStyle(ChatFormatting.ITALIC);
             return text(missing.getVisualOrderText(), 0, DIM);
         }
-        List<Ingredient> ingredients = recipe.getIngredients();
+        List<ItemStack[]> ingredients = inputs(recipe);
         ItemStack result = recipe.getResultItem(level.registryAccess());
         ItemStack station = station(recipe);
-        int columns = recipe instanceof ShapedRecipe s ? s.getWidth() : Math.min(ingredients.size(), Math.max(1, (w - 3 * SLOT - 30) / SLOT));
+        int columns = Math.max(1, recipe instanceof ShapedRecipe s ? s.getWidth() : Math.min(ingredients.size(), (w - 3 * SLOT - 30) / SLOT));
         int lines = recipe instanceof ShapedRecipe s ? s.getHeight() : (ingredients.size() + columns - 1) / columns;
         return new Row(Math.max(1, lines) * SLOT + 6) {
             @Override void draw(GuiGraphics g, int x, int y, int ww, int mx, int my) {
@@ -336,7 +342,7 @@ public final class HandbookScreen extends Screen {
                 for (int i = 0; i < ingredients.size(); i++) {
                     int sx = gx + (i % columns) * SLOT, sy = y + (i / columns) * SLOT;
                     g.fill(sx, sy, sx + 16, sy + 16, 0x30FFFFFF);
-                    ItemStack[] choices = ingredients.get(i).getItems();
+                    ItemStack[] choices = ingredients.get(i);
                     if (choices.length == 0) { continue; }
                     ItemStack shown = choices[(int) (turn % choices.length)];
                     g.renderItem(shown, sx, sy);
@@ -354,6 +360,23 @@ public final class HandbookScreen extends Screen {
                 return !hovered.isEmpty() && showRecipes(hovered);
             }
         };
+    }
+
+    /**
+     * A recipe's inputs, each the stacks it may be (with their counts): hdfv's own recipes (assembly bench, alloy
+     * furnace, electric furnaces) keep sized ingredients of their own, the vanilla ones their ingredients.
+     */
+    private static List<ItemStack[]> inputs(Recipe<?> recipe) {
+        List<net.neoforged.neoforge.common.crafting.SizedIngredient> sized = switch (recipe) {
+            case dev.mcmod.hdfv.neoforge.material.AssemblingRecipe r -> r.ingredients();
+            case dev.mcmod.hdfv.neoforge.material.AlloyingRecipe r -> r.ingredients();
+            case dev.mcmod.hdfv.neoforge.material.ElectricRecipe r -> r.ingredients();
+            default -> null;
+        };
+        List<ItemStack[]> out = new ArrayList<>();
+        if (sized != null) { for (var s : sized) { out.add(s.getItems()); } }
+        else { for (Ingredient i : recipe.getIngredients()) { out.add(i.getItems()); } }
+        return out;
     }
 
     /** The block a recipe is made at: its type's (the crafting table for crafting). */
