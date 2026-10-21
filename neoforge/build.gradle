@@ -182,7 +182,7 @@ def verifyReleaseJar = tasks.register('verifyReleaseJar') {
                     it.startsWith('data/hdfv/structure/')
         }
         if (development) { throw new GradleException("Development code in the release JAR: ${development}") }
-        def missing = ['COPYING', 'COPYING.LESSER', 'META-INF/neoforge.mods.toml'].findAll { !names.contains(it) }
+        def missing = ['COPYING', 'COPYING.LESSER', 'hdfv_logo.png', 'META-INF/neoforge.mods.toml'].findAll { !names.contains(it) }
         if (missing) { throw new GradleException("The release JAR lacks ${missing}") }
     }
 }
