@@ -80,6 +80,11 @@ and textures.
 - Performance depends on how many vehicles and machines are running; very fast vehicles need the world ahead loaded.
 - With shader packs (Iris), parts are drawn with vanilla shading; with Sound Physics Remastered, hdfv's own reverb is off.
 
+## Community
+
+Questions, bug reports, screenshots and news about High Degree of Freedom Vehicles and AeroCore: join the
+[Discord server](https://discord.gg/4y2mubMg7e).
+
 ## License
 
 High Degree of Freedom Vehicles is released under the [GNU Lesser General Public License v3.0 only](COPYING.LESSER)

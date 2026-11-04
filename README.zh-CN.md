@@ -67,6 +67,10 @@ Windows 上 `.\dev.ps1 build` 会自己找 JDK 21。开发用程序（GameTest�
 - 性能取决于同时运作的载具与机器数量；极高速的载具需要前方的世界已加载。
 - 使用光影包（Iris）时零件改用原版着色；装了 Sound Physics Remastered 时，hdfv 自己的回响会关掉。
 
+## 社区
+
+高自由度载具与 AeroCore 的问题、错误反馈、截图与消息：欢迎加入 [Discord 服务器](https://discord.gg/4y2mubMg7e)。
+
 ## 授权
 
 高自由度载具以 [GNU 较宽松通用公共授权条款第 3 版（仅此版）](COPYING.LESSER)（LGPL-3.0-only）发布，它创建在
