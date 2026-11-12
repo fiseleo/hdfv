@@ -196,9 +196,9 @@
   `-Phdfv_local_build=false` 改回專案裡的 `build`。網路資料夾裡舊的 `core\build`、`neoforge\build` 不再更新。
 - 所有遊戲 run 把 `java.io.tmpdir` 與 `jdk.net.unixdomain.tmpdir` 固定在 `%USERPROFILE%\.mcmod\tmp`（`第二台電腦` 少了它建立世界會崩潰）；
   NeoForm 暫存在 Gradle 使用者目錄的 `caches/hdfv-work`。
-- git：自己的倉庫，尚無遠端。網路磁碟上的 git 指令加
+- git：自己的倉庫，2026-10-21 起依使用者要求上傳到公開的 GitHub `fiseleo/hdfv`。網路磁碟上的 git 指令加
   `-c safe.directory=Z:/MCMod/HighDegreeOfFreedomVehicles -c safe.directory=%(prefix)///<網路資料夾>/MCMod/HighDegreeOfFreedomVehicles`（實際位址見工作區的 AGENTS.md），
-  不改全域設定。commit 只在使用者要求時做；推送（將來有遠端時）每次先經使用者同意。
+  不改全域設定。commit 只在使用者要求時做；推送是對外公開的動作，每次先經使用者同意。
 
 ## 常用指令
 
