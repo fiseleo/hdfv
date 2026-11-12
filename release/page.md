@@ -43,6 +43,7 @@ where it is made. JEI (optional) shows every recipe and machining step.
 ## Links
 
 - Source and issues: https://github.com/fiseleo/hdfv
+- Discord (questions, bug reports, screenshots, news): https://discord.gg/4y2mubMg7e
 - License: LGPL-3.0-only
 
 <details>
@@ -71,6 +72,8 @@ where it is made. JEI (optional) shows every recipe and machining step.
 
 需求：Minecraft 1.21.1、NeoForge 21.1.252 以上、AeroCore 0.41.x；選用 JEI、Create；客戶端與伺服器都要裝。授權 LGPL-3.0-only。
 
+問題、錯誤回報、截圖與消息：[Discord](https://discord.gg/4y2mubMg7e)。
+
 </details>
 
 <details>
@@ -98,5 +101,7 @@ where it is made. JEI (optional) shows every recipe and machining step.
 新玩家会拿到《载具工程手册》：右键打开，从第一块矿石教到第一台车、飞机和船。
 
 需求：Minecraft 1.21.1、NeoForge 21.1.252 以上、AeroCore 0.41.x；选用 JEI、Create；客户端与服务器都要装。授权 LGPL-3.0-only。
+
+问题、错误反馈、截图与消息：[Discord](https://discord.gg/4y2mubMg7e)。
 
 </details>
