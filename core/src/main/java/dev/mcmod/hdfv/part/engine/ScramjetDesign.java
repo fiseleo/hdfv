@@ -150,6 +150,8 @@ public record ScramjetDesign(String name, ScramInletDesign inlet, ScramCombustor
 
     public static final int STATE_STARTED = 0, STATE_LIT = 1, STATE_PHI = 2, STATE_PHI_LIMIT = 3;
 
+    private static final java.util.List<String> STRUCTURE = java.util.List.of(dev.mcmod.hdfv.damage.Conditions.STRUCTURE);
+
     private static final class Compiled implements Part {
         private final ScramjetDesign design;
         private final List<DesignIssue> issues;
@@ -172,6 +174,8 @@ public record ScramjetDesign(String name, ScramInletDesign inlet, ScramCombustor
         @Override public int internalStates() { return 4; }
         /** The flame: its mixture over the richest (0 unlit; RamjetDesign.SHOWN_FLAME). */
         @Override public int shownValues() { return 1 + Exhaust.COUNT; }
+        /** 0.25: its duct (Conditions.STRUCTURE): damaged from outside only; less thrust, none at 1 (damage.EngineWear). */
+        @Override public java.util.List<String> conditions() { return STRUCTURE; }
         @Override public void warmUp() { model(); }
 
         Scramjet.Map model() {
@@ -187,6 +191,8 @@ public record ScramjetDesign(String name, ScramInletDesign inlet, ScramCombustor
             JetRuntime.Air air = JetRuntime.air(step, new Vec3d(halfLength, 0, 0));
             Turbojet.Flight flight = air.flight();
             double throttle = Math.clamp(step.input("throttle", 0), 0, 1), ignition = step.input("ignition", 1);
+            double used = step.used(0);   // 0.25: a failed duct holds no flame
+            if (used >= 1) { ignition = 0; }
             boolean wasStarted = step.internal(STATE_STARTED) > 0.5;
             double phi = Math.max(0, step.internal(STATE_PHI)), limit = step.internal(STATE_PHI_LIMIT);
             double richest = limit > 0 ? Math.min(limit, c.maxEquivalenceRatio()) : c.maxEquivalenceRatio();
@@ -200,6 +206,7 @@ public record ScramjetDesign(String name, ScramInletDesign inlet, ScramCombustor
             double fuel = r != null && r.lit() ? r.point().fuelKgPerS() : 0;
             JetRuntime.burn(step, c.acceptedFluids(), ignition, fuel);
             double thrust = r == null ? 0 : r.point().thrustN();
+            if (used > 0 && thrust > 0) { thrust *= dev.mcmod.hdfv.damage.EngineWear.structure(used); }
             step.force(new AppliedForce(AppliedForce.Kind.THRUST, step.offset(new Vec3d(-halfLength, 0, 0)), step.axis(Vec3d.X).scale(thrust)));
             step.setInternal(STATE_STARTED, r != null && r.started() ? 1 : 0);
             step.setInternal(STATE_LIT, r != null && r.lit() ? 1 : 0);

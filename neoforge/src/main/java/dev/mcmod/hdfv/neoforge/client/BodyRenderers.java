@@ -75,6 +75,8 @@ public final class BodyRenderers {
             @Override public void lamps(Part part, PartVehicle entity, String partId, float partialTick, java.util.List<dev.mcmod.aerocore.api.mesh.Lamp> lamps,
                                         float[] level) {
                 dev.mcmod.hdfv.neoforge.client.model.VehicleLamps.levels(lamps, level, dev.mcmod.hdfv.neoforge.client.model.VehicleLamps.inputs(entity, partialTick));
+                // 0.25: a body nine tenths used up has no lamp left whole
+                if (entity != null && entity.used(partId, dev.mcmod.hdfv.damage.Conditions.STRUCTURE) >= 0.9) { java.util.Arrays.fill(level, 0f); }
             }
 
             /** 0.12: the doors, controls and wipers, baked as pieces, each where its pose puts it now. */

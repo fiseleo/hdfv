@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "hdfv:apron_concrete"
+    }
+  },
+  "result": {
+    "id": "hdfv:concrete_ramp_8",
+    "count": 6
+  }
+}

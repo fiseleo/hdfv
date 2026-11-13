@@ -214,6 +214,17 @@
     "hdfv:cable_duct",
     "hdfv:tower_floor",
     "hdfv:arc_furnace",
-    "hdfv:electrolysis_cell"
+    "hdfv:electrolysis_cell",
+    "hdfv:asphalt_ramp_2",
+    "hdfv:asphalt_ramp_4",
+    "hdfv:asphalt_ramp_8",
+    "hdfv:concrete_ramp_2",
+    "hdfv:concrete_ramp_4",
+    "hdfv:concrete_ramp_8",
+    "hdfv:steel_locker",
+    "hdfv:parts_rack",
+    "hdfv:shipping_container",
+    "hdfv:repair_shop_controller",
+    "hdfv:cargo_loader"
   ]
 }

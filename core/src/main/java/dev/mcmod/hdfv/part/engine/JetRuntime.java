@@ -29,6 +29,35 @@ final class JetRuntime {
     /** Length of the matching solution (AeroCore's two-spool unknowns). */
     static final int SOLUTION = 7;
 
+    /**
+     * 0.25: a gas turbine's conditions (Part.conditions; rules in damage.EngineWear): "hot_section" wears by creep with the
+     * turbine entry temperature against the control's limit (more with reheat), costs thrust and power, and holds no
+     * flame at 1; "ancillaries" (fuel control, ignition, oil and electrics) are damaged from outside only, cost power
+     * from half used, and at 1 the engine neither runs nor starts.
+     */
+    static final int HOT_SECTION = 0, ANCILLARIES = 1;
+    static final java.util.List<String> CONDITIONS = java.util.List.of(dev.mcmod.hdfv.damage.Conditions.HOT_SECTION, dev.mcmod.hdfv.damage.Conditions.ANCILLARIES);
+
+    /** What its conditions leave an engine this step: the share of its thrust and shaft power, and whether it is dead. */
+    record Health(double share, boolean dead) {
+        static final Health NEW = new Health(1, false);
+    }
+
+    /** The engine's health from its conditions; NEW (and nothing computed) while neither shows yet, so a new engine steps as before 0.25. */
+    static Health health(PartStep step) {
+        double hot = step.used(HOT_SECTION), ancillaries = step.used(ANCILLARIES);
+        boolean tired = hot >= dev.mcmod.hdfv.damage.EngineWear.SHOWS_FROM;
+        if (!tired && !(ancillaries > dev.mcmod.hdfv.damage.EngineWear.ANCILLARIES_KNEE)) { return Health.NEW; }
+        double share = dev.mcmod.hdfv.damage.EngineWear.ancillaries(ancillaries);
+        if (tired) { share *= dev.mcmod.hdfv.damage.EngineWear.hotSection(hot); }
+        return new Health(share, hot >= 1 || ancillaries >= 1);
+    }
+
+    /** Wears the hot section for a step lit at a turbine entry temperature (pace: DamagePace.wear() as the part was compiled). */
+    static void wear(PartStep step, double pace, boolean lit, double ratedK, double turbineInletK, boolean reheat) {
+        if (lit && pace > 0) { step.wear(HOT_SECTION, dev.mcmod.hdfv.damage.EngineWear.hotSection(step.dt() * pace, ratedK, turbineInletK, reheat)); }
+    }
+
     /** The flight condition at the inlet (ambient static state, speed into it along the part's +X) and whether the inlet is under water. */
     record Air(Turbojet.Flight flight, boolean drowned) {}
 

@@ -162,6 +162,19 @@ ADVANCEMENTS = [
     ('refined', 'gusher', 'hdfv:distillation_column', 'task', milestone('refined'),
      ('Refinery', 'Be near a distillation column or process unit while it makes products.'),
      ('煉油', '在蒸餾塔或製程單元生產時待在旁邊。')),
+    # 0.25: damage and repair, cargo and storage
+    ('repaired', 'on_the_road', 'hdfv:repair_shop_controller', 'task', milestone('repaired'),
+     ('First Repair', 'Repair a vehicle: be at a repair shop when its job is done, or mend a part with a field kit.'),
+     ('第一次修理', '修好一台載具：修理廠完工時在旁邊，或用急修工具修好一個零件。')),
+    ('field_repaired', 'repaired', 'hdfv:field_repair_kit', 'task', milestone('repaired', 'field'),
+     ('Fixed on the Spot', 'Patch a vehicle where it stands with a field repair kit or a tyre patch kit.'),
+     ('就地修好', '用急修工具包或補胎工具組，在原地把載具修好。')),
+    ('storeroom', 'steel', 'hdfv:storage_crate', 'task', has('hdfv:storage_crate', 'hdfv:steel_locker', 'hdfv:parts_rack', 'hdfv:shipping_container'),
+     ('Storeroom', 'Make a storage block: a crate, a steel locker, a parts rack or a shipping container. Rooms take their materials from them.'),
+     ('倉庫', '做一個儲物方塊：儲物木箱、鋼製置物櫃、零件架或貨櫃。各種廠房會從裡面取料。')),
+    ('loaded', 'first_car', 'hdfv:shipping_container', 'task', milestone('loaded'),
+     ('Loaded Up', 'Put something in a vehicle\'s hold: its boot, its bed, a roof box or a container. Cargo has weight.'),
+     ('裝貨', '把東西放進載具的貨艙：行李廂、車斗、車頂行李箱或貨櫃。貨物也有重量。')),
 ]
 
 # the other words: (anchor, [(key, English, Chinese)])

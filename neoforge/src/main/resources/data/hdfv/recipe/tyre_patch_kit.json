@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hdfv:synthetic_rubber"
+    },
+    {
+      "tag": "c:slime_balls"
+    },
+    {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "steel"
+      }
+    }
+  ],
+  "result": {
+    "id": "hdfv:tyre_patch_kit",
+    "count": 1
+  }
+}

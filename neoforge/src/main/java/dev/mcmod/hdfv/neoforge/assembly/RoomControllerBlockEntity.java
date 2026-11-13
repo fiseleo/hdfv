@@ -443,9 +443,11 @@ public final class RoomControllerBlockEntity extends BlockEntity implements Menu
         }
         if (v == null || v.blueprint() == null) { return Component.translatable("hdfv.build.nothing"); }
         List<net.neoforged.neoforge.items.IItemHandler> stores = stores();
-        for (ItemStack s : Staging.salvage(v.blueprint())) {
-            Staging.give(s, stores, left -> net.minecraft.world.Containers.dropItemStack(level, worldPosition.getX() + 0.5, worldPosition.getY() + 1, worldPosition.getZ() + 0.5, left));
-        }
+        java.util.function.Consumer<ItemStack> drop = left -> net.minecraft.world.Containers.dropItemStack(level, worldPosition.getX() + 0.5, worldPosition.getY() + 1,
+                worldPosition.getZ() + 0.5, left);
+        // 0.25: what it carried goes to the stores first (and so does not drop where it stood when it is discarded)
+        dev.mcmod.hdfv.neoforge.storage.VehicleCargo.unload(v, s -> Staging.give(s, stores, drop));
+        for (ItemStack s : Staging.salvage(v.blueprint())) { Staging.give(s, stores, drop); }
         v.ejectPassengers();
         v.discard();
         building = null;

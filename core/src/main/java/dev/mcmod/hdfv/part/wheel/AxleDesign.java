@@ -193,8 +193,9 @@ public record AxleDesign(String name, AxleLayoutDesign layout, TyreDesign tyre, 
         WheelCorner left = new WheelCorner(new WheelCorner.Spec(new Vec3d(0, droop, -half), -1, layout.trackM(), t, rimInertiaKgM2(), s, brake.brake(), toe));
         WheelCorner right = new WheelCorner(new WheelCorner.Spec(new Vec3d(0, droop, half), 1, layout.trackM(), t, rimInertiaKgM2(), s, brake.brake(), toe));
         AxlePart.Steering steering = layout.steered() ? new AxlePart.Steering(Math.toRadians(layout.maxSteerDeg()), layout.ackermann(), layout.wheelbaseM()) : null;
+        // 0.25: the wheels wear (tyres, brakes, suspension), by numbers worked out from the tyre, the brake and the design load
         AxlePart axle = new AxlePart(this, left, right, differential.drive(), steering, layout.antiRollNPerM(), brake.handbrakeShare() * brake.maxTorqueNm(), brake.control(),
-                mass(), Components.extrapolations(issues));
+                mass(), Components.extrapolations(issues)).wearing(dev.mcmod.hdfv.damage.Wearings.wheels(tyre, brake, 2, suspension.designLoadKg()));
         // 0.15: a steering share that is not the whole, or that changes with speed (a rear axle, a second front axle)
         return layout.scheduled() ? new SteerSchedule(this, axle, layout.steerRatio(), layout.steerRatioHigh(), layout.steerCrossoverMps()) : axle;
     }

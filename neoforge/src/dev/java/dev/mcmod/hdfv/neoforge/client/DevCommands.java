@@ -27,6 +27,15 @@ import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
  * /hdfvdev enlarge on|off              the 3D view over the whole page
  * /hdfvdev focus x y z | off           the 3D view turned about a point of the model (close-ups)
  * /hdfvdev clip                        log where the open design's world model passes through itself
+ * /hdfvdev status &lt;tab&gt;                0.25: the status screen of the vehicle ridden or the nearest (0 condition, 1 repair, 2 cargo)
+ * /hdfvdev mouse &lt;x&gt; &lt;y&gt;              0.25: the mouse put at a point of the screen (GUI units), for tooltips
+ * /hdfvdev hover &lt;slot&gt;                0.25: the mouse put over a slot of the open container screen
+ * /hdfvdev click &lt;x&gt; &lt;y&gt;              0.25: a left click at a point of the open screen
+ * /hdfvdev scroll &lt;x&gt; &lt;y&gt; &lt;amount&gt;     0.25: the mouse wheel turned at a point of the open screen (positive: up)
+ * /hdfvdev drag &lt;x&gt; &lt;y&gt; &lt;dx&gt; &lt;dy&gt;      0.25: a left-button drag on the open screen (the advancements' tree)
+ * /hdfvdev advancements                0.25: the advancements screen on hdfv's tab
+ * /hdfvdev lang &lt;code&gt;                 0.25: the language for this run (en_us, zh_tw, zh_cn; options.txt unchanged)
+ * /hdfvdev jei &lt;item&gt;                  0.25: JEI's information page of hdfv:&lt;item&gt;
  * </pre>
  */
 @EventBusSubscriber(modid = Hdfv.MOD_ID, value = Dist.CLIENT)
@@ -407,6 +416,106 @@ public final class DevCommands {
                             screen.devAction(dev.mcmod.hdfv.neoforge.refit.RefitShopBlockEntity.Op.valueOf(StringArgumentType.getString(c, "op").toUpperCase(java.util.Locale.ROOT)));
                             return 1;
                         }))))
+                // 0.25 (AutoShot cannot sneak-use a vehicle, move the mouse, click or turn the wheel)
+                .then(Commands.literal("status").then(Commands.argument("tab", com.mojang.brigadier.arguments.IntegerArgumentType.integer(0)).executes(c -> {
+                    Minecraft minecraft = Minecraft.getInstance();
+                    if (minecraft.player == null || minecraft.level == null) { return 0; }
+                    var player = minecraft.player;
+                    dev.mcmod.aerocore.neoforge.vehicle.PartVehicle nearest = player.getVehicle() instanceof dev.mcmod.aerocore.neoforge.vehicle.PartVehicle riding ? riding : null;
+                    if (nearest == null) {
+                        for (var e : minecraft.level.entitiesForRendering()) {
+                            if (e instanceof dev.mcmod.aerocore.neoforge.vehicle.PartVehicle v && v.vehicle() != null && v.distanceToSqr(player) < 24 * 24
+                                    && (nearest == null || v.distanceToSqr(player) < nearest.distanceToSqr(player))) { nearest = v; }
+                        }
+                    }
+                    if (nearest == null) { return 0; }
+                    VehicleStatusScreen screen = new VehicleStatusScreen(nearest);
+                    int tab = com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "tab");
+                    try {
+                        java.lang.reflect.Field tabs = VehicleStatusScreen.class.getDeclaredField("tabs"), at = VehicleStatusScreen.class.getDeclaredField("tab");
+                        tabs.setAccessible(true);
+                        at.setAccessible(true);
+                        java.util.List<?> list = (java.util.List<?>) tabs.get(screen);
+                        if (tab >= list.size()) { return 0; }
+                        at.setInt(screen, tab);
+                        ((VehicleStatusScreen.Tab) list.get(tab)).refresh();
+                    } catch (ReflectiveOperationException e) {
+                        throw new IllegalStateException(e);
+                    }
+                    minecraft.execute(() -> minecraft.setScreen(screen));
+                    return 1;
+                })))
+                .then(Commands.literal("mouse").then(Commands.argument("x", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg())
+                        .then(Commands.argument("y", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg()).executes(c -> {
+                            mouse(com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "x"), com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "y"));
+                            return 1;
+                        }))))
+                .then(Commands.literal("hover").then(Commands.argument("slot", com.mojang.brigadier.arguments.IntegerArgumentType.integer(0)).executes(c -> {
+                    if (!(Minecraft.getInstance().screen instanceof net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<?> s)) { return 0; }
+                    int i = com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "slot");
+                    if (i >= s.getMenu().slots.size()) { return 0; }
+                    var slot = s.getMenu().slots.get(i);
+                    mouse(s.getGuiLeft() + slot.x + 8, s.getGuiTop() + slot.y + 8);
+                    return 1;
+                })))
+                .then(Commands.literal("click").then(Commands.argument("x", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg())
+                        .then(Commands.argument("y", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg()).executes(c -> {
+                            var screen = Minecraft.getInstance().screen;
+                            if (screen == null) { return 0; }
+                            double x = com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "x"), y = com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "y");
+                            Minecraft.getInstance().execute(() -> { screen.mouseClicked(x, y, 0); screen.mouseReleased(x, y, 0); });
+                            return 1;
+                        }))))
+                .then(Commands.literal("scroll").then(Commands.argument("x", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg())
+                        .then(Commands.argument("y", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg())
+                                .then(Commands.argument("amount", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg()).executes(c -> {
+                                    var screen = Minecraft.getInstance().screen;
+                                    if (screen == null) { return 0; }
+                                    double x = com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "x"), y = com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "y");
+                                    double amount = com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "amount");
+                                    Minecraft.getInstance().execute(() -> screen.mouseScrolled(x, y, 0, amount));
+                                    return 1;
+                                })))))
+                .then(Commands.literal("drag").then(Commands.argument("x", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg())
+                        .then(Commands.argument("y", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg())
+                                .then(Commands.argument("dx", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg())
+                                        .then(Commands.argument("dy", com.mojang.brigadier.arguments.DoubleArgumentType.doubleArg()).executes(c -> {
+                                            var screen = Minecraft.getInstance().screen;
+                                            if (screen == null) { return 0; }
+                                            double x = com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "x"), y = com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "y");
+                                            double dx = com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "dx"), dy = com.mojang.brigadier.arguments.DoubleArgumentType.getDouble(c, "dy");
+                                            // a still drag first: the advancements screen takes the first as the drag's start
+                                            Minecraft.getInstance().execute(() -> { screen.mouseDragged(x, y, 0, 0, 0); screen.mouseDragged(x, y, 0, dx, dy); screen.mouseReleased(x + dx, y + dy, 0); });
+                                            return 1;
+                                        }))))))
+                // 0.25: the advancements screen on hdfv's tab (with Create in the run it opens on Create's)
+                .then(Commands.literal("advancements").executes(c -> {
+                    Minecraft minecraft = Minecraft.getInstance();
+                    if (minecraft.player == null) { return 0; }
+                    var advancements = minecraft.player.connection.getAdvancements();
+                    var root = advancements.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(Hdfv.MOD_ID, "tutorial/root"));
+                    if (root == null) { return 0; }
+                    minecraft.execute(() -> {
+                        advancements.setSelectedTab(root, false);
+                        minecraft.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(advancements));
+                    });
+                    return 1;
+                }))
+                // 0.25: the game's language for this run only (options.txt keeps the player's), as the language screen reloads it
+                .then(Commands.literal("lang").then(Commands.argument("code", StringArgumentType.word()).executes(c -> {
+                    Minecraft minecraft = Minecraft.getInstance();
+                    String code = StringArgumentType.getString(c, "code");
+                    if (minecraft.getLanguageManager().getLanguage(code) == null) { return 0; }
+                    minecraft.execute(() -> { minecraft.getLanguageManager().setSelected(code); minecraft.reloadResourcePacks(); });
+                    return 1;
+                })))
+                // 0.25: JEI's information page of an item (hdfv:<id>), when JEI is in the run
+                .then(Commands.literal("jei").then(Commands.argument("item", StringArgumentType.word()).executes(c -> {
+                    var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(Hdfv.MOD_ID,
+                            StringArgumentType.getString(c, "item")));
+                    Minecraft.getInstance().execute(() -> jeiInformation(new net.minecraft.world.item.ItemStack(item)));
+                    return 1;
+                })))
                 .then(Commands.literal("close").executes(c -> {
                     Minecraft.getInstance().execute(() -> Minecraft.getInstance().setScreen(null));
                     return 1;
@@ -420,7 +529,66 @@ public final class DevCommands {
                     if (!(Minecraft.getInstance().screen instanceof DesignScreen screen)) { return 0; }
                     screen.runBench();
                     return 1;
-                })));
+                })
+                        // 0.25: an axle's bench view (0 the travel, 1 tyre and brakes)
+                        .then(Commands.literal("view").then(Commands.argument("view", com.mojang.brigadier.arguments.IntegerArgumentType.integer(0, 1)).executes(c -> {
+                            if (!(Minecraft.getInstance().screen instanceof DesignScreen screen)) { return 0; }
+                            screen.devAxleView(com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "view"));
+                            return 1;
+                        })))));
+    }
+
+    /**
+     * 0.25: puts the mouse at a point of the screen in GUI units (the game reads the cursor from MouseHandler, which GLFW
+     * only updates when the real mouse moves over the window), so a screen draws its tooltip there.
+     */
+    private static void mouse(double x, double y) {
+        Minecraft minecraft = Minecraft.getInstance();
+        var window = minecraft.getWindow();
+        try {
+            java.lang.reflect.Field xpos = net.minecraft.client.MouseHandler.class.getDeclaredField("xpos"), ypos = net.minecraft.client.MouseHandler.class.getDeclaredField("ypos");
+            xpos.setAccessible(true);
+            ypos.setAccessible(true);
+            xpos.setDouble(minecraft.mouseHandler, x * window.getScreenWidth() / (double) window.getGuiScaledWidth());
+            ypos.setDouble(minecraft.mouseHandler, y * window.getScreenHeight() / (double) window.getGuiScaledHeight());
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /**
+     * 0.25: opens JEI's information recipes of an item (the hdfv.jei.* lines), by reflection: the dev source set is
+     * not compiled against JEI's API, and JeiLink holds the runtime JEI hands hdfv. Logs and does nothing without JEI.
+     */
+    private static void jeiInformation(net.minecraft.world.item.ItemStack stack) {
+        var log = com.mojang.logging.LogUtils.getLogger();
+        try {
+            java.lang.reflect.Field f = Class.forName("dev.mcmod.hdfv.neoforge.compat.JeiLink").getDeclaredField("runtime");
+            f.setAccessible(true);
+            Object runtime = f.get(null);
+            if (runtime == null) { log.warn("hdfvdev jei: no JEI runtime"); return; }
+            Class<?> runtimeType = Class.forName("mezz.jei.api.runtime.IJeiRuntime"), managerType = Class.forName("mezz.jei.api.recipe.IRecipeManager");
+            Class<?> recipeType = Class.forName("mezz.jei.api.recipe.RecipeType");
+            Object information = Class.forName("mezz.jei.api.constants.RecipeTypes").getField("INFORMATION").get(null);
+            Object manager = runtimeType.getMethod("getRecipeManager").invoke(runtime);
+            Object category = managerType.getMethod("getRecipeCategory", recipeType).invoke(manager, information);
+            Object lookup = managerType.getMethod("createRecipeLookup", recipeType).invoke(manager, information);
+            java.util.stream.Stream<?> all = (java.util.stream.Stream<?>) Class.forName("mezz.jei.api.recipe.IRecipeLookup").getMethod("get").invoke(lookup);
+            Class<?> infoType = Class.forName("mezz.jei.api.recipe.vanilla.IJeiIngredientInfoRecipe"), typed = Class.forName("mezz.jei.api.ingredients.ITypedIngredient");
+            java.util.List<Object> mine = new java.util.ArrayList<>();
+            for (Object r : all.toList()) {
+                for (Object ingredient : (java.util.List<?>) infoType.getMethod("getIngredients").invoke(r)) {
+                    Object o = typed.getMethod("getIngredient").invoke(ingredient);
+                    if (o instanceof net.minecraft.world.item.ItemStack s && s.is(stack.getItem())) { mine.add(r); break; }
+                }
+            }
+            if (mine.isEmpty()) { log.warn("hdfvdev jei: no information for {}", stack); return; }
+            Object gui = runtimeType.getMethod("getRecipesGui").invoke(runtime);
+            Class.forName("mezz.jei.api.runtime.IRecipesGui").getMethod("showRecipes", Class.forName("mezz.jei.api.recipe.category.IRecipeCategory"), java.util.List.class,
+                    java.util.List.class).invoke(gui, category, mine, java.util.List.of());
+        } catch (ReflectiveOperationException e) {
+            log.warn("hdfvdev jei: {}", e.toString());
+        }
     }
 
     /** 0.15: writes a development export under %USERPROFILE%\.mcmod\exports\<kind>\<design>.<ext>. */

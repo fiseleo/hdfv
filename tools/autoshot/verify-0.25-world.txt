@@ -1,0 +1,215 @@
+world AeroCore 025 QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.25 verification, run 1 of 3 (tools/autoshot/README.md): the 0.24 save AeroCore Production QA copied to
+# AeroCore 025 QA and opened with 0.25 (the old vehicles' conditions logged: all new), then on pads in the air: the
+# sample line-up, the road ramps (1:8, 1:4, 1:2 in asphalt and concrete, a sedan half-way up the asphalt 1:8), the four
+# storage blocks and their screens (with the mass footer and an item's mass line), the ramps' and stores' item icons.
+# English for this run (hdfvdev lang; options.txt keeps the player's language). Pads: the line-up x 160-220, z 180-230;
+# ramps and stores x 240-300, z 180-230; all at y 150.
+mark v25 world start
+wait 30
+gui v25-join
+cmd gamemode spectator @p
+cmd gamerule doDaylightCycle false
+cmd gamerule doWeatherCycle false
+cmd time set 6000
+cmd weather clear
+clouds off
+client hdfvdev lang en_us
+# --- the old save: what stands on the line-up pad, once its vehicles are ready
+cmd tp @p 190 162 168 facing 190 151 207
+wait 1200
+shot v25-discard
+shot v25-old-pad
+mark v25 old vehicles
+cmd execute as @e[type=aerocore:part_vehicle] run data get entity @s Pos
+cmd execute at @e[type=aerocore:part_vehicle] run hdfv vehicle condition
+wait 20
+# --- the line-up again, as release-0.24 sets it
+cmd kill @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70]
+cmd fill 160 150 180 220 150 230 minecraft:smooth_stone
+cmd fill 160 151 180 220 160 230 minecraft:air
+wait 20
+cmd execute positioned 176 151 190 rotated -90 0 run hdfv dev drive spawn semi
+cmd execute positioned 185 151 205 rotated -90 0 run aerocore vehicle spawn sedan
+cmd execute positioned 203 151 205 rotated -90 0 run aerocore vehicle spawn helicopter
+cmd execute positioned 175 151 220 rotated -90 0 run aerocore vehicle spawn seaplane
+wait 40
+cmd execute as @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] at @s run aerocore vehicle control brake 1
+# --- the ramps' pad (built while the line-up gets ready): asphalt runs at z 184-196, concrete at z 201-213, rising east
+cmd fill 240 150 180 300 150 230 minecraft:smooth_stone
+cmd fill 240 151 180 300 170 230 minecraft:air
+cmd fill 246 150 182 266 150 198 hdfv:asphalt
+cmd fill 246 150 199 266 150 215 hdfv:apron_concrete
+cmd fill 250 151 184 250 151 186 hdfv:asphalt_ramp_8[facing=east,part=0]
+cmd fill 251 151 184 251 151 186 hdfv:asphalt_ramp_8[facing=east,part=1]
+cmd fill 252 151 184 252 151 186 hdfv:asphalt_ramp_8[facing=east,part=2]
+cmd fill 253 151 184 253 151 186 hdfv:asphalt_ramp_8[facing=east,part=3]
+cmd fill 254 151 184 254 151 186 hdfv:asphalt_ramp_8[facing=east,part=4]
+cmd fill 255 151 184 255 151 186 hdfv:asphalt_ramp_8[facing=east,part=5]
+cmd fill 256 151 184 256 151 186 hdfv:asphalt_ramp_8[facing=east,part=6]
+cmd fill 257 151 184 257 151 186 hdfv:asphalt_ramp_8[facing=east,part=7]
+cmd fill 258 151 184 263 151 186 hdfv:asphalt
+cmd fill 250 151 189 250 151 191 hdfv:asphalt_ramp_4[facing=east,part=0]
+cmd fill 251 151 189 251 151 191 hdfv:asphalt_ramp_4[facing=east,part=1]
+cmd fill 252 151 189 252 151 191 hdfv:asphalt_ramp_4[facing=east,part=2]
+cmd fill 253 151 189 253 151 191 hdfv:asphalt_ramp_4[facing=east,part=3]
+cmd fill 254 151 189 263 151 191 hdfv:asphalt
+cmd fill 250 151 194 250 151 196 hdfv:asphalt_ramp_2[facing=east,part=0]
+cmd fill 251 151 194 251 151 196 hdfv:asphalt_ramp_2[facing=east,part=1]
+cmd fill 252 151 194 263 151 196 hdfv:asphalt
+cmd fill 250 151 201 250 151 203 hdfv:concrete_ramp_8[facing=east,part=0]
+cmd fill 251 151 201 251 151 203 hdfv:concrete_ramp_8[facing=east,part=1]
+cmd fill 252 151 201 252 151 203 hdfv:concrete_ramp_8[facing=east,part=2]
+cmd fill 253 151 201 253 151 203 hdfv:concrete_ramp_8[facing=east,part=3]
+cmd fill 254 151 201 254 151 203 hdfv:concrete_ramp_8[facing=east,part=4]
+cmd fill 255 151 201 255 151 203 hdfv:concrete_ramp_8[facing=east,part=5]
+cmd fill 256 151 201 256 151 203 hdfv:concrete_ramp_8[facing=east,part=6]
+cmd fill 257 151 201 257 151 203 hdfv:concrete_ramp_8[facing=east,part=7]
+cmd fill 258 151 201 263 151 203 hdfv:apron_concrete
+cmd fill 250 151 206 250 151 208 hdfv:concrete_ramp_4[facing=east,part=0]
+cmd fill 251 151 206 251 151 208 hdfv:concrete_ramp_4[facing=east,part=1]
+cmd fill 252 151 206 252 151 208 hdfv:concrete_ramp_4[facing=east,part=2]
+cmd fill 253 151 206 253 151 208 hdfv:concrete_ramp_4[facing=east,part=3]
+cmd fill 254 151 206 263 151 208 hdfv:apron_concrete
+cmd fill 250 151 211 250 151 213 hdfv:concrete_ramp_2[facing=east,part=0]
+cmd fill 251 151 211 251 151 213 hdfv:concrete_ramp_2[facing=east,part=1]
+cmd fill 252 151 211 263 151 213 hdfv:apron_concrete
+# a sedan set down half-way up the asphalt 1:8 (its origin, the body's tail, 4 m ahead of the point), braked
+cmd execute positioned 247.7 152.3 185.5 rotated -90 0 run aerocore vehicle spawn sedan
+wait 20
+cmd execute positioned 254 152 185.5 run aerocore vehicle control handbrake 1
+cmd execute positioned 254 152 185.5 run aerocore vehicle control brake 1
+# --- the storage blocks in a row facing south, filled (the container's second page from slot 54)
+cmd setblock 270 151 222 hdfv:storage_crate[facing=south]
+cmd setblock 272 151 222 hdfv:steel_locker[facing=south]
+cmd setblock 274 151 222 hdfv:parts_rack[facing=south]
+cmd setblock 276 151 222 hdfv:shipping_container[facing=south]
+cmd setblock 278 151 222 hdfv:cargo_loader[facing=south]
+cmd data merge block 270 151 222 {Items:[{Slot:0b,id:"hdfv:aluminium_ingot",count:32},{Slot:1b,id:"minecraft:iron_ingot",count:64},{Slot:2b,id:"hdfv:steel_plate",count:8},{Slot:3b,id:"minecraft:oak_planks",count:64},{Slot:4b,id:"hdfv:cast_gear",count:4},{Slot:5b,id:"minecraft:water_bucket",count:1},{Slot:9b,id:"minecraft:cobblestone",count:64}]}
+cmd data merge block 272 151 222 {Items:[{Slot:0b,id:"minecraft:iron_ingot",count:64},{Slot:1b,id:"minecraft:iron_ingot",count:64},{Slot:20b,id:"hdfv:titanium_ingot",count:16},{Slot:53b,id:"minecraft:copper_ingot",count:48}]}
+cmd data merge block 274 151 222 {Items:[{Slot:0b,id:"hdfv:cast_gear",count:6},{Slot:1b,id:"hdfv:forged_shaft",count:4},{Slot:2b,id:"hdfv:ball_bearing",count:16},{Slot:3b,id:"hdfv:fastener_kit",count:8},{Slot:4b,id:"hdfv:steel_tube",count:10},{Slot:5b,id:"hdfv:blank_blueprint",count:3}]}
+cmd data merge block 276 151 222 {Items:[{Slot:0b,id:"minecraft:iron_ingot",count:64},{Slot:1b,id:"hdfv:steel_plate",count:16},{Slot:2b,id:"minecraft:stone",count:64},{Slot:54b,id:"hdfv:aluminium_ingot",count:20},{Slot:60b,id:"minecraft:oak_log",count:32},{Slot:107b,id:"minecraft:gold_ingot",count:5}]}
+wait 1700
+# --- the line-up
+cmd execute as @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] at @s run aerocore vehicle control handbrake 1
+cmd tp @p 190 162 168 facing 190 151 207
+wait 60
+shot v25-lineup
+fps
+cmd tp @p 195.5 152.6 201.2 facing 189.5 151.6 205
+wait 40
+shot v25-sedan
+cmd tp @p 189 153 185 facing 181 151.8 190
+wait 20
+shot v25-semi
+cmd tp @p 212 154 199 facing 207 152 205
+wait 20
+shot v25-heli
+cmd tp @p 186 155 213 facing 179 152 220
+wait 20
+shot v25-seaplane
+mark v25 new vehicles
+cmd execute at @e[type=aerocore:part_vehicle,x=150,y=140,z=170,dx=80,dy=40,dz=70] run hdfv vehicle condition
+# --- the ramps
+cmd tp @p 243 159 222 facing 256 151 198
+wait 60
+shot v25-ramps
+fps
+cmd tp @p 244 152.6 190 facing 256 151.4 190
+wait 30
+shot v25-ramps-asphalt
+cmd tp @p 244 152.6 207 facing 256 151.4 207
+wait 30
+shot v25-ramps-concrete
+cmd tp @p 254.5 151.6 179.5 facing 254.5 150.9 190
+wait 30
+shot v25-ramps-asphalt-side
+cmd tp @p 254.5 151.6 218.5 facing 254.5 150.9 207
+wait 30
+shot v25-ramps-concrete-side
+cmd tp @p 254 152.6 178 facing 254 150.6 185.5
+wait 30
+shot v25-ramp-sedan
+cmd execute as @e[type=aerocore:part_vehicle,x=245,y=145,z=180,dx=20,dy=15,dz=10] run data get entity @s Pos
+# --- the storage blocks
+cmd tp @p 274 152.4 227.5 facing 274 150.9 222.5
+wait 30
+shot v25-stores
+cmd tp @p 271 151.6 224.6 facing 272.5 150.9 222.5
+wait 20
+shot v25-stores-near
+# their screens: the player stands in front of them
+cmd tp @p 273 151 224.5 facing 273 151 222.5
+wait 10
+client hdfv dev open 270 151 222
+wait 30
+gui v25-crate
+client hdfvdev hover 0
+wait 10
+gui v25-crate-tooltip
+client hdfvdev hover 5
+wait 10
+gui v25-crate-tooltip-water
+client hdfvdev close
+wait 10
+client hdfv dev open 272 151 222
+wait 30
+gui v25-locker
+client hdfvdev close
+wait 10
+client hdfv dev open 274 151 222
+wait 30
+gui v25-rack
+client hdfvdev hover 2
+wait 10
+gui v25-rack-tooltip
+client hdfvdev close
+wait 10
+cmd tp @p 275 151 224.5 facing 276 151 222.5
+wait 10
+client hdfv dev open 276 151 222
+wait 30
+gui v25-container
+client hdfvdev scroll 213 120 -1
+wait 20
+gui v25-container-page2
+client hdfvdev close
+wait 10
+client hdfv dev open 278 151 222
+wait 10
+gui v25-loader-alone
+wait 10
+# --- the item icons: the player's inventory (survival on the pad), the ramps and stores in the hotbar
+cmd gamemode survival @p
+cmd tp @p 273 151 226 facing 273 151 222
+cmd clear @p
+cmd give @p hdfv:asphalt_ramp_8
+cmd give @p hdfv:asphalt_ramp_4
+cmd give @p hdfv:asphalt_ramp_2
+cmd give @p hdfv:concrete_ramp_8
+cmd give @p hdfv:concrete_ramp_4
+cmd give @p hdfv:concrete_ramp_2
+cmd give @p hdfv:storage_crate
+cmd give @p hdfv:steel_locker
+cmd give @p hdfv:parts_rack
+cmd give @p hdfv:shipping_container
+cmd give @p hdfv:cargo_loader
+cmd give @p hdfv:repair_shop_controller
+cmd give @p hdfv:field_repair_kit
+cmd give @p hdfv:tyre_patch_kit
+wait 20
+key key.inventory tap
+wait 30
+gui v25-inventory
+client hdfvdev hover 36
+wait 10
+gui v25-inventory-ramp-tooltip
+client hdfvdev close
+wait 10
+cmd gamemode spectator @p
+mark v25 world end
+quit

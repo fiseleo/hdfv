@@ -33,6 +33,7 @@ COMPONENTS = [
     ('ground_slideway', 'Ground Slideway', '磨削導軌', 'way_ground'), ('spindle', 'Spindle', '主軸', 'spindle'),
     ('ball_screw', 'Ball Screw', '滾珠螺桿', 'ball_screw'), ('circuit_board', 'Circuit Board', '電路基板', 'pcb'),
     ('linear_guide', 'Linear Guide', '線性滑軌', 'rail'), ('precision_spindle', 'Precision Spindle', '精密主軸', 'spindle_fine'),
+    ('friction_lining', 'Friction Lining', '來令片', 'lining'),   # 0.25: the repair shop relines brakes and clutches with it
 ]
 # the intermediates (core Intermediate): id, English, Chinese, icon
 INTERMEDIATES = [
@@ -220,6 +221,11 @@ def icon(kind):
     elif kind == 'flakes':
         for x, y in ((3, 4), (8, 3), (11, 6), (5, 8), (10, 10), (4, 12), (8, 12)):
             c.rect(x, y, x + 2, y + 1, rgb('#f2f0ea'))
+    elif kind == 'lining':
+        # a brake pad: its steel backing plate, the friction block moulded on it, two rivets
+        c.rect(1, 5, 14, 11, STEEL); c.frame(1, 5, 14, 11, shade(STEEL, 0.7))
+        c.rect(3, 6, 12, 10, rgb('#4a4038')); c.rect(3, 6, 12, 6, rgb('#6a5c50'))
+        c.set(5, 8, BRIGHT); c.set(10, 8, BRIGHT)
     elif kind == 'anode':
         c.rect(4, 3, 11, 13, rgb('#262628')); c.rect(4, 3, 11, 4, rgb('#3c3c40')); c.rect(7, 1, 8, 3, STEEL)
     return c.im

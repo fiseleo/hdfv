@@ -22,15 +22,18 @@ final class Plot {
         g.fill(x, y, x + w, y + h, FILL);
         for (int i = 1; i < 4; i++) { g.hLine(px, px + pw, py + ph * i / 4, GRID); g.vLine(px + pw * i / 4, py, py + ph, GRID); }
         g.renderOutline(px, py, pw + 1, ph + 1, FRAME);
+        // 0.25: two axis titles that overlap over the plot (a half-width chart) use the line's whole width, over the numbers' columns too
+        int leftX = px, rightEnd = px + pw;
+        if (left != null && right != null && font.width(leftLabel) + font.width(rightLabel) + 4 > pw) { leftX = x + 2; rightEnd = x + w - 2; }
         if (left != null) {
             g.drawString(font, number(left[1]), px - 2 - font.width(number(left[1])), py, leftColor, false);
             g.drawString(font, number(left[0]), px - 2 - font.width(number(left[0])), py + ph - 8, leftColor, false);
-            g.drawString(font, leftLabel, px, y + 1, leftColor, false);
+            g.drawString(font, leftLabel, leftX, y + 1, leftColor, false);
         }
         if (right != null) {
             g.drawString(font, number(right[1]), px + pw + 3, py, rightColor, false);
             g.drawString(font, number(right[0]), px + pw + 3, py + ph - 8, rightColor, false);
-            g.drawString(font, rightLabel, px + pw - font.width(rightLabel), y + 1, rightColor, false);
+            g.drawString(font, rightLabel, rightEnd - font.width(rightLabel), y + 1, rightColor, false);
         }
         g.drawString(font, number(xMin), px, py + ph + 2, 0xFFC0C0C0, false);
         g.drawString(font, number(xMax), px + pw - font.width(number(xMax)), py + ph + 2, 0xFFC0C0C0, false);

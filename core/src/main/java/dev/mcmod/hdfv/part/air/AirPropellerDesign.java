@@ -77,7 +77,9 @@ public record AirPropellerDesign(String name, PropellerBladeDesign blades, Secti
     @Override public Part compile() {
         List<DesignIssue> issues = check();
         DesignException.throwIfInvalid(issues);
-        return new Compiled(this, new AirPropellerPart(this, geometry(), hub.fineDeg(), hub.coarseDeg(), mass(), Components.extrapolations(issues)));
+        // 0.25: its blades can be damaged
+        return new Compiled(this, new AirPropellerPart(this, geometry(), hub.fineDeg(), hub.coarseDeg(), mass(), Components.extrapolations(issues))
+                .wearing(AirPropellerPart.Wearing.typical()));
     }
 
     @Override public Map<String, Object> parameters() { return Components.parameters(components()); }
@@ -109,6 +111,8 @@ public record AirPropellerDesign(String name, PropellerBladeDesign blades, Secti
         @Override public int internalStates() { return governed ? 1 : 0; }
         /** 0.12 (AeroCore 0.30): the propeller's shown blade setting, for drawing. */
         @Override public int shownValues() { return inner.shownValues(); }
+        /** 0.25: the propeller's condition (blades). */
+        @Override public List<String> conditions() { return inner.conditions(); }
         @Override public double[] initialInternals() { return governed ? new double[]{Math.toRadians(design.hub().fineDeg())} : new double[0]; }
 
         @Override public void loads(PartStep step) {

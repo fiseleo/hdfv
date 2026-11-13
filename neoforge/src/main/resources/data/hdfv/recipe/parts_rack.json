@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "TPT",
+    "TPT",
+    "TBT"
+  ],
+  "key": {
+    "T": {
+      "item": "hdfv:steel_tube"
+    },
+    "P": {
+      "item": "hdfv:steel_plate"
+    },
+    "B": {
+      "item": "hdfv:fastener_kit"
+    }
+  },
+  "result": {
+    "id": "hdfv:parts_rack",
+    "count": 1
+  }
+}

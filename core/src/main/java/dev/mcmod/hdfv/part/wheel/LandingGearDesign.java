@@ -79,8 +79,9 @@ public record LandingGearDesign(String name, LegLayoutDesign leg, TyreDesign tyr
         Tyre t = tyre.tyre();
         WheelCorner corner = new WheelCorner(new WheelCorner.Spec(new Vec3d(0, -leg.lengthM(), 0), leg.side().sign, 0, t, rimInertiaKgM2(), strut.suspension(),
                 brake.brake(), 0));
+        // 0.25: the wheel wears (tyre, brake, strut)
         return new LegPart(this, corner, leg.steer(), Math.toRadians(leg.maxSteerDeg()), leg.trailM(), brake.control(), mass(), Components.extrapolations(issues),
-                retraction());
+                retraction()).wearing(dev.mcmod.hdfv.damage.Wearings.wheels(tyre, brake, 1, strut.designLoadKg()));
     }
 
     /**

@@ -54,6 +54,8 @@ public final class HdfvParts {
         PartTypes.register(dev.mcmod.hdfv.part.engine.TurboRamjetDesign.TYPE, dev.mcmod.hdfv.part.engine.TurboRamjetDesign::read);
         // 0.23: the standard components
         PartTypes.register(dev.mcmod.hdfv.part.component.ComponentDesign.TYPE, dev.mcmod.hdfv.part.component.ComponentDesign::read);
+        // 0.25: the storage box (roof box, bed box, container)
+        PartTypes.register(StorageBoxDesign.TYPE, StorageBoxDesign::read);
         registered = true;
     }
 }

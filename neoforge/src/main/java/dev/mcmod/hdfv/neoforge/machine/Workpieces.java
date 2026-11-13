@@ -64,6 +64,32 @@ public final class Workpieces {
         }
     }
 
+    /**
+     * 0.25: a workpiece item's mass, kg each: the stock it was started from and its finished mass (Workpiece.stockKg and
+     * finishedKg), set when a machine or a room makes the item (hdfv:workpiece_kg). Pieces made before 0.25 have none;
+     * storage.ItemMass weighs those as a stock.
+     */
+    public record Kg(float stock, float finished) {
+        public static final Codec<Kg> CODEC = RecordCodecBuilder.create(i -> i.group(
+                Codec.FLOAT.fieldOf("stock").forGetter(Kg::stock), Codec.FLOAT.fieldOf("finished").forGetter(Kg::finished)).apply(i, Kg::new));
+        public static final StreamCodec<ByteBuf, Kg> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.FLOAT, Kg::stock, ByteBufCodecs.FLOAT, Kg::finished, Kg::new);
+
+        public static Kg of(Workpiece w) { return new Kg((float) w.stockKg(), (float) w.finishedKg()); }
+    }
+
+    /** Marks a workpiece item with what its piece weighs (0.25). */
+    public static ItemStack weigh(ItemStack s, Workpiece w) {
+        if (w != null && s.is(HdfvMachines.WORKPIECE.get())) { s.set(HdfvMachines.WORKPIECE_KG.get(), Kg.of(w)); }
+        return s;
+    }
+
+    /** What a workpiece item weighs, kg each, by its step (CargoMass.workpieceKg); negative when it does not say (made before 0.25). */
+    public static double kg(ItemStack s) {
+        Data d = data(s);
+        Kg kg = d == null ? null : s.get(HdfvMachines.WORKPIECE_KG.get());
+        return kg == null ? -1 : dev.mcmod.hdfv.storage.CargoMass.workpieceKg(kg.stock(), kg.finished(), d.step(), d.steps());
+    }
+
     /** A short hash of a design's JSON (what workpieces and drawings are matched by). */
     public static String hash(String json) {
         try {
@@ -113,7 +139,7 @@ public final class Workpieces {
     public static ItemStack start(PartDesign d, Workpiece w, int done) {
         ItemStack s = new ItemStack(HdfvMachines.WORKPIECE.get());
         s.set(HdfvMachines.WORKPIECE_DATA.get(), new Data(hash(Designs.write(d)), d.name(), d.type(), w.key(), done, w.route().size()));
-        return s;
+        return weigh(s, w);
     }
 
     /** The step a workpiece is at (null when finished). */

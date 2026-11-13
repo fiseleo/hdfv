@@ -3,6 +3,7 @@
     "hdfv:design_table",
     "hdfv:assembly_bench",
     "hdfv:slipway",
-    "hdfv:treadle"
+    "hdfv:treadle",
+    "hdfv:storage_crate"
   ]
 }

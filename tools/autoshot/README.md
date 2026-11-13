@@ -15,4 +15,5 @@
     ```
 
   - 截圖在 `client\screenshots\aerocore-<TAG>-*.png`。整理到 `screenshots\compare-0.22\{before,after,off}\` 後，用 AeroCore 的 `scripts/ShotDiff.java` 比對。
+- `verify-0.25-world.txt`、`verify-0.25-damage.txt`、`verify-0.25-screens.txt`、`verify-0.25-fixes.txt`：0.25 的客戶端驗證（0.24 的 `AeroCore Production QA` 複製成 `AeroCore 025 QA`，依序跑，後面的用到前面留下的車與修理廠；`fixes` 是改完畫面後的複拍），用 0.25 新的 `/hdfvdev status|hover|mouse|click|scroll|drag|lang|jei|advancements` 與測試車 `roofbox`、`containersemi`（`advancements` 直接開在 hdfv 的分頁，不必 `-Phdfv_create=false`）。
 - 塔台內部與機場的對照用 `/hdfv dev airport view <spot>`（本機專用伺服器＋Dev，`AeroCore Airport QA 21a`），和 0.21 的 `compare-0.21\after\` 同樣的鏡頭。

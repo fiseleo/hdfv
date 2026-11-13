@@ -183,7 +183,9 @@ public final class BodyModel {
             double front = shape.moduleFrontX(i), rear = shape.moduleRearX(i), x = 0.5 * (front + rear), len = 0.8 * (front - rear);
             double bottom = shape.bottomAt(x), h = shape.topAt(x) - bottom, w = 0.7 * shape.widthAt(x);
             if (m.fuelM3() > 0) { tank(inside, m.fuelM3(), x - 0.25 * len, bottom + 0.05 * h, 0.5 * len, 0.35 * h, w, FUEL); }
-            if (m.cargoM3() > 0) { tank(inside, m.cargoM3(), x + 0.25 * len, bottom + 0.05 * h, 0.5 * len, 0.6 * h, w, CARGO); }
+            // 0.25: the hold where the body's Part.Hold is (BodyDesign.cargoBox: its cargo rides at its middle)
+            Vec3d[] hold = d.cargoBox(shape, i);
+            if (hold != null) { inside.box(hold[0], hold[1], CARGO); }
         }
         for (PartMesh m : new PartMesh[]{hull, shown, inside, cabin}) { finish(m, c); }
         EngineModel model = new EngineModel(new PartMesh());

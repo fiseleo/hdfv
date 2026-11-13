@@ -463,10 +463,21 @@ public record PistonEngineDesign(String name, EngineBlockDesign block, CylinderH
      */
     public static final int SHOWN_LOAD = 0, SHOWN_RUNNING = 1, SHOWN_BOOST = 2;
 
+    /**
+     * 0.25: the engine's conditions (Part.conditions; rules in damage.EngineWear): "engine" wears with running (mean piston
+     * speed squared and load against the hours to overhaul, far faster over the rev limit), loses compression and gains
+     * friction, and has seized at 1; "ancillaries" (cooling, ignition or injection, electrics) are damaged from outside
+     * only, cost power from half used and at 1 the engine neither runs nor starts.
+     */
+    public static final int CONDITION_ENGINE = 0, CONDITION_ANCILLARIES = 1;
+    private static final List<String> CONDITIONS = List.of(dev.mcmod.hdfv.damage.Conditions.ENGINE, dev.mcmod.hdfv.damage.Conditions.ANCILLARIES);
+
     private static final class Compiled implements Part {
         private final PistonEngineDesign design;
         private final List<DesignIssue> issues;
         private final MassProperties mass;
+        /** 0.25: seconds of wear a second of running is (DamagePace as it stood when this was compiled) and the life to overhaul, s. */
+        private final double wearPace, lifeS;
         private final double inertia, displacement, plenumVolume, closedAngle = Math.toRadians(5);
         private final Friction.Engine friction;
         private final EngineOil oil;
@@ -494,6 +505,8 @@ public record PistonEngineDesign(String name, EngineBlockDesign block, CylinderH
             heatCapacity = metal + design.cooling().coolantVolumeM3() * CoolingDesign.COOLANT_DENSITY * CoolingDesign.COOLANT_SPECIFIC_HEAT
                     + design.lubrication().oilVolumeM3() * LubricationDesign.OIL_DENSITY * LubricationDesign.OIL_SPECIFIC_HEAT;
             fluids = design.acceptedFluids();
+            wearPace = dev.mcmod.hdfv.damage.DamagePace.wear();
+            lifeS = 3600 * (design.diesel() ? dev.mcmod.hdfv.damage.EngineWear.DIESEL_OVERHAUL_H : dev.mcmod.hdfv.damage.EngineWear.SPARK_OVERHAUL_H);
         }
 
         @Override public PartDesign design() { return design; }
@@ -506,6 +519,7 @@ public record PistonEngineDesign(String name, EngineBlockDesign block, CylinderH
         @Override public double[] initialInternals() { return new double[]{1, 0, 0, 1}; }
         /** 0.11: the load and whether it runs (SHOWN_LOAD, SHOWN_RUNNING), for its exhaust's smoke and its manifolds' glow; 0.19 the boost. */
         @Override public int shownValues() { return 3; }
+        @Override public List<String> conditions() { return CONDITIONS; }
 
         @Override public void warmUp() { performance(); }
         Performance performance() {
@@ -533,6 +547,17 @@ public record PistonEngineDesign(String name, EngineBlockDesign block, CylinderH
             double temperature = step.internal(STATE_TEMPERATURE);
             if (!(temperature > 0)) { temperature = airT; }
             boolean running = step.internal(STATE_RUNNING) > 0.5;
+            // 0.25: condition. A new engine, and one whose wear does not show yet, takes none of the branches below and steps as before.
+            double usedEngine = step.used(CONDITION_ENGINE), usedAncillaries = step.used(CONDITION_ANCILLARIES);
+            boolean tired = usedEngine >= dev.mcmod.hdfv.damage.EngineWear.SHOWS_FROM;
+            boolean worn = tired || usedAncillaries > dev.mcmod.hdfv.damage.EngineWear.ANCILLARIES_KNEE, seized = usedEngine >= 1;
+            double workShare = 1, frictionRise = 1;
+            if (worn) {
+                if (tired) { workShare = dev.mcmod.hdfv.damage.EngineWear.compression(usedEngine); frictionRise = dev.mcmod.hdfv.damage.EngineWear.friction(usedEngine); }
+                workShare *= dev.mcmod.hdfv.damage.EngineWear.ancillaries(usedAncillaries);
+                if (seized || usedAncillaries >= 1) { ignitionOn = 0; }   // neither runs nor starts
+            }
+            final double work = workShare, rub = frictionRise;
             IgnitionDesign ign = design.ignition();
             // run state: the starter cranks until the engine fires; below 300 rpm it stalls; it stops when the tanks run dry
             boolean fed = step.fuelSupply() >= 0.5;
@@ -606,6 +631,10 @@ public record PistonEngineDesign(String name, EngineBlockDesign block, CylinderH
                 double r = Math.max(0, w * 30 / Math.PI);
                 double imep = imepAt.applyAsDouble(w);
                 double fmep = Friction.fmep(friction, Math.max(r, 50), manifold * ambient, ambient, viscosity).totalPa();
+                if (worn) {
+                    if (imep > 0) { imep *= work; }
+                    fmep *= rub;
+                }
                 double spin = Math.tanh(w / 2);   // friction and pumping oppose the rotation; smooth through standstill
                 double t = motoring ? (imep - fmep) * scaleTorque * spin : (imep - fmep * spin) * scaleTorque;
                 if (cranking) { t += ign.starterTorqueNm() * Math.clamp((500 - r) / 200, 0, 1); }
@@ -614,7 +643,16 @@ public record PistonEngineDesign(String name, EngineBlockDesign block, CylinderH
             double torque = torqueAt.applyAsDouble(omega);
             double dw = Math.max(1, 1e-3 * Math.abs(omega));
             double slope = (torqueAt.applyAsDouble(omega + dw) - torqueAt.applyAsDouble(omega - dw)) / (2 * dw);
+            if (seized) {
+                // the crank is held: it stops within about EngineWear.SEIZE_S whatever turns it
+                slope = -inertia / dev.mcmod.hdfv.damage.EngineWear.SEIZE_S;
+                torque = slope * omega;
+            }
             step.rotorTorque(0, torque, slope, false);
+            // 0.25: wear while it turns under its own power
+            if (running && wearPace > 0) {
+                step.wear(CONDITION_ENGINE, dev.mcmod.hdfv.damage.EngineWear.piston(dt * wearPace, lifeS, 2 * design.stroke() * rpm / 60, load, rpm, ign.revLimitRpm()));
+            }
             // fuel and heat
             double fuelFlow = cycles * fuelPerCycle;
             step.burn(fluids, fuelFlow);

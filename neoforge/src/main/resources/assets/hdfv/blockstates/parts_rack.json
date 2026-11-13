@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/parts_rack"
+    },
+    "facing=east": {
+      "model": "hdfv:block/parts_rack",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/parts_rack",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/parts_rack",
+      "y": 270
+    }
+  }
+}

@@ -320,4 +320,226 @@ public final class DriveBench {
         boolean converter = box.kind() == Gearboxes.Kind.AUTOMATIC || box.kind() == Gearboxes.Kind.CVT;
         return new GearboxBench(engine.name(), traction, run, converter ? converterCurve(box.converter()) : List.of(), converter ? stallRpm(box.converter(), engine) : Double.NaN);
     }
+
+    // ---------------------------------------------------------------- transfer cases (0.25)
+
+    /** A torque on a shaft (N m): the gearbox's output on the transfer rig. */
+    public record TorqueSource(double torqueNm, boolean transverse) implements PartDesign {
+        @Override public String type() { return "hdfv:bench_torque"; }
+        @Override public String name() { return "torque"; }
+        @Override public List<DesignIssue> check() { return List.of(); }
+        @Override public Map<String, Object> parameters() { return Map.of("torqueNm", torqueNm, "transverse", transverse); }
+
+        @Override public Part compile() {
+            TorqueSource design = this;
+            MassProperties mass = MassProperties.point(1, Vec3d.ZERO);
+            return new Part() {
+                @Override public PartDesign design() { return design; }
+                @Override public MassProperties mass() { return mass; }
+                @Override public List<CollisionSphere> collision() { return List.of(); }
+                @Override public List<DesignIssue> issues() { return List.of(); }
+                @Override public List<Rotor> rotors() { return List.of(new Rotor(transverse ? Vec3d.Z.scale(-1) : Vec3d.X, 0.01, false)); }
+                @Override public void loads(PartStep step) { step.rotorTorque(0, torqueNm, 0, false); }
+            };
+        }
+    }
+
+    /**
+     * A dynamometer on a propeller shaft: it holds the shaft at the speed on its "speed" input (rad/s) whatever the
+     * torque, and reports the torque it takes from the shaft (diagnostic "torqueNm", positive when driven).
+     */
+    public record Dyno(String name) implements PartDesign {
+        @Override public String type() { return "hdfv:bench_dyno"; }
+        @Override public List<DesignIssue> check() { return List.of(); }
+        @Override public Map<String, Object> parameters() { return Map.of(); }
+
+        @Override public Part compile() {
+            Dyno design = this;
+            MassProperties mass = MassProperties.point(1, Vec3d.ZERO);
+            return new Part() {
+                @Override public PartDesign design() { return design; }
+                @Override public MassProperties mass() { return mass; }
+                @Override public List<CollisionSphere> collision() { return List.of(); }
+                @Override public List<DesignIssue> issues() { return List.of(); }
+                @Override public List<Rotor> rotors() { return List.of(new Rotor(Vec3d.X, 0.05, false)); }
+                @Override public List<String> inputs() { return List.of("speed"); }
+                @Override public void loads(PartStep step) {
+                    step.row(new int[]{0}, new double[]{1}, step.input("speed", 0), Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
+                }
+                @Override public void after(dev.mcmod.aerocore.api.vehicle.PartAfter step) { step.diagnostic("torqueNm", -step.rowTorque(0)); }
+            };
+        }
+    }
+
+    /**
+     * A transfer case between a torque on its input and a dynamometer on each propeller shaft, held still: the case is
+     * the part itself (AeroCore's TransferPart under hdfv's rule), so the split is what a vehicle gets. Controls: the
+     * case's own ("mode", "range", "lock", "throttle") and the shafts' speeds "front_speed", "rear_speed" (rad/s).
+     */
+    public static final class TransferRig {
+        private static final FluidState AIR = Atmosphere.atAltitude(0, Vec3d.ZERO).fluid();
+        private static final RigidBodyState HELD = new RigidBodyState(Vec3d.ZERO, Vec3d.ZERO, Orientation.IDENTITY, Vec3d.ZERO);
+        public final Vehicle vehicle;
+        public final VehicleState state;
+        public final Map<String, Double> controls = new HashMap<>();
+        private final VehicleEnvironment environment = VehicleEnvironment.calm(-100, FluidState.FRESH_WATER_20C, AIR);
+        private Map<String, Map<String, Double>> last = Map.of();
+        public double time;
+
+        TransferRig(dev.mcmod.hdfv.part.drive.TransferCaseDesign design, double inputNm) {
+            List<Binding> bindings = new ArrayList<>();
+            for (String role : design.compile().inputs()) { bindings.add(Binding.of(role, role)); }
+            vehicle = new VehicleBlueprint("transfer bench", List.of(
+                    new VehicleBlueprint.Entry("source", new TorqueSource(inputNm, design.transverse()), Mount.at(Vec3d.ZERO)),
+                    new VehicleBlueprint.Entry("transfer", design, Mount.at(new Vec3d(-0.5, 0, 0)), bindings),
+                    new VehicleBlueprint.Entry("front", new Dyno("front"), Mount.at(new Vec3d(1, 0, 0)), List.of(Binding.of("speed", "front_speed"))),
+                    new VehicleBlueprint.Entry("rear", new Dyno("rear"), Mount.at(new Vec3d(-2, 0, 0)), List.of(Binding.of("speed", "rear_speed")))),
+                    List.of(Connection.Shaft.ports("source", null, "transfer", "input", 1, 1), Connection.Shaft.ports("transfer", "front", "front", null, 1, 1),
+                            Connection.Shaft.ports("transfer", "rear", "rear", null, 1, 1)))
+                    .compile();
+            vehicle.warmUp();
+            state = vehicle.newState(Vec3d.ZERO, Orientation.IDENTITY, DT);
+            controls.putAll(Map.of("mode", 0.0, "range", 0.0, "lock", 0.0, "throttle", 0.0, "front_speed", 0.0, "rear_speed", 0.0));
+        }
+
+        public void step() {
+            VehicleDynamics.Result r = VehicleDynamics.step(vehicle, state, environment, controls, Vec3d.ZERO, List.of(), null, time, DT);
+            state.setBody(HELD);
+            time += DT;
+            last = r.diagnostics();
+        }
+
+        /** The torque the front or the rear dynamometer took in the last step, N m. */
+        public double torque(String shaft) { return last.getOrDefault(shaft, Map.of()).getOrDefault("torqueNm", 0.0); }
+        /** The case's range (1 high, 2 low) and its second shown value (mode, lock or the coupling's share of its largest torque). */
+        public double range() { return state.shown("transfer", 0); }
+        public double second() { return state.shown("transfer", 1); }
+    }
+
+    public static TransferRig transferRig(dev.mcmod.hdfv.part.drive.TransferCaseDesign design, double inputNm) { return new TransferRig(design, inputNm); }
+
+    /** One point of a split: the front shaft's speed less the rear's (rad/s), the torque each shaft gets (N m). */
+    public record SplitPoint(double differenceRadPerS, double frontNm, double rearNm) {
+        /** The front's share of what the two shafts get together; NaN when they get nothing. */
+        public double frontShare() { return frontNm + rearNm == 0 ? Double.NaN : frontNm / (frontNm + rearNm); }
+    }
+
+    /**
+     * One mode's split over the speed difference. Modes: "two_high" and "four_high" (part-time), "open", "torsen",
+     * "viscous" and "locked" (full-time), "slip" and "preload" (on-demand: the coupling on slip alone, and preloaded by
+     * the rule at full throttle and low speed). locked: the shafts are geared together, so their speeds cannot differ;
+     * the points are then the limits (all of the torque to the rear when the front would run ahead, to the front
+     * otherwise: whichever axle grips takes it).
+     */
+    public record Split(String mode, boolean locked, List<SplitPoint> points) {}
+
+    /**
+     * A transfer case's bench: the engine and gearbox it sits behind, the torque on its input (the engine's largest in
+     * first gear), each mode's split, the largest tractive force of the bench car in high and in low range (the best gear
+     * at each road speed; low null without a low range) with the road's resistance, and the crawl ratio (first gear, low
+     * range and final drive together).
+     */
+    public record TransferBench(String engine, String gearbox, double inputNm, List<Split> splits, TractionLine high, TractionLine low, List<double[]> resistance,
+                                double crawlRatio) {}
+
+    /** The split is swept to this speed difference either way (rad/s; about 570 rpm between the shafts), at SPLIT_POINTS points a side. */
+    public static final double SPLIT_DIFFERENCE = 60, SPLIT_SPEED = 100;
+    public static final int SPLIT_POINTS = 20;
+
+    /** The gearbox the bench puts before a transfer case: the five-speed behind the 2.0 l four below 350 N m, the six-speed behind the V8 above. */
+    public static GearboxDesign gearboxFor(dev.mcmod.hdfv.part.drive.TransferCaseDesign d) {
+        return d.torqueRatingNm() < 350 ? dev.mcmod.hdfv.part.drive.SampleGearboxes.fiveSpeedManual() : dev.mcmod.hdfv.part.drive.SampleGearboxes.sixSpeedManual();
+    }
+
+    /**
+     * A mode's split on the rig: the shafts held SPLIT_SPEED apart by each difference in turn (an on-demand case's
+     * primary shaft kept at the reference speed, the other moved; otherwise both about it), the torques averaged once
+     * settled. Zero difference is left out: a limited-slip or preloaded case holds there, and the split is whatever
+     * the axles' grip makes it.
+     */
+    public static List<SplitPoint> split(dev.mcmod.hdfv.part.drive.TransferCaseDesign d, double inputNm, Map<String, Double> controls, double referenceRadPerS) {
+        TransferRig rig = new TransferRig(d, inputNm);
+        rig.controls.putAll(controls);
+        boolean onDemand = d.kind() == dev.mcmod.aerocore.api.vehicle.part.TransferPart.Kind.ON_DEMAND;
+        List<SplitPoint> out = new ArrayList<>();
+        double step = SPLIT_DIFFERENCE / SPLIT_POINTS;
+        for (int j = -SPLIT_POINTS; j < SPLIT_POINTS; j++) {
+            double difference = (j + 0.5) * step, front, rear;
+            if (onDemand) {
+                front = d.frontPrimary() ? referenceRadPerS : referenceRadPerS + difference;
+                rear = d.frontPrimary() ? referenceRadPerS - difference : referenceRadPerS;
+            } else {
+                front = referenceRadPerS + difference / 2;
+                rear = referenceRadPerS - difference / 2;
+            }
+            rig.controls.put("front_speed", front);
+            rig.controls.put("rear_speed", rear);
+            double f = 0, r = 0;
+            for (int i = 0; i < 40; i++) {
+                rig.step();
+                if (i >= 30) { f += rig.torque("front") / 10; r += rig.torque("rear") / 10; }
+            }
+            out.add(new SplitPoint(difference, f, r));
+        }
+        return out;
+    }
+
+    /** The limits of shafts geared together: the torque to the rear when the front would run ahead, to the front otherwise. */
+    private static List<SplitPoint> lockedSplit(double outputNm) {
+        List<SplitPoint> out = new ArrayList<>();
+        double step = SPLIT_DIFFERENCE / SPLIT_POINTS;
+        for (int j = -SPLIT_POINTS; j < SPLIT_POINTS; j++) {
+            double difference = (j + 0.5) * step;
+            out.add(new SplitPoint(difference, difference < 0 ? outputNm : 0, difference < 0 ? 0 : outputNm));
+        }
+        return out;
+    }
+
+    /** The largest tractive force over the gears at each road speed (rows as a TractionLine's), times an efficiency. */
+    private static TractionLine envelope(String label, Traction traction, double efficiency) {
+        java.util.TreeMap<Double, double[]> best = new java.util.TreeMap<>();
+        for (TractionLine line : traction.gears()) {
+            for (double[] p : line.points()) {
+                double[] was = best.get(p[0]);
+                if (was == null || p[1] * efficiency > was[1]) { best.put(p[0], new double[]{p[0], p[1] * efficiency, p[2]}); }
+            }
+        }
+        return new TractionLine(label, new ArrayList<>(best.values()));
+    }
+
+    /** The largest force of a line, N (0 for an empty one). */
+    public static double peakN(TractionLine line) {
+        double peak = 0;
+        for (double[] p : line.points()) { peak = Math.max(peak, p[1]); }
+        return peak;
+    }
+
+    public static TransferBench transferCase(dev.mcmod.hdfv.part.drive.TransferCaseDesign d) {
+        GearboxDesign box = gearboxFor(d);
+        PistonEngineDesign engine = engineFor(box);
+        double first = box.ratios()[0], inputNm = Bench.fullLoad(engine).peakTorque().torqueNm() * first * box.efficiency();
+        List<Split> splits = new ArrayList<>();
+        switch (d.kind()) {
+            case PART_TIME -> {
+                splits.add(new Split("two_high", false, split(d, inputNm, Map.of("mode", 0.0), SPLIT_SPEED)));
+                splits.add(new Split("four_high", true, lockedSplit(inputNm * d.efficiency())));
+            }
+            case FULL_TIME -> {
+                splits.add(new Split(d.centre().name().toLowerCase(java.util.Locale.ROOT), false, split(d, inputNm, Map.of("lock", 0.0), SPLIT_SPEED)));
+                if (d.lockable()) { splits.add(new Split("locked", true, lockedSplit(inputNm * d.efficiency()))); }
+            }
+            case ON_DEMAND -> {
+                splits.add(new Split("slip", false, split(d, inputNm, Map.of("throttle", 0.0), SPLIT_SPEED)));
+                if (d.preloadShare() > 0 && d.preloadBelowRpm() > 0) {
+                    // the rule preloads below a propeller-shaft speed: the primary shaft held at half of it
+                    double reference = Math.min(SPLIT_SPEED, 0.5 * d.preloadBelowRpm() * Math.PI / 30);
+                    splits.add(new Split("preload", false, split(d, inputNm, Map.of("throttle", 1.0), reference)));
+                }
+            }
+        }
+        Traction high = traction(box, engine, FINAL_RATIO, TYRE_RADIUS, MASS);
+        TractionLine low = d.lowRatio() > 1 ? envelope("L", traction(box, engine, FINAL_RATIO * d.lowRatio(), TYRE_RADIUS, MASS), d.efficiency()) : null;
+        return new TransferBench(engine.name(), box.name(), inputNm, splits, envelope("H", high, d.efficiency()), low, high.resistance(),
+                first * d.lowRatio() * FINAL_RATIO);
+    }
 }

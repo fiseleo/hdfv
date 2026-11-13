@@ -1,0 +1,1510 @@
+{
+  "values": {
+    "#minecraft:slabs": {
+      "kg": 10
+    },
+    "#minecraft:stairs": {
+      "kg": 15
+    },
+    "#minecraft:walls": {
+      "kg": 20
+    },
+    "#c:ingots": {
+      "kg": 10
+    },
+    "#c:raw_materials": {
+      "kg": 10
+    },
+    "#c:nuggets": {
+      "kg": 1.1
+    },
+    "#c:storage_blocks": {
+      "kg": 90
+    },
+    "#c:ores": {
+      "kg": 20
+    },
+    "#c:plates": {
+      "kg": 10
+    },
+    "#c:gears": {
+      "kg": 10
+    },
+    "#c:wires": {
+      "kg": 2
+    },
+    "#c:dusts": {
+      "kg": 1
+    },
+    "#c:gems": {
+      "kg": 2
+    },
+    "#c:rods": {
+      "kg": 1
+    },
+    "#c:chains": {
+      "kg": 1.2
+    },
+    "#c:storage_blocks/coal": {
+      "kg": 9
+    },
+    "#c:storage_blocks/redstone": {
+      "kg": 9
+    },
+    "#c:storage_blocks/lapis": {
+      "kg": 18
+    },
+    "#c:storage_blocks/diamond": {
+      "kg": 18
+    },
+    "#c:storage_blocks/emerald": {
+      "kg": 18
+    },
+    "#c:storage_blocks/wheat": {
+      "kg": 1.8
+    },
+    "#c:storage_blocks/slime": {
+      "kg": 4.5
+    },
+    "#c:storage_blocks/bone_meal": {
+      "kg": 0.9
+    },
+    "#c:storage_blocks/dried_kelp": {
+      "kg": 0.9
+    },
+    "minecraft:coal": {
+      "kg": 1
+    },
+    "minecraft:charcoal": {
+      "kg": 1
+    },
+    "minecraft:flint": {
+      "kg": 0.5
+    },
+    "minecraft:clay_ball": {
+      "kg": 4.5
+    },
+    "minecraft:brick": {
+      "kg": 4.5
+    },
+    "minecraft:nether_brick": {
+      "kg": 4.5
+    },
+    "minecraft:netherite_scrap": {
+      "kg": 10
+    },
+    "minecraft:ancient_debris": {
+      "kg": 30
+    },
+    "#minecraft:logs": {
+      "kg": 4
+    },
+    "#minecraft:planks": {
+      "kg": 1
+    },
+    "#c:rods/wooden": {
+      "kg": 0.1
+    },
+    "#minecraft:wooden_slabs": {
+      "kg": 0.5
+    },
+    "#minecraft:wooden_stairs": {
+      "kg": 0.75
+    },
+    "#minecraft:wooden_doors": {
+      "kg": 2
+    },
+    "#minecraft:wooden_trapdoors": {
+      "kg": 3
+    },
+    "#minecraft:wooden_fences": {
+      "kg": 1.4
+    },
+    "#minecraft:fence_gates": {
+      "kg": 2.2
+    },
+    "#minecraft:wooden_pressure_plates": {
+      "kg": 2
+    },
+    "#minecraft:wooden_buttons": {
+      "kg": 1
+    },
+    "#minecraft:signs": {
+      "kg": 2
+    },
+    "#minecraft:hanging_signs": {
+      "kg": 1.2
+    },
+    "#minecraft:boats": {
+      "kg": 5
+    },
+    "#minecraft:saplings": {
+      "kg": 0.5
+    },
+    "#minecraft:leaves": {
+      "kg": 1
+    },
+    "#c:chests/wooden": {
+      "kg": 8
+    },
+    "#c:barrels/wooden": {
+      "kg": 7
+    },
+    "#c:player_workstations/crafting_tables": {
+      "kg": 4
+    },
+    "#minecraft:bamboo_blocks": {
+      "kg": 2
+    },
+    "minecraft:bamboo": {
+      "kg": 0.2
+    },
+    "minecraft:ladder": {
+      "kg": 0.25
+    },
+    "minecraft:bowl": {
+      "kg": 0.2
+    },
+    "minecraft:bookshelf": {
+      "kg": 7.5
+    },
+    "minecraft:chiseled_bookshelf": {
+      "kg": 7.5
+    },
+    "minecraft:scaffolding": {
+      "kg": 0.3
+    },
+    "#c:stones": {
+      "kg": 20
+    },
+    "#c:cobblestones": {
+      "kg": 20
+    },
+    "#minecraft:stone_bricks": {
+      "kg": 20
+    },
+    "#c:sandstone/blocks": {
+      "kg": 15
+    },
+    "#c:sands": {
+      "kg": 15
+    },
+    "#c:gravels": {
+      "kg": 15
+    },
+    "#minecraft:dirt": {
+      "kg": 15
+    },
+    "#c:obsidians": {
+      "kg": 25
+    },
+    "#c:netherracks": {
+      "kg": 15
+    },
+    "#c:end_stones": {
+      "kg": 20
+    },
+    "#minecraft:terracotta": {
+      "kg": 18
+    },
+    "#c:concretes": {
+      "kg": 20
+    },
+    "#c:concrete_powders": {
+      "kg": 15
+    },
+    "#c:glass_blocks": {
+      "kg": 10
+    },
+    "#c:glass_panes": {
+      "kg": 4
+    },
+    "minecraft:ice": {
+      "kg": 10
+    },
+    "minecraft:packed_ice": {
+      "kg": 10
+    },
+    "minecraft:blue_ice": {
+      "kg": 10
+    },
+    "minecraft:snow_block": {
+      "kg": 3
+    },
+    "minecraft:smooth_stone": {
+      "kg": 20
+    },
+    "minecraft:smooth_stone_slab": {
+      "kg": 10
+    },
+    "minecraft:deepslate": {
+      "kg": 22
+    },
+    "minecraft:cobbled_deepslate": {
+      "kg": 22
+    },
+    "minecraft:bricks": {
+      "kg": 18
+    },
+    "minecraft:clay": {
+      "kg": 18
+    },
+    "minecraft:nether_bricks": {
+      "kg": 18
+    },
+    "minecraft:basalt": {
+      "kg": 22
+    },
+    "minecraft:blackstone": {
+      "kg": 22
+    },
+    "minecraft:tuff": {
+      "kg": 18
+    },
+    "minecraft:calcite": {
+      "kg": 20
+    },
+    "minecraft:dripstone_block": {
+      "kg": 20
+    },
+    "minecraft:soul_sand": {
+      "kg": 15
+    },
+    "minecraft:soul_soil": {
+      "kg": 15
+    },
+    "minecraft:glowstone": {
+      "kg": 4
+    },
+    "minecraft:sea_lantern": {
+      "kg": 6
+    },
+    "minecraft:quartz_block": {
+      "kg": 8
+    },
+    "minecraft:amethyst_block": {
+      "kg": 8
+    },
+    "#minecraft:wool": {
+      "kg": 1
+    },
+    "#minecraft:wool_carpets": {
+      "kg": 0.7
+    },
+    "#minecraft:beds": {
+      "kg": 6
+    },
+    "#minecraft:banners": {
+      "kg": 6
+    },
+    "#c:dyes": {
+      "kg": 0.1
+    },
+    "#c:strings": {
+      "kg": 0.05
+    },
+    "#c:feathers": {
+      "kg": 0.02
+    },
+    "#c:leathers": {
+      "kg": 0.5
+    },
+    "#c:bones": {
+      "kg": 0.3
+    },
+    "#c:gunpowders": {
+      "kg": 0.2
+    },
+    "#c:slime_balls": {
+      "kg": 0.5
+    },
+    "#c:eggs": {
+      "kg": 0.06
+    },
+    "#c:ender_pearls": {
+      "kg": 0.2
+    },
+    "#c:seeds": {
+      "kg": 0.02
+    },
+    "#c:crops": {
+      "kg": 0.2
+    },
+    "#c:foods": {
+      "kg": 0.3
+    },
+    "#minecraft:flowers": {
+      "kg": 0.05
+    },
+    "#minecraft:candles": {
+      "kg": 0.2
+    },
+    "minecraft:short_grass": {
+      "kg": 0.05
+    },
+    "minecraft:paper": {
+      "kg": 0.01
+    },
+    "minecraft:book": {
+      "kg": 0.5
+    },
+    "minecraft:writable_book": {
+      "kg": 0.5
+    },
+    "minecraft:written_book": {
+      "kg": 0.5
+    },
+    "minecraft:enchanted_book": {
+      "kg": 0.5
+    },
+    "minecraft:sugar": {
+      "kg": 0.2
+    },
+    "minecraft:sugar_cane": {
+      "kg": 0.2
+    },
+    "minecraft:cactus": {
+      "kg": 2
+    },
+    "minecraft:pumpkin": {
+      "kg": 4
+    },
+    "minecraft:melon": {
+      "kg": 4
+    },
+    "minecraft:hay_block": {
+      "kg": 1.8
+    },
+    "minecraft:torch": {
+      "kg": 0.1
+    },
+    "minecraft:redstone_torch": {
+      "kg": 0.2
+    },
+    "minecraft:lever": {
+      "kg": 0.5
+    },
+    "#minecraft:pickaxes": {
+      "kg": 30
+    },
+    "#minecraft:axes": {
+      "kg": 30
+    },
+    "#minecraft:shovels": {
+      "kg": 10
+    },
+    "#minecraft:hoes": {
+      "kg": 20
+    },
+    "#minecraft:swords": {
+      "kg": 20
+    },
+    "#minecraft:head_armor": {
+      "kg": 50
+    },
+    "#minecraft:chest_armor": {
+      "kg": 80
+    },
+    "#minecraft:leg_armor": {
+      "kg": 70
+    },
+    "#minecraft:foot_armor": {
+      "kg": 40
+    },
+    "minecraft:wooden_pickaxe": {
+      "kg": 3
+    },
+    "minecraft:wooden_axe": {
+      "kg": 3
+    },
+    "minecraft:wooden_shovel": {
+      "kg": 1
+    },
+    "minecraft:wooden_hoe": {
+      "kg": 2
+    },
+    "minecraft:wooden_sword": {
+      "kg": 2
+    },
+    "minecraft:stone_pickaxe": {
+      "kg": 6
+    },
+    "minecraft:stone_axe": {
+      "kg": 6
+    },
+    "minecraft:stone_shovel": {
+      "kg": 2
+    },
+    "minecraft:stone_hoe": {
+      "kg": 4
+    },
+    "minecraft:stone_sword": {
+      "kg": 4
+    },
+    "minecraft:diamond_pickaxe": {
+      "kg": 6
+    },
+    "minecraft:diamond_axe": {
+      "kg": 6
+    },
+    "minecraft:diamond_shovel": {
+      "kg": 2
+    },
+    "minecraft:diamond_hoe": {
+      "kg": 4
+    },
+    "minecraft:diamond_sword": {
+      "kg": 4
+    },
+    "minecraft:netherite_pickaxe": {
+      "kg": 16
+    },
+    "minecraft:netherite_axe": {
+      "kg": 16
+    },
+    "minecraft:netherite_shovel": {
+      "kg": 12
+    },
+    "minecraft:netherite_hoe": {
+      "kg": 14
+    },
+    "minecraft:netherite_sword": {
+      "kg": 14
+    },
+    "minecraft:leather_helmet": {
+      "kg": 2.5
+    },
+    "minecraft:leather_chestplate": {
+      "kg": 4
+    },
+    "minecraft:leather_leggings": {
+      "kg": 3.5
+    },
+    "minecraft:leather_boots": {
+      "kg": 2
+    },
+    "minecraft:chainmail_helmet": {
+      "kg": 15
+    },
+    "minecraft:chainmail_chestplate": {
+      "kg": 25
+    },
+    "minecraft:chainmail_leggings": {
+      "kg": 20
+    },
+    "minecraft:chainmail_boots": {
+      "kg": 12
+    },
+    "minecraft:diamond_helmet": {
+      "kg": 10
+    },
+    "minecraft:diamond_chestplate": {
+      "kg": 16
+    },
+    "minecraft:diamond_leggings": {
+      "kg": 14
+    },
+    "minecraft:diamond_boots": {
+      "kg": 8
+    },
+    "minecraft:netherite_helmet": {
+      "kg": 20
+    },
+    "minecraft:netherite_chestplate": {
+      "kg": 26
+    },
+    "minecraft:netherite_leggings": {
+      "kg": 24
+    },
+    "minecraft:netherite_boots": {
+      "kg": 18
+    },
+    "minecraft:turtle_helmet": {
+      "kg": 2.5
+    },
+    "minecraft:elytra": {
+      "kg": 2
+    },
+    "minecraft:shield": {
+      "kg": 16
+    },
+    "minecraft:bow": {
+      "kg": 0.3
+    },
+    "minecraft:crossbow": {
+      "kg": 11
+    },
+    "minecraft:fishing_rod": {
+      "kg": 0.3
+    },
+    "minecraft:shears": {
+      "kg": 20
+    },
+    "minecraft:flint_and_steel": {
+      "kg": 10
+    },
+    "minecraft:arrow": {
+      "kg": 0.1
+    },
+    "minecraft:trident": {
+      "kg": 20
+    },
+    "#c:buckets": {
+      "kg": 30
+    },
+    "#minecraft:anvil": {
+      "kg": 310
+    },
+    "#minecraft:rails": {
+      "kg": 0.5
+    },
+    "minecraft:rail": {
+      "kg": 0.4
+    },
+    "minecraft:iron_bars": {
+      "kg": 0.4
+    },
+    "minecraft:iron_door": {
+      "kg": 20
+    },
+    "minecraft:iron_trapdoor": {
+      "kg": 40
+    },
+    "minecraft:heavy_weighted_pressure_plate": {
+      "kg": 20
+    },
+    "minecraft:light_weighted_pressure_plate": {
+      "kg": 20
+    },
+    "minecraft:cauldron": {
+      "kg": 70
+    },
+    "minecraft:hopper": {
+      "kg": 58
+    },
+    "minecraft:minecart": {
+      "kg": 50
+    },
+    "minecraft:chest_minecart": {
+      "kg": 58
+    },
+    "minecraft:hopper_minecart": {
+      "kg": 108
+    },
+    "minecraft:furnace_minecart": {
+      "kg": 210
+    },
+    "minecraft:tnt_minecart": {
+      "kg": 66
+    },
+    "minecraft:compass": {
+      "kg": 41
+    },
+    "minecraft:clock": {
+      "kg": 41
+    },
+    "minecraft:lantern": {
+      "kg": 1
+    },
+    "minecraft:soul_lantern": {
+      "kg": 1
+    },
+    "minecraft:lightning_rod": {
+      "kg": 30
+    },
+    "minecraft:furnace": {
+      "kg": 160
+    },
+    "minecraft:blast_furnace": {
+      "kg": 270
+    },
+    "minecraft:smoker": {
+      "kg": 176
+    },
+    "minecraft:piston": {
+      "kg": 94
+    },
+    "minecraft:sticky_piston": {
+      "kg": 94.5
+    },
+    "minecraft:dispenser": {
+      "kg": 141
+    },
+    "minecraft:dropper": {
+      "kg": 141
+    },
+    "minecraft:observer": {
+      "kg": 124
+    },
+    "minecraft:repeater": {
+      "kg": 62
+    },
+    "minecraft:comparator": {
+      "kg": 63
+    },
+    "minecraft:redstone_lamp": {
+      "kg": 8
+    },
+    "minecraft:tnt": {
+      "kg": 61
+    },
+    "minecraft:bell": {
+      "kg": 60
+    },
+    "minecraft:beacon": {
+      "kg": 130
+    },
+    "minecraft:ender_chest": {
+      "kg": 200
+    },
+    "minecraft:enchanting_table": {
+      "kg": 105
+    },
+    "minecraft:brewing_stand": {
+      "kg": 61
+    },
+    "minecraft:oak_pressure_plate": {
+      "kg": 2
+    },
+    "minecraft:oak_boat": {
+      "kg": 5
+    },
+    "minecraft:powder_snow_bucket": {
+      "kg": 33
+    },
+    "minecraft:glass_bottle": {
+      "kg": 0.3
+    },
+    "minecraft:potion": {
+      "kg": 0.6
+    },
+    "minecraft:splash_potion": {
+      "kg": 0.6
+    },
+    "minecraft:lingering_potion": {
+      "kg": 0.6
+    },
+    "minecraft:honey_bottle": {
+      "kg": 0.7
+    },
+    "minecraft:experience_bottle": {
+      "kg": 0.4
+    },
+    "minecraft:bundle": {
+      "kg": 0.5
+    },
+    "#c:shulker_boxes": {
+      "kg": 9
+    },
+    "hdfv:air_separation_unit": {
+      "kg": 160
+    },
+    "hdfv:airfield_approach": {
+      "kg": 10.5
+    },
+    "hdfv:airfield_approach_flasher": {
+      "kg": 9.5
+    },
+    "hdfv:airfield_beacon": {
+      "kg": 23.2
+    },
+    "hdfv:airfield_obstruction": {
+      "kg": 8.55
+    },
+    "hdfv:airfield_papi": {
+      "kg": 23.2
+    },
+    "hdfv:airfield_runway_centre": {
+      "kg": 3.55
+    },
+    "hdfv:airfield_runway_edge": {
+      "kg": 3.3
+    },
+    "hdfv:airfield_taxi_centre": {
+      "kg": 3.55
+    },
+    "hdfv:airfield_taxi_edge": {
+      "kg": 3.3
+    },
+    "hdfv:airfield_threshold": {
+      "kg": 3.3
+    },
+    "hdfv:airfield_turf": {
+      "kg": 15
+    },
+    "hdfv:alloy_furnace": {
+      "kg": 406
+    },
+    "hdfv:aluminium_rivets": {
+      "kg": 2
+    },
+    "hdfv:ammonium_perchlorate": {
+      "kg": 1
+    },
+    "hdfv:apron_concrete": {
+      "kg": 21.9
+    },
+    "hdfv:apron_floodlight": {
+      "kg": 36
+    },
+    "hdfv:arc_furnace": {
+      "kg": 206
+    },
+    "hdfv:asphalt": {
+      "kg": 16.2
+    },
+    "hdfv:asphalt_ramp_2": {
+      "kg": 8.12
+    },
+    "hdfv:asphalt_ramp_4": {
+      "kg": 8.12
+    },
+    "hdfv:asphalt_ramp_8": {
+      "kg": 8.12
+    },
+    "hdfv:assembly_bench": {
+      "kg": 38
+    },
+    "hdfv:assembly_floor": {
+      "kg": 20
+    },
+    "hdfv:auto_loader": {
+      "kg": 53.4
+    },
+    "hdfv:b_axis_head": {
+      "kg": 93.4
+    },
+    "hdfv:band_saw_head": {
+      "kg": 28
+    },
+    "hdfv:bar_feeder": {
+      "kg": 42
+    },
+    "hdfv:battery": {
+      "kg": 129
+    },
+    "hdfv:bauxite_ore": {
+      "kg": 20
+    },
+    "hdfv:bevel_head": {
+      "kg": 54.4
+    },
+    "hdfv:blank_blueprint": {
+      "kg": 0.06
+    },
+    "hdfv:blueprint": {
+      "kg": 0.01
+    },
+    "hdfv:boring_column": {
+      "kg": 18
+    },
+    "hdfv:boring_head": {
+      "kg": 25
+    },
+    "hdfv:boring_mill": {
+      "kg": 106
+    },
+    "hdfv:boring_rotary_table": {
+      "kg": 36
+    },
+    "hdfv:boring_table": {
+      "kg": 12.5
+    },
+    "hdfv:brass_wire_spool": {
+      "kg": 5
+    },
+    "hdfv:broaching_head": {
+      "kg": 50
+    },
+    "hdfv:cable": {
+      "kg": 1.12
+    },
+    "hdfv:cable_duct": {
+      "kg": 11.1
+    },
+    "hdfv:car_factory_controller": {
+      "kg": 135
+    },
+    "hdfv:carbon_tool_set": {
+      "kg": 3
+    },
+    "hdfv:cargo_loader": {
+      "kg": 112
+    },
+    "hdfv:centreless_grinding_head": {
+      "kg": 54
+    },
+    "hdfv:cermet_tool_set": {
+      "kg": 21
+    },
+    "hdfv:chamfering_head": {
+      "kg": 30
+    },
+    "hdfv:chromite_ore": {
+      "kg": 20
+    },
+    "hdfv:cnc_machining_centre": {
+      "kg": 254
+    },
+    "hdfv:coal_tar": {
+      "kg": 1
+    },
+    "hdfv:cold_saw_head": {
+      "kg": 52
+    },
+    "hdfv:column_section": {
+      "kg": 15
+    },
+    "hdfv:column_top": {
+      "kg": 20
+    },
+    "hdfv:composite_oven": {
+      "kg": 61
+    },
+    "hdfv:concrete_ramp_2": {
+      "kg": 10.9
+    },
+    "hdfv:concrete_ramp_4": {
+      "kg": 10.9
+    },
+    "hdfv:concrete_ramp_8": {
+      "kg": 10.9
+    },
+    "hdfv:control_tower": {
+      "kg": 71.8
+    },
+    "hdfv:cracking_furnace": {
+      "kg": 112
+    },
+    "hdfv:crane_rail": {
+      "kg": 2.82
+    },
+    "hdfv:creative_power": {
+      "kg": 10
+    },
+    "hdfv:cross_rail": {
+      "kg": 10.5
+    },
+    "hdfv:crown_block": {
+      "kg": 35
+    },
+    "hdfv:cryogenic_tank": {
+      "kg": 96
+    },
+    "hdfv:cutting_slats": {
+      "kg": 10
+    },
+    "hdfv:cutting_table": {
+      "kg": 138
+    },
+    "hdfv:cylindrical_grinding_head": {
+      "kg": 33
+    },
+    "hdfv:deburring_head": {
+      "kg": 63
+    },
+    "hdfv:deepslate_chromite_ore": {
+      "kg": 22
+    },
+    "hdfv:deepslate_garnet_ore": {
+      "kg": 22
+    },
+    "hdfv:deepslate_ilmenite_ore": {
+      "kg": 22
+    },
+    "hdfv:deepslate_nickel_ore": {
+      "kg": 22
+    },
+    "hdfv:deepslate_tin_ore": {
+      "kg": 22
+    },
+    "hdfv:deepslate_zinc_ore": {
+      "kg": 22
+    },
+    "hdfv:derrick": {
+      "kg": 2
+    },
+    "hdfv:design_table": {
+      "kg": 8.03
+    },
+    "hdfv:design_tablet": {
+      "kg": 15.4
+    },
+    "hdfv:diamond_dresser": {
+      "kg": 3
+    },
+    "hdfv:digital_readout": {
+      "kg": 7.4
+    },
+    "hdfv:distillation_column": {
+      "kg": 129
+    },
+    "hdfv:dividing_head": {
+      "kg": 25
+    },
+    "hdfv:dock_gate": {
+      "kg": 3.83
+    },
+    "hdfv:drill_column": {
+      "kg": 15.5
+    },
+    "hdfv:drill_head": {
+      "kg": 28
+    },
+    "hdfv:drill_press": {
+      "kg": 43
+    },
+    "hdfv:drill_riveter_head": {
+      "kg": 66.8
+    },
+    "hdfv:drill_spindle": {
+      "kg": 12
+    },
+    "hdfv:drill_table": {
+      "kg": 12.5
+    },
+    "hdfv:drilling_rig": {
+      "kg": 142
+    },
+    "hdfv:ecm_head": {
+      "kg": 73
+    },
+    "hdfv:edm_tank": {
+      "kg": 40
+    },
+    "hdfv:electric_motor": {
+      "kg": 53
+    },
+    "hdfv:electro_machine": {
+      "kg": 141
+    },
+    "hdfv:electrode": {
+      "kg": 4
+    },
+    "hdfv:electrode_changer": {
+      "kg": 54.8
+    },
+    "hdfv:electrolysis_cell": {
+      "kg": 156
+    },
+    "hdfv:electrolyte": {
+      "kg": 10
+    },
+    "hdfv:empty_gas_cylinder": {
+      "kg": 10
+    },
+    "hdfv:engine_stand": {
+      "kg": 76
+    },
+    "hdfv:facing_head": {
+      "kg": 21
+    },
+    "hdfv:fcc_reactor": {
+      "kg": 92
+    },
+    "hdfv:field_repair_kit": {
+      "kg": 4.5
+    },
+    "hdfv:finisher": {
+      "kg": 81
+    },
+    "hdfv:finisher_column": {
+      "kg": 12.5
+    },
+    "hdfv:finisher_table": {
+      "kg": 17.5
+    },
+    "hdfv:finisher_top": {
+      "kg": 14
+    },
+    "hdfv:fired_heater": {
+      "kg": 120
+    },
+    "hdfv:flat_die_head": {
+      "kg": 60
+    },
+    "hdfv:fluid_pipe": {
+      "kg": 1.5
+    },
+    "hdfv:fluid_tank": {
+      "kg": 44
+    },
+    "hdfv:forging_press": {
+      "kg": 244
+    },
+    "hdfv:foundry": {
+      "kg": 206
+    },
+    "hdfv:fuel_dispenser": {
+      "kg": 52
+    },
+    "hdfv:fume_extractor": {
+      "kg": 39
+    },
+    "hdfv:garnet_abrasive": {
+      "kg": 2.5
+    },
+    "hdfv:garnet_ore": {
+      "kg": 20
+    },
+    "hdfv:gear_column": {
+      "kg": 14
+    },
+    "hdfv:gear_cutter": {
+      "kg": 107
+    },
+    "hdfv:gear_grinding_head": {
+      "kg": 34
+    },
+    "hdfv:gear_shaping_head": {
+      "kg": 26
+    },
+    "hdfv:gear_table": {
+      "kg": 9.5
+    },
+    "hdfv:gear_top": {
+      "kg": 10
+    },
+    "hdfv:generator": {
+      "kg": 96
+    },
+    "hdfv:geophone": {
+      "kg": 13.4
+    },
+    "hdfv:glass_fibre": {
+      "kg": 3
+    },
+    "hdfv:grinder": {
+      "kg": 114
+    },
+    "hdfv:grinder_bed": {
+      "kg": 25
+    },
+    "hdfv:grinding_wheel": {
+      "kg": 12
+    },
+    "hdfv:hacksaw_head": {
+      "kg": 31
+    },
+    "hdfv:handbook": {
+      "kg": 0.56
+    },
+    "hdfv:hangar_controller": {
+      "kg": 85
+    },
+    "hdfv:hangar_door": {
+      "kg": 6
+    },
+    "hdfv:heavy_cable": {
+      "kg": 3.25
+    },
+    "hdfv:hobbing_head": {
+      "kg": 24
+    },
+    "hdfv:holding_sign": {
+      "kg": 20.6
+    },
+    "hdfv:hole_edm_head": {
+      "kg": 72.4
+    },
+    "hdfv:honing_head": {
+      "kg": 46
+    },
+    "hdfv:honing_stones": {
+      "kg": 1
+    },
+    "hdfv:horsehead": {
+      "kg": 25
+    },
+    "hdfv:hss_tool_set": {
+      "kg": 12
+    },
+    "hdfv:hydrogen_cylinders": {
+      "kg": 34
+    },
+    "hdfv:hydrogen_liquefier": {
+      "kg": 229
+    },
+    "hdfv:ilmenite_ore": {
+      "kg": 20
+    },
+    "hdfv:impact_riveter_head": {
+      "kg": 31
+    },
+    "hdfv:interior_lamp": {
+      "kg": 3.5
+    },
+    "hdfv:internal_grinding_head": {
+      "kg": 36
+    },
+    "hdfv:jack_base": {
+      "kg": 20
+    },
+    "hdfv:jack_crank": {
+      "kg": 43
+    },
+    "hdfv:jerry_can": {
+      "kg": 40
+    },
+    "hdfv:jig_plate": {
+      "kg": 11
+    },
+    "hdfv:lamp_unit": {
+      "kg": 8.05
+    },
+    "hdfv:lapping_compound": {
+      "kg": 0.25
+    },
+    "hdfv:lapping_head": {
+      "kg": 29.2
+    },
+    "hdfv:laser_head": {
+      "kg": 41.4
+    },
+    "hdfv:lathe": {
+      "kg": 90
+    },
+    "hdfv:lathe_bed": {
+      "kg": 20
+    },
+    "hdfv:lathe_tailstock": {
+      "kg": 22
+    },
+    "hdfv:line_shaft": {
+      "kg": 2
+    },
+    "hdfv:lube_extractor": {
+      "kg": 58
+    },
+    "hdfv:machine_bed": {
+      "kg": 30
+    },
+    "hdfv:machine_frame": {
+      "kg": 18
+    },
+    "hdfv:machine_guard": {
+      "kg": 7
+    },
+    "hdfv:magnesite_ore": {
+      "kg": 20
+    },
+    "hdfv:magnetic_chuck": {
+      "kg": 15
+    },
+    "hdfv:mill_head": {
+      "kg": 28
+    },
+    "hdfv:mill_rotary_table": {
+      "kg": 24
+    },
+    "hdfv:mill_table": {
+      "kg": 15
+    },
+    "hdfv:milling_machine": {
+      "kg": 108
+    },
+    "hdfv:mitre_vise": {
+      "kg": 18
+    },
+    "hdfv:motor_drive": {
+      "kg": 52
+    },
+    "hdfv:multi_spindle_head": {
+      "kg": 33
+    },
+    "hdfv:nc_drive": {
+      "kg": 51.8
+    },
+    "hdfv:nickel_ore": {
+      "kg": 20
+    },
+    "hdfv:oil_seep": {
+      "kg": 15
+    },
+    "hdfv:paint_booth_controller": {
+      "kg": 85
+    },
+    "hdfv:paint_booth_exhaust": {
+      "kg": 21.5
+    },
+    "hdfv:paint_can": {
+      "kg": 2.6
+    },
+    "hdfv:parts_rack": {
+      "kg": 57
+    },
+    "hdfv:planer": {
+      "kg": 120
+    },
+    "hdfv:planer_bed": {
+      "kg": 25
+    },
+    "hdfv:planer_upright": {
+      "kg": 15
+    },
+    "hdfv:plasma_head": {
+      "kg": 70.4
+    },
+    "hdfv:polishing_head": {
+      "kg": 50
+    },
+    "hdfv:polymer_reactor": {
+      "kg": 127
+    },
+    "hdfv:power_feed": {
+      "kg": 42
+    },
+    "hdfv:process_unit": {
+      "kg": 111
+    },
+    "hdfv:pulley_drive": {
+      "kg": 27
+    },
+    "hdfv:pump": {
+      "kg": 72
+    },
+    "hdfv:pump_jack": {
+      "kg": 96
+    },
+    "hdfv:quick_change_post": {
+      "kg": 17
+    },
+    "hdfv:ram_bed": {
+      "kg": 27.5
+    },
+    "hdfv:ram_machine": {
+      "kg": 113
+    },
+    "hdfv:reed_set": {
+      "kg": 4
+    },
+    "hdfv:refit_shop_controller": {
+      "kg": 52
+    },
+    "hdfv:reformer_reactor": {
+      "kg": 58.2
+    },
+    "hdfv:repair_shop_controller": {
+      "kg": 49
+    },
+    "hdfv:rig_floor": {
+      "kg": 2.67
+    },
+    "hdfv:rig_rotary": {
+      "kg": 56
+    },
+    "hdfv:riveter": {
+      "kg": 79
+    },
+    "hdfv:riveter_frame": {
+      "kg": 20
+    },
+    "hdfv:roller_shutter": {
+      "kg": 3.53
+    },
+    "hdfv:rotary_table": {
+      "kg": 55.4
+    },
+    "hdfv:samson_post": {
+      "kg": 11
+    },
+    "hdfv:saw_bed": {
+      "kg": 22.5
+    },
+    "hdfv:saw_blade": {
+      "kg": 3
+    },
+    "hdfv:sawing_machine": {
+      "kg": 102
+    },
+    "hdfv:second_tool_head": {
+      "kg": 19
+    },
+    "hdfv:shaper_head": {
+      "kg": 36
+    },
+    "hdfv:shaving_head": {
+      "kg": 23
+    },
+    "hdfv:shipping_container": {
+      "kg": 106
+    },
+    "hdfv:shipyard_controller": {
+      "kg": 90
+    },
+    "hdfv:side_head": {
+      "kg": 24
+    },
+    "hdfv:sinker_edm_head": {
+      "kg": 84.4
+    },
+    "hdfv:slipway": {
+      "kg": 0.63
+    },
+    "hdfv:slotter_head": {
+      "kg": 27
+    },
+    "hdfv:spindle_head": {
+      "kg": 54
+    },
+    "hdfv:squeeze_riveter_head": {
+      "kg": 40
+    },
+    "hdfv:steady_rest": {
+      "kg": 16.5
+    },
+    "hdfv:steam_engine": {
+      "kg": 69
+    },
+    "hdfv:steel_column": {
+      "kg": 1.75
+    },
+    "hdfv:steel_grating": {
+      "kg": 1.3
+    },
+    "hdfv:steel_locker": {
+      "kg": 51
+    },
+    "hdfv:steel_rivets": {
+      "kg": 2
+    },
+    "hdfv:steel_stairs": {
+      "kg": 6.5
+    },
+    "hdfv:sticker_film": {
+      "kg": 2.5
+    },
+    "hdfv:storage_crate": {
+      "kg": 8.2
+    },
+    "hdfv:storage_tank_roof": {
+      "kg": 7.5
+    },
+    "hdfv:storage_tank_valve": {
+      "kg": 24
+    },
+    "hdfv:storage_tank_wall": {
+      "kg": 5
+    },
+    "hdfv:sub_spindle": {
+      "kg": 95.4
+    },
+    "hdfv:surface_grinding_head": {
+      "kg": 43
+    },
+    "hdfv:tapping_head": {
+      "kg": 22
+    },
+    "hdfv:thread_milling_head": {
+      "kg": 55.4
+    },
+    "hdfv:thread_rolling_head": {
+      "kg": 49
+    },
+    "hdfv:threader": {
+      "kg": 72
+    },
+    "hdfv:threader_base": {
+      "kg": 27.5
+    },
+    "hdfv:threshold_paint": {
+      "kg": 38.7
+    },
+    "hdfv:tin_ore": {
+      "kg": 20
+    },
+    "hdfv:tool_grinding_head": {
+      "kg": 35
+    },
+    "hdfv:toolpost_grinder": {
+      "kg": 45
+    },
+    "hdfv:tower_base": {
+      "kg": 21.2
+    },
+    "hdfv:tower_cab_floor": {
+      "kg": 15
+    },
+    "hdfv:tower_console": {
+      "kg": 20.8
+    },
+    "hdfv:tower_floor": {
+      "kg": 13.5
+    },
+    "hdfv:tower_glass": {
+      "kg": 10.1
+    },
+    "hdfv:tower_mast": {
+      "kg": 36.2
+    },
+    "hdfv:tower_radar": {
+      "kg": 62.2
+    },
+    "hdfv:tower_roof": {
+      "kg": 5.5
+    },
+    "hdfv:tower_shaft": {
+      "kg": 20.5
+    },
+    "hdfv:treadle": {
+      "kg": 5.3
+    },
+    "hdfv:trunnion": {
+      "kg": 106
+    },
+    "hdfv:turning_spindle": {
+      "kg": 54
+    },
+    "hdfv:turret": {
+      "kg": 57.4
+    },
+    "hdfv:tyre_patch_kit": {
+      "kg": 6.5
+    },
+    "hdfv:unit_outlet": {
+      "kg": 7
+    },
+    "hdfv:vacuum_column": {
+      "kg": 95
+    },
+    "hdfv:vehicle_blueprint": {
+      "kg": 0.24
+    },
+    "hdfv:vulcanizer": {
+      "kg": 59
+    },
+    "hdfv:walking_beam": {
+      "kg": 9.33
+    },
+    "hdfv:waterjet_head": {
+      "kg": 78
+    },
+    "hdfv:welding_station": {
+      "kg": 55
+    },
+    "hdfv:wellhead": {
+      "kg": 18
+    },
+    "hdfv:white_line_paint": {
+      "kg": 38.6
+    },
+    "hdfv:windsock": {
+      "kg": 14
+    },
+    "hdfv:wire_edm_head": {
+      "kg": 91.8
+    },
+    "hdfv:work_light": {
+      "kg": 4
+    },
+    "hdfv:y_turret": {
+      "kg": 98.8
+    },
+    "hdfv:yellow_line_paint": {
+      "kg": 38.6
+    },
+    "hdfv:zinc_ore": {
+      "kg": 20
+    }
+  }
+}

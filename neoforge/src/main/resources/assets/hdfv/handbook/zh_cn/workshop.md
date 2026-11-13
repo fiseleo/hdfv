@@ -12,6 +12,6 @@ advancement: hdfv:tutorial/machined
 - 把工件连同图纸拿到下一台机器。如果这台做不了下一步，它会告诉你该去哪一台。
 - 最后一步交出完成的组件；一个零件的组件全部做好后，{item hdfv:assembly_bench}把它组成{item hdfv:part}。
 
-JEI 的机加工页面会写每台机器能做什么、精度到 IT 几级。时间是实际工时：缺省一个工作小时等于 Minecraft 的一小时（服务器设置可改）。
+JEI 的机加工页面会写每台机器能做什么、精度到 IT 几级。时间是实际工时：默认一个工作小时等于 Minecraft 的一小时（服务器设置可改）。
 
 {see electricity}

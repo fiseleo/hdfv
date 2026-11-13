@@ -36,9 +36,18 @@ public final class BlueprintItem extends Item {
         if (info.invalid() == 0 && info.extrapolation() == 0) { tooltip.add(Component.translatable("hdfv.blueprint.ok").withStyle(ChatFormatting.GREEN)); }
     }
 
-    /** "hdfv:piston_engine" as "Piston engine". */
+    /**
+     * "hdfv:piston_engine" as "Piston engine". 0.25: a type with no hdfv.type name of its own (the gearboxes, axles,
+     * chassis, storage boxes...) by its design kind's name (hdfv.kind.manual_gearbox), not its raw id.
+     */
     public static net.minecraft.network.chat.MutableComponent typeName(String type) {
-        return Component.translatableWithFallback("hdfv.type." + type.replace(':', '.'), type);
+        String key = "hdfv.type." + type.replace(':', '.');
+        net.minecraft.locale.Language language = net.minecraft.locale.Language.getInstance();
+        if (!language.has(key) && type.startsWith(dev.mcmod.hdfv.neoforge.Hdfv.MOD_ID + ":")) {
+            String kind = "hdfv.kind." + type.substring(type.indexOf(':') + 1);
+            if (language.has(kind)) { return Component.translatable(kind); }
+        }
+        return Component.translatableWithFallback(key, type);
     }
 
     @Override public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {

@@ -101,7 +101,8 @@ public record TransferCaseDesign(String name, TransferPart.Kind kind, double low
     @Override public Part compile() {
         List<DesignIssue> issues = check();
         DesignException.throwIfInvalid(issues);
-        return ShiftRules.transfer(this, new TransferPart(this, spec(), mass(), Components.extrapolations(issues)));
+        // 0.25: the gears wear
+        return ShiftRules.transfer(this, new TransferPart(this, spec(), mass(), Components.extrapolations(issues)).wearing(dev.mcmod.hdfv.damage.Wearings.transfer(this)));
     }
 
     @Override public Map<String, Object> parameters() {

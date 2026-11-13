@@ -133,12 +133,19 @@ public final class DesignScreen extends Screen {
     private static boolean airframe(PartDesign d) {
         return d instanceof dev.mcmod.hdfv.part.air.WingDesign || d instanceof dev.mcmod.hdfv.part.air.AirPropellerDesign || d instanceof dev.mcmod.hdfv.part.air.RotorDesign;
     }
+    /** 0.25: a landing-gear leg's drop tests: at the sink rate asked and at 1.2 times it (FAR 23.727's reserve energy: 1.44 times the drop height), and the strut's stroke (m). */
+    private record LegBench(dev.mcmod.hdfv.design.WheelBench.DropTest limit, dev.mcmod.hdfv.design.WheelBench.DropTest reserve, double travelM) {}
     private CompletableFuture<Object> running;
     private long runningSince;
     private Object result;
     private PartDesign resultFor;
     private String benchError;
     private double altitude, speed;
+    /** 0.25: the sink rate of a leg's drop test (m/s; FAR 23's limit for a light aircraft until changed), and which of an axle's two bench views shows (0 the travel, 1 tyre and brakes). */
+    private double sink = Math.round(dev.mcmod.hdfv.design.WheelBench.FAR23_SINK * 100) / 100.0;
+    private int axleView;
+    /** The colours of a traction diagram's gears, first gear first. */
+    private static final int[] GEAR_COLORS = {ORANGE, BLUE, GREEN, YELLOW, 0xFFC792EA, 0xFF4DD0E1, RED, 0xFFB0BEC5};
 
     public DesignScreen(PartDesign design, Blueprints.Target target, Component status) {
         super(Component.translatable("hdfv.screen.title"));
@@ -173,8 +180,14 @@ public final class DesignScreen extends Screen {
         e.add(OVERVIEW);
         e.addAll(Designs.pages(design));
         if (design instanceof PistonEngineDesign || flies(design) || sweeps(design) || airframe(design) || design instanceof BodyDesign
-                || design instanceof dev.mcmod.hdfv.part.wheel.AxleDesign || design instanceof dev.mcmod.hdfv.part.chassis.ChassisDesign) { e.add(BENCH); }
+                || design instanceof dev.mcmod.hdfv.part.wheel.AxleDesign || design instanceof dev.mcmod.hdfv.part.chassis.ChassisDesign || drives(design)
+                || design instanceof dev.mcmod.hdfv.part.wheel.LandingGearDesign) { e.add(BENCH); }
         return e;
+    }
+
+    /** 0.25: a gearbox (all four kinds) or a transfer case: benched behind an engine on the bench car (DriveBench). */
+    private static boolean drives(PartDesign d) {
+        return d instanceof dev.mcmod.hdfv.part.drive.GearboxDesign || d instanceof dev.mcmod.hdfv.part.drive.TransferCaseDesign;
     }
 
     private void refresh() {
@@ -475,9 +488,21 @@ public final class DesignScreen extends Screen {
             addRenderableWidget(spd);
             x += 230;
         }
+        if (design instanceof dev.mcmod.hdfv.part.wheel.LandingGearDesign) {
+            EditBox rate = new EditBox(font, x + 40, y, 50, FIELD_H, Component.translatable("hdfv.bench.sink"));
+            rate.setValue(Plot.number(sink));
+            rate.setResponder(s -> sink = number(s, rate, 0.5, 6, sink));
+            addRenderableWidget(rate);
+            x += 130;
+        }
         Button run = Button.builder(Component.translatable("hdfv.bench.run"), b -> runBench()).bounds(x, y - 1, 70, 16).build();
         run.active = !invalid();
         addRenderableWidget(run);
+        if (design instanceof dev.mcmod.hdfv.part.wheel.AxleDesign) {
+            // 0.25: the axle's second view (its tyre's curves and the brakes' fade test), from the same run
+            Component view = Component.translatable(axleView == 0 ? "hdfv.bench.view_tyre" : "hdfv.bench.view_travel");
+            addRenderableWidget(Button.builder(view, b -> { axleView = 1 - axleView; rebuildWidgets(); }).bounds(x + 76, y - 1, font.width(view) + 12, 16).build());
+        }
     }
 
     private double number(String s, EditBox box, double min, double max, double previous) {
@@ -560,7 +585,7 @@ public final class DesignScreen extends Screen {
     void runBench() {
         if (running != null || invalid()) { return; }
         PartDesign d = design;
-        double alt = altitude, v = speed;
+        double alt = altitude, v = d instanceof dev.mcmod.hdfv.part.wheel.LandingGearDesign ? sink : speed;
         result = null;
         benchError = null;
         resultFor = d;
@@ -592,6 +617,12 @@ public final class DesignScreen extends Screen {
         // 0.15: an axle's travel and kinematics, a chassis's structure
         if (d instanceof dev.mcmod.hdfv.part.wheel.AxleDesign a) { return dev.mcmod.hdfv.design.WheelBench.axle(a); }
         if (d instanceof dev.mcmod.hdfv.part.chassis.ChassisDesign c) { return c.analysis(); }
+        // 0.25: a gearbox's traction diagram and run, a transfer case's split and ranges, a leg's drop tests (speedMps is the sink rate)
+        if (d instanceof dev.mcmod.hdfv.part.drive.GearboxDesign b) { return dev.mcmod.hdfv.design.DriveBench.gearbox(b); }
+        if (d instanceof dev.mcmod.hdfv.part.drive.TransferCaseDesign t) { return dev.mcmod.hdfv.design.DriveBench.transferCase(t); }
+        if (d instanceof dev.mcmod.hdfv.part.wheel.LandingGearDesign l) {
+            return new LegBench(dev.mcmod.hdfv.design.WheelBench.drop(l, speedMps), dev.mcmod.hdfv.design.WheelBench.drop(l, 1.2 * speedMps), l.strut().suspension().travelM());
+        }
         if (d instanceof ShaftTurbineDesign t) {
             Turbojet.Flight flight = Bench.flight(altitudeM, speedMps);
             return new ShaftBench(Bench.powerSweep(t, flight, 21), Bench.torqueCurve(t, flight, 31), Bench.startAndRunUp(t), altitudeM, speedMps);
@@ -759,6 +790,10 @@ public final class DesignScreen extends Screen {
             g.drawString(font, Component.translatable("hdfv.bench.speed"), x0 + 104, TOP + 3, GREY, false);
             g.drawString(font, "m/s", x0 + 194, TOP + 3, GREY, false);
         }
+        if (design instanceof dev.mcmod.hdfv.part.wheel.LandingGearDesign) {
+            g.drawString(font, Component.translatable("hdfv.bench.sink"), x0, TOP + 3, GREY, false);
+            g.drawString(font, "m/s", x0 + 94, TOP + 3, GREY, false);
+        }
         if (invalid()) { g.drawString(font, Component.translatable("hdfv.bench.invalid"), x0, y, RED, false); return; }
         if (running != null) {
             g.drawString(font, Component.translatable("hdfv.bench.running", (Util.getMillis() - runningSince) / 1000), x0, y, YELLOW, false);
@@ -832,10 +867,227 @@ public final class DesignScreen extends Screen {
         } else if (result instanceof Bench.BodyBench b) {
             renderBodyBench(g, b, x0, y, w, bottom);
         } else if (result instanceof dev.mcmod.hdfv.design.WheelBench.AxleBench a) {
-            renderAxleBench(g, a, x0, y, w, bottom);
+            if (axleView == 1) { renderTyreBench(g, a, x0, y, w, bottom); } else { renderAxleBench(g, a, x0, y, w, bottom); }
         } else if (result instanceof dev.mcmod.hdfv.part.chassis.ChassisDesign.Analysis a) {
             renderChassisBench(g, a, x0, y, w, bottom);
+        } else if (result instanceof dev.mcmod.hdfv.design.DriveBench.GearboxBench b) {
+            renderGearboxBench(g, b, x0, y, w, bottom);
+        } else if (result instanceof dev.mcmod.hdfv.design.DriveBench.TransferBench b) {
+            renderTransferBench(g, b, x0, y, w, bottom);
+        } else if (result instanceof LegBench b) {
+            renderLegBench(g, b, x0, y, w, bottom);
         }
+    }
+
+    // ---------------------------------------------------------------- 0.25: gearboxes, transfer cases, tyres and brakes, landing gear
+
+    /** A chart's key, right-aligned on its top line (where a right axis's label would be): each entry's text in its line's colour. */
+    private void legend(GuiGraphics g, int right, int y, List<String> texts, List<Integer> colors) {
+        int x = right;
+        for (int i = texts.size() - 1; i >= 0; i--) {
+            x -= font.width(texts.get(i));
+            g.drawString(font, texts.get(i), x, y, colors.get(i), false);
+            x -= 6;
+        }
+    }
+
+    private static String text(String key, Object... args) { return Component.translatable(key, args).getString(); }
+
+    /** A traction line's road speeds (km/h) and forces (kN). */
+    private static Plot.Series forceLine(List<double[]> rows, int color) {
+        double[] v = new double[rows.size()], f = new double[rows.size()];
+        for (int i = 0; i < v.length; i++) { v[i] = rows.get(i)[0] * 3.6; f[i] = rows.get(i)[1] / 1000; }
+        return new Plot.Series(v, f, color, false);
+    }
+
+    /**
+     * A gearbox's bench (DriveBench.gearbox): the traction diagram above (each gear's tractive force and the bench car's
+     * resistance against road speed); below, the run from rest at full throttle (speed and engine speed against time)
+     * and, for an automatic or a CVT, the converter's torque ratio and efficiency against its speed ratio beside it.
+     */
+    private void renderGearboxBench(GuiGraphics g, dev.mcmod.hdfv.design.DriveBench.GearboxBench b, int x0, int y, int w, int bottom) {
+        var run = b.run();
+        for (FormattedCharSequence line : font.split(Component.translatable("hdfv.bench.gearbox_summary", b.engine(), seconds(run.to100S()), seconds(run.quarterS()),
+                Plot.number(Math.round(run.topMps() * 3.6))), w)) {
+            g.drawString(font, line, x0, y, ORANGE, false);
+            y += 10;
+        }
+        boolean converter = !b.converter().isEmpty();
+        if (converter) {
+            double stallRatio = b.converter().get(0).torqueRatio(), best = 0;
+            for (var p : b.converter()) { best = Math.max(best, p.efficiency()); }
+            for (FormattedCharSequence line : font.split(Component.translatable("hdfv.bench.converter_summary", Plot.number(Math.round(b.stallRpm())),
+                    Plot.number(round(stallRatio, 2)), Plot.number(Math.round(100 * best))), w)) {
+                g.drawString(font, line, x0, y, BLUE, false);
+                y += 10;
+            }
+        }
+        int h = (bottom - y - 4) / 2;
+        List<Plot.Series> lines = new ArrayList<>();
+        List<String> keys = new ArrayList<>();
+        List<Integer> colors = new ArrayList<>();
+        double top = 0;
+        for (double[] r : b.traction().resistance()) { top = Math.max(top, r[0] * 3.6); }
+        for (int i = 0; i < b.traction().gears().size(); i++) {
+            var gear = b.traction().gears().get(i);
+            int color = GEAR_COLORS[i % GEAR_COLORS.length];
+            lines.add(forceLine(gear.points(), color));
+            keys.add(gear.gear());
+            colors.add(color);
+        }
+        lines.add(forceLine(b.traction().resistance(), GREY));
+        keys.add(text("hdfv.bench.road_resistance"));
+        colors.add(GREY);
+        Plot.draw(g, font, x0, y + 2, w, h - 2, 0, Math.max(top, 1), text("hdfv.bench.road_speed"), text("hdfv.bench.tractive_force"), WHITE, "", GREY, lines);
+        legend(g, x0 + w - 6, y + 3, keys, colors);
+        int n = run.points().size();
+        if (n > 1) {
+            double[] t = new double[n], kmh = new double[n], rpm = new double[n];
+            for (int i = 0; i < n; i++) { var p = run.points().get(i); t[i] = p.timeS(); kmh[i] = p.speedMps() * 3.6; rpm[i] = p.engineRpm(); }
+            int runW = converter ? (w - 6) / 2 : w;
+            Plot.draw(g, font, x0, y + 2 + h, runW, h, 0, t[n - 1], text("hdfv.bench.time"), text("hdfv.bench.road_speed"), ORANGE, text("hdfv.bench.engine_rpm"), BLUE,
+                    List.of(new Plot.Series(t, kmh, ORANGE, false), new Plot.Series(t, rpm, BLUE, true)));
+        }
+        if (converter) {
+            int m = b.converter().size(), half = (w - 6) / 2;
+            double[] nu = new double[m], ratio = new double[m], eta = new double[m];
+            for (int i = 0; i < m; i++) { var p = b.converter().get(i); nu[i] = p.speedRatio(); ratio[i] = p.torqueRatio(); eta[i] = 100 * p.efficiency(); }
+            Plot.draw(g, font, x0 + half + 6, y + 2 + h, w - half - 6, h, 0, 1, text("hdfv.bench.speed_ratio"), text("hdfv.bench.torque_ratio"), ORANGE,
+                    text("hdfv.bench.efficiency"), GREEN, List.of(new Plot.Series(nu, ratio, ORANGE, false), new Plot.Series(nu, eta, GREEN, true)));
+        }
+    }
+
+    /**
+     * A transfer case's bench (DriveBench.transferCase): each mode's torque to the front and the rear shaft against the
+     * speed difference between them above (one chart a mode, side by side); below, the bench car's largest tractive
+     * force in high and in low range against road speed, with its resistance.
+     */
+    private void renderTransferBench(GuiGraphics g, dev.mcmod.hdfv.design.DriveBench.TransferBench b, int x0, int y, int w, int bottom) {
+        for (FormattedCharSequence line : font.split(Component.translatable("hdfv.bench.transfer_summary", b.engine(), b.gearbox(), Plot.number(Math.round(b.inputNm())),
+                Plot.number(round(b.crawlRatio(), 1))), w)) {
+            g.drawString(font, line, x0, y, ORANGE, false);
+            y += 10;
+        }
+        double high = dev.mcmod.hdfv.design.DriveBench.peakN(b.high()) / 1000;
+        Component force = b.low() == null ? Component.translatable("hdfv.bench.transfer_force_high", Plot.number(round(high, 1)))
+                : Component.translatable("hdfv.bench.transfer_force", Plot.number(round(high, 1)), Plot.number(round(dev.mcmod.hdfv.design.DriveBench.peakN(b.low()) / 1000, 1)),
+                        Plot.number(Math.round(b.low().points().get(b.low().points().size() - 1)[0] * 3.6)));
+        for (FormattedCharSequence line : font.split(force, w)) { g.drawString(font, line, x0, y, BLUE, false); y += 10; }
+        int count = b.splits().size(), each = (w - 6 * (count - 1)) / Math.max(count, 1);
+        List<String> shafts = List.of(text("hdfv.bench.front_shaft"), text("hdfv.bench.rear_shaft"));
+        // the modes side by side, or one under another (whole width) where the axis title and the numbers would not fit beside
+        // (a chart needs 43 high: Plot.draw leaves one out under that); with no room for that either, the axis is titled by its unit alone
+        String axis = text("hdfv.bench.shaft_difference");
+        boolean narrow = count > 1 && font.width(axis) + 2 * font.width("-0000.0") + 46 > each;
+        boolean stack = narrow && (bottom - y - 4) / (count + 1) >= 43;
+        if (narrow && !stack) { axis = "rpm"; }
+        int rows = stack ? count + 1 : 2, h = (bottom - y - 4) / rows;
+        for (int k = 0; k < count; k++) {
+            var split = b.splits().get(k);
+            int n = split.points().size(), x = stack ? x0 : x0 + k * (each + 6), cw = stack ? w : each, cy = stack ? y + k * h : y;
+            double[] rpm = new double[n], front = new double[n], rear = new double[n];
+            for (int i = 0; i < n; i++) {
+                var p = split.points().get(i);
+                rpm[i] = p.differenceRadPerS() * 30 / Math.PI; front[i] = p.frontNm(); rear[i] = p.rearNm();
+            }
+            Plot.draw(g, font, x, cy + 2, cw, h - 2, rpm[0], rpm[n - 1], axis, text("hdfv.bench.split." + split.mode()), WHITE, "", GREY,
+                    List.of(new Plot.Series(rpm, front, ORANGE, false), new Plot.Series(rpm, rear, BLUE, false)));
+            legend(g, x + cw - 6, cy + 3, shafts, List.of(ORANGE, BLUE));
+        }
+        y += (rows - 2) * h;   // the force chart under the last mode's
+        List<Plot.Series> lines = new ArrayList<>(List.of(forceLine(b.high().points(), ORANGE)));
+        List<String> keys = new ArrayList<>(List.of(text("hdfv.bench.high_range")));
+        List<Integer> colors = new ArrayList<>(List.of(ORANGE));
+        if (b.low() != null) { lines.add(forceLine(b.low().points(), BLUE)); keys.add(text("hdfv.bench.low_range")); colors.add(BLUE); }
+        lines.add(forceLine(b.resistance(), GREY));
+        keys.add(text("hdfv.bench.road_resistance"));
+        colors.add(GREY);
+        double top = 0;
+        for (double[] r : b.resistance()) { top = Math.max(top, r[0] * 3.6); }
+        Plot.draw(g, font, x0, y + 2 + h, w, h, 0, Math.max(top, 1), text("hdfv.bench.road_speed"), text("hdfv.bench.tractive_force"), WHITE, "", GREY, lines);
+        legend(g, x0 + w - 6, y + 3 + h, keys, colors);
+    }
+
+    /**
+     * 0.25: an axle's second view: its tyre's braking force against slip and cornering force against slip angle at the
+     * corner's design load, dry and wet, side by side above; the brakes' fade test below (each stop's hottest rotor
+     * temperature and the torque left of the cold brake's).
+     */
+    private void renderTyreBench(GuiGraphics g, dev.mcmod.hdfv.design.WheelBench.AxleBench a, int x0, int y, int w, int bottom) {
+        var tyre = a.tyre();
+        // the rolling resistance at the row nearest 100 km/h
+        double rolling = 0, nearest = Double.POSITIVE_INFINITY;
+        for (double[] r : tyre.rolling()) { if (Math.abs(r[0] - 100 / 3.6) < nearest) { nearest = Math.abs(r[0] - 100 / 3.6); rolling = r[1]; } }
+        for (FormattedCharSequence line : font.split(Component.translatable("hdfv.bench.tyre_summary", Plot.number(Math.round(tyre.loadN())), Plot.number(Math.round(tyre.peakBrakingN())),
+                Plot.number(Math.round(100 * tyre.peakSlip())), Plot.number(Math.round(tyre.peakCorneringN())), Plot.number(tyre.peakAngleDeg()),
+                Plot.number(Math.round(rolling)), Plot.number(Math.round(tyre.hydroplaningMps() * 3.6))), w)) {
+            g.drawString(font, line, x0, y, ORANGE, false);
+            y += 10;
+        }
+        boolean brakes = !a.fade().isEmpty();
+        Component fade = Component.translatable("hdfv.bench.fade_none");
+        if (brakes) {
+            double hottest = 0;
+            for (var s : a.fade()) { hottest = Math.max(hottest, s.peakC()); }
+            fade = Component.translatable("hdfv.bench.fade_summary", a.fade().size(), Plot.number(Math.round(hottest)),
+                    Plot.number(Math.round(100 * a.fade().get(a.fade().size() - 1).torqueShare())));
+        }
+        for (FormattedCharSequence line : font.split(fade, w)) { g.drawString(font, line, x0, y, BLUE, false); y += 10; }
+        int h = brakes ? (bottom - y - 4) / 2 : bottom - y - 2, half = (w - 6) / 2;
+        List<String> keys = List.of(text("hdfv.bench.dry_road"), text("hdfv.bench.wet_road"));
+        int n = tyre.braking().size();
+        double[] slip = new double[n], dry = new double[n], wet = new double[n];
+        for (int i = 0; i < n; i++) { var p = tyre.braking().get(i); slip[i] = 100 * p.slip(); dry[i] = p.dryN() / 1000; wet[i] = p.wetN() / 1000; }
+        Plot.draw(g, font, x0, y + 2, half, h - 2, 0, 100, text("hdfv.bench.slip_ratio"), text("hdfv.bench.braking_force"), WHITE, "", GREY,
+                List.of(new Plot.Series(slip, dry, ORANGE, false), new Plot.Series(slip, wet, BLUE, false)));
+        legend(g, x0 + half - 6, y + 3, keys, List.of(ORANGE, BLUE));
+        int m = tyre.cornering().size();
+        double[] angle = new double[m], dryY = new double[m], wetY = new double[m];
+        for (int i = 0; i < m; i++) { var p = tyre.cornering().get(i); angle[i] = p.slip(); dryY[i] = p.dryN() / 1000; wetY[i] = p.wetN() / 1000; }
+        Plot.draw(g, font, x0 + half + 6, y + 2, w - half - 6, h - 2, 0, angle[m - 1], text("hdfv.bench.slip_angle"), text("hdfv.bench.cornering_force"), WHITE, "", GREY,
+                List.of(new Plot.Series(angle, dryY, ORANGE, false), new Plot.Series(angle, wetY, BLUE, false)));
+        legend(g, x0 + w - 6, y + 3, keys, List.of(ORANGE, BLUE));
+        if (!brakes) { return; }
+        int k = a.fade().size();
+        double[] stop = new double[k], peak = new double[k], share = new double[k];
+        for (int i = 0; i < k; i++) { var s = a.fade().get(i); stop[i] = s.stop(); peak[i] = s.peakC(); share[i] = 100 * s.torqueShare(); }
+        Plot.draw(g, font, x0, y + 2 + h, w, h, 1, Math.max(k, 2), text("hdfv.bench.fade_stop"), text("hdfv.bench.rotor_temperature"), RED, text("hdfv.bench.brake_torque_left"), GREEN,
+                List.of(new Plot.Series(stop, peak, RED, false), new Plot.Series(stop, share, GREEN, true)));
+    }
+
+    /**
+     * 0.25: a landing-gear leg's drop test (WheelBench.drop): the strut's stroke, the tyre's deflection and the load on
+     * the aircraft against time above; the load against the stroke below (the area under it is the energy the strut took).
+     */
+    private void renderLegBench(GuiGraphics g, LegBench b, int x0, int y, int w, int bottom) {
+        var d = b.limit();
+        for (FormattedCharSequence line : font.split(Component.translatable("hdfv.bench.drop_summary", Plot.number(round(d.sinkMps(), 2)), Plot.number(round(d.peakForceN() / 1000, 1)),
+                Plot.number(round(d.loadFactor(), 2)), Plot.number(Math.round(Math.min(d.maxStrokeM(), b.travelM()) * 1000)), Plot.number(Math.round(b.travelM() * 1000)),
+                Plot.number(Math.round(d.maxTyreM() * 1000))), w)) {
+            g.drawString(font, line, x0, y, ORANGE, false);
+            y += 10;
+        }
+        if (d.bottomed()) {
+            for (FormattedCharSequence line : font.split(Component.translatable("hdfv.bench.drop_bottomed"), w)) { g.drawString(font, line, x0, y, RED, false); y += 10; }
+        }
+        var r = b.reserve();
+        for (FormattedCharSequence line : font.split(Component.translatable(r.bottomed() ? "hdfv.bench.drop_reserve_bottomed" : "hdfv.bench.drop_reserve",
+                Plot.number(round(r.sinkMps(), 2)), Plot.number(round(r.loadFactor(), 2))), w)) {
+            g.drawString(font, line, x0, y, r.bottomed() ? YELLOW : BLUE, false);
+            y += 10;
+        }
+        int n = d.points().size(), h = (bottom - y - 4) / 2;
+        if (n < 2) { return; }
+        double[] t = new double[n], stroke = new double[n], tyre = new double[n], load = new double[n];
+        for (int i = 0; i < n; i++) { var p = d.points().get(i); t[i] = p.timeS(); stroke[i] = p.strokeM() * 1000; tyre[i] = p.tyreM() * 1000; load[i] = p.forceN() / 1000; }
+        Plot.draw(g, font, x0, y + 2, w, h - 2, 0, t[n - 1], text("hdfv.bench.time"), text("hdfv.bench.stroke"), ORANGE, text("hdfv.bench.gear_load"), BLUE,
+                List.of(new Plot.Series(t, stroke, ORANGE, false), new Plot.Series(t, tyre, GREEN, false), new Plot.Series(t, load, BLUE, true)));
+        // the key sits left of the right axis's label
+        legend(g, x0 + w - 36 - font.width(text("hdfv.bench.gear_load")), y + 3, List.of(text("hdfv.bench.strut"), text("hdfv.bench.tyre_deflection")), List.of(ORANGE, GREEN));
+        double most = 0;
+        for (double s : stroke) { most = Math.max(most, s); }
+        Plot.draw(g, font, x0, y + 2 + h, w, h, 0, Math.max(most, 1), text("hdfv.bench.stroke"), text("hdfv.bench.gear_load"), BLUE, "", GREY,
+                List.of(new Plot.Series(stroke, load, BLUE, false)));
     }
 
     /**
@@ -1234,6 +1486,7 @@ public final class DesignScreen extends Screen {
     PartDesign devDesign() { return design; }
     boolean devCutawayOn() { return preview.cutaway; }
     void devOpen(String p) { if (entries().contains(p)) { open(p); } }
+    void devAxleView(int view) { axleView = view; rebuildWidgets(); }
 
     /** Development: scrolls the parameters to the bottom (AutoShot cannot turn the mouse wheel). */
     void devScrollToEnd() { scroll = Math.max(0, contentHeight - (height - TOP - 6)); layout(); }

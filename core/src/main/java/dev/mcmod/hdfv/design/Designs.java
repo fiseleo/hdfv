@@ -47,7 +47,7 @@ public final class Designs {
     public static final String DESIGN_PAGE = "design";
 
     /** The groups the design screen sorts kinds of part into (0.6: the user asked for categories). */
-    public enum Category { ENGINE, AIR, BODY, WATER, LAND, OTHER, COMPONENT }
+    public enum Category { ENGINE, AIR, BODY, WATER, LAND, STORAGE, OTHER, COMPONENT }
 
     /**
      * A kind of part one can design: its id (for translations: hdfv.kind.<id>), category, and a new design of it to
@@ -93,6 +93,7 @@ public final class Designs {
             new Kind("transfer_case", Category.LAND, dev.mcmod.hdfv.part.drive.SampleGearboxes::partTime),
             new Kind("propeller", Category.WATER, () -> new PropellerDesign("screw", 0.35, 4, 0.70, 1.4, 0.18, 0.1,
                     dev.mcmod.aerocore.api.vehicle.MassSpec.solid(dev.mcmod.aerocore.api.vehicle.Material.BRONZE))),
+            new Kind("storage_box", Category.STORAGE, dev.mcmod.hdfv.part.StorageBoxDesign::roofBox),   // 0.25
             new Kind("box", Category.OTHER, () -> new BoxDesign("box", new dev.mcmod.aerocore.api.Vec3d(1, 0.5, 1), 1.05, true, 2, dev.mcmod.aerocore.api.vehicle.MassSpec.given(100))),
             new Kind("ballast", Category.OTHER, () -> new BallastDesign("ballast", 100)),
             new Kind("fuel_tank", Category.OTHER, () -> dev.mcmod.hdfv.part.FuelTankDesign.car("gasoline")),
@@ -157,7 +158,11 @@ public final class Designs {
             new Sample("full_time_case", "transfer_case", dev.mcmod.hdfv.part.drive.SampleGearboxes::fullTimeTorsen),
             new Sample("on_demand_coupling", "transfer_case", dev.mcmod.hdfv.part.drive.SampleGearboxes::onDemand),
             new Sample("hydrogen_cylinder", "fuel_tank", dev.mcmod.hdfv.part.FuelTankDesign::hydrogenCylinder),
-            new Sample("liquid_hydrogen_tank", "fuel_tank", dev.mcmod.hdfv.part.FuelTankDesign::liquidHydrogenTank)));
+            new Sample("liquid_hydrogen_tank", "fuel_tank", dev.mcmod.hdfv.part.FuelTankDesign::liquidHydrogenTank),
+            // 0.25: storage boxes
+            new Sample("roof_box", "storage_box", dev.mcmod.hdfv.part.StorageBoxDesign::roofBox),
+            new Sample("bed_box", "storage_box", dev.mcmod.hdfv.part.StorageBoxDesign::bedBox),
+            new Sample("container_20ft", "storage_box", dev.mcmod.hdfv.part.StorageBoxDesign::container20)));
 
     /** 0.23: each standard component's drawing is a sample too (a blueprint in the creative tab), after the parts'. */
     private static List<Sample> withComponentSamples(List<Sample> parts) {
@@ -486,6 +491,14 @@ public final class Designs {
                     if (bottom > 0) { out.add(new Figure("bottomPressure", bottom / 1000, "kPa")); }
                     out.add(new Figure("buoyancy", shape.waterHull().totalVolume() * 1000, "kg"));
                 }
+                // 0.25: its holds: their volume, their slots, the design payload (every hold full at the cargo density)
+                if (b.holdM3() > 0) {
+                    int slots = 0;
+                    for (var h : b.holds(shape)) { slots += dev.mcmod.hdfv.storage.CargoRules.slots(b, h); }
+                    out.add(new Figure("holdVolume", b.holdM3(), "m³"));
+                    out.add(new Figure("holdSlots", slots, ""));
+                    out.add(new Figure("designPayload", b.payloadKg(), "kg"));
+                }
             } else if (d instanceof dev.mcmod.hdfv.part.wheel.AxleDesign a) {
                 var t = a.tyre().tyre();
                 out.add(new Figure("tyreDiameter", 2 * t.radiusM(), "m"));
@@ -533,6 +546,13 @@ public final class Designs {
                 out.add(new Figure("fuelMass", full, "kg"));
                 if (t.boilOffKgPerS() > 0 && full > 0) { out.add(new Figure("boilOff", t.boilOffKgPerS() * 86400 / full * 100, "%/d")); }
                 if (t.kind() == dev.mcmod.hdfv.part.FuelTankDesign.Kind.HIGH_PRESSURE) { out.add(new Figure("burstPressure", t.safetyFactor() * t.pressurePa() / 1e6, "MPa")); }
+            } else if (d instanceof dev.mcmod.hdfv.part.StorageBoxDesign s) {
+                // 0.25: what it holds (litres and the slots of its hold), its tare, what it is rated to carry, its drag area
+                out.add(new Figure("capacity", s.capacityM3() * 1000, "L"));
+                out.add(new Figure("holdSlots", dev.mcmod.hdfv.storage.CargoRules.slots(s.capacityM3(), dev.mcmod.hdfv.storage.CargoRules.maxSlots(s)), ""));
+                out.add(new Figure("mass", s.massKg(), "kg"));
+                out.add(new Figure("ratedLoad", s.ratedLoadKg(), "kg"));
+                out.add(new Figure("dragArea", s.frontalAreaM2() * s.dragCoefficient(), "m²"));
             } else if (d instanceof dev.mcmod.hdfv.part.drive.TransferCaseDesign t) {
                 out.add(new Figure("mass", t.totalMassKg(), "kg"));
                 if (t.lowRatio() > 1) { out.add(new Figure("lowRange", t.lowRatio(), "")); }

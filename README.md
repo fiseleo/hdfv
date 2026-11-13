@@ -26,6 +26,10 @@ helicopters and boats; the physics is [AeroCore](https://github.com/fiseleo/aero
 - **Drive it.** Manual and automatic gearboxes, four-wheel drive, dials, lights; flight controls, landing gear,
   airports and control towers with ATC; trailers on a fifth wheel.
 - **Make it yours.** A refit shop (shape, size, aero kits, rims, tuning, lamps) and a paint booth with your own stickers.
+- **Keep it running.** Parts wear and get damaged (crashes, attacks, fire, water, rust); a repair shop and field
+  kits put them right, and a part past 80 % is replaced by a new one.
+- **Load it.** Boots, beds and holds carry cargo that weighs; roof boxes, bed boxes and containers you design;
+  crates, lockers, parts racks and a cargo loader.
 - **Hear it.** Every sound is synthesized from the running engine or machine.
 
 ## Getting started
@@ -41,7 +45,7 @@ every recipe and machining step is there too.
 | --- | --- |
 | Minecraft | 1.21.1 |
 | NeoForge | 21.1.252 or newer (21.1.x) |
-| AeroCore | 0.41.x (required) |
+| AeroCore | 0.42.x (required) |
 | JEI | optional: recipes and information pages |
 | Create | optional: some materials by Create's crushing, mixing and pressing |
 | Java | 21 |

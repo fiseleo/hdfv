@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SWS",
+    " L "
+  ],
+  "key": {
+    "S": {
+      "type": "neoforge:components",
+      "items": "hdfv:stock_bit",
+      "components": {
+        "hdfv:alloy": "steel"
+      }
+    },
+    "W": {
+      "item": "hdfv:copper_wire"
+    },
+    "L": {
+      "tag": "c:leathers"
+    }
+  },
+  "result": {
+    "id": "hdfv:field_repair_kit",
+    "count": 1
+  }
+}

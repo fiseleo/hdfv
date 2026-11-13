@@ -84,7 +84,7 @@ public record RotorDesign(String name, RotorBladeDesign blades, SectionDesign se
         double hubInertia = 0.5 * hub.massKg(blades.massKg()) * Math.pow(blades.rootCutout() * blades.radiusM(), 2);
         RotorPart inner = new RotorPart(this, geometry(), controls.minCollectiveDeg(), controls.maxCollectiveDeg(), controls.cyclicDeg(), hubInertia, mass(),
                 Components.extrapolations(issues));
-        return new Compiled(this, inner);
+        return new Compiled(this, inner.wearing(RotorPart.Wearing.typical()));   // 0.25: its blades can be damaged
     }
 
     @Override public Map<String, Object> parameters() { return Components.parameters(components()); }
@@ -110,6 +110,8 @@ public record RotorDesign(String name, RotorBladeDesign blades, SectionDesign se
         @Override public int internalStates() { return inner.internalStates(); }
         /** 0.12 (AeroCore 0.30): the rotor's shown values (blade setting, flapping...) for drawing. */
         @Override public int shownValues() { return inner.shownValues(); }
+        /** 0.25: the rotor's condition (blades). */
+        @Override public List<String> conditions() { return inner.conditions(); }
 
         @Override public void loads(PartStep step) {
             RotorControlDesign c = design.controls();

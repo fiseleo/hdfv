@@ -66,7 +66,7 @@ final class Preview {
         return d instanceof dev.mcmod.hdfv.part.FloatDesign || d instanceof dev.mcmod.hdfv.part.HullDesign || d instanceof dev.mcmod.hdfv.part.PlaningHullDesign
                 || d instanceof dev.mcmod.hdfv.part.PropellerDesign || d instanceof dev.mcmod.hdfv.part.ControlSurfaceDesign || d instanceof dev.mcmod.hdfv.part.MotorDesign
                 || d instanceof dev.mcmod.hdfv.part.BoxDesign || d instanceof dev.mcmod.hdfv.part.BallastDesign || d instanceof dev.mcmod.hdfv.part.FuelTankDesign
-                || d instanceof dev.mcmod.hdfv.part.SeatDesign;
+                || d instanceof dev.mcmod.hdfv.part.SeatDesign || d instanceof dev.mcmod.hdfv.part.StorageBoxDesign;
     }
 
     /** 0.12: a part's world mesh as a model (all of it fixed; its page not highlighted), null where it draws nothing. */

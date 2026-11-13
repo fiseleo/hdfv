@@ -72,7 +72,8 @@ public record PropellerDesign(String name, double diameterM, int blades, double 
         List<DesignIssue> issues = check();
         DesignException.throwIfInvalid(issues);
         return new PropellerPart(this, diameterM, blades, pitchRatio, hubRatio, chordRatio(), () -> PropellerModels.fourQuadrant(blades, areaRatio, pitchRatio, hubRatio),
-                mass.resolve(t -> unitMass()), issues.stream().filter(i -> i.kind() == DesignIssue.Kind.EXTRAPOLATION).toList());
+                mass.resolve(t -> unitMass()), issues.stream().filter(i -> i.kind() == DesignIssue.Kind.EXTRAPOLATION).toList())
+                .wearing(PropellerPart.Wearing.typical());   // 0.25: its blades can be damaged
     }
 
     @Override public Map<String, Object> parameters() {

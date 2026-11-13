@@ -111,6 +111,8 @@ public record SolidRocketDesign(String name, GrainDesign grain, RocketCasingDesi
     /** What an idle booster asks of its grain (kg/s): enough to learn whether there is any. */
     static final double TRICKLE = 1e-9;
 
+    private static final java.util.List<String> STRUCTURE = java.util.List.of(dev.mcmod.hdfv.damage.Conditions.STRUCTURE);
+
     private static final class Compiled implements Part {
         private final SolidRocketDesign design;
         private final List<DesignIssue> issues;
@@ -143,6 +145,8 @@ public record SolidRocketDesign(String name, GrainDesign grain, RocketCasingDesi
         @Override public int internalStates() { return 3; }
         /** The flame: thrust over the motor's largest at sea level (0 out; RamjetDesign.SHOWN_FLAME). */
         @Override public int shownValues() { return 1 + Exhaust.COUNT; }
+        /** 0.25: its casing (Conditions.STRUCTURE): damaged from outside only; a motor whose casing has failed does not ignite (no bursts are modelled). */
+        @Override public java.util.List<String> conditions() { return STRUCTURE; }
 
         @Override public void loads(PartStep step) {
             double dt = step.dt(), fire = step.input("fire", 0);
@@ -152,7 +156,7 @@ public record SolidRocketDesign(String name, GrainDesign grain, RocketCasingDesi
             // whether the grain had propellant last step (a trickle is asked while idle, so an empty grain does not light)
             boolean fed = JetRuntime.fed(step);
             if (burning && !fed) { burning = false; }
-            if (!burning && rising && fed) { burning = true; t = 0; }
+            if (!burning && rising && fed && !(step.used(0) >= 1)) { burning = true; t = 0; }
             double thrust = 0, flow = 0;
             double pa = JetRuntime.air(step, new Vec3d(halfLength, 0, 0)).flight().pressurePa();
             if (burning) {

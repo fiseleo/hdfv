@@ -1,0 +1,26 @@
+{
+  "parent": "hdfv:tutorial/first_car",
+  "display": {
+    "icon": {
+      "id": "hdfv:shipping_container"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.loaded.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.loaded.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "loaded": {
+      "trigger": "hdfv:milestone",
+      "conditions": {
+        "event": "loaded"
+      }
+    }
+  }
+}

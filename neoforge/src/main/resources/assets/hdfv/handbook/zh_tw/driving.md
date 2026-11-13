@@ -17,4 +17,8 @@ advancement: hdfv:tutorial/on_the_road
 
 儀表顯示車速、轉速、檔位與油量。所有按鍵都可以在控制設定的「高自由度載具」裡改。
 
+## 道路與坡道
+{items hdfv:asphalt hdfv:asphalt_ramp_2 hdfv:asphalt_ramp_4 hdfv:asphalt_ramp_8 hdfv:apron_concrete hdfv:concrete_ramp_2 hdfv:concrete_ramp_4 hdfv:concrete_ramp_8}
+路面用{item hdfv:asphalt}（礫石加上煉油廠的瀝青）或{item hdfv:apron_concrete}來鋪。坡道每走 2、4 或 8 格升高一格：1:8 是平緩的道路，1:2 就很陡了。第一段面向上坡放，接下來的貼著它放，坡面會自己接下去；在坡頂前方高一格的地方再放一段，就會開始下一層。車輪會把坡道當成真正的斜坡開上去。
+
 {see aircraft}

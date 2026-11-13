@@ -210,6 +210,7 @@ public final class Exhausts {
                 if (d instanceof PistonEngineDesign e) { pistonSmoke(level, v, p, e, drift); }
                 else if (Exhaust.first(d) >= 0 && !(d instanceof ShaftTurbineDesign)) { jetSmoke(level, v, p, drift); }
             }
+            if (v.worstUsed() > DAMAGE_SMOKE_FROM) { damage(level, v, vehicle, drift); }   // 0.25
         }
         standSmoke(level);
         OWED.keySet().removeIf(k -> !k.startsWith("stand") && level.getEntity(Integer.parseInt(k.substring(0, k.indexOf(':')))) == null);
@@ -279,6 +280,39 @@ public final class Exhausts {
         }
         if (running && e.diesel() && load > 0.6) {   // a diesel near full load (and while its turbo catches up) puffs soot
             emitAt(level, key + ":d", at, 0.02, out.scale(0.15).add(drift), drift, HdfvParticles.SOOT.get(), 40 * Math.clamp((load - 0.6) / 0.4, 0, 1), 0.14f, 0xb0181818, 2.2f);
+        }
+    }
+
+    /** 0.25: from this much used an engine's damage smokes (display rules: the rate and the darkness rise with the damage). */
+    private static final double DAMAGE_SMOKE_FROM = 0.5;
+
+    /**
+     * 0.25: what damage shows: smoke rising from an engine whose ancillaries, engine or hot section are past half used
+     * (grey, blacker and thicker toward failure), and fuel dripping under a leaking tank that still holds some.
+     */
+    private static void damage(ClientLevel level, PartVehicle v, Vehicle vehicle, Vec3d drift) {
+        for (Vehicle.Installed p : vehicle.installed()) {
+            double worst = 0;
+            for (String c : p.part().conditions()) {
+                if (c.equals(dev.mcmod.hdfv.damage.Conditions.ANCILLARIES) || c.equals(dev.mcmod.hdfv.damage.Conditions.ENGINE)
+                        || c.equals(dev.mcmod.hdfv.damage.Conditions.HOT_SECTION) || c.equals(dev.mcmod.hdfv.damage.Conditions.MOTOR)) {
+                    worst = Math.max(worst, v.used(p.id(), c));
+                }
+            }
+            if (!(worst > DAMAGE_SMOKE_FROM)) { continue; }
+            double share = Math.clamp((worst - DAMAGE_SMOKE_FROM) / (1 - DAMAGE_SMOKE_FROM), 0, 1);
+            int grey = (int) Math.round(0x9a - (0x9a - 0x20) * share), alpha = (int) Math.round(0x70 + 0x60 * share);
+            emit(level, v, p, p.part().mass().centre(), 0.15, new Vec3d(0, 0.05, 0).add(drift), drift, HdfvParticles.SMOKE.get(), 3 + 20 * share, (float) (0.35 + 0.35 * share),
+                    alpha << 24 | grey << 16 | grey << 8 | grey, 2.8f, "dmg");
+        }
+        for (int k = 0; k < vehicle.tanks().size(); k++) {
+            Vehicle.Tank t = vehicle.tanks().get(k);
+            if (t.tank().own() || !(v.tankKg(k) > 0)) { continue; }
+            double leak = dev.mcmod.hdfv.damage.EngineWear.leakPerS(dev.mcmod.hdfv.neoforge.damage.VehicleDamage.tankUsed(v, k));
+            if (!(leak > 0)) { continue; }
+            Vehicle.Installed p = vehicle.installed().get(t.part());
+            emit(level, v, p, t.tank().centre(), 0.1, new Vec3d(0, -0.05, 0).add(drift), drift, HdfvParticles.MUD.get(), 4 + 200 * Math.min(leak, 0.05), 0.05f, 0xd0b08a3a, 1.2f,
+                    "leak" + k);
         }
     }
 

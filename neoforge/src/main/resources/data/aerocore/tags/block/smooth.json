@@ -1,6 +1,12 @@
 {
   "values": [
     "hdfv:asphalt",
-    "hdfv:apron_concrete"
+    "hdfv:apron_concrete",
+    "hdfv:asphalt_ramp_2",
+    "hdfv:asphalt_ramp_4",
+    "hdfv:asphalt_ramp_8",
+    "hdfv:concrete_ramp_2",
+    "hdfv:concrete_ramp_4",
+    "hdfv:concrete_ramp_8"
   ]
 }

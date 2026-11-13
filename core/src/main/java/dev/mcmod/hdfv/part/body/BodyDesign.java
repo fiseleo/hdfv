@@ -41,6 +41,11 @@ import java.util.Objects;
  * (AeroCore's RoadAero). Only a car's body has the page; without a kit its JSON has no "kit" key and it is as before.
  * <p>0.18: a car's front end (BodyFrontDesign, the "front" page: grille, headlamps, bumper, intake, fog lamps, a bulge on
  * the hood; look/FrontLayout places it, automatic from the shape): looks only. All automatic writes no "front" key.
+ * <p>0.25: every module with a hold's volume (cargoM3) is a cargo hold of the compiled body (Part.Hold "m3_cargo": a
+ * car's boot, a lorry's box, an aircraft's or a boat's hold) whose cargo the vehicle carries at its centre; the design
+ * cargo (cargoFill of it at cargoDensityKgM3) stays the load the structure is checked with and the bench's laden mass,
+ * and is no longer in the compiled body's mass (dryMass). A module's hold is rated for its volume at cargoDensityKgM3
+ * (holdLimitKg; storage.CargoRules).
  */
 public record BodyDesign(String name, BodySettingsDesign settings, List<BodyModuleDesign> modules, BodyKitDesign kit, BodyFrontDesign front)
         implements PartDesign, dev.mcmod.hdfv.design.ListedDesign {
@@ -260,8 +265,57 @@ public record BodyDesign(String name, BodySettingsDesign settings, List<BodyModu
         return out;
     }
 
+    /**
+     * A module's design cargo, kg: its hold at the settings' density and fill. What the structure is checked with and the
+     * design screen's laden figures (mass(), the bench); from 0.25 not in the compiled body (dryMass): what a vehicle
+     * carries is what is in its holds (Part.Hold, the game's items).
+     */
     public double cargoKg(int i) { return modules.get(i).cargoM3() * settings.cargoDensityKgM3() * settings.cargoFill(); }
     public double fuelKg(int i) { return modules.get(i).fuelM3() * settings.fuelDensity() * settings.fuelFill(); }
+
+    /** 0.25: what a module's hold is rated to carry, kg: its volume full at the settings' cargo density (0 without a hold). */
+    public double holdLimitKg(int i) { return modules.get(i).cargoM3() * settings.cargoDensityKgM3(); }
+
+    /** 0.25: the design payload, kg: every hold full at the settings' cargo density. */
+    public double payloadKg() {
+        double kg = 0;
+        for (int i = 0; i < modules.size(); i++) { kg += holdLimitKg(i); }
+        return kg;
+    }
+
+    /** 0.25: the holds' volume, m^3. */
+    public double holdM3() {
+        double m3 = 0;
+        for (BodyModuleDesign m : modules) { m3 += Math.max(m.cargoM3(), 0); }
+        return m3;
+    }
+
+    /**
+     * 0.25: a module's cargo hold as BodyModel draws it (body frame: min and max corners): in the rear part of the
+     * module's middle 80 %, from 5 % of its depth up, a box of its volume in the room of half that length, 60 % of the
+     * depth and 70 % of the width (shrunk alike on every side when the volume is smaller, never grown past it); null
+     * without a hold.
+     */
+    public Vec3d[] cargoBox(BodyShape shape, int i) {
+        BodyModuleDesign m = modules.get(i);
+        if (!(m.cargoM3() > 0)) { return null; }
+        double front = shape.moduleFrontX(i), rear = shape.moduleRearX(i), x = 0.5 * (front + rear), len = 0.8 * (front - rear);
+        double bottom = shape.bottomAt(x), h = shape.topAt(x) - bottom, w = 0.7 * shape.widthAt(x);
+        double rl = 0.5 * len, rh = 0.6 * h, room = Math.max(rl * rh * w, 1e-6), f = Math.min(Math.cbrt(m.cargoM3() / room), 1);
+        double l = rl * f, hh = rh * f, ww = w * f, cx = x + 0.25 * len, y0 = bottom + 0.05 * h;
+        return new Vec3d[]{new Vec3d(cx - l / 2, y0, -ww / 2), new Vec3d(cx + l / 2, y0 + hh, ww / 2)};
+    }
+
+    /** 0.25: its cargo holds (Part.Hold): one for each module with a hold's volume, named CargoRules.holdName, at the middle of its cargoBox. */
+    public List<Part.Hold> holds(BodyShape shape) {
+        List<Part.Hold> out = new ArrayList<>();
+        for (int i = 0; i < modules.size(); i++) {
+            Vec3d[] box = cargoBox(shape, i);
+            if (box == null) { continue; }
+            out.add(new Part.Hold(dev.mcmod.hdfv.storage.CargoRules.holdName(i), modules.get(i).cargoM3(), box[0].add(box[1]).scale(0.5)));
+        }
+        return out;
+    }
 
     /** Where a module's tank is (body frame): low in it, mid-length, on the centre line. */
     private static Vec3d tankAt(BodyShape shape, int i) {
@@ -279,13 +333,20 @@ public record BodyDesign(String name, BodySettingsDesign settings, List<BodyModu
         return out;
     }
 
-    /** Mass, centre and inertia: each module's structure as a box of its size, the seats, occupants, cargo and fuel as points. */
-    public MassProperties mass() { return mass(true); }
+    /**
+     * Mass, centre and inertia laden as designed: each module's structure as a box of its size, the seats, occupants,
+     * design cargo (cargoKg) and fuel as points. The design screen's and the bench's.
+     */
+    public MassProperties mass() { return mass(true, true); }
 
-    /** The same without the fuel (the vehicle carries that in the tanks). */
-    public MassProperties dryMass() { return mass(false); }
+    /**
+     * What the compiled body weighs: the same without the fuel (the vehicle carries that in the tanks) and, from 0.25,
+     * without the design cargo (the vehicle carries what is loaded in its holds; before 0.25 the design cargo was part
+     * of the body and a vehicle could not carry more or less).
+     */
+    public MassProperties dryMass() { return mass(false, false); }
 
-    private MassProperties mass(boolean fuel) {
+    private MassProperties mass(boolean fuel, boolean cargo) {
         BodyShape shape = shape();
         List<BodyStructure.ModuleMass> masses = BodyStructure.masses(shape, structure());
         List<MassProperties> parts = new ArrayList<>();
@@ -293,7 +354,7 @@ public record BodyDesign(String name, BodySettingsDesign settings, List<BodyModu
             double front = shape.moduleFrontX(i), rear = shape.moduleRearX(i), x = 0.5 * (front + rear);
             double h = Math.max(shape.topAt(x) - shape.bottomAt(x), 0.05), w = Math.max(shape.widthAt(x), 0.05), kg = Math.max(masses.get(i).totalKg(), 1e-3);
             parts.add(MassProperties.of(kg, new Vec3d(x, shape.centreAt(x), 0), InertiaTensor.box(kg, new Vec3d(Math.max(front - rear, 0.05), h, w))));
-            double load = cargoKg(i) + (fuel ? fuelKg(i) : 0);
+            double load = (cargo ? cargoKg(i) : 0) + (fuel ? fuelKg(i) : 0);
             if (load > 0) { parts.add(MassProperties.point(load, tankAt(shape, i))); }
         }
         for (Seat s : seats(shape)) { parts.add(MassProperties.point(SEAT_KG + settings.occupantKg(), s.at())); }
@@ -529,7 +590,9 @@ public record BodyDesign(String name, BodySettingsDesign settings, List<BodyModu
         List<DesignIssue> extrapolated = issues.stream().filter(i -> i.kind() == DesignIssue.Kind.EXTRAPOLATION).toList();
         if (!tanks) { return new BodyPart(this, shape, extraDragAreaM2(shape), settings.waterModel(), 6, mass(), mountPoints(shape), seats, extrapolated); }
         dev.mcmod.aerocore.api.body.RoadAero aero = kitted() ? dev.mcmod.hdfv.look.KitLayout.of(this, shape).aero : null;
-        return new BodyPart(this, shape, extraDragAreaM2(shape), settings.waterModel(), 6, dryMass(), mountPoints(shape), seats, tanks(shape), extrapolated, twist(shape), aero);
+        // 0.25: the shell can be damaged (its structure; a dented body drags more); its holds carry what is loaded (dryMass has no design cargo)
+        return new BodyPart(this, shape, extraDragAreaM2(shape), settings.waterModel(), 6, dryMass(), mountPoints(shape), seats, tanks(shape), extrapolated, twist(shape), aero,
+                holds(shape)).wearing(BodyPart.Wearing.typical());
     }
 
     /**

@@ -1,0 +1,241 @@
+world AeroCore 025 QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.25 verification, run 2 of 3 (tools/autoshot/README.md), after verify-0.25-world.txt in AeroCore 025 QA: on a
+# pad in the air (x 230-310, z 240-300, y 150) the manual test sedan driven into a stone wall at 15 m/s, braked once it
+# hit (in neutral it rolled back 25 m), its smoke and drips (its parts then set worse by /hdfv vehicle condition set,
+# so every dashboard warning lights), its status screen's three tabs (Condition, Cargo, Repair), the dashboard while
+# riding it; a repair shop (the room RepairShopGameTests builds) with a damaged sedan and its screen; cargo: the roof
+# box sedan and the semi with a 20 ft container (test cars /hdfv dev drive spawn roofbox, containersemi), a cargo loader
+# fed by a hopper at the sedan's boot, the boot's menu opened by the inventory key while riding. English, then the
+# screens again in Traditional Chinese (hdfvdev lang). The crashed car is found by a box over its lane (x 270-302,
+# z 262-278) and the cameras are set from where it stopped. After a gui step the first shot (and after a shot the first
+# gui) is thrown away: hiding and showing the HUD takes a frame.
+mark v25 damage start
+cmd gamemode spectator @p
+cmd gamerule doDaylightCycle false
+cmd gamerule doWeatherCycle false
+cmd gamerule logAdminCommands false
+cmd time set 6000
+cmd weather clear
+clouds off
+client hdfvdev lang en_us
+cmd tp @p 270 165 270 facing 270 150 280
+wait 200
+# every loaded vehicle away (the QA world's and run 1's: with them the server ran 86-92 ms a tick), the pad built
+cmd kill @e[type=aerocore:part_vehicle]
+cmd fill 230 150 240 310 150 300 minecraft:smooth_stone
+cmd fill 230 151 240 310 170 300 minecraft:air
+# --- the repair shop as RepairShopGameTests.shop builds it (its origin at 240 148 245): inside x 242-249, z 247-251, y 151-154
+cmd fill 241 150 246 250 155 252 minecraft:stone
+cmd fill 242 151 247 249 154 251 minecraft:air
+cmd fill 250 151 248 250 153 250 hdfv:roller_shutter
+cmd setblock 241 152 249 hdfv:repair_shop_controller[facing=east]
+cmd setblock 242 151 247 hdfv:work_light
+cmd setblock 242 151 251 hdfv:work_light
+cmd setblock 240 152 249 hdfv:creative_power
+cmd setblock 249 151 247 hdfv:welding_station
+cmd setblock 249 151 251 hdfv:storage_crate[facing=west]
+cmd data merge block 249 151 251 {Items:[{Slot:0b,id:"hdfv:steel_plate",count:8},{Slot:1b,id:"hdfv:fastener_kit",count:4},{Slot:2b,id:"minecraft:iron_ingot",count:20}]}
+cmd execute positioned 239.0 151.6 249.5 rotated -90 0 run aerocore vehicle spawn sedan
+# --- the crash lane: a stone wall at x 300 across z 262-278, four blocks high
+cmd fill 300 151 262 301 154 278 minecraft:stone
+# --- cargo: the roof box sedan (spawned as the player, so it is not the "last" test car), a loader and a hopper at its boot
+cmd tp @p 262 151 290 facing 272 151 290
+wait 5
+client hdfv dev drive spawn roofbox
+cmd setblock 264 151 290 hdfv:cargo_loader[facing=east]
+cmd setblock 264 152 290 minecraft:hopper[facing=down]
+# the semi with the container, from the server (its trailer behind the tractor, to the west)
+cmd execute positioned 266 151 280 rotated -90 0 run hdfv dev drive spawn containersemi
+# the manual sedan last: drive launch and mount act on it
+cmd tp @p 281 151 270 facing 291 151 270
+wait 5
+client hdfv dev drive spawn manual
+cmd tp @p 290 160 255 facing 290 151 270
+wait 1500
+mark v25 ready
+cmd execute as @e[type=aerocore:part_vehicle,x=230,y=140,z=240,dx=80,dy=30,dz=60] run data get entity @s Pos
+# --- the crash
+cmd execute positioned 287 152 270 run aerocore vehicle control handbrake 0
+cmd execute positioned 287 152 270 run aerocore vehicle control selector 0
+cmd tp @p 292 156 280 facing 296 151.5 270
+wait 10
+client hdfv dev drive launch 15
+wait 30
+cmd execute as @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] at @s run aerocore vehicle control brake 1
+wait 70
+shot v25-discard
+shot v25-crash
+mark v25 crashed
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run hdfv vehicle condition
+cmd execute as @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run data get entity @s Pos
+wait 20
+# the car faces +x, its origin at its tail: the front is about 4.6 m ahead of it
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run tp @p ~2.6 ~-0.2 ~3.6 facing ~4.2 ~-1.3 ~0
+wait 40
+shot v25-crash-front
+# worse than the crash made them: every warning (engine, brakes, flat tyre, transmission, structure and its leak)
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run hdfv vehicle condition set engine ancillaries 0.85
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run hdfv vehicle condition set body structure 0.75
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run hdfv vehicle condition set front_axle tyres 1
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run hdfv vehicle condition set front_axle brakes 0.85
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run hdfv vehicle condition set gearbox gears 0.85
+wait 100
+shot v25-smoke
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run tp @p ~-1 ~1.5 ~5 facing ~3.5 ~-1.2 ~0
+wait 40
+shot v25-smoke-wide
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run tp @p ~1.8 ~-1.75 ~2.6 facing ~2 ~-1.85 ~0
+wait 60
+shot v25-drips
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run tp @p ~-1.5 ~-1.4 ~3.2 facing ~2 ~-1.85 ~0
+wait 40
+shot v25-drips-b
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run hdfv vehicle condition
+# its status screen (the player beside it)
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run tp @p ~2 ~-0.5 ~2.5 facing ~2 ~-0.5 ~0
+wait 10
+client hdfvdev status 0
+wait 30
+gui v25-discard
+gui v25-status-condition
+client hdfvdev close
+wait 5
+client hdfvdev status 1
+wait 50
+gui v25-status-cargo
+client hdfvdev close
+wait 5
+client hdfvdev status 2
+wait 30
+gui v25-status-repair
+client hdfvdev close
+wait 10
+# the dashboard's warnings while riding it
+cmd gamemode creative @p
+client hdfv dev drive mount
+wait 40
+gui v25-hud-badges
+camera back
+wait 20
+gui v25-hud-badges-back
+camera first
+cmd ride @p dismount
+cmd gamemode spectator @p
+wait 10
+# --- the repair shop: the sedan in it damaged, then its screen
+cmd execute positioned 245 152 249.5 run hdfv vehicle condition set body structure 0.35
+cmd execute positioned 245 152 249.5 run hdfv vehicle condition set front_axle suspension 0.85
+cmd execute positioned 245 152 249.5 run hdfv vehicle condition set front_axle tyres 0.6
+cmd execute positioned 245 152 249.5 run hdfv vehicle condition set engine ancillaries 0.45
+cmd execute positioned 245 152 249.5 run hdfv vehicle condition set rear_axle brakes 0.3
+cmd tp @p 249.3 152.8 250.8 facing 245 150.4 249.5
+wait 60
+shot v25-discard
+shot v25-repair-room
+cmd tp @p 248 151 249.5 facing 241 152 249.5
+wait 10
+client hdfv dev repair 241 152 249 open
+wait 30
+gui v25-discard
+gui v25-repair-screen
+client hdfv dev repair 241 152 249 all
+wait 30
+gui v25-repair-screen-all
+client hdfvdev close
+wait 10
+# --- cargo: the roof box sedan with its loader, the semi with its container
+cmd data merge block 264 152 290 {Items:[{Slot:0b,id:"minecraft:iron_ingot",count:8},{Slot:1b,id:"hdfv:aluminium_ingot",count:4}]}
+cmd tp @p 271.5 153.5 295.5 facing 268 151.6 290
+wait 140
+shot v25-discard
+shot v25-roofbox-sedan
+cmd tp @p 262 153 294 facing 265 151.4 290
+wait 20
+shot v25-loader
+cmd tp @p 247 158 266 facing 255 152 280
+wait 40
+shot v25-container-semi
+fps
+cmd tp @p 262.5 151 292.5 facing 264 151 290
+wait 10
+gui v25-discard
+client hdfv dev open 264 151 290
+wait 10
+gui v25-loader-message
+cmd tp @p 268 151 293 facing 268 151 290
+wait 10
+client hdfvdev status 1
+wait 50
+gui v25-roofbox-status-cargo
+client hdfvdev close
+wait 10
+cmd gamemode creative @p
+cmd ride @p mount @e[type=aerocore:part_vehicle,x=268,y=152,z=290,distance=..5,limit=1,sort=nearest]
+wait 40
+gui v25-roofbox-hud
+key key.inventory tap
+wait 40
+gui v25-boot-menu
+client hdfvdev close
+wait 10
+cmd ride @p dismount
+cmd gamemode spectator @p
+wait 10
+# --- the same screens in Traditional Chinese
+client hdfvdev lang zh_tw
+wait 400
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run tp @p ~2 ~-0.5 ~2.5 facing ~2 ~-0.5 ~0
+wait 10
+client hdfvdev status 0
+wait 30
+gui v25-zh-status-condition
+client hdfvdev close
+wait 5
+client hdfvdev status 2
+wait 30
+gui v25-zh-status-repair
+client hdfvdev close
+wait 5
+cmd gamemode creative @p
+client hdfv dev drive mount
+wait 40
+gui v25-zh-hud-badges
+cmd ride @p dismount
+cmd gamemode spectator @p
+wait 10
+cmd tp @p 248 151 249.5 facing 241 152 249.5
+wait 10
+client hdfv dev repair 241 152 249 open
+wait 30
+gui v25-zh-repair-screen
+client hdfvdev close
+wait 10
+cmd tp @p 268 151 293 facing 268 151 290
+wait 10
+client hdfvdev status 1
+wait 50
+gui v25-zh-roofbox-status-cargo
+client hdfvdev close
+wait 10
+cmd tp @p 271 151 224.5 facing 270 151 222.5
+wait 40
+client hdfv dev open 270 151 222
+wait 30
+client hdfvdev hover 0
+wait 10
+gui v25-zh-crate-tooltip
+client hdfvdev close
+wait 10
+cmd tp @p 275 151 224.5 facing 276 151 222.5
+wait 10
+client hdfv dev open 276 151 222
+wait 30
+gui v25-zh-container
+client hdfvdev close
+wait 10
+mark v25 damage end
+quit

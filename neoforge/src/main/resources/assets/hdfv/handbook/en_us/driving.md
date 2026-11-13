@@ -17,4 +17,8 @@ Fuel the car first (it leaves the factory empty), then get in. {key key.forward}
 
 The dashboard shows speed, revs, gear and fuel. All keys can be changed in the controls, under High Degree of Freedom Vehicles.
 
+## Roads and ramps
+{items hdfv:asphalt hdfv:asphalt_ramp_2 hdfv:asphalt_ramp_4 hdfv:asphalt_ramp_8 hdfv:apron_concrete hdfv:concrete_ramp_2 hdfv:concrete_ramp_4 hdfv:concrete_ramp_8}
+Pave with {item hdfv:asphalt} (gravel and the refinery's bitumen) or {item hdfv:apron_concrete}. A ramp rises one block over 2, 4 or 8 blocks: 1:8 is a gentle road, 1:2 a steep one. Put the first piece down looking uphill and the next ones against it: each carries the slope on by itself, and a piece set a block higher beyond the top starts the next flight. Wheels drive up a ramp as a real slope.
+
 {see aircraft}

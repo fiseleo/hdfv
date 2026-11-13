@@ -1,0 +1,260 @@
+world AeroCore 025 QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.25 verification, run 3 of 3 (tools/autoshot/README.md), Create in the run (hdfvdev advancements opens the screen
+# on hdfv's tab, not Create's): first the status screen's fixed tabs (a tractor's Cargo with no holds, the crashed sedan's
+# Repair wrapped) on run 2's pad, then the design screen's new bench charts (a manual, an automatic, a CVT, a dual clutch, a transfer
+# case, an axle's two views, a landing gear's drop test) and the STORAGE category (the roof box and the 20 ft container
+# in the 3D preview); the handbook's damage, cargo, driving (scrolled to the ramps) and design pages; the advancements
+# with the four new ones granted; JEI's information pages of the repair shop and the cargo loader. English, then the
+# handbook, the advancements, JEI and a bench again in Traditional Chinese (hdfvdev lang).
+mark v25 screens start
+cmd gamemode spectator @p
+cmd gamerule doDaylightCycle false
+cmd gamerule logAdminCommands false
+cmd time set 6000
+cmd weather clear
+client hdfvdev lang en_us
+# the four new advancements and those before them (their toasts are gone by the time the screen is shot)
+cmd advancement grant @p until hdfv:tutorial/field_repaired
+cmd advancement grant @p until hdfv:tutorial/storeroom
+cmd advancement grant @p until hdfv:tutorial/loaded
+cmd tp @p 277 151 283.5 facing 274 151 280.5
+wait 300
+# --- the status screen's tabs as fixed after run 2: the tractor's Cargo (no holds: the line wraps), the crashed sedan's Repair
+client hdfvdev status 1
+wait 40
+gui v25-discard
+gui v25-status-cargo-none
+client hdfvdev close
+wait 10
+cmd execute at @e[type=aerocore:part_vehicle,x=270,y=145,z=262,dx=32,dy=15,dz=16] run tp @p ~2 ~-0.5 ~2.5 facing ~2 ~-0.5 ~0
+wait 20
+client hdfvdev status 2
+wait 30
+gui v25-status-repair-wrapped
+client hdfvdev close
+wait 10
+cmd tp @p 273 152.4 230 facing 273 150.9 222.5
+wait 20
+# --- benches
+client hdfvdev design five_speed_manual bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-bench-manual
+client hdfvdev close
+wait 10
+client hdfvdev design six_speed_automatic bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-bench-automatic
+client hdfvdev close
+wait 10
+client hdfvdev design belt_cvt bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-bench-cvt
+client hdfvdev close
+wait 10
+client hdfvdev design seven_speed_dual_clutch bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-bench-dct
+client hdfvdev close
+wait 10
+client hdfvdev design part_time_case bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-bench-transfer
+client hdfvdev close
+wait 10
+client hdfvdev design full_time_case bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-bench-transfer-full
+client hdfvdev close
+wait 10
+client hdfvdev design sedan_front_axle bench
+wait 60
+client hdfvdev bench
+wait 120
+client hdfvdev bench view 0
+wait 20
+gui v25-bench-axle-travel
+client hdfvdev bench view 1
+wait 20
+gui v25-bench-axle-tyre
+client hdfvdev close
+wait 10
+client hdfvdev design light_main_gear bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-bench-gear-drop
+client hdfvdev close
+wait 10
+# --- the storage boxes
+client hdfvdev design roof_box overview
+wait 120
+gui v25-design-roofbox
+client hdfvdev page overview
+wait 20
+client hdfvdev cutaway off
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 40
+gui v25-design-roofbox-3d
+client hdfvdev close
+wait 10
+client hdfvdev design container_20ft overview
+wait 120
+gui v25-design-container
+client hdfvdev page overview
+wait 20
+client hdfvdev cutaway off
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 40
+gui v25-design-container-3d
+client hdfvdev close
+wait 10
+client hdfvdev design bed_box overview
+wait 120
+gui v25-design-bedbox
+client hdfvdev close
+wait 10
+# --- the handbook
+client hdfv handbook damage
+wait 60
+gui v25-handbook-damage
+client hdfvdev scroll 400 140 -10
+wait 10
+gui v25-handbook-damage-end
+client hdfv handbook cargo
+wait 40
+gui v25-handbook-cargo
+client hdfvdev scroll 400 140 -10
+wait 10
+gui v25-handbook-cargo-end
+client hdfv handbook driving
+wait 40
+client hdfvdev scroll 400 140 -20
+wait 10
+gui v25-handbook-driving-ramps
+client hdfv handbook design
+wait 120
+gui v25-handbook-design
+client hdfvdev scroll 400 140 -20
+wait 10
+gui v25-handbook-design-end
+client hdfvdev close
+wait 10
+# --- the advancements on hdfv's tab (hdfvdev advancements), dragged about to find the new ones
+client hdfvdev advancements
+wait 40
+gui v25-advancements
+client hdfvdev drag 213 140 -120 0
+wait 10
+gui v25-advancements-a
+client hdfvdev drag 213 140 0 -80
+wait 10
+gui v25-advancements-b
+client hdfvdev drag 213 140 240 0
+wait 10
+gui v25-advancements-c
+client hdfvdev close
+wait 10
+# --- JEI
+client hdfvdev jei repair_shop_controller
+wait 40
+gui v25-jei-repair-shop
+client hdfvdev close
+wait 10
+client hdfvdev jei cargo_loader
+wait 40
+gui v25-jei-cargo-loader
+client hdfvdev close
+wait 10
+client hdfvdev jei field_repair_kit
+wait 40
+gui v25-jei-field-kit
+client hdfvdev close
+wait 10
+# --- Traditional Chinese
+client hdfvdev lang zh_tw
+wait 400
+client hdfv handbook damage
+wait 60
+gui v25-zh-handbook-damage
+client hdfvdev scroll 400 140 -10
+wait 10
+gui v25-zh-handbook-damage-end
+client hdfv handbook cargo
+wait 40
+gui v25-zh-handbook-cargo
+client hdfvdev scroll 400 140 -10
+wait 10
+gui v25-zh-handbook-cargo-end
+client hdfv handbook driving
+wait 40
+client hdfvdev scroll 400 140 -20
+wait 10
+gui v25-zh-handbook-driving-ramps
+client hdfv handbook design
+wait 120
+gui v25-zh-handbook-design
+client hdfvdev close
+wait 10
+client hdfvdev advancements
+wait 40
+gui v25-zh-advancements
+client hdfvdev drag 213 140 -120 0
+wait 10
+gui v25-zh-advancements-a
+client hdfvdev drag 213 140 0 -80
+wait 10
+gui v25-zh-advancements-b
+client hdfvdev close
+wait 10
+client hdfvdev jei repair_shop_controller
+wait 40
+gui v25-zh-jei-repair-shop
+client hdfvdev close
+wait 10
+client hdfvdev jei cargo_loader
+wait 40
+gui v25-zh-jei-cargo-loader
+client hdfvdev close
+wait 10
+client hdfvdev design belt_cvt bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-zh-bench-cvt
+client hdfvdev close
+wait 10
+client hdfvdev design sedan_front_axle bench
+wait 60
+client hdfvdev bench
+wait 120
+client hdfvdev bench view 1
+wait 20
+gui v25-zh-bench-axle-tyre
+client hdfvdev close
+wait 10
+client hdfvdev design container_20ft overview
+wait 120
+gui v25-zh-design-container
+client hdfvdev close
+wait 10
+mark v25 screens end
+quit

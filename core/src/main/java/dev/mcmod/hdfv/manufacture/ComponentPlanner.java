@@ -64,6 +64,8 @@ final class ComponentPlanner {
                     .cut(Process.MILL, 0.8, 0.13, 1.0, 6).cut(Process.GRIND, 0.2, 0.1, 1.0, 4);
             case PRECISION_SPINDLE -> Shop.piece(k, 1, Alloy.ALLOY_STEEL, Form.FORGING, c.kg).turned(0.5, 0.1)
                     .cut(Process.TURN, 0.8, 0.15, 0.1, 5).cut(Process.GRIND, 0.2, 0.06, 0.1, 4);
+            // 0.25: a backing stamped from sheet at the press, drilled for the rivets that hold its lining (the drill press: B)
+            case FRICTION_LINING -> Shop.piece(k, 1, Alloy.STEEL, Form.SHEET, c.kg).size(0.2, 0.06, 0.012).drill(8, 0.005, 0.006, 11);
         };
         return List.of(p.build());
     }

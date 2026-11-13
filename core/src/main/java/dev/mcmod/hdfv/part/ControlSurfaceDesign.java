@@ -67,7 +67,7 @@ public record ControlSurfaceDesign(String name, double chordM, double spanM, dou
         MassProperties unit = new MassProperties(volume, Vec3d.ZERO, volume * (sp * sp + t * t) / 12, volume * (c * c + t * t) / 12,
                 volume * (c * c + sp * sp) / 12, 0, 0, 0);
         return new ControlSurfacePart(this, chordM, spanM, maxDeflectionDeg, thicknessRatio, polar(), mass.resolve(th -> unit),
-                issues.stream().filter(i -> i.kind() == DesignIssue.Kind.EXTRAPOLATION).toList());
+                issues.stream().filter(i -> i.kind() == DesignIssue.Kind.EXTRAPOLATION).toList()).wearing(ControlSurfacePart.Wearing.typical());   // 0.25: it can be damaged
     }
 
     @Override public Map<String, Object> parameters() {

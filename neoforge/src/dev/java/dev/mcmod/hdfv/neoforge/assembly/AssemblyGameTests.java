@@ -405,6 +405,117 @@ public final class AssemblyGameTests {
         h.succeed();
     }
 
+    /**
+     * 0.25: a car with cargo in its boot, taken apart in the factory: its cargo goes to the room's chests before its
+     * parts, and nothing is left lying on the floor (it is discarded empty). Its own batch, as above.
+     */
+    @GameTest(templateNamespace = Hdfv.MOD_ID, template = "hull_pool", batch = "hdfv_car_factory_cargo")
+    public static void aCarTakenApartGivesItsCargoToTheRoomsStores(GameTestHelper h) {
+        BlockPos c = carFactory(h);
+        h.setBlock(new BlockPos(9, 3, 6), Blocks.CHEST);
+        h.setBlock(new BlockPos(9, 3, 2), Blocks.CHEST);
+        RoomControllerBlockEntity be = (RoomControllerBlockEntity) h.getBlockEntity(c);
+        var blueprint = new net.minecraft.world.item.ItemStack(HdfvAssembly.VEHICLE_BLUEPRINT.get());
+        blueprint.set(HdfvAssembly.VEHICLE_LAYOUT.get(), dev.mcmod.hdfv.assembly.SampleLayouts.sedan().toJsonText());
+        be.drawings.setItem(RoomControllerBlockEntity.VEHICLE_DRAWING, blueprint);
+        be.apply(RoomControllerBlockEntity.Edit.of(RoomControllerBlockEntity.Op.LOAD));
+        var plan = be.plan();
+        stock(h, plan, new BlockPos(9, 3, 6), new BlockPos(9, 3, 2));
+        h.assertTrue(be.start() == null, "Started");
+        HdfvVehicle v = be.vehicle();
+        h.assertTrue(dev.mcmod.hdfv.neoforge.storage.VehicleCargo.hold(v, 0) == null, "No cargo while it is being built");
+        v.setBuilt(1);
+        var boot = dev.mcmod.hdfv.neoforge.storage.VehicleCargo.hold(v, 0);
+        h.assertTrue(boot != null, "Finished, its boot takes cargo");
+        boot.setItem(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND, 7));
+        h.assertTrue(v.holdKg(0) > 0, "The diamonds weigh something");
+        h.assertTrue(be.dismantle() == null && v.isRemoved(), "Taken apart");
+        int diamonds = 0;
+        for (BlockPos p : List.of(new BlockPos(9, 3, 6), new BlockPos(9, 3, 2))) {
+            var chest = (net.minecraft.world.level.block.entity.ChestBlockEntity) h.getBlockEntity(p);
+            for (int i = 0; i < chest.getContainerSize(); i++) { if (chest.getItem(i).is(net.minecraft.world.item.Items.DIAMOND)) { diamonds += chest.getItem(i).getCount(); } }
+        }
+        h.assertTrue(diamonds == 7, "The seven diamonds are in the chests: " + diamonds);
+        var box = new net.minecraft.world.phys.AABB(h.absolutePos(BlockPos.ZERO)).inflate(24);
+        h.assertTrue(h.getLevel().getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity.class, box, e -> e.getItem().is(net.minecraft.world.item.Items.DIAMOND)).isEmpty(),
+                "None dropped");
+        h.succeed();
+    }
+
+    /**
+     * 0.25: the same factory fed from storage blocks instead of chests (its own batch, as above): a parts rack takes the
+     * parts and the finished workpieces (what does not fit it goes on to the locker), a steel locker the stock. The
+     * factory starts only once they hold everything and takes it all; taken apart, the engine comes back to a store and
+     * the salvaged stock bits only to the locker (the rack refuses them).
+     */
+    @GameTest(templateNamespace = Hdfv.MOD_ID, template = "hull_pool", batch = "hdfv_car_factory_stores")
+    public static void aCarFactoryTakesItsMaterialsFromStorageBlocks(GameTestHelper h) {
+        BlockPos c = carFactory(h);
+        BlockPos rackAt = new BlockPos(9, 3, 6), lockerAt = new BlockPos(9, 3, 2);
+        h.setBlock(rackAt, dev.mcmod.hdfv.neoforge.storage.HdfvStorage.block(dev.mcmod.hdfv.storage.StorageKind.PARTS_RACK).get());
+        h.setBlock(lockerAt, dev.mcmod.hdfv.neoforge.storage.HdfvStorage.block(dev.mcmod.hdfv.storage.StorageKind.STEEL_LOCKER).get());
+        var rack = (dev.mcmod.hdfv.neoforge.storage.StorageBlockEntity) h.getBlockEntity(rackAt);
+        var locker = (dev.mcmod.hdfv.neoforge.storage.StorageBlockEntity) h.getBlockEntity(lockerAt);
+        RoomControllerBlockEntity be = (RoomControllerBlockEntity) h.getBlockEntity(c);
+        var blueprint = new net.minecraft.world.item.ItemStack(HdfvAssembly.VEHICLE_BLUEPRINT.get());
+        blueprint.set(HdfvAssembly.VEHICLE_LAYOUT.get(), dev.mcmod.hdfv.assembly.SampleLayouts.sedan().toJsonText());
+        be.drawings.setItem(RoomControllerBlockEntity.VEHICLE_DRAWING, blueprint);
+        be.apply(RoomControllerBlockEntity.Edit.of(RoomControllerBlockEntity.Op.LOAD));
+        var plan = be.plan();
+        h.assertTrue(plan != null, "A sedan: " + be.issues());
+        h.assertTrue(be.start() != null, "Nothing in the stores yet: not started");
+        h.assertTrue(be.stores().size() == 2, "The rack and the locker are the room's stores: " + be.stores().size());
+        // the parts and the finished workpieces into the rack (then the locker), the stock into the locker
+        List<net.minecraft.world.item.ItemStack> parts = new java.util.ArrayList<>(), stock = new java.util.ArrayList<>();
+        for (var n : plan.parts()) { for (int i = 0; i < n.count(); i++) { parts.add(dev.mcmod.hdfv.neoforge.machine.Workpieces.part(n.design())); } }
+        for (var piece : plan.pieces()) {
+            int left = piece.workpiece().count();
+            while (left > 0) {
+                var s = Staging.workpieceOf(piece.design(), piece.workpiece());
+                s.setCount(Math.min(left, s.getMaxStackSize()));
+                left -= s.getCount();
+                parts.add(s);
+            }
+        }
+        plan.stockKg().forEach((a, kg) -> {
+            int n = (int) Math.ceil(kg / 10 - 1e-9);
+            while (n > 0) { int k = Math.min(n, 64); stock.add(dev.mcmod.hdfv.neoforge.material.Stock.of(a, k)); n -= k; }
+        });
+        h.assertTrue(!parts.isEmpty() && !stock.isEmpty(), "The sedan takes parts and stock");
+        for (var s : stock) {
+            h.assertTrue(net.neoforged.neoforge.items.ItemHandlerHelper.insertItemStacked(rack.handler(), s.copy(), false).getCount() == s.getCount(), "The rack refuses stock: " + s);
+            h.assertTrue(net.neoforged.neoforge.items.ItemHandlerHelper.insertItemStacked(locker.handler(), s, false).isEmpty(), "The locker takes stock: " + s);
+        }
+        int inRack = 0;
+        for (var s : parts) {
+            var left = net.neoforged.neoforge.items.ItemHandlerHelper.insertItemStacked(rack.handler(), s, false);
+            if (left.isEmpty()) { inRack++; }
+            h.assertTrue(net.neoforged.neoforge.items.ItemHandlerHelper.insertItemStacked(locker.handler(), left, false).isEmpty(), "Room in the locker for what the rack has none for");
+        }
+        h.assertTrue(inRack > 0 && !rack.isEmpty(), "Parts on the rack: " + inRack + " of " + parts.size());
+        h.assertTrue(be.start() == null, "Started from the storage blocks");
+        HdfvVehicle v = be.vehicle();
+        h.assertTrue(v != null && v.ready(), "The sedan stands in the factory");
+        h.assertTrue(rack.isEmpty(), "Everything on the rack went into the car");
+        for (int i = 0; i < locker.getContainerSize(); i++) {
+            var s = locker.getItem(i);
+            h.assertTrue(s.isEmpty() || s.is(dev.mcmod.hdfv.neoforge.material.HdfvMaterials.STOCK.get()) || s.is(dev.mcmod.hdfv.neoforge.material.HdfvMaterials.STOCK_BIT.get()),
+                    "Only the stock's change is left in the locker: " + s);
+        }
+        h.assertTrue(be.dismantle() == null && v.isRemoved() && be.building == null, "Taken apart");
+        boolean engine = false;
+        for (var store : List.of(rack, locker)) {
+            for (int i = 0; i < store.getContainerSize(); i++) {
+                var s = store.getItem(i);
+                var d = dev.mcmod.hdfv.neoforge.machine.Workpieces.partDesign(s);
+                engine |= d != null && d.type().equals("hdfv:piston_engine");
+                h.assertTrue(store != rack || s.isEmpty() || s.is(dev.mcmod.hdfv.neoforge.storage.HdfvStorage.PARTS_RACK), "Only parts come back to the rack: " + s);
+            }
+        }
+        h.assertTrue(engine, "The engine is back in a store");
+        h.succeed();
+    }
+
     // Its own batch: a built sedan rolls out of a car factory (0.14: rolling out filled the emptied tanks again).
     @GameTest(templateNamespace = Hdfv.MOD_ID, template = "hull_pool", timeoutTicks = 300, batch = "hdfv_car_rollout")
     public static void aBuiltCarRollsOutWithTheFuelItWasGiven(GameTestHelper h) {

@@ -1,0 +1,89 @@
+world AeroCore 025 QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.25 verification, after the fixes the three verify-0.25-*.txt runs found (tools/autoshot/README.md): the part
+# type under the design screen's bar by its kind's name (no raw hdfv:manual_gearbox), the half-width charts' titles
+# (an automatic's run and converter, an axle's tyre, a part-time case's modes stacked under one another), the landing
+# gear's sink field; the repair shop's buttons and panel; in English and in Traditional Chinese (hdfvdev lang).
+mark v25 fixes start
+cmd gamemode spectator @p
+cmd gamerule logAdminCommands false
+cmd time set 6000
+client hdfvdev lang en_us
+cmd tp @p 248 151 249.5 facing 241 152 249.5
+wait 300
+client hdfvdev design six_speed_automatic bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-fix-bench-automatic
+client hdfvdev close
+wait 10
+client hdfvdev design part_time_case bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-fix-bench-transfer
+client hdfvdev close
+wait 10
+client hdfvdev design on_demand_coupling bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-fix-bench-coupling
+client hdfvdev close
+wait 10
+client hdfvdev design sedan_front_axle bench
+wait 60
+client hdfvdev bench
+wait 120
+client hdfvdev bench view 1
+wait 20
+gui v25-fix-bench-axle-tyre
+client hdfvdev close
+wait 10
+client hdfvdev design light_main_gear bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-fix-bench-gear-drop
+client hdfvdev close
+wait 10
+client hdfvdev design container_20ft overview
+wait 100
+gui v25-fix-design-container
+client hdfvdev close
+wait 10
+client hdfv dev repair 241 152 249 open
+wait 30
+client hdfv dev repair 241 152 249 all
+wait 30
+gui v25-fix-repair-screen
+client hdfvdev close
+wait 10
+client hdfvdev lang zh_tw
+wait 400
+client hdfvdev design belt_cvt bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-fix-zh-bench-cvt
+client hdfvdev close
+wait 10
+client hdfvdev design part_time_case bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-fix-zh-bench-transfer
+client hdfvdev close
+wait 10
+client hdfvdev design light_main_gear bench
+wait 60
+client hdfvdev bench
+wait 120
+gui v25-fix-zh-bench-gear-drop
+client hdfvdev close
+wait 10
+mark v25 fixes end
+quit

@@ -98,7 +98,9 @@ public record WingDesign(String name, SectionDesign rootSection, SectionDesign t
     @Override public Part compile() {
         List<DesignIssue> issues = check();
         DesignException.throwIfInvalid(issues);
-        return new WingPart(this, planform.planform(), rootSection.airfoil(), tipSection.airfoil(), surfaces(), STRIPS, mass(), Components.extrapolations(issues));
+        // 0.25: the wing's structure can be damaged
+        return new WingPart(this, planform.planform(), rootSection.airfoil(), tipSection.airfoil(), surfaces(), STRIPS, mass(), Components.extrapolations(issues))
+                .wearing(WingPart.Wearing.typical());
     }
 
     /** The mass as a slab of the mean chord and mean thickness along the span, at the area's centroid. */

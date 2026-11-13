@@ -247,6 +247,8 @@ public record ShaftTurbineDesign(String name, Output output, JetInletDesign inle
         private final List<DesignIssue> issues;
         private final MassProperties mass;
         private final double outputInertia, outputMomentum, ggInertia, ggOmega, ptOmega, ratio, gearEfficiency, halfLength;
+        /** 0.25: seconds of wear a second of running is (DamagePace when this was compiled). */
+        private final double wearPace = dev.mcmod.hdfv.damage.DamagePace.wear();
         private volatile Model model;
 
         Compiled(ShaftTurbineDesign design, List<DesignIssue> issues) {
@@ -268,6 +270,7 @@ public record ShaftTurbineDesign(String name, Output output, JetInletDesign inle
         @Override public int internalStates() { return STATE_SOLUTION + JetRuntime.SOLUTION; }
         /** 0.11: the exhaust for the plume (Exhaust). */
         @Override public int shownValues() { return Exhaust.COUNT; }
+        @Override public java.util.List<String> conditions() { return JetRuntime.CONDITIONS; }
         @Override public void warmUp() { model(); }
 
         Model model() {
@@ -291,6 +294,9 @@ public record ShaftTurbineDesign(String name, Output output, JetInletDesign inle
             double omegaOut = step.rotorSpeed(0), omegaG = step.rotorSpeed(1);
             double nP = Math.max(0, omegaOut * ratio / ptOmega), nG = Math.max(0, omegaG / ggOmega);
             double throttle = Math.clamp(step.input("throttle", 0), 0, 1), ignition = step.input("ignition", 1);
+            // 0.25: condition (a dead engine is as one switched off; a new one takes no branch)
+            JetRuntime.Health health = JetRuntime.health(step);
+            if (health.dead()) { ignition = 0; }
             double fuel = Math.max(0, step.internal(STATE_FUEL)), surge = Math.max(0, step.internal(STATE_SURGE) - dt);
             double cutout = JetRuntime.cutout(c.idleFraction());
             int burner = JetRuntime.burner(step.internal(STATE_LIT), ignition, JetRuntime.fed(step), air.drowned(), nG, c.lightOffFraction(), cutout);
@@ -308,9 +314,12 @@ public record ShaftTurbineDesign(String name, Output output, JetInletDesign inle
                     -(turbinePower + compressorPower) / (wG * wG), false);
             // the power turbine through the gearbox: its torque falls linearly with speed (to none at twice the best speed ratio)
             double torque = p.shaftTorqueNm() * ratio * gearEfficiency * share;
+            if (health.share() < 1 && torque > 0) { torque *= health.share(); }
             double stall = nP < 1.9 ? torque / (1 - nP / 2) : torque;
             step.rotorTorque(0, torque, -stall * ratio / (2 * ptOmega), false);
             double thrust = air.drowned() ? 0 : p.thrustN() * share;
+            if (health.share() < 1 && thrust > 0) { thrust *= health.share(); }
+            JetRuntime.wear(step, wearPace, lit && !air.drowned(), c.turbineInletK(), p.tt4(), false);
             step.force(new AppliedForce(AppliedForce.Kind.THRUST, step.offset(new Vec3d(-halfLength, 0, 0)), step.axis(Vec3d.X).scale(thrust)));
             // the governor and the fuel control, for the next step
             double integral = step.internal(STATE_GOVERNOR), command = 0;

@@ -22,13 +22,30 @@ import java.util.function.Supplier;
  * tractor|lowloader|semi (the last the two coupled as soon as they are ready, the trailer behind on the tractor's jaw): the test cars
  * (TestCars) for trying the driving keys and dashboard, 4 m ahead facing the way the source looks, as /aerocore vehicle spawn sets a sample down. Not in a
  * production game (they are not samples). 0.19: mount, launch &lt;m/s&gt; and remove act on the test car the player spawned last.
+ * 0.25: roofbox (the sedan with a roof rack and a roof box) and containersemi (the semi, a 20 ft container on its low-loader).
  */
 public final class DriveDevCommands {
     private DriveDevCommands() {}
 
-    private static final Map<String, Supplier<VehicleBlueprint>> CARS = Map.of("manual", TestCars::manualSedan, "4x4", TestCars::fourByFour,
-            "6x6", TestCars::sixBySix, "rearsteer", TestCars::rearSteerSedan, "air", TestCars::airSedan, "hardpoints", TestCars::hardpointSedan,
-            "tractor", TestCars::tractor6x4, "lowloader", TestCars::lowLoader, "semi", TestCars::tractor6x4);
+    private static final Map<String, Supplier<VehicleBlueprint>> CARS = Map.ofEntries(Map.entry("manual", TestCars::manualSedan), Map.entry("4x4", TestCars::fourByFour),
+            Map.entry("6x6", TestCars::sixBySix), Map.entry("rearsteer", TestCars::rearSteerSedan), Map.entry("air", TestCars::airSedan),
+            Map.entry("hardpoints", TestCars::hardpointSedan), Map.entry("tractor", TestCars::tractor6x4), Map.entry("lowloader", TestCars::lowLoader),
+            Map.entry("semi", TestCars::tractor6x4), Map.entry("roofbox", DriveDevCommands::roofBoxSedan), Map.entry("containersemi", TestCars::tractor6x4));
+
+    /** 0.25: the sample sedan with a roof rack and the sample roof box on it, as CargoGameTests builds it. */
+    static VehicleBlueprint roofBoxSedan() {
+        var racked = dev.mcmod.hdfv.part.body.SampleBodies.sedan().withKit(dev.mcmod.hdfv.design.RecordEditor.with(dev.mcmod.hdfv.part.body.BodyKitDesign.NONE,
+                "roofRack", dev.mcmod.hdfv.part.body.BodyKitDesign.RoofRack.BARS));
+        VehicleBlueprint layout = dev.mcmod.hdfv.assembly.SampleLayouts.sedan();
+        layout = new VehicleBlueprint("roof box sedan", layout.parts().stream()
+                .map(e -> e.id().equals("body") ? new VehicleBlueprint.Entry("body", racked, e.mount()) : e).toList(), java.util.List.of());
+        return dev.mcmod.hdfv.assembly.AutoWiring.wire(dev.mcmod.hdfv.assembly.Placing.add(layout, dev.mcmod.hdfv.part.StorageBoxDesign.roofBox()));
+    }
+
+    /** 0.25: the low-loader with the sample 20 ft container on its well deck. */
+    static VehicleBlueprint containerLowLoader() {
+        return dev.mcmod.hdfv.assembly.AutoWiring.wire(dev.mcmod.hdfv.assembly.Placing.add(TestCars.lowLoader(), dev.mcmod.hdfv.part.StorageBoxDesign.container20()));
+    }
 
     /**
      * 0.18: a test car set down parked: its handbrake on and an automatic in P (with no channels an automatic crept off in
@@ -48,8 +65,7 @@ public final class DriveDevCommands {
     }
 
     /** 0.18: the low-loader behind a tractor just spawned, its kingpin on the jaw, coupled once both are ready. */
-    private static void semiTrailer(CommandSourceStack source, PartVehicle tractor) {
-        VehicleBlueprint trailer = TestCars.lowLoader();
+    private static void semiTrailer(CommandSourceStack source, PartVehicle tractor, VehicleBlueprint trailer) {
         var tv = tractor.vehicle();
         var rv = trailer.compile();
         var jaw = dev.mcmod.hdfv.drive.Hitch.jaw(tractor.blueprint(), tv);
@@ -88,7 +104,8 @@ public final class DriveDevCommands {
                     if (source.getEntity() != null) { vehicle.setOwner(source.getEntity().getUUID()); }
                     source.getLevel().addFreshEntity(vehicle);
                     if (source.getEntity() != null) { LAST.put(source.getEntity().getUUID(), vehicle.getUUID()); }
-                    if (StringArgumentType.getString(c, "car").equals("semi")) { semiTrailer(source, vehicle); }
+                    if (StringArgumentType.getString(c, "car").equals("semi")) { semiTrailer(source, vehicle, TestCars.lowLoader()); }
+                    if (StringArgumentType.getString(c, "car").equals("containersemi")) { semiTrailer(source, vehicle, containerLowLoader()); }
                     source.sendSuccess(() -> Component.literal("Spawned the test car " + vehicle.blueprint().name()), false);
                     return 1;
                 })))

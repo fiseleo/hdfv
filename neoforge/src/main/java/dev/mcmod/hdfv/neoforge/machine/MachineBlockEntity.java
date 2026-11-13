@@ -630,6 +630,7 @@ public final class MachineBlockEntity extends BlockEntity implements MenuProvide
         Workpieces.Data done = new Workpieces.Data(hash, d.name(), d.type(), job.piece().key(), job.from() + job.steps(), job.piece().route().size());
         ItemStack result = new ItemStack(HdfvMachines.WORKPIECE.get());
         result.set(HdfvMachines.WORKPIECE_DATA.get(), done);
+        Workpieces.weigh(result, job.piece());   // 0.25: what it weighs (storage.ItemMass)
         // 0.23: a standard component's last step hands out the component
         if (d instanceof dev.mcmod.hdfv.part.component.ComponentDesign c && done.finished()) {
             result = dev.mcmod.hdfv.neoforge.material.HdfvComponents.stack(c.kind(), 1);

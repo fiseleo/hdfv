@@ -17,6 +17,8 @@ import java.util.Locale;
  * <li>D: the CNC (linear guides, precision spindles): what the CNC's own upgrades and the numerically controlled
  *     machines need.</li>
  * </ul>
+ * 0.25: the friction lining (B), a stamped steel backing with its moulded lining, drilled for its rivets: the pads or
+ * shoes of one wheel's brake, or one clutch disc's facings; the repair shop relines brakes and clutches with it.
  * Masses are the finished pieces' (kg); a component is one workpiece. They are real objects (a 0.5 m shaft, a
  * 1 m bed casting): machines take fewer and smaller of them than the real ones (the game scale, recipe.GameScale).
  */
@@ -26,7 +28,9 @@ public enum Component {
     TURNED_SHAFT('B', 3), LEADSCREW('B', 3), FASTENER_KIT('B', 1), STEEL_TUBE('B', 6), PLANED_SLIDEWAY('B', 15), VALVE_BODY('B', 4),
     BORED_CYLINDER('B', 12),
     CUT_GEAR('C', 2), BALL_BEARING('C', 0.5), GROUND_SLIDEWAY('C', 10), SPINDLE('C', 5), BALL_SCREW('C', 2.5), CIRCUIT_BOARD('C', 0.3),
-    LINEAR_GUIDE('D', 3), PRECISION_SPINDLE('D', 6);
+    LINEAR_GUIDE('D', 3), PRECISION_SPINDLE('D', 6),
+    // 0.25 (the repair shop relines brakes and clutches with it)
+    FRICTION_LINING('B', 1);
 
     /** The machines its route needs: 'A' to 'D' (see the class). */
     public final char grade;

@@ -112,6 +112,10 @@ public final class PartLooks {
         Looks.register(MotorDesign.class, new PartRenderer() {
             @Override public void mesh(Part part, PartMesh out) { motor(out, part.mass().massKg()); }
         });
+        // 0.25: a storage box by its kind (StorageBoxModel: a roof box's clamshell, a ribbed bed box, a corrugated container with doors)
+        Looks.register(dev.mcmod.hdfv.part.StorageBoxDesign.class, new PartRenderer() {
+            @Override public void mesh(Part part, PartMesh out) { dev.mcmod.hdfv.neoforge.client.model.StorageBoxModel.mesh((dev.mcmod.hdfv.part.StorageBoxDesign) part.design(), out); }
+        });
         Looks.register(BallastDesign.class, new PartRenderer() {
             @Override public void mesh(Part part, PartMesh out) {
                 // lead (11 340 kg/m3) as a block twice as long as high, a lifting eye on it

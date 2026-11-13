@@ -148,12 +148,28 @@ public final class DashboardHud {
             if (lit.blinking() && !blink) { lx += lampWidth(font, lit); continue; }
             lx += lamp(g, font, lit, lx, ly);
         }
+        // 0.25: what is damaged, above the dials, only while something is wrong
+        dev.mcmod.hdfv.neoforge.damage.VehicleConditions.Warnings warnings = dev.mcmod.hdfv.neoforge.damage.VehicleConditions.warnings(v);
+        if (warnings.any()) { warnings(g, font, warnings, blink); }
         if (face.fuelShare() >= 0) {
             int fw = 40, fx = (int) (sx + D - fw), fy = ly + 5;
             icon(g, ICON_FUEL, fx - 14, ly, face.fuelShare() < Dashboard.LOW_FUEL ? 0xFFE3B341 : 0xFF9AA0A6);
             g.fill(fx - 1, fy - 1, fx + fw + 1, fy + 4, 0xC0000000);
             int colour = face.fuelShare() > 0.25 ? 0xFF3FB950 : face.fuelShare() > 0.1 ? 0xFFE3B341 : 0xFFE5534B;
             g.fill(fx, fy, fx + (int) Math.round(fw * face.fuelShare()), fy + 3, colour);
+        }
+        // 0.25: the cargo aboard under the fuel, when there is any (red when a hold carries more than it is rated for)
+        double cargo = 0;
+        boolean over = false;
+        var holding = v.vehicle();
+        for (int k = 0; k < v.holdCount(); k++) {
+            double kg = v.holdKg(k);
+            cargo += kg;
+            if (holding != null) { over |= dev.mcmod.hdfv.storage.CargoRules.overloaded(kg, dev.mcmod.hdfv.neoforge.storage.VehicleCargo.limitKg(holding, k)); }
+        }
+        if (cargo >= 1) {
+            small(g, font, sx + D - 20, ly + 12, net.minecraft.network.chat.Component.translatable("hdfv.drive.cargo", dev.mcmod.hdfv.storage.CargoMass.text(cargo)).getString(),
+                    over ? 0xFFE5534B : 0xFF9AA0A6);
         }
         pose.popPose();
     }
@@ -279,6 +295,35 @@ public final class DashboardHud {
             case ENGINE -> icon(g, ICON_ENGINE, x, y, amber);
         }
         return lampWidth(font, lit);
+    }
+
+    /**
+     * 0.25: the damage warnings, a row of badges over the dials from the left: the engine's lamp in red, then red badges
+     * for the brakes, a flat tyre and a fuel leak (the leak's blinking), amber ones for the transmission and the structure.
+     */
+    private static void warnings(GuiGraphics g, Font font, dev.mcmod.hdfv.neoforge.damage.VehicleConditions.Warnings w, boolean blink) {
+        int amber = 0xFFE3B341, red = 0xFFE5534B, x = 2, y = -13;
+        if (w.engine()) {
+            g.fill(x, y, x + 14, y + 12, 0xC0101418);
+            icon(g, ICON_ENGINE, x + 1, y, red);
+            x += 16;
+        }
+        x = badge(g, font, "hdfv.hud.warning.brakes", w.brakes(), red, x, y);
+        x = badge(g, font, "hdfv.hud.warning.tyres", w.tyres(), red, x, y);
+        x = badge(g, font, "hdfv.hud.warning.transmission", w.transmission(), amber, x, y);
+        x = badge(g, font, "hdfv.hud.warning.structure", w.structure(), amber, x, y);
+        badge(g, font, "hdfv.hud.warning.leak", w.leak() && blink, red, x, y);
+    }
+
+    /** One text badge when lit; returns where the next goes. */
+    private static int badge(GuiGraphics g, Font font, String key, boolean lit, int colour, int x, int y) {
+        if (!lit) { return x; }
+        String text = net.minecraft.client.resources.language.I18n.get(key);
+        int width = (int) Math.ceil(font.width(text) * 0.75f) + 6;
+        g.fill(x, y + 1, x + width, y + 11, 0xC0101418);
+        g.renderOutline(x, y + 1, width, 10, colour);
+        tiny(g, font, x + width / 2f, y + 3.5f, text, colour);
+        return x + width + 2;
     }
 
     private static void tiny(GuiGraphics g, Font font, float cx, float y, String text, int colour) {

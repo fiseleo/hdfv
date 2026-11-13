@@ -154,6 +154,8 @@ public record TurboRamjetDesign(String name, SupersonicInletDesign inlet, Compre
         private final List<DesignIssue> issues;
         private final MassProperties mass;
         private final double inertia, omegaDesign, halfLength;
+        /** 0.25: seconds of wear a second of running is (DamagePace when this was compiled). */
+        private final double wearPace = dev.mcmod.hdfv.damage.DamagePace.wear();
         private volatile Model model;
 
         Compiled(TurboRamjetDesign design, List<DesignIssue> issues) {
@@ -174,6 +176,7 @@ public record TurboRamjetDesign(String name, SupersonicInletDesign inlet, Compre
         @Override public int internalStates() { return 5; }
         /** The reheat's share and the spool's speed (JetEngineDesign.SHOWN_REHEAT, SHOWN_SPEED), for its flame and sound. */
         @Override public int shownValues() { return 2 + Exhaust.COUNT; }
+        @Override public java.util.List<String> conditions() { return JetRuntime.CONDITIONS; }
         @Override public void warmUp() { model(); }
 
         Model model() {
@@ -193,6 +196,9 @@ public record TurboRamjetDesign(String name, SupersonicInletDesign inlet, Compre
             boolean drowned = air.drowned();
             double omega = step.rotorSpeed(0), n = Math.max(0, omega / omegaDesign);
             double throttle = Math.clamp(step.input("throttle", 0), 0, 1), ignition = step.input("ignition", 1);
+            // 0.25: condition (a dead engine is as one switched off; a new one takes no branch)
+            JetRuntime.Health health = JetRuntime.health(step);
+            if (health.dead()) { ignition = 0; }
             double fuel = Math.max(0, step.internal(STATE_FUEL)), surge = Math.max(0, step.internal(STATE_SURGE) - dt), cutout = JetRuntime.cutout(c.idleFraction());
             int burner = JetRuntime.burner(step.internal(STATE_LIT), ignition, JetRuntime.fed(step), drowned, n, c.lightOffFraction(), cutout);
             boolean lit = burner > 0, running = burner > 1;
@@ -230,6 +236,8 @@ public record TurboRamjetDesign(String name, SupersonicInletDesign inlet, Compre
             if (starter) { torque += JetRuntime.starter(c.starterTorqueNm(), n, cutout); }
             step.rotorTorque(0, torque, -(turbinePower + compressorPower) / (w * w), false);
             double thrust = drowned ? 0 : p.thrustN() * share;
+            if (health.share() < 1 && thrust > 0) { thrust *= health.share(); }
+            JetRuntime.wear(step, wearPace, lit && !drowned, c.turbineInletK(), cp.tt4(), reheatLit);
             step.force(new AppliedForce(AppliedForce.Kind.THRUST, step.offset(new Vec3d(-halfLength, 0, 0)), step.axis(Vec3d.X).scale(thrust)));
             step.setInternal(STATE_FUEL, fuel);
             step.setInternal(STATE_LIT, burner);

@@ -164,7 +164,14 @@
     - 發布頁要說明、截圖、Logo，不做影片。
   - AutoShot：從發布的 JAR 拿掉，開發環境保留（AeroCore 的 `aerocore_devtools`；hdfv 的 `neoforge/src/dev`，見〈約定〉的「開發用程式」）。
   - 計畫：本機計畫檔 `snoopy-gathering-fog.md`；進度在共用筆記資料夾的 `release-0.41-0.24-progress.md`。
-- 下一步：0.6 的 H4～H6 剩下的（變速箱的試算圖、路面坡道方塊）。
+- 0.25.0（2026-11-12～13；AeroCore 0.42）：0.6 的 H4～H6 剩下的、修理系統、儲物箱系統。使用者 2026-11-12
+  「H4～H6（變速箱的試算圖、路面坡道方塊） + 還有修理系統 + 還有儲物箱系統」，選擇：
+  - 損壞來源四種都要（碰撞、使用磨損、攻擊／爆炸／火、泡水與腐蝕）；預設「寫實」（伺服器設定可調倍率或關掉）；乘員會受傷（可關）。
+  - 修理：修理廠＋就地急修；損壞超過 80 % 的零件必須換新（照原設計再做一個）。
+  - 儲物三種都要：載具上的儲物（車身的貨艙）、可設計的儲物箱零件、工坊的儲物方塊；貨物算重量。
+  - 「一版做完」。H4 的七台範例車使用者在 0.14 已說不補，按鍵與 HUD 在 0.14 做完，這版只補試算圖與坡道方塊。
+  - 計畫：本機計畫檔 `inherited-questing-rossum.md`（P1～P6）。
+- 下一步：未定。
 
 ## 固定開發基底
 
@@ -273,6 +280,11 @@ py -3 tools/zh_cn.py         # 0.24：改過 zh_tw（語言檔或手冊）之後
 | `assets/hdfv/handbook/<語言>/*.md`、`data/hdfv/advancement/tutorial/` | 0.24 手冊頁面（24 篇；en_us 與 zh_tw 手寫，zh_cn 由 `tools/zh_cn.py` 產生）、進度（`tools/tutorial.py` 產生） |
 | `tools/tutorial.py`、`tools/zh_cn.py`、`tools/zh_cn_terms.json` | 0.24 進度與教學語言鍵的產生器；繁轉簡（OpenCC tw2sp＋術語表） |
 | `neoforge/src/dev`、core 的 `src/testFixtures` | 0.24 開發用程式（只在開發 run 載入，不進發布的 JAR）：所有 `*GameTests`、GameTest 結構、`/hdfv dev` 與它拉進來的指令、`/hdfvdev`、`ClipCheck`、`HdfvDev`（登記）；`TestCars`、`SoundBench` |
+| `core/.../road/`、`neoforge/.../road/` | 0.25 路面坡道：`RampShape`（坡度、每格的高度、碰撞的 16 階）；`HdfvRoads`、`RoadRampBlock`（柏油與混凝土 × 1:2、1:4、1:8；`FACING` 是上坡方向、`part` 是在坡上的第幾格，放置時自動接下一格或下一段；碰撞是階梯、畫的是平滑的楔形 OBJ；實作 AeroCore 的 `SlopedGround`，輪子走的是真斜面）；`tools/road_assets.py`；GameTest `road/RoadGameTests` |
+| `core/.../storage/`、`neoforge/.../storage/` | 0.25 儲物：`StorageKind`（四種方塊的格數）、`CargoMass`（後備質量、工件質量、頁尾的編碼）、`CargoRules`（貨艙格數＝每 m³ 27 格、9～216（貨櫃 324）、額定載重）；`ItemMass`（每個物品的 kg：hdfv 自己的規則＋資料映射 `hdfv:item_mass`＋後備；設定 `storage.itemMassScale`）、`HdfvStorage`、`StorageBlock(Entity)`（木箱、鋼製置物櫃、零件架、貨櫃）、`StorageMenu`（不綁方塊位置，載具貨艙也用它）、`VehicleCargo`（載具實體的附件：每個貨艙一個容器、重排、秤重 → `PartVehicle.setHold`、打開、卸下、掉落）、`HdfvCargo`、`CargoNetwork`、`CargoLoaderBlock(Entity)`（裝卸台）；畫面 `client/StorageScreen`、`client/CargoTab`；`tools/storage_assets.py`、`tools/item_mass.py`、`tools/cargo_assets.py`；GameTest `StorageGameTests`、`CargoGameTests` |
+| `core/.../part/StorageBoxDesign` | 0.25 儲物箱零件 `hdfv:storage_box`（車頂箱、貨斗箱、20 呎貨櫃；長寬高、壁厚、材料；一個貨艙；設計畫面分類 STORAGE）；模型 `client/model/StorageBoxModel` |
+| `core/.../damage/`、`neoforge/.../damage/` | 0.25 損壞：`Conditions`（每種零件的狀況項目、撞擊分配、韌性、伸及、腐蝕的金屬與壁厚、`REPLACE_FROM` 0.8）、`Impacts`（撞擊、爆炸、攻擊 → 各項目的損壞；乘員受傷）、`Wearings`（由設計數字算 AeroCore 零件的 `Wearing`）、`EngineWear`（hdfv 自己的引擎與油箱）、`Elements`（腐蝕、泡水、火、油箱爆炸）、`DamagePace`（遊戲的時間尺度）；`VehicleDamage`（四種來源、報廢規則、狀態畫面的互動）、`VehicleConditions`（讀取與警示）、`client/VehicleStatusScreen`（分頁：狀況、修理、貨物）；設定 `damage.*`；`/hdfv vehicle condition [set|repair]`；`tools/damage_assets.py`；GameTest `damage/DamageGameTests` |
+| `core/.../repair/`、`neoforge/.../repair/` | 0.25 修理：`RepairJob`（每項的修法：原地修、換件、換整個零件、原地重做；料、工時、電、回收）、`Repairs`（規則表）、`RepairRules`（房間與載具的條件、報廢順序）、`FieldRepair`（急修工具組、補胎片的限制）；`HdfvRepair`、`RepairShopBlock(Entity)`、`RepairShopMenu`、`RepairNetwork`、`FieldKitItem`、`FieldKits`；畫面 `client/RepairShopScreen`、`client/RepairTab`；標準件 `friction_lining`；`tools/repair_assets.py`；GameTest `repair/RepairShopGameTests` |
 | `release/` | 0.24 發布頁的文字（`page.md` 三語、`summary.txt`、各版的 `notes-*.md`、`checklist.md`）；圖示與截圖在本機 `%USERPROFILE%\.mcmod\release\hdfv` |
 
 hdfv 的遊戲 JAR 包含 core；執行時不要再放 AeroCore 的 physics JAR（AeroCore 遊戲 JAR 已含同樣的套件，重複會讓模組層衝突）。
@@ -384,7 +396,8 @@ hdfv 的遊戲 JAR 包含 core；執行時不要再放 AeroCore 的 physics JAR�
     手排沒有規則：`gear`（排檔桿）與 `clutch`（踏板）就是駕駛的。顯示值多一個（選檔位置）。
   - 試算：`WheelBench`（輪胎曲線、懸吊行程與外傾、乘坐頻率、側傾剛性、鎖死比、十次煞車熱衰退、FAR 23.725 落震）、
     `DriveBench`（Wong 牽引力圖、變扭器曲線與失速轉速、引擎＋變速箱＋道路負載的試驗台加速；試驗台沒有輪胎打滑，比整車快）。
-    設計畫面還沒畫這兩個的圖（H5）。
+    0.25 起設計畫面畫出來：變速箱（牽引力圖、全油門起步、自排與 CVT 的變扭器曲線）、分動箱（`DriveBench.transferCase`：前後分配對轉差、
+    高低速檔的牽引力）、車軸的第二個畫面（乾濕的煞車與轉彎曲線、十次煞車衰退）、起落架（落震，預設 FAR 23 的 2.59 m/s，另算 1.2 倍的保留能量）。
   - 模型：`WheelModel`（輪胎胎紋、輪圈、碟盤與卡鉗、鼓煞、各型懸吊連桿、差速器、轉向機、防傾桿、油氣支柱與彈簧鋼腳）、`GearboxModel`；
     世界中由 `WheelRenderers` 依顯示值（每輪 spin、steer、compression）擺輪子與連桿。車身預覽在車軸掛載點畫家用車的輪子（只在設計畫面）。
   - AeroCore 0.24 的油氣支柱阻尼在 2026-10-13 修過（割線係數並迭代）；支柱要有線性阻尼（`StrutDesign.SEAL`，靜止位置臨界的 1/6）才停得穩。
@@ -903,6 +916,27 @@ hdfv 的遊戲 JAR 包含 core；執行時不要再放 AeroCore 的 physics JAR�
   - AutoShot、開發視窗（第 2 個螢幕、不搶焦點）、`/aerocoredev` 是 AeroCore 的 `aerocore_devtools` mod（`aerocore-devtools-1.21.1`，
     `devRuntimeOnly`），開發 run 一起載入；它不會發布，也不能被正式程式依賴。
   - `build` 會跑 `verifyReleaseJar`：發布的 JAR 出現開發用類別、GameTest 結構，或少了授權檔，就失敗。
+- 損壞、修理、儲物（0.25；物理與公式在 AeroCore 0.42 的 docs/CONDITION.md）：
+  - 狀況只放在 AeroCore 的 `VehicleState.used`（依零件 id 與項目名稱）。不要為了損壞在既有零件加內部狀態或顯示值：AeroCore 在內部狀態數量改變時
+    整台重設，0.24 的存檔會失去引擎溫度、檔位這些。設計與藍圖 JSON 也不加參數（`Wearing` 在編譯時由既有的設計數字算），工件雜湊與零件快取才不變。
+  - 項目都是 0 時，hdfv 自己的零件（引擎、油箱）要和 0.24 逐位元相同：用 `used > 0` 分支；引擎與熱段的磨損在 1 % 以下不作用（死區），
+    新車與輕度使用的引擎照 0.24 走。包住 AeroCore 零件的零件（`ShiftRules.Ruled`、`SteerSchedule`、螺旋槳與旋翼的 `Compiled`）要轉送
+    `conditions()`，內層的排最前面。
+  - 校準（`ConditionsTest`、`WearTest`、GameTest）：範例轎車正面撞牆 15 km/h 每項 < 3 %；50 km/h 車身約 26 %、引擎附屬件約 42 %、前懸吊約 30 %；
+    100 km/h 車身報廢。彈性速度用 8 km/h（美國 5 mph 保險桿；AeroCore 預設 4 km/h 時 15 km/h 壓不到 3 %）；世界中的撞擊衝量含反彈，只算 1 − 恢復係數。
+    改韌性、分配或彈性速度時重跑這些並更新數字。
+  - 時間尺度：磨損與腐蝕跟製造用同一個壓縮（`ticksPerWorkHour` 1000 = 72 倍）乘設定；輪胎是其 1/6（否則一組胎約 70 km）。
+    `DamagePace` 在編譯零件時用，AeroCore 依設計 JSON 快取編譯好的零件，所以改了設定要重開伺服器才對已編譯的設計生效。
+  - 火與岩漿：載具實體是防火的，`PartVehicle.Hurt` 收不到；`VehicleDamage` 每秒看零件所在的方塊。
+  - 報廢：車身或底盤的 `structure` 到 1 時把引擎的附屬件設 1（一次）；車身修到 1 以下才重新作用。修理廠在引擎被選而報廢的車身沒被選時拒絕（`wreck_first`）。
+  - 修理：0.8（`Conditions.REPLACE_FROM`）以上不能原地修；煞車、懸吊、支柱、離合器只換壞的那幾件（照零件自己的設計做），輪胎一律換新，
+    引擎、變速箱這類要一個同設計的零件物品，車身、底盤、機翼原地重做。急修：每次最多 0.15、不低於 0.5、不碰 0.8 以上。
+  - 貨物：車身設計時的 `cargoFill` 不再算進編譯後的車重（只給試算的「滿載」用）；真的貨在貨艙（`VehicleCargo` → `PartVehicle.setHold`），
+    兩邊都算會重複。0.25 起範例轎車輕 45 kg、直升機輕 120 kg。貨艙的 id 是 `m<n>_cargo`：插入或重排模組會改 id，舊貨會當成放不下的掉出來。
+  - 物品質量：容器裡的流體照密度算，hdfv 自己的容器（油桶）1 mB 是 1 公升；原版與其他 Mod 的容器一桶（1000 mB）算 `storage.bucketLitres`
+    公升（預設 10，真的水桶；一桶水 30＋10 kg）。最初照 hdfv 的算法一桶是 1 m³、1028 kg，使用者 2026-11-13 看了截圖要改。
+    zh_cn 的術語：OpenCC 把「預設」轉成「缺省」，術語表加了「缺省 → 默认」；方塊與其他物品照資料映射 `hdfv:item_mass`（後面的條目蓋前面的，
+    寬的標籤放前面），hdfv 方塊的質量由 `tools/item_mass.py` 從配方加總寫入。
 - 新手教學（0.24）：
   - 新物品、新機器或新玩法要想一下：手冊要不要補一段、要不要一個進度、JEI 說明頁有沒有。手冊頁面三種語言的結構要一樣
     （`HandbookTest`：篇目、區塊種類與參數、行內的按鍵與物品），引用的東西要存在；en_us、zh_tw 手寫，改完 `py -3 tools/zh_cn.py`。
@@ -955,6 +989,7 @@ hdfv 的遊戲 JAR 包含 core；執行時不要再放 AeroCore 的 physics JAR�
 
 | 版本 | 日期／電腦 | JUnit（core） | GameTest | 客戶端 |
 | --- | --- | --- | --- | --- |
+| 0.25.0 | 2026-11-13，原開發機；AeroCore 0.42.0 | 445 全過（新增 54：`TransferBenchTest` 7、`GearboxBenchTest` 1、`RoadAssetsTest` 3、`RampDriveTest` 2、`StorageAssetsTest` 4、`ConditionsTest` 5（含範例轎車撞牆的校準）、`WearTest` 8（煞車片、輪胎、引擎、熱段的壽命）、`ElementsTest` 3、`RepairTest` 10、`RepairRecipesTest` 1、`StorageBoxTest` 5、`CargoRulesTest` 4、`RecipeRulesTest` 1；`FuelTest.aBodysFuelIsInItsTanks` 的直升機機體 2074.35 → 1954.35 kg（設計載重不再算進車重）） | 178 全過（新增 36：`RoadGameTests` 3（轎車 D 檔爬上 1:4 柏油坡停在上一層）、`StorageGameTests` 7、`AssemblyGameTests` 2（組裝室從儲物方塊取料、拆車的貨退回）、`DamageGameTests` 7（15 m/s 撞牆車身 26.7 %、存讀不變、步行速度沒事、設定關掉沒事、TNT、乘員受傷、岩漿、泡水、報廢、指令）、`RepairShopGameTests` 8、`CargoGameTests` 6（後車廂 200 kg 車尾低 4.55 cm、選單、存讀、裝卸台、掉落、車頂箱）、`RefitShopGameTests` 1（貨艙變小時多的退回）、`TutorialGameTests` 2）；記錄中 `DamageGameTests.thoseAboardAreHurtByAHardCrashOnly` 有一次被接住的 NPE（沒有連線的玩家受傷時原版送封包），測試照過 | 2026-11-13 使用者同意後 AutoShot（第 2 個螢幕；`tools/autoshot/verify-0.25-*.txt`，世界 `AeroCore 025 QA` 是 0.24 正式版測試的 `AeroCore Production QA` 的複本）6 輪：0.24 存檔載入沒有錯誤，17 台舊載具每項 0 %；試算圖、儲物箱零件的 3D、坡道、四種儲物方塊與畫面（頁尾質量、物品提示的質量）、撞牆後的狀況與煙、狀態畫面三個分頁、儀表警示燈、修理廠畫面、車頂箱轎車與載貨櫃的半拖車、騎乘按 E 打開貨艙、裝卸台、手冊四篇與四個新進度（英、繁）、JEI 頁都看過。截圖修掉的版面問題：貨物與修理分頁的行換行、修理廠按鈕寬度與「還有 n 項」、整數數量不帶小數、設計畫面與藍圖提示顯示原始類型 id、半寬圖的軸標題重疊、分動箱兩張模式圖改上下排、起落架與輪胎圖的英文標題縮短；修完 445／178 全過。開發用指令（dev 原始碼集）：`hdfvdev status|mouse|hover|click|scroll|drag|lang|jei|advancements`、測試車 `roofbox`、`containersemi`。FPS：排列場景 108（30.3 萬面、送出 4.54 ms，伺服器 tick 86 ms、約 21 台載具），貨物場景 119～120（伺服器 tick 13.6～13.9 ms）。未修：繁中 JEI 說明在數字前後的空格提早換行（JEI 以空格斷行）、1:8 與 1:4 坡道的物品圖示幾乎一樣、撞車的煙淡、滴油在截圖裡看不出、漏油徽章閃爍沒拍到、英文 JEI 頁（JEI 啟動時固定語言）。未驗證：多人同步；修理廠完成時給附近玩家的進度 |
 | 0.24.0 | 2026-10-21，原開發機；AeroCore 0.41.0 | 391 全過（新增 6：`HandbookTest`（三種語言的篇目與結構一樣；引用的物品、進度、配方、圖都存在；圖 320×180）、`LangParityTest`（三份語言檔的鍵與順序一樣、zh_cn 沒有繁體專用字）；core 的 `test` 把 mod 的資源與 `tools/**/*.json` 列為輸入，只改資源也會重跑） | 142 全過（新增 `TutorialGameTests` 4：教學的進度都載入、`hdfv:milestone` 給等著它的進度、新玩家只拿到一次手冊、手冊引用的物品與配方存在），裝著 Create 6.0.11 | 開發客戶端 AutoShot（`tools/autoshot/release-0.24.txt`、`release-0.24-lang.txt`，QA 世界的複本 `AeroCore Release QA`）：0.23 的世界打開後舊玩家拿到手冊與歡迎訊息；手冊三種語言、進度、JEI 說明頁；第一輪手冊在 hdfv 自訂配方上 `/ by zero` 崩潰，已修。正式版 NeoForge 21.1.252 的乾淨環境（AeroCore `scripts/release-test/release_test.py`，`production-0.24.txt`、`production-mp-0.24.txt`）：伺服器只有兩個 mod、加 JEI、加 JEI 與 Create 都起得來、沒有可疑的行；客戶端有 JEI、沒有 JEI 都正常（歡迎、轎車、手冊、JEI）；多人連線拿到手冊、進度同步。0.22 的比較場景：機器 115～116、停車 113～114、塔台 119 FPS（0.22：114、111、119），整合伺服器 tick 54～57 ms（0.22 同場景 58～70 ms）。未驗證：裝 Create 的正式版客戶端；改裝、烤漆、卡車、高速、船的手冊圖沒有拍 |
 | 0.23.0 | 2026-10-20，原開發機；AeroCore 0.40.0 | 385 全過（新增 10：`ComponentRouteTest` 4（每種標準件一個工件、質量等於設計、那一級的機器做得到；圖紙是自己種類的範例；路線等於 `routes-0.23-components.json`；名稱都在）、`RecipeRulesTest` 3（每個配方的產物都做得出來；階段錨點的順序；組裝台的工時是零件的規則、中間件的質量等於它的料）、`MetallurgyRecipesTest` 2（每批的 kWh 對 AeroCore 2 % 內；每 kg 的電在工廠的範圍）、`RefiningTest.theReformerMakesMethanolOfLpgAndWater`；`DesignEditorTest` 的參數數量下限對只有種類的標準件是 1） | 138 全過，裝著 Create 6.0.11（載入 3154 個配方，沒有解析錯誤；新增 `RecipeGameTests` 7：組裝台用鑄鍛件組出第一台車床、少一個鑄齒輪時組不出、鍛壓機軋板只在成品與料頭都放得下時開工、車床退回切屑、電弧爐與電解槽吃電出料、漏斗進出合金爐、Create 的配方有載入、遊戲中的科技樹涵蓋每個產物） | 未開客戶端：JEI 的組裝、電爐、電解頁與物品提示的截圖，以及用 0.22 的 QA 存檔在 0.23 開，都等使用者同意再做 |
 | 0.21.0 | 2026-10-20，原開發機；AeroCore 0.38.0（不變） | 373 全過（`AirportPlannerTest` 改寫成三級：大機場少見、中小補上（合成平原上大機場的比例在上限內）、每一級自成一體（跑道寬、塔台、燈、蓄電池、風向袋）、0.20 兩份規劃的地面雜湊凍結、`VERSION 2` 大中小各一份凍結（0.21 發佈前因床掉頭改過一次）、塔內：每層一階、每階朝走上來的方向且往上三格淨空、最上一階在活門、中柱連續、四格格柵、電纜槽連成一條且每顆蓄電池在上面、從門口走得到床頭旁與管制員的位置；`RunwayTest` 的 `distanceTo`；`DetailKitTest` 的新零件組件；`AirportAssetsTest` 的新方塊） | 131 全過（新增：中型塔台的四顆蓄電池讓它成形並有電；小機場沒有塔台、放得出風向袋；有碰撞的玩家實體從塔底走上管制室再走下來（兩種高度）；照 0.21.0 擺的塔（樓梯、格柵、床）在塔台跑起來後修好；生成的塔台測試加上室內燈亮、樓梯、電纜槽、管制室的光源方塊） | 密度：無視窗伺服器＋RCON，三個新世界（種子 `hdfv-0.21-a`／`b`／`c`）各 25 個區域：大 2／1／2、中 3／2／3、小 6／11／7，75 個區域共大 5 座（約每 15 個區域一座，間距約 12 km）、中小 32 座；一個區域規劃最多 4.8 秒。遊戲中（使用者同意「現在可以」；本機專用伺服器＋Dev，`AeroCore Airport QA 21a`，`server.properties` 暫改、之後從備份還原成 `AeroCore MP QA`）三輪：中型（550 m × 18 m、6 段塔台、4 顆蓄電池）、大型（900 m、16 段、8 顆）、小型（400 m 與 250 m，沒有塔台與燈，`view tower_close` 回「This airport has no tower」）；空拍、停機坪、跑道頭、風向袋；塔底大廳與機房、螺旋梯、活門與欄杆、管制室內裝（白天、夜晚）、夜裡從外面看塔與管制室天花板。找到並修掉：小機場每個區塊的放置都在塔台那步丟 NullPointerException（280 次，風向袋與等待標誌沒放；`AirportFeature.tower`、`placeTower`、`goto`，新 GameTest）；夜裡窗燈全暗（客戶端的 `Level.getSkyDarken()` 只在進世界時算，改用 `ClientLevel.getSkyDarken(partial)`），之後調亮並加管制室天花板的微光；塔底的牆整面發黑（遮蔽，塔底也 `split`）；使用者自己在「新的世界」裡走螺旋梯「上不去 下不來」（轉角那一階的方向、第四階上方的格柵；新 GameTest 讓玩家實體真的走一趟，舊配置在第一個轉角卡住；已生成的塔載入後自己修好）；生成的管制員從不認領床、夜裡站在門外（床頭被牆、蓄電池格與第二階圍住；床頭改朝大廳後，在無視窗伺服器用 RCON 把 21a 那座的床照新配置擺好：當場有 `home`，`time set 13000` 後 `SleepingX/Z` 是床頭、床 `occupied=true`）；開發鏡頭 `aerial`、`apron` 依停機坪的位置縮放。單人 `AeroCore HDFV QA`：同一份計畫一進世界（還在烘焙 100 個網格）機器場景 99,391 面、送出 8.36 ms（0.20 同計畫 99,603 面、8.52 ms）；烘焙完後機器場景 97 FPS、約 10.4 萬面、送出 5.75 ms（這個場景 0.20 沒有烘焙完的數字可比）；0.20 放在空中的 10 段塔台（現在畫出 0.21 的內裝）119 FPS、6.7 萬面、1.10 ms，管制室裡 119 FPS、1.2 萬面、0.44 ms。截圖 `compare-0.21\`（before 是 0.20 的 a20d、a20q）。已知：夜裡的窗燈只是淡淡的加色燈罩（沒有泛光）、格柵在亮處偏白、樓梯從下面看是灰色方塊，留給 0.22 美化；0.20 與 21a 世界裡已生成的塔照舊（梯子、舊的床方向）；BodyTest 的計時基準與 GameTest 同時跑時會超時（單獨跑通過）。未確認：修好後真人走螺旋梯（GameTest 的玩家實體走得上去）、多人（Dev2）、塔台畫面在中型塔台、定翼機起降。多了三個測試世界 `AeroCore Airport QA 21a`、`21b`、`21c`（`%USERPROFILE%\.mcmod\runs\hdfv\server`），使用者的「新的世界」沒動 |

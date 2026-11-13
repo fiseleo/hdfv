@@ -30,6 +30,14 @@ class RecipeRulesTest {
         return t.tier();
     }
 
+    /** 0.25: the cargo loader (a motor-driven conveyor) comes with the electric motor unit (the steel locker's stage or later). */
+    @Test void theCargoLoaderComesWithElectricMotors() {
+        Map<String, TechTree.Stage> s = stages();
+        int loader = tier(s, "hdfv:cargo_loader");
+        System.out.println("hdfv cargo loader: tier " + loader + ", electric motor unit " + tier(s, "hdfv:electric_motor_unit") + ", steel locker " + tier(s, "hdfv:steel_locker"));
+        assertTrue(loader >= tier(s, "hdfv:electric_motor_unit") && loader >= tier(s, "hdfv:steel_locker") && loader >= 2, "tier " + loader);
+    }
+
     @Test void everythingTheRecipesMakeIsReachable() {
         Map<String, TechTree.Stage> s = stages();
         Set<String> lost = new TreeSet<>();

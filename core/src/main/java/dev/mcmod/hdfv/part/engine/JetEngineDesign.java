@@ -192,6 +192,8 @@ public record JetEngineDesign(String name, JetInletDesign inlet, CompressorDesig
         private final List<DesignIssue> issues;
         private final MassProperties mass;
         private final double inertia, omegaDesign, halfLength;
+        /** 0.25: seconds of wear a second of running is (DamagePace when this was compiled). */
+        private final double wearPace = dev.mcmod.hdfv.damage.DamagePace.wear();
         private volatile Model model;
 
         Compiled(JetEngineDesign design, List<DesignIssue> issues) {
@@ -213,6 +215,7 @@ public record JetEngineDesign(String name, JetInletDesign inlet, CompressorDesig
         @Override public int internalStates() { return design.afterburner().fitted() ? STATE_REHEAT + 1 : STATE_REHEAT; }
         /** With an afterburner (0.10): the reheat's share (0 out) and the spool's speed, for its flame and sound; then (0.11) the exhaust (Exhaust). */
         @Override public int shownValues() { return (design.afterburner().fitted() ? 2 : 0) + Exhaust.COUNT; }
+        @Override public java.util.List<String> conditions() { return JetRuntime.CONDITIONS; }
         @Override public void warmUp() { model(); }
 
         Model model() {
@@ -241,6 +244,9 @@ public record JetEngineDesign(String name, JetInletDesign inlet, CompressorDesig
             Turbojet.Flight flight = new Turbojet.Flight(t0, p0, v0);
             double omega = step.rotorSpeed(0), n = Math.max(0, omega / omegaDesign);
             double throttle = Math.clamp(step.input("throttle", 0), 0, 1), ignition = step.input("ignition", 1);
+            // 0.25: condition (a dead engine is as one switched off; a new one takes no branch)
+            JetRuntime.Health health = JetRuntime.health(step);
+            if (health.dead()) { ignition = 0; }
             double fuel = Math.max(0, step.internal(STATE_FUEL));
             double surge = Math.max(0, step.internal(STATE_SURGE) - dt), cutout = JetRuntime.cutout(c.idleFraction());
             int burner = JetRuntime.burner(step.internal(STATE_LIT), ignition, JetRuntime.fed(step), drowned, n, c.lightOffFraction(), cutout);
@@ -284,6 +290,8 @@ public record JetEngineDesign(String name, JetInletDesign inlet, CompressorDesig
             double slope = -(turbine + compressor) / (w * w);
             step.rotorTorque(0, torque, slope, false);
             double thrust = drowned ? 0 : (rp != null ? rp.thrustN() : p.thrustN()) * share;
+            if (health.share() < 1 && thrust > 0) { thrust *= health.share(); }
+            JetRuntime.wear(step, wearPace, lit && !drowned, c.turbineInletK(), p.tt4(), reheatLit);
             step.force(new AppliedForce(AppliedForce.Kind.THRUST, step.offset(new Vec3d(-halfLength, 0, 0)), axis.scale(thrust)));
             step.setInternal(STATE_FUEL, fuel);
             step.setInternal(STATE_LIT, burner);

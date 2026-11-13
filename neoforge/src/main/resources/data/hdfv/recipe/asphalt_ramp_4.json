@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "P  ",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "hdfv:asphalt"
+    }
+  },
+  "result": {
+    "id": "hdfv:asphalt_ramp_4",
+    "count": 8
+  }
+}

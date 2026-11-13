@@ -115,6 +115,35 @@ final class StructurePlanner {
     }
 
     /**
+     * 0.25: a freight container (StorageBoxDesign CONTAINER): its eight corner castings cast and their apertures milled,
+     * its rails, end rails and corner posts pressed from plate and its floor's cross members from sheet (each its share
+     * of StorageBoxDesign.FRAME_KG_PER_M, CROSS_KG_PER_M) at the shop; the room welds the corrugated walls, roof and doors
+     * (panels PANEL_W wide, welded to each other and all round to the frame: MIG) and lays the plywood floor on the cross
+     * members (glued and screwed).
+     */
+    static void container(dev.mcmod.hdfv.part.StorageBoxDesign d, List<Workpiece> pieces, List<StructureWork> works) {
+        double l = d.lengthM(), w = d.widthM(), h = d.heightM(), kg = dev.mcmod.hdfv.part.StorageBoxDesign.FRAME_KG_PER_M;
+        double[] in = d.inside();
+        Alloy a = Alloy.of(d.material());
+        pieces.add(Shop.piece("container_corner", 8, Alloy.STEEL, Form.CASTING, dev.mcmod.hdfv.part.StorageBoxDesign.CASTING_KG).modulus(0.01).size(0.178, 0.162, 0.118)
+                .cut(Process.MILL, 1, 0.06, 0.18, 10).build());
+        pieces.add(Shop.piece("container_side_rail", 4, Alloy.STEEL, Form.PLATE, l * kg).size(l, 0.16, 0.05).weld(0.5).build());
+        pieces.add(Shop.piece("container_end_rail", 4, Alloy.STEEL, Form.PLATE, w * kg).size(w, 0.16, 0.05).weld(0.5).build());
+        pieces.add(Shop.piece("container_post", 4, Alloy.STEEL, Form.PLATE, h * kg).size(h, 0.16, 0.12).weld(0.5).build());
+        int cross = (int) Math.floor(Math.max(in[0], 0) / dev.mcmod.hdfv.part.StorageBoxDesign.CROSS_PITCH_M) + 1;
+        pieces.add(Shop.piece("container_cross_member", cross, Alloy.STEEL, Form.SHEET, Math.max(in[2], 0) * dev.mcmod.hdfv.part.StorageBoxDesign.CROSS_KG_PER_M)
+                .profile().build());
+        double panels = 2 * l * h + 2 * w * h + l * w, sheetKg = panels * d.wallM() * a.density * dev.mcmod.hdfv.part.StorageBoxDesign.CORRUGATION;
+        double seams = 2 * 4 * (l + w + h) + (2 * l / PANEL_W) * h + (l / PANEL_W) * w;
+        boolean composite = a.family == Alloy.Family.COMPOSITE;
+        works.add(work("container_walls", a, composite ? Form.LAMINATE : Form.SHEET, sheetKg, composite ? Joint.BOND : Joint.MIG, seams, panels * dev.mcmod.hdfv.part.StorageBoxDesign.CORRUGATION,
+                Math.max(d.wallM(), 0.001)));
+        double floorArea = Math.max(in[0], 0) * Math.max(in[2], 0);
+        works.add(work("container_floor", Alloy.PLYWOOD, Form.TIMBER, floorArea * dev.mcmod.hdfv.part.StorageBoxDesign.FLOOR_M * dev.mcmod.hdfv.part.StorageBoxDesign.FLOOR_KG_PER_M3,
+                Joint.GLUE, cross * Math.max(in[2], 0), floorArea, dev.mcmod.hdfv.part.StorageBoxDesign.FLOOR_M));
+    }
+
+    /**
      * 0.15: a chassis: its rails (a ladder's two, a backbone's tube) and each station's crossmember and braces made at
      * the shop, from the stock their section is (a pressed channel or I beam from sheet, a fabricated box from plate,
      * tubes from tube; ChassisLayout's members), a tube frame's tubes cut and mitred; the room joins them (MIG or TIG

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PNP",
+    "P P",
+    "PNP"
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "N": {
+      "tag": "c:nuggets/iron"
+    }
+  },
+  "result": {
+    "id": "hdfv:storage_crate",
+    "count": 1
+  }
+}

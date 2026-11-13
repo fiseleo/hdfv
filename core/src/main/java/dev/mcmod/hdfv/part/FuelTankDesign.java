@@ -194,10 +194,14 @@ public record FuelTankDesign(String name, double lengthM, double widthM, double 
         return new Compiled(this, mass, List.of(tank), boilOffKgPerS(), Set.of(fuel));
     }
 
+    private static final List<String> TANK_CONDITIONS = List.of(dev.mcmod.hdfv.damage.Conditions.TANK);
+
     /** The compiled tank: mass and its tank; a cryogenic one vents what boils off. */
     record Compiled(FuelTankDesign design, MassProperties mass, List<Tank> tanks, double boilOffKgPerS, Set<String> fuels) implements Part {
         @Override public List<CollisionSphere> collision() { return List.of(); }
         @Override public List<DesignIssue> issues() { return List.of(); }
+        /** 0.25: the tank can be holed (Conditions.TANK): from half used it leaks, which the game drains (neoforge's damage package). */
+        @Override public List<String> conditions() { return TANK_CONDITIONS; }
         @Override public void loads(PartStep step) {
             if (boilOffKgPerS > 0) {
                 step.burn(fuels, boilOffKgPerS);

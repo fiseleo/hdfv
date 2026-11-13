@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 8
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:steel_tube"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:fastener_kit"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:shipping_container",
+    "count": 1
+  },
+  "seconds": 1458
+}

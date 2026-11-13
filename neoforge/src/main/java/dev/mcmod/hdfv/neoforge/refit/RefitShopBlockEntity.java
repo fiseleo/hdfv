@@ -482,6 +482,10 @@ public final class RefitShopBlockEntity extends BlockEntity implements MenuProvi
             message = Component.translatable("hdfv.refit_shop.failed");
         } else {
             settle(v, next);
+            // 0.25: a hold made smaller or taken away: what no longer fits to the stores (or the floor)
+            List<IItemHandler> stores = stores();
+            dev.mcmod.hdfv.neoforge.storage.VehicleCargo.relayout(v, s -> Staging.give(s, stores, left -> net.minecraft.world.Containers.dropItemStack(level,
+                    worldPosition.getX() + 0.5, worldPosition.getY() + 1, worldPosition.getZ() + 0.5, left)));
             if (!free) { giveBack(job); }   // a creative-mode job took nothing and gives nothing back
             double kg = spilled.values().stream().mapToDouble(Double::doubleValue).sum();
             message = kg > 0.05 ? Component.translatable("hdfv.refit_shop.done_spilled", fmt(kg)) : Component.translatable("hdfv.refit_shop.done");

@@ -152,7 +152,8 @@ public record GearboxDesign(String name, Gearboxes.Kind kind, GearboxLayoutDesig
     @Override public Part compile() {
         List<DesignIssue> issues = check();
         DesignException.throwIfInvalid(issues);
-        return ShiftRules.gearbox(this, new TransmissionPart(this, spec(), mass(), Components.extrapolations(issues)));
+        // 0.25: the gears and the friction elements wear
+        return ShiftRules.gearbox(this, new TransmissionPart(this, spec(), mass(), Components.extrapolations(issues)).wearing(dev.mcmod.hdfv.damage.Wearings.gearbox(this)));
     }
 
     @Override public Map<String, Object> parameters() { return Components.parameters(components()); }

@@ -364,7 +364,7 @@ public record ChassisDesign(String name, ChassisSettingsDesign frame, List<Chass
         Analysis a = analysis();
         FrameTwist twist = a.twist() == null ? null : new FrameTwist(a.twistX(), a.twist());
         List<DesignIssue> warnings = check().stream().filter(i -> i.kind() == DesignIssue.Kind.EXTRAPOLATION).toList();
-        return new FramePart(this, mass(), mountPoints(), List.of(), twist, warnings);
+        return new FramePart(this, mass(), mountPoints(), List.of(), twist, warnings).wearing(FramePart.Wearing.typical());   // 0.25: the frame can be damaged (it twists more easily)
     }
 
     @Override public Map<String, Object> parameters() {

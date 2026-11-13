@@ -32,6 +32,7 @@ public final class AssemblyDevCommands {
                 .then(dev.mcmod.hdfv.neoforge.paint.StickerDevCommands.tree())
                 .then(dev.mcmod.hdfv.neoforge.paint.StickerDevCommands.booth())
                 .then(dev.mcmod.hdfv.neoforge.refit.RefitDevCommands.refit())
+                .then(dev.mcmod.hdfv.neoforge.repair.RepairDevCommands.repair())
                 .then(dev.mcmod.hdfv.neoforge.vehicle.DriveDevCommands.tree())
                 .then(Commands.literal("open").then(Commands.argument("pos", BlockPosArgument.blockPos()).executes(c -> {
                     var player = c.getSource().getPlayerOrException();

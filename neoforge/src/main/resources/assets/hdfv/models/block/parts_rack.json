@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "hdfv:block/parts_rack_top",
+    "front": "hdfv:block/parts_rack_front",
+    "side": "hdfv:block/parts_rack_side"
+  }
+}

@@ -157,6 +157,45 @@ public final class RefitShopGameTests {
                 .thenSucceed();
     }
 
+    /**
+     * 0.25: a refit that makes the sedan's boot smaller (0.45 to 0.1 m3: twelve slots to nine) gives the stacks past its
+     * ninth slot to the shop's chest; the hold weighs what is left in it.
+     */
+    @GameTest(templateNamespace = Hdfv.MOD_ID, template = "hull_pool", batch = "hdfv_refit_cargo", timeoutTicks = 300)
+    public static void aSmallerHoldGivesWhatNoLongerFitsToTheStores(GameTestHelper h) {
+        BlockPos c = shop(h, true);
+        RefitShopBlockEntity be = (RefitShopBlockEntity) h.getBlockEntity(c);
+        HdfvVehicle v = sedan(h);
+        FakePlayer p = player(h, true);   // creative: no materials
+        h.startSequence()
+                .thenExecuteAfter(5, () -> {
+                    var boot = dev.mcmod.hdfv.neoforge.storage.VehicleCargo.hold(v, 0);
+                    h.assertTrue(boot != null && boot.getContainerSize() == 12, "Twelve slots in the boot");
+                    for (int i = 0; i < 12; i++) { boot.setItem(i, new ItemStack(net.minecraft.world.item.Items.COBBLESTONE, 10 + i)); }
+                    be.scan();
+                    h.assertTrue(be.apply(set("body", "module5", "cargoM3", "0.1"), p) == null, "A smaller boot: " + be.report());
+                    be.pendingBlueprint().compile().warmUp();
+                    h.assertTrue(be.apply(op(RefitShopBlockEntity.Op.START), p) == null && be.working, "Started: " + keys(be));
+                    be.workTotal = 20;
+                })
+                .thenWaitUntil(() -> h.assertTrue(!be.working, "Working"))
+                .thenExecuteAfter(2, () -> {
+                    var boot = dev.mcmod.hdfv.neoforge.storage.VehicleCargo.hold(v, 0);
+                    h.assertTrue(boot != null && boot.getContainerSize() == 9, "Nine slots in a 0.1 m3 boot: " + (boot == null ? "none" : boot.getContainerSize())
+                            + " (" + be.report().getString("Message") + ")");
+                    int inBoot = 0, inChest = 0;
+                    for (int i = 0; i < boot.getContainerSize(); i++) { inBoot += boot.getItem(i).getCount(); }
+                    var chest = (net.minecraft.world.level.block.entity.ChestBlockEntity) h.getBlockEntity(new BlockPos(9, 3, 6));
+                    for (int i = 0; i < chest.getContainerSize(); i++) { if (chest.getItem(i).is(net.minecraft.world.item.Items.COBBLESTONE)) { inChest += chest.getItem(i).getCount(); } }
+                    h.assertTrue(inBoot == 126 && inChest == 60, "The first nine stacks stay (126), the last three go to the chest (60): " + inBoot + ", " + inChest);
+                    double kg = dev.mcmod.hdfv.neoforge.storage.ItemMass.kg(new ItemStack(net.minecraft.world.item.Items.COBBLESTONE, 126));
+                    h.assertTrue(Math.abs(v.holdKg(0) - kg) < 1e-6, "The boot weighs what is left: " + v.holdKg(0) + " kg, not " + kg);
+                    dev.mcmod.hdfv.neoforge.storage.VehicleCargo.unload(v, x -> {});
+                    v.discard();
+                })
+                .thenSucceed();
+    }
+
     @GameTest(templateNamespace = Hdfv.MOD_ID, template = "hull_pool", batch = "hdfv_refit_scale", timeoutTicks = 600)
     public static void aBiggerCarIsRebuiltInPlace(GameTestHelper h) {
         BlockPos c = shop(h, true);

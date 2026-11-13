@@ -114,6 +114,8 @@ public record PulsejetDesign(String name, PulseTubeDesign tube, PulseValveDesign
     /** Shown values: frequency (Hz), pressure swing (Pa), lit. */
     public static final int SHOWN_FREQUENCY = 0, SHOWN_AMPLITUDE = 1, SHOWN_LIT = 2;
 
+    private static final java.util.List<String> STRUCTURE = java.util.List.of(dev.mcmod.hdfv.damage.Conditions.STRUCTURE);
+
     private static final class Compiled implements Part {
         private final PulsejetDesign design;
         private final List<DesignIssue> issues;
@@ -136,6 +138,8 @@ public record PulsejetDesign(String name, PulseTubeDesign tube, PulseValveDesign
         @Override public List<String> inputs() { return List.of("throttle", "ignition", "start"); }
         @Override public int internalStates() { return 3; }
         @Override public int shownValues() { return 3 + Exhaust.COUNT; }
+        /** 0.25: its tube (the reeds keep their own wear, STATE_CYCLES) (Conditions.STRUCTURE): damaged from outside only; less thrust, none at 1 (damage.EngineWear). */
+        @Override public java.util.List<String> conditions() { return STRUCTURE; }
         @Override public void warmUp() { model(); }
 
         Pulsejet.Map model() {
@@ -151,6 +155,8 @@ public record PulsejetDesign(String name, PulseTubeDesign tube, PulseValveDesign
             JetRuntime.Air air = JetRuntime.air(step, new Vec3d(halfLength, 0, 0));
             Turbojet.Flight flight = air.flight();
             double throttle = Math.clamp(step.input("throttle", 0), 0, 1), ignition = step.input("ignition", 1), start = step.input("start", 0);
+            double used = step.used(0);   // 0.25: a failed tube does not run
+            if (used >= 1) { ignition = 0; }
             double fuel = Math.max(0, step.internal(STATE_FUEL)), cycles = Math.max(0, step.internal(STATE_CYCLES));
             fuel += (throttle * c.maxFuelKgPerS() - fuel) * Math.min(1, dt / FUEL_LAG);
             double share = reedShare(cycles / life);
@@ -160,6 +166,7 @@ public record PulsejetDesign(String name, PulseTubeDesign tube, PulseValveDesign
             boolean lit = can && cycle.running() && (step.internal(STATE_LIT) > 0.5 || blown);
             if (!lit && can) { cycle = map.at(flight, 0); }
             double thrust = air.drowned() ? 0 : lit ? cycle.thrustN() * share : Math.min(0, cycle.thrustN());
+            if (used > 0 && thrust > 0) { thrust *= dev.mcmod.hdfv.damage.EngineWear.structure(used); }
             JetRuntime.burn(step, c.acceptedFluids(), ignition, lit ? fuel : 0);
             step.force(new AppliedForce(AppliedForce.Kind.THRUST, step.offset(new Vec3d(-halfLength, 0, 0)), step.axis(Vec3d.X).scale(thrust)));
             if (lit) { cycles += cycle.frequencyHz() * dt; }

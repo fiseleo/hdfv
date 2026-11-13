@@ -16,7 +16,10 @@ import net.minecraft.world.entity.Entity;
  * <li>rolled_out (kind: car, aircraft or boat) when a player rolls a finished vehicle out of an assembly room;</li>
  * <li>driven (metres so far), speed (km/h), height (m above the ground), mach (DriveTracker; kind as rolled_out);</li>
  * <li>fuelled; refit_started; painted; coupled; atc_cleared; prospected;</li>
- * <li>gusher and refined, which have no player of their own: the players near the rig or the unit.</li>
+ * <li>gusher and refined, which have no player of their own: the players near the rig or the unit;</li>
+ * <li>0.25: repaired (kind: field for a kit's use that mended something, FieldKits.finish; shop for a repair shop's job
+ *     done, which has no player of its own: the players near its controller, RepairShopBlockEntity.finish); loaded when
+ *     a player closes a vehicle's hold with more in it than when they opened it (VehicleCargo.Hold.stopOpen).</li>
  * </ul>
  */
 public final class Milestones {
@@ -35,9 +38,12 @@ public final class Milestones {
     }
 
     /** Every player within the radius of a place (events without a player of their own). */
-    public static void near(ServerLevel level, BlockPos at, double radius, String event) {
+    public static void near(ServerLevel level, BlockPos at, double radius, String event) { near(level, at, radius, event, ""); }
+
+    /** Every player within the radius of a place, with a kind. */
+    public static void near(ServerLevel level, BlockPos at, double radius, String event, String kind) {
         for (ServerPlayer p : level.players()) {
-            if (p.blockPosition().distSqr(at) <= radius * radius) { reach(p, event); }
+            if (p.blockPosition().distSqr(at) <= radius * radius) { reach(p, event, kind, 0); }
         }
     }
 }

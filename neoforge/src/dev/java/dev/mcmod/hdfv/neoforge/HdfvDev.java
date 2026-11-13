@@ -48,6 +48,11 @@ public final class HdfvDev {
             event.register(dev.mcmod.hdfv.neoforge.vehicle.ChassisGameTests.class);
             event.register(dev.mcmod.hdfv.neoforge.truck.TruckGameTests.class);
             event.register(dev.mcmod.hdfv.neoforge.airport.AirportGameTests.class);
+            event.register(dev.mcmod.hdfv.neoforge.road.RoadGameTests.class);
+            event.register(dev.mcmod.hdfv.neoforge.storage.StorageGameTests.class);
+            event.register(dev.mcmod.hdfv.neoforge.storage.CargoGameTests.class);
+            event.register(dev.mcmod.hdfv.neoforge.damage.DamageGameTests.class);
+            event.register(dev.mcmod.hdfv.neoforge.repair.RepairShopGameTests.class);
             event.register(dev.mcmod.hdfv.neoforge.tutorial.TutorialGameTests.class);
         }
     }

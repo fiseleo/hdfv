@@ -58,6 +58,8 @@ public final class SteerSchedule implements Part {
     @Override public int internalStates() { return inner.internalStates(); }
     @Override public double[] initialInternals() { return inner.initialInternals(); }
     @Override public int shownValues() { return inner.shownValues(); }
+    /** 0.25: the axle's conditions (tyres, brakes, suspension), read and worn by the axle inside. */
+    @Override public List<String> conditions() { return inner.conditions(); }
     @Override public boolean probes() { return inner.probes(); }
     @Override public void probe(PartStep step) { steer(step); inner.probe(step); }
     @Override public void loads(PartStep step) { steer(step); inner.loads(step); }

@@ -263,6 +263,8 @@ public record TurbofanDesign(String name, JetInletDesign inlet, FanDesign fan, C
         private final List<DesignIssue> issues;
         private final MassProperties mass;
         private final double lowInertia, highInertia, lowOmega, highOmega, halfLength;
+        /** 0.25: seconds of wear a second of running is (DamagePace when this was compiled). */
+        private final double wearPace = dev.mcmod.hdfv.damage.DamagePace.wear();
         private volatile Model model;
 
         Compiled(TurbofanDesign design, List<DesignIssue> issues) {
@@ -284,6 +286,7 @@ public record TurbofanDesign(String name, JetInletDesign inlet, FanDesign fan, C
         @Override public int internalStates() { return design.afterburner().fitted() ? STATE_REHEAT + 1 : STATE_REHEAT; }
         /** With an afterburner (0.10): the reheat's share and the fan's speed (JetEngineDesign.SHOWN_REHEAT, SHOWN_SPEED). */
         @Override public int shownValues() { return (design.afterburner().fitted() ? 2 : 0) + Exhaust.COUNT; }
+        @Override public java.util.List<String> conditions() { return JetRuntime.CONDITIONS; }
         @Override public void warmUp() { model(); }
 
         Model model() {
@@ -306,6 +309,9 @@ public record TurbofanDesign(String name, JetInletDesign inlet, FanDesign fan, C
             double omegaL = step.rotorSpeed(0), omegaH = step.rotorSpeed(1);
             double nL = Math.max(0, omegaL / lowOmega), nH = Math.max(0, omegaH / highOmega);
             double throttle = Math.clamp(step.input("throttle", 0), 0, 1), ignition = step.input("ignition", 1);
+            // 0.25: condition (a dead engine is as one switched off; a new one takes no branch)
+            JetRuntime.Health health = JetRuntime.health(step);
+            if (health.dead()) { ignition = 0; }
             double fuel = Math.max(0, step.internal(STATE_FUEL)), surge = Math.max(0, step.internal(STATE_SURGE) - dt);
             double coreIdle = Turbofan.lineHighSpeed(m.lines(), flight, c.idleFraction()), cutout = JetRuntime.cutout(coreIdle);
             int burner = JetRuntime.burner(step.internal(STATE_LIT), ignition, JetRuntime.fed(step), air.drowned(), nH, c.lightOffFraction(), cutout);
@@ -335,6 +341,8 @@ public record TurbofanDesign(String name, JetInletDesign inlet, FanDesign fan, C
             step.rotorTorque(1, Turbomachinery.spoolTorque(highTurbine, compressorPower, wH) + (starter ? JetRuntime.starter(c.starterTorqueNm(), nH, cutout) : 0),
                     -(highTurbine + compressorPower) / (wH * wH), false);
             double thrust = air.drowned() ? 0 : (rp != null ? rp.thrustN() : p.thrustN()) * share;
+            if (health.share() < 1 && thrust > 0) { thrust *= health.share(); }
+            JetRuntime.wear(step, wearPace, lit && !air.drowned(), c.turbineInletK(), p.tt4(), reheatLit);
             step.force(new AppliedForce(AppliedForce.Kind.THRUST, step.offset(new Vec3d(-halfLength, 0, 0)), step.axis(Vec3d.X).scale(thrust)));
             if (reheat != null) {
                 step.setInternal(STATE_REHEAT, reheatLit ? 1 : 0);

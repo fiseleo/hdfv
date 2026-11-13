@@ -239,6 +239,7 @@ final class PartPlanner {
             case dev.mcmod.hdfv.part.FuelTankDesign t -> List.of(shell("fuel_tank_shell", Alloy.of(t.material()), massKg(d),
                     4 * (t.lengthM() + t.widthM() + t.heightM())));
             case BallastDesign b -> List.of(Shop.piece("ballast", 1, Alloy.GREY_IRON, Form.CASTING, b.massKg()).modulus(0.03).build());
+            case dev.mcmod.hdfv.part.StorageBoxDesign s -> storageBox(s);
             case SeatDesign s -> List.of(Shop.piece("seat_frame", 1, Alloy.STEEL, Form.BAR, s.massKg()).yield(0.9).weld(3).build());
             // 0.18 (the truck parts): a fifth wheel's ductile iron top plate (its face milled, the jaws' throat bored), its welded
             // steel mounting, its turned lock; a landing leg's welded tube, its turned and threaded screw with the bevel gears, its cast foot
@@ -265,6 +266,34 @@ final class PartPlanner {
             }
             default -> List.of();
         };
+    }
+
+    /**
+     * 0.25: a roof box or a bed box, made at the bench (a container is room-built: StructurePlanner.container). A roof
+     * box's lid and base moulded of its walls (laid up and cured; a metal one pressed from sheet); a bed box's body cut
+     * from sheet, folded and welded along its edges, its lid cut and folded; both with their steel fittings (hinges,
+     * latches, the roof box's rack clamps, the bed box's gas struts) cut and drilled.
+     */
+    static List<Workpiece> storageBox(dev.mcmod.hdfv.part.StorageBoxDesign s) {
+        Alloy a = Alloy.of(s.material());
+        boolean roof = s.kind() == dev.mcmod.hdfv.part.StorageBoxDesign.Kind.ROOF_BOX;
+        double fittings = roof ? dev.mcmod.hdfv.part.StorageBoxDesign.ROOF_FITTINGS_KG : dev.mcmod.hdfv.part.StorageBoxDesign.BED_FITTINGS_KG;
+        double shell = Math.max(s.massKg() - fittings, 0), l = s.lengthM(), w = s.widthM(), h = s.heightM();
+        List<Workpiece> out = new ArrayList<>();
+        Form sheet = a.family == Alloy.Family.COMPOSITE ? Form.LAMINATE : a.family == Alloy.Family.WOOD ? Form.TIMBER : Form.SHEET;
+        if (roof) {
+            Shop.Piece half = Shop.piece("roof_box_shell", 2, a, sheet, shell / 2);
+            if (sheet == Form.LAMINATE) { half.thickness(Math.max(s.wallM(), 0.001)); } else if (sheet == Form.SHEET) { half.profile().weld(l + w); }
+            out.add(half.build());
+        } else {
+            Shop.Piece body = Shop.piece("bed_box_body", 1, a, sheet, 0.75 * shell), lid = Shop.piece("bed_box_lid", 1, a, sheet, 0.25 * shell);
+            if (sheet == Form.LAMINATE) { body.thickness(Math.max(s.wallM(), 0.001)); lid.thickness(Math.max(s.wallM(), 0.001)); }
+            else if (sheet == Form.SHEET) { body.profile().weld(2 * (l + w) + 4 * h); lid.profile(); }
+            out.add(body.build());
+            out.add(lid.build());
+        }
+        out.add(Shop.piece("storage_box_fittings", 1, Alloy.STEEL, Form.BAR, fittings).cut(Process.MILL, 1, 0.02, 0.05, 10).drill(roof ? 12 : 8, 0.008, 0.01, 11).build());
+        return out;
     }
 
     /** A welded sheet shell (or a laid-up one, or wood) of a mass with seams of a length. */

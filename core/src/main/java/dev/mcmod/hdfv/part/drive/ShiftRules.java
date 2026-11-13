@@ -54,6 +54,8 @@ public final class ShiftRules {
         @Override public int internalStates() { return inner.internalStates() + memory; }
         @Override public double[] initialInternals() { return Arrays.copyOf(inner.initialInternals(), internalStates()); }
         @Override public int shownValues() { return inner.shownValues() + shown; }
+        /** 0.25: the hardware's conditions (gears, clutch), which it reads and wears by its own indices. */
+        @Override public List<String> conditions() { return inner.conditions(); }
         @Override public void after(PartAfter step) { inner.after(step); }
         @Override public void warmUp() { inner.warmUp(); }
     }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "hdfv:item/tyre_patch_kit"
+  }
+}

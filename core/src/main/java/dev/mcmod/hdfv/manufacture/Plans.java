@@ -88,6 +88,11 @@ public final class Plans {
             case PlaningHullDesign h -> { StructurePlanner.planingHull(h, pieces, works); at = Station.ASSEMBLY_ROOM; }
             case HullDesign h -> { StructurePlanner.displacementHull(h, pieces, works); at = Station.ASSEMBLY_ROOM; }
             case dev.mcmod.hdfv.part.component.ComponentDesign c -> pieces.addAll(ComponentPlanner.plan(c.kind()));
+            // 0.25: a container is built in the room as a body is; a roof box or a bed box at the bench (PartPlanner)
+            case dev.mcmod.hdfv.part.StorageBoxDesign s when s.kind() == dev.mcmod.hdfv.part.StorageBoxDesign.Kind.CONTAINER -> {
+                StructurePlanner.container(s, pieces, works);
+                at = Station.ASSEMBLY_ROOM;
+            }
             default -> pieces.addAll(PartPlanner.simple(d));
         }
         double kg = 0;

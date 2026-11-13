@@ -45,6 +45,9 @@ public final class HdfvMachines {
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Workpieces.Data>> WORKPIECE_DATA = COMPONENTS.registerComponentType("workpiece",
             b -> b.persistent(Workpieces.Data.CODEC).networkSynchronized(Workpieces.Data.STREAM_CODEC));
+    /** 0.25: what a workpiece weighs, set when it is made (the item does not carry its drawing; storage.ItemMass reads it). */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Workpieces.Kg>> WORKPIECE_KG = COMPONENTS.registerComponentType("workpiece_kg",
+            b -> b.persistent(Workpieces.Kg.CODEC).networkSynchronized(Workpieces.Kg.STREAM_CODEC));
 
     public static final Map<Station, DeferredBlock<MachineBlock>> MACHINES = new LinkedHashMap<>();
 

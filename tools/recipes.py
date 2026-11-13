@@ -42,7 +42,7 @@ COMPONENT_KG = {
     'steel_plate': 10, 'electrical_steel': 5, 'copper_wire': 2, 'bed_casting': 40, 'frame_casting': 15, 'cylinder_casting': 12, 'cast_gear': 3,
     'cast_pulley': 5, 'bronze_bushing': 0.5, 'forged_shaft': 6, 'forged_crank': 6, 'turned_shaft': 3, 'leadscrew': 3, 'fastener_kit': 1, 'steel_tube': 6,
     'planed_slideway': 15, 'valve_body': 4, 'bored_cylinder': 12, 'cut_gear': 2, 'ball_bearing': 0.5, 'ground_slideway': 10, 'spindle': 5,
-    'ball_screw': 2.5, 'circuit_board': 0.3, 'linear_guide': 3, 'precision_spindle': 6,
+    'ball_screw': 2.5, 'circuit_board': 0.3, 'linear_guide': 3, 'precision_spindle': 6, 'friction_lining': 1,
 }
 INTERMEDIATE_KG = {
     'electric_motor_unit': 33, 'transformer': 31, 'control_board': 1.4, 'servo_motor': 35.4, 'pump_unit': 24, 'hydraulic_cylinder': 25,
@@ -498,6 +498,11 @@ def rooms():
     shapeless('sticker_film', [H('polyethylene'), H('polyethylene')], 4)
     bench('refit_shop_controller', {PLATE: 2, CWIRE: 1, PANE: 1, REDSTONE: 1, HCYL: 1}, cls='machine')
     shapeless('lamp_unit', [PANE, COPPER, REDSTONE, NUGGET], 2, cls='fixture')
+    # 0.25: repairs. The repair shop's controller at the refit shop's stage (a lift's hydraulic cylinder, its tools' fasteners);
+    # the field kits early: a pouch of steel and copper wire for patching, a tyre plug kit of rubber cement and a steel reamer
+    bench('repair_shop_controller', {PLATE: 2, CWIRE: 1, REDSTONE: 1, HCYL: 1, BOLTS: 1}, cls='machine')
+    shaped('field_repair_kit', ['SWS', ' L '], {'S': ('bit', 'steel'), 'W': CWIRE, 'L': '#c:leathers'})
+    shapeless('tyre_patch_kit', [H('synthetic_rubber'), '#c:slime_balls', ('bit', 'steel')])
 
 
 # ------------------------------------------------------------------------------------------------ airports (0.20, 0.21)
@@ -542,6 +547,32 @@ def airports():
     shapeless('cable_duct', ['minecraft:smooth_stone_slab', 'minecraft:smooth_stone_slab', 'minecraft:smooth_stone_slab', H('heavy_cable')], 3,
               category='building')
     shaped('tower_floor', ['CQC', 'QCQ', 'CQC'], {'C': 'minecraft:white_concrete', 'Q': QUARTZ}, 8, category='building')
+
+
+# ------------------------------------------------------------------------------------------------ roads (0.25)
+
+def roads():
+    # the ramps (core RampShape), cut from their pavement: a piece is half a block on average whatever the gradient (a run of
+    # N pieces rises one block), so a block makes two; the steeper the ramp, the more stair-like its pattern
+    for material, pavement in (('asphalt', H('asphalt')), ('concrete', H('apron_concrete'))):
+        shaped(material + '_ramp_2', ['P  ', 'PP ', 'PPP'], {'P': pavement}, 12, category='building')
+        shaped(material + '_ramp_4', ['P  ', 'PPP'], {'P': pavement}, 8, category='building')
+        shaped(material + '_ramp_8', ['PPP'], {'P': pavement}, 6, category='building')
+
+
+# ------------------------------------------------------------------------------------------------ storage (0.25)
+
+def storage():
+    # the workshop's storage blocks (core StorageKind): a nailed crate from the start; the steel locker and the parts rack
+    # once there are rolled plate, tube and fasteners; the shipping container, a hundred kilograms of plate on a tube frame,
+    # put together at the bench
+    shaped('storage_crate', ['PNP', 'P P', 'PNP'], {'P': PLANKS, 'N': NUGGET})
+    shaped('steel_locker', ['PP', 'PB', 'PP'], {'P': PLATE, 'B': BOLTS}, cls='container')
+    shaped('parts_rack', ['TPT', 'TPT', 'TBT'], {'T': TUBE, 'P': PLATE, 'B': BOLTS}, cls='container')
+    bench('shipping_container', {PLATE: 8, TUBE: 4, BOLTS: 2}, cls='container')
+    # 0.25: the cargo loader (vehicle cargo): a steel chute with a motor-driven roller conveyor and a hopper's funnel, at the bench
+    # once there are electric motors
+    bench('cargo_loader', {PLATE: 2, MOTOR: 1, 'minecraft:hopper': 1, BOLTS: 1}, cls='machine')
 
 
 # ------------------------------------------------------------------------------------------------ the furnaces: alloys, ores, chemicals
@@ -658,7 +689,8 @@ DROPPED = {
 }
 
 
-def main():
+def build():
+    """Fills RECIPES from the spec (tools/item_mass.py reads the recipes this way, without writing them)."""
     t0()
     assemblies()
     workshop()
@@ -667,9 +699,15 @@ def main():
     petroleum()
     rooms()
     airports()
+    roads()
+    storage()
     furnaces()
     electric_batches()
     compat()
+
+
+def main():
+    build()
     if SCALE_ERRORS:
         sys.exit('off the game scale:\n  ' + '\n  '.join(SCALE_ERRORS))
     # every recipe of before is here or dropped

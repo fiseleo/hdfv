@@ -154,14 +154,28 @@ public final class HdfvJeiPlugin implements IModPlugin {
         registration.addRecipes(RefiningCategory.TYPE, List.of(new dev.mcmod.hdfv.petroleum.Refining.Yield("liquefier", Map.of("hydrogen", 1.0),
                 Map.of("liquid_hydrogen", 1.0), 0, dev.mcmod.hdfv.fluid.HydrogenStorage.LIQUEFACTION_J_PER_KG)));
         for (var e : INFO.entrySet()) { registration.addIngredientInfo(e.getKey().get(), Component.translatable("hdfv.jei." + e.getValue())); }
-        // 0.24: the tutorial: the handbook, and the blocks that had no page (each points to the handbook)
+        // the tutorial's pointer to the handbook (0.24), on the pages of things the handbook has a chapter on
         Component more = Component.translatable("hdfv.jei.more_in_handbook");
+        // 0.25: the road ramps (how a run of them is placed)
+        for (var r : dev.mcmod.hdfv.neoforge.road.HdfvRoads.RAMPS.values()) { registration.addIngredientInfo(r.get(), Component.translatable("hdfv.jei.road_ramp"), more); }
+        // 0.25: the storage blocks (what each holds and takes)
+        for (var s : dev.mcmod.hdfv.neoforge.storage.HdfvStorage.STORES.entrySet()) {
+            registration.addIngredientInfo(s.getValue().get(), Component.translatable("hdfv.jei." + s.getKey().id()), more);
+        }
+        // 0.25: the cargo loader
+        registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.storage.HdfvCargo.LOADER.get(), Component.translatable("hdfv.jei.cargo_loader"), more);
+        // 0.24: the tutorial: the handbook, and the blocks that had no page (each points to the handbook)
         registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.tutorial.HdfvTutorial.HANDBOOK.get(), Component.translatable("hdfv.jei.handbook"));
         registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.material.HdfvMaterials.ALLOY_FURNACE.get(), Component.translatable("hdfv.jei.alloy_furnace"), more);
         registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.smelting.HdfvSmelting.ARC_FURNACE.get(), Component.translatable("hdfv.jei.smelter"), more);
         registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.smelting.HdfvSmelting.ELECTROLYSIS_CELL.get(), Component.translatable("hdfv.jei.smelter"), more);
         registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.paint.HdfvPaint.CONTROLLER.get(), Component.translatable("hdfv.jei.paint_booth"), more);
         registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.refit.HdfvRefit.CONTROLLER.get(), Component.translatable("hdfv.jei.refit_shop"), more);
+        // 0.25: repairs: the repair shop and the field kits
+        registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.repair.HdfvRepair.CONTROLLER.get(), Component.translatable("hdfv.jei.repair_shop"), more);
+        for (var k : dev.mcmod.hdfv.neoforge.repair.HdfvRepair.KITS.entrySet()) {
+            registration.addIngredientInfo(k.getValue().get(), Component.translatable("hdfv.jei." + k.getKey().id()), more);
+        }
         registration.addIngredientInfo(dev.mcmod.hdfv.neoforge.airport.HdfvAirports.TOWER.get(), Component.translatable("hdfv.jei.control_tower"), more);
     }
 

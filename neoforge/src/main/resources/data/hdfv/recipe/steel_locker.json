@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PP",
+    "PB",
+    "PP"
+  ],
+  "key": {
+    "P": {
+      "item": "hdfv:steel_plate"
+    },
+    "B": {
+      "item": "hdfv:fastener_kit"
+    }
+  },
+  "result": {
+    "id": "hdfv:steel_locker",
+    "count": 1
+  }
+}

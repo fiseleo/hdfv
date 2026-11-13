@@ -25,6 +25,10 @@ tools and put the vehicle together in an assembly room.
 - **Drive and fly it:** manual and automatic gearboxes, four-wheel drive, dials and lights; flight controls, landing
   gear, airports with control towers and ATC; articulated trailers.
 - **Make it yours:** a refit shop (shape, size, aero kits, rims, tuning, lamps) and a paint booth with your own stickers.
+- **Keep it running:** parts wear and get damaged (crashes, attacks, fire, water, rust); a repair shop and field kits
+  put them right, and a part past 80 % is replaced by a new one.
+- **Load it:** boots, beds and holds carry cargo that weighs; roof boxes, bed boxes and containers you design;
+  crates, lockers, parts racks and a cargo loader.
 - **Hear it:** every sound is synthesized from the running engine or machine.
 
 ## Getting started
@@ -36,7 +40,7 @@ where it is made. JEI (optional) shows every recipe and machining step.
 ## Requirements
 
 - Minecraft 1.21.1, NeoForge 21.1.252 or newer
-- [AeroCore](https://modrinth.com/mod/aerocore) 0.41.x
+- [AeroCore](https://modrinth.com/mod/aerocore) 0.42.x
 - Optional: JEI (recipes, information pages), Create (some materials by crushing, mixing, pressing)
 - Install on both the client and the server.
 
@@ -66,11 +70,13 @@ where it is made. JEI (optional) shows every recipe and machining step.
 - **加油：** 油田、鑽井架、抽油機、常壓蒸餾塔、FCC、重組、裂解、聚合。
 - **開與飛：** 手排與自排、四驅、儀表與車燈；飛行操作、起落架、有塔台與 ATC 的機場；鉸接拖車。
 - **改成你的：** 改裝廠與可以貼自己圖片的烤漆房。
+- **保養與修理：** 零件會磨損，也會被撞壞、燒壞、泡水、生鏽；修理廠與急修工具把它修好，超過 80 % 的換新零件。
+- **載貨：** 後車廂、貨斗、貨艙放的東西有重量；自己設計的車頂箱、貨斗箱、貨櫃；木箱、置物櫃、零件架與裝卸台。
 - **聽得到：** 所有聲音都依運轉中的引擎或機器即時合成。
 
 新玩家會拿到《載具工程手冊》：右鍵打開，從第一塊礦石教到第一台車、飛機和船。
 
-需求：Minecraft 1.21.1、NeoForge 21.1.252 以上、AeroCore 0.41.x；選用 JEI、Create；客戶端與伺服器都要裝。授權 LGPL-3.0-only。
+需求：Minecraft 1.21.1、NeoForge 21.1.252 以上、AeroCore 0.42.x；選用 JEI、Create；客戶端與伺服器都要裝。授權 LGPL-3.0-only。
 
 問題、錯誤回報、截圖與消息：[Discord](https://discord.gg/4y2mubMg7e)。
 
@@ -96,11 +102,13 @@ where it is made. JEI (optional) shows every recipe and machining step.
 - **加油：** 油田、钻井架、抽油机、常压蒸馏塔、FCC、重组、裂解、聚合。
 - **开与飞：** 手动挡与自动挡、四驱、仪表与车灯；飞行操作、起落架、有塔台与 ATC 的机场；铰接拖车。
 - **改成你的：** 改装厂与可以贴自己图片的喷漆房。
+- **保养与修理：** 零件会磨损，也会被撞坏、烧坏、泡水、生锈；修理厂与急修工具把它修好，超过 80 % 的换新零件。
+- **载货：** 后备箱、货斗、货舱放的东西有重量；自己设计的车顶箱、货斗箱、集装箱；木箱、置物柜、零件架与装卸台。
 - **听得到：** 所有声音都依运转中的发动机或机器即时合成。
 
 新玩家会拿到《载具工程手册》：右键打开，从第一块矿石教到第一台车、飞机和船。
 
-需求：Minecraft 1.21.1、NeoForge 21.1.252 以上、AeroCore 0.41.x；选用 JEI、Create；客户端与服务器都要装。授权 LGPL-3.0-only。
+需求：Minecraft 1.21.1、NeoForge 21.1.252 以上、AeroCore 0.42.x；选用 JEI、Create；客户端与服务器都要装。授权 LGPL-3.0-only。
 
 问题、错误反馈、截图与消息：[Discord](https://discord.gg/4y2mubMg7e)。
 

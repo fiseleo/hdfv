@@ -1,0 +1,34 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:electric_motor_unit"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:hopper"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "item": "hdfv:fastener_kit"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "id": "hdfv:cargo_loader",
+    "count": 1
+  },
+  "seconds": 912
+}

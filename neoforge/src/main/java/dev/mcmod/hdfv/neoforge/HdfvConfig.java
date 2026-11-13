@@ -11,6 +11,10 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * 0.8: energy, the joules of work time a Forge Energy unit is (1000: 1 FE = 1 kJ; a lathe at full load about 33 FE a
  * tick).
  * 0.13: stickers, the pictures players upload (whether they may, how many, how big).
+ * 0.25: storage, the scale of the mass of items (storage.ItemMass: what a store's screen shows and cargo weighs).
+ * 0.25: damage (the user 2026-11-12: four sources, realistic by default, those aboard are hurt): whether vehicles are
+ * damaged at all and how hard by each source (damage.VehicleDamage; wear and corrosion also run on ticksPerWorkHour's
+ * clock, core damage.DamagePace).
  */
 public final class HdfvConfig {
     private HdfvConfig() {}
@@ -24,6 +28,17 @@ public final class HdfvConfig {
     private static final ModConfigSpec.IntValue DECAL_PER_PLAYER, DECAL_TOTAL, DECAL_BYTES, DECAL_SIDE;
     private static final ModConfigSpec.BooleanValue AIRPORTS, FLAT_AIRPORTS, TOWER_TICKETS, LARGE_AIRPORTS, MEDIUM_AIRPORTS, SMALL_AIRPORTS;
     private static final ModConfigSpec.BooleanValue GIVE_HANDBOOK, WELCOME;
+    private static final ModConfigSpec.DoubleValue ITEM_MASS_SCALE, BUCKET_LITRES;
+    private static final ModConfigSpec.BooleanValue DAMAGE, OCCUPANT_INJURY, EXPLOSIONS;
+    private static final ModConfigSpec.DoubleValue COLLISION_SCALE, WEAR_SCALE, ATTACK_SCALE, CORROSION_SCALE;
+    /** The default: items weigh what the rules and the hdfv:item_mass data map say. */
+    public static final double DEFAULT_ITEM_MASS_SCALE = 1.0;
+    /**
+     * The default: a bucket (1000 mB) of fluid in vanilla's and other mods' containers weighs as a real bucket's 10
+     * litres. hdfv counts a millibucket a litre in its tanks, which makes a bucket a cubic metre (a tonne of water):
+     * right for pipes and vehicle tanks, absurd for a bucket in a car's boot (the user, 2026-11-13: change it).
+     */
+    public static final double DEFAULT_BUCKET_LITRES = 10;
     /** The stickers' defaults: uploads allowed, 64 pictures a player, 2048 on the server. */
     public static final int DEFAULT_DECALS_PER_PLAYER = 64, DEFAULT_DECALS_TOTAL = 2048;
     /** The default: 1 FE is 1 kJ of work time. */
@@ -67,12 +82,46 @@ public final class HdfvConfig {
         WELCOME = b.comment("Whether a player joining for the first time gets the welcome in the chat (the handbook, the advancements, a few keys)")
                 .define("welcome", true);
         b.pop();
+        b.comment("Storage (0.25): the mass of items (stock, parts and components by their own rules, other items by the hdfv:item_mass data map)").push("storage");
+        ITEM_MASS_SCALE = b.comment("What the mass of every item is multiplied by (1: an ingot is 10 kg; 0: items and cargo are weightless)")
+                .defineInRange("itemMassScale", DEFAULT_ITEM_MASS_SCALE, 0, 10);
+        BUCKET_LITRES = b.comment("Litres a bucket (1000 mB) of fluid weighs as in vanilla's and other mods' containers (10: a real bucket; "
+                        + "1000: a cubic metre, as hdfv's tanks count a millibucket a litre). hdfv's jerry can holds its litres as they are")
+                .defineInRange("bucketLitres", DEFAULT_BUCKET_LITRES, 0, 1000);
+        b.pop();
+        b.comment("Damage (0.25): vehicles' parts are damaged by collisions, wear in use, attacks, explosions and fire, and by water and corrosion").push("damage");
+        DAMAGE = b.comment("Whether vehicles are damaged at all (false: nothing new is damaged; what is damaged stays so and still has its effects)")
+                .define("enabled", true);
+        COLLISION_SCALE = b.comment("What the energy of a crash is multiplied by (1: realistic; 0: crashes damage nothing)").defineInRange("collisionScale", 1.0, 0, 100);
+        WEAR_SCALE = b.comment("How fast parts wear in use over the work clock's pace (1: an hour of running at ticksPerWorkHour's pace; 0: nothing wears). "
+                + "Reaches the designs compiled after it is set: in practice after a restart").defineInRange("wearScale", 1.0, 0, 100);
+        ATTACK_SCALE = b.comment("What the damage of attacks, projectiles, explosions, fire and lava is multiplied by (0: they damage nothing)")
+                .defineInRange("attackScale", 1.0, 0, 100);
+        CORROSION_SCALE = b.comment("How fast metal corrodes and water harms engines (1: a year of rust in about twelve real hours; 0: neither)")
+                .defineInRange("corrosionScale", 1.0, 0, 100);
+        OCCUPANT_INJURY = b.comment("Whether those aboard are hurt by crashes and by their vehicle burning").define("occupantInjury", true);
+        EXPLOSIONS = b.comment("Whether a burning or blasted vehicle's fuel explodes (it hurts whoever is near and breaks no blocks)").define("explosions", true);
+        b.pop();
         SPEC = b.build();
     }
 
     /** Whether a player joining for the first time gets the handbook, and the welcome (0.24). */
     public static boolean giveHandbook() { return !SPEC.isLoaded() || GIVE_HANDBOOK.get(); }
     public static boolean welcome() { return !SPEC.isLoaded() || WELCOME.get(); }
+
+    /** What the mass of every item is multiplied by (0.25; 0: weightless). */
+    public static double itemMassScale() { return SPEC.isLoaded() ? ITEM_MASS_SCALE.get() : DEFAULT_ITEM_MASS_SCALE; }
+    /** The litres a bucket (1000 mB) of fluid counts as in containers that are not hdfv's (0.25). */
+    public static double bucketLitres() { return SPEC.isLoaded() ? BUCKET_LITRES.get() : DEFAULT_BUCKET_LITRES; }
+
+    /** 0.25, damage: whether vehicles are damaged at all; the sources' scales; whether those aboard are hurt; whether fuel explodes. */
+    public static boolean damage() { return !SPEC.isLoaded() || DAMAGE.get(); }
+    public static double collisionScale() { return SPEC.isLoaded() ? COLLISION_SCALE.get() : 1; }
+    public static double wearScale() { return SPEC.isLoaded() ? WEAR_SCALE.get() : 1; }
+    public static double attackScale() { return SPEC.isLoaded() ? ATTACK_SCALE.get() : 1; }
+    public static double corrosionScale() { return SPEC.isLoaded() ? CORROSION_SCALE.get() : 1; }
+    public static boolean occupantInjury() { return !SPEC.isLoaded() || OCCUPANT_INJURY.get(); }
+    public static boolean explosions() { return !SPEC.isLoaded() || EXPLOSIONS.get(); }
 
     public static double kgPerIngot() { return SPEC.isLoaded() ? KG_PER_INGOT.get() : Pace.KG_PER_INGOT; }
     public static double ticksPerWorkHour() { return SPEC.isLoaded() ? TICKS_PER_WORK_HOUR.get() : Pace.TICKS_PER_WORK_HOUR; }

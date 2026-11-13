@@ -3,6 +3,30 @@
 High Degree of Freedom Vehicles' versions, newest first. Before 0.24 hdfv was not released; the detailed development
 log (in Traditional Chinese) is [docs/HISTORY.zh-TW.md](docs/HISTORY.zh-TW.md).
 
+## 0.25.0: damage and repair, cargo and storage, ramps, on AeroCore 0.42.0
+
+- **Damage.** Parts wear as they are used (tyres, brake linings, clutches, gears, engines, hot sections, motors) and are
+  damaged by crashes, attacks and explosions, fire and lava, water and corrosion; each part shows how much of it is used
+  up, and a worn part does less (grip, braking, power, lift, thrust). Occupants can be hurt in crashes. A wrecked body
+  stops the engines; a leaking tank can burn. Sneak and right-click a vehicle with an empty hand for its status screen;
+  warning lamps on the dashboard; smoke and leaks. Server options in `damage` (scales for each source, injuries,
+  explosions, or off).
+- **Repair.** The repair shop (a room like the refit shop) mends worn and damaged parts with stock and standard parts,
+  time and power; a part past 80 % must be replaced by a newly made one of the same design (or, for brakes, suspension
+  and clutches, its worn pieces). Field repair kit and tyre patch kit to get home. New standard part: friction lining.
+- **Cargo.** A body's cargo spaces (boot, bed, hold) carry items, weighed into the physics; open them with the
+  inventory key while riding, or from the status screen. The storage box part: roof boxes, bed boxes, 20 ft containers.
+  The cargo loader serves a parked vehicle's hold to hoppers. Every item has a mass (data map `hdfv:item_mass`, server
+  options `storage.itemMassScale` and `storage.bucketLitres`: a bucket of fluid weighs as 10 litres).
+- **Storage blocks.** Crate, steel locker, parts rack (parts only), shipping container; assembly rooms and the refit
+  and repair shops take materials from them.
+- **Road ramps** of asphalt and concrete, 1:2, 1:4 and 1:8, placed run by run; wheels drive them as a real slope.
+- **Bench charts** in the design screen for gearboxes (traction, a full-throttle run, the torque converter), transfer
+  cases, axles (tyre curves, brake fade) and landing gear (drop test).
+- A body's design cargo no longer counts in the empty vehicle's mass (the sample sedan is 45 kg lighter, the helicopter
+  120 kg); real cargo does.
+- Saves from 0.24 load with every part as new and empty holds.
+
 ## 0.24.0: first public release (beta), on AeroCore 0.41.0
 
 - **New-player tutorial.** The Vehicle Engineering Handbook (24 entries: the main line from the first ore to driving,

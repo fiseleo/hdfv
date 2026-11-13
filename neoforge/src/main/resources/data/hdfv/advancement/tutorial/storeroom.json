@@ -1,0 +1,35 @@
+{
+  "parent": "hdfv:tutorial/steel",
+  "display": {
+    "icon": {
+      "id": "hdfv:storage_crate"
+    },
+    "title": {
+      "translate": "advancements.hdfv.tutorial.storeroom.title"
+    },
+    "description": {
+      "translate": "advancements.hdfv.tutorial.storeroom.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "has": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hdfv:storage_crate",
+              "hdfv:steel_locker",
+              "hdfv:parts_rack",
+              "hdfv:shipping_container"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

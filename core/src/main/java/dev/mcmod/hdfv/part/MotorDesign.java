@@ -57,8 +57,9 @@ public record MotorDesign(String name, double maxTorqueNm, double maxPowerW, dou
         DesignException.throwIfInvalid(issues);
         double side = Math.cbrt(massKg / HOUSING_DENSITY);
         MassProperties mass = MassProperties.of(massKg, Vec3d.ZERO, InertiaTensor.box(massKg, new Vec3d(side, side, side)));
+        // 0.25: the motor wears
         return new MotorPart(this, motor(), rotorInertiaKgM2, efficiency, mass,
-                issues.stream().filter(i -> i.kind() == DesignIssue.Kind.EXTRAPOLATION).toList());
+                issues.stream().filter(i -> i.kind() == DesignIssue.Kind.EXTRAPOLATION).toList()).wearing(dev.mcmod.hdfv.damage.Wearings.motor(this));
     }
 
     @Override public Map<String, Object> parameters() {

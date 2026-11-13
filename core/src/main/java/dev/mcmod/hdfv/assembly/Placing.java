@@ -68,6 +68,7 @@ public final class Placing {
             case ControlSurfaceDesign c -> List.of("rudder", "tail");
             case SeatDesign s -> List.of("m2_bottom", "m\\d+_bottom");
             case BodyDesign b -> cab(b) ? List.of("cab", "body") : List.of("body");
+            case dev.mcmod.hdfv.part.StorageBoxDesign s -> List.of("m\\d+_top");   // 0.25: on a module's or a deck's top (storageBox orders them)
             default -> List.of();
         };
     }
@@ -110,6 +111,10 @@ public final class Placing {
      */
     public static Mount suggest(VehicleBlueprint layout, PartDesign d, Map<String, Map<String, Mount>> pointsByPart) {
         if (d instanceof SeatDesign && bodySeats(layout)) { return Mount.ORIGIN; }
+        if (d instanceof dev.mcmod.hdfv.part.StorageBoxDesign box) {
+            Mount m = storageBox(layout, box, pointsByPart);
+            if (m != null) { return m; }
+        }
         for (String pattern : points(d)) {
             Pattern p = Pattern.compile(pattern);
             for (var host : pointsByPart.entrySet()) {
@@ -123,6 +128,45 @@ public final class Placing {
             }
         }
         return Mount.ORIGIN;
+    }
+
+    private static final Pattern TOP = Pattern.compile("m(\\d+)_top");
+
+    /**
+     * 0.25: where a storage box goes (its origin is the middle of its bottom): a roof box on the highest module top (the
+     * roof; on its bars when the body has a roof rack: KitLayout's bars' top); a bed box or a container on the top of a
+     * deck, a cargo module or a trunk first, the lowest of those (a lorry's bed, a low-loader's well), then on any top;
+     * a point a storage box already holds is passed over. Null when there is no top free.
+     */
+    static Mount storageBox(VehicleBlueprint layout, dev.mcmod.hdfv.part.StorageBoxDesign box, Map<String, Map<String, Mount>> pointsByPart) {
+        record Spot(String part, String point, double y, int rank, double raise) {}
+        boolean roof = box.kind() == dev.mcmod.hdfv.part.StorageBoxDesign.Kind.ROOF_BOX;
+        List<Spot> spots = new ArrayList<>();
+        for (var host : pointsByPart.entrySet()) {
+            VehicleBlueprint.Entry e = layout.part(host.getKey());
+            BodyDesign body = e != null && e.design() instanceof BodyDesign b ? b : null;
+            double rack = Double.NaN;
+            if (roof && body != null && body.kitted() && body.kit().roofRack() != dev.mcmod.hdfv.part.body.BodyKitDesign.RoofRack.NONE) {
+                double top = Double.NEGATIVE_INFINITY;
+                for (var st : body.shape().stations()) { top = Math.max(top, st.topM()); }
+                rack = top + 0.06 + dev.mcmod.hdfv.look.KitLayout.BAR_M;
+            }
+            for (var p : host.getValue().entrySet()) {
+                java.util.regex.Matcher m = TOP.matcher(p.getKey());
+                if (!m.matches() || taken(layout, box, host.getKey(), p.getKey())) { continue; }
+                int module = Integer.parseInt(m.group(1)) - 1;
+                var kind = body != null && module < body.modules().size() ? body.modules().get(module).kind() : null;
+                boolean bed = kind == dev.mcmod.hdfv.part.body.BodyModuleDesign.Kind.DECK || kind == dev.mcmod.hdfv.part.body.BodyModuleDesign.Kind.CARGO
+                        || kind == dev.mcmod.hdfv.part.body.BodyModuleDesign.Kind.TRUNK;
+                double y = p.getValue().position().y();
+                spots.add(new Spot(host.getKey(), p.getKey(), y, roof || bed ? 0 : 1, roof && Double.isFinite(rack) ? Math.max(rack - y, 0) : 0));
+            }
+        }
+        if (spots.isEmpty()) { return null; }
+        spots.sort((a, b) -> a.rank() != b.rank() ? Integer.compare(a.rank(), b.rank())
+                : Math.abs(a.y() - b.y()) > 1e-9 ? (roof ? Double.compare(b.y(), a.y()) : Double.compare(a.y(), b.y())) : byName(a.point(), b.point()));
+        Spot s = spots.get(0);
+        return Mount.on(s.part(), s.point(), Mount.at(new Vec3d(0, s.raise(), 0)));
     }
 
     /** How far apart along x two axle points must be for both to take an axle (0.15), m. */

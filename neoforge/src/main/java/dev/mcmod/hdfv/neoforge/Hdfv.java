@@ -36,6 +36,11 @@ public final class Hdfv {
         dev.mcmod.hdfv.neoforge.refit.HdfvRefit.register(modBus);
         dev.mcmod.hdfv.neoforge.machining.HdfvMachining.register(modBus);
         dev.mcmod.hdfv.neoforge.airport.HdfvAirports.register(modBus);
+        dev.mcmod.hdfv.neoforge.road.HdfvRoads.register(modBus);
+        dev.mcmod.hdfv.neoforge.storage.HdfvStorage.register(modBus);
+        dev.mcmod.hdfv.neoforge.storage.HdfvCargo.register(modBus);
+        dev.mcmod.hdfv.neoforge.repair.HdfvRepair.register(modBus);
+        dev.mcmod.hdfv.neoforge.damage.VehicleDamage.register(modBus);
         dev.mcmod.hdfv.neoforge.tutorial.HdfvTutorial.register(modBus);
         modBus.addListener(dev.mcmod.hdfv.neoforge.sound.SoundSync::register);
         dev.mcmod.hdfv.neoforge.sound.FarSignatures.register();

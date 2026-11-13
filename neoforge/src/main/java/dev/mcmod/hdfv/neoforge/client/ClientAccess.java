@@ -30,6 +30,12 @@ public final class ClientAccess {
         Minecraft.getInstance().setScreen(new DesignScreen(null, Blueprints.Target.NEW, null));
     }
 
+    /** 0.25: opens a vehicle's status screen (sneak and use an empty hand on it). */
+    public static void openVehicleStatus(dev.mcmod.aerocore.neoforge.vehicle.PartVehicle vehicle) { Minecraft.getInstance().setScreen(new VehicleStatusScreen(vehicle)); }
+
+    /** 0.25: the server's answer to the cargo tab: each hold's used slots. */
+    public static void cargoSummary(int entity, int[] used) { CargoTab.summary(entity, used); }
+
     /** 0.24: opens the handbook at an entry ("": where it was last). */
     public static void openHandbook(String entry) { Minecraft.getInstance().setScreen(new HandbookScreen(entry)); }
 

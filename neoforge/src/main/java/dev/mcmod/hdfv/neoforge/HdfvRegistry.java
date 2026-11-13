@@ -67,6 +67,10 @@ public final class HdfvRegistry {
                 dev.mcmod.hdfv.neoforge.refit.HdfvRefit.tab(output);
                 dev.mcmod.hdfv.neoforge.machining.HdfvMachining.tab(output);
                 dev.mcmod.hdfv.neoforge.airport.HdfvAirports.tab(output);
+                dev.mcmod.hdfv.neoforge.road.HdfvRoads.tab(output);
+                dev.mcmod.hdfv.neoforge.storage.HdfvStorage.tab(output);
+                dev.mcmod.hdfv.neoforge.storage.HdfvCargo.tab(output);
+                dev.mcmod.hdfv.neoforge.repair.HdfvRepair.tab(output);
             })
             .build());
 

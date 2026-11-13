@@ -55,9 +55,14 @@ class FuelTest {
         assertEquals("kerosene", t.fuel());
         assertEquals(1.4, t.capacityM3(), 1e-12);
         assertEquals(1.4 * 800 * 0.5, t.initialKg(), 1e-9, "half full of kerosene");
-        assertEquals(f.mass().massKg() - t.initialKg(), p.mass().massKg(), 1e-6);
-        // dry and fuel together are what the body weighed with its fuel in it
-        MassProperties joint = MassProperties.combine(List.of(p.mass(), MassProperties.point(t.initialKg(), t.centre())));
+        // 0.25: the design cargo (its 1.2 m3 hold half full at 200 kg/m3) is not in the compiled body either: its hold carries what is loaded
+        double cargo = 0;
+        for (int i = 0; i < f.modules().size(); i++) { cargo += f.cargoKg(i); }
+        assertEquals(120, cargo, 1e-9);
+        assertEquals(f.mass().massKg() - t.initialKg() - cargo, p.mass().massKg(), 1e-6);
+        assertEquals(f.dryMass().massKg(), p.mass().massKg(), 1e-9);
+        // dry, fuel and the design cargo together are what the body weighed with them in it (both low in the aft fuselage, where the tank is)
+        MassProperties joint = MassProperties.combine(List.of(p.mass(), MassProperties.point(t.initialKg() + cargo, t.centre())));
         assertEquals(f.mass().massKg(), joint.massKg(), 1e-6);
         assertEquals(0, joint.centre().subtract(f.mass().centre()).length(), 1e-9);
         // the fuel is a choice of hdfv's fuels and reads back
