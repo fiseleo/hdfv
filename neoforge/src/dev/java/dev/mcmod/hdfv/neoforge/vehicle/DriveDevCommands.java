@@ -89,8 +89,9 @@ public final class DriveDevCommands {
         return Commands.literal("drive").requires(s -> !FMLEnvironment.production)
                 .then(Commands.literal("spawn").then(Commands.argument("car", StringArgumentType.word()).executes(c -> {
                     CommandSourceStack source = c.getSource();
-                    Supplier<VehicleBlueprint> car = CARS.get(StringArgumentType.getString(c, "car"));
-                    if (car == null) { source.sendFailure(Component.literal("Test cars: " + CARS.keySet())); return 0; }
+                    // 0.26: the test machines (TestMachines) too
+                    Supplier<VehicleBlueprint> car = CARS.getOrDefault(StringArgumentType.getString(c, "car"), dev.mcmod.hdfv.drive.TestMachines.ALL.get(StringArgumentType.getString(c, "car")));
+                    if (car == null) { source.sendFailure(Component.literal("Test cars: " + CARS.keySet() + "; machines: " + dev.mcmod.hdfv.drive.TestMachines.ALL.keySet())); return 0; }
                     PartVehicle vehicle = VehicleRegistry.PART_VEHICLE.get().create(source.getLevel());
                     if (vehicle == null) { return 0; }
                     double yaw = Math.toRadians(source.getRotation().y);

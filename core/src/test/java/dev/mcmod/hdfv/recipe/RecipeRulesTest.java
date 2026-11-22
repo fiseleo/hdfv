@@ -106,7 +106,8 @@ class RecipeRulesTest {
     static final Map<String, Double> VANILLA = Map.ofEntries(Map.entry("#c:ingots/iron", 10.0), Map.entry("#c:ingots/copper", 10.0),
             Map.entry("#c:ingots/gold", 10.0), Map.entry("#c:nuggets/iron", 1.1), Map.entry("#c:nuggets/gold", 1.1), Map.entry("minecraft:hopper", 50.0),
             Map.entry("minecraft:minecart", 50.0), Map.entry("minecraft:compass", 40.0), Map.entry("minecraft:flint_and_steel", 10.0),
-            Map.entry("hdfv:nickel_ingot", 10.0), Map.entry("hdfv:grinding_wheel", 3.0));
+            Map.entry("hdfv:nickel_ingot", 10.0), Map.entry("hdfv:grinding_wheel", 3.0),
+            Map.entry("minecraft:iron_bars", 0.4), Map.entry("minecraft:bucket", 30.0));   // 0.26: the tower crane's and the concrete plant's
 
     @Test void theBenchsTimesAreThePartsRuleAndTheAssembliesWeighTheirParts() {
         List<String> wrong = new ArrayList<>();

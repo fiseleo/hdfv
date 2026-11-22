@@ -51,7 +51,7 @@ public final class PartLooks {
 
     private static final int BRONZE = 0xffc2955a, RUDDER = 0xff3b3f45, STOCK = 0xffb7bcc2, HULL = 0xffd9d6cc, BOTTOM = 0xff9b3b30, RUB_RAIL = 0xff34383d,
             FLOAT = 0xffe0662a, CRATE = 0xff8a6a43, FRAME = 0xff4a4f55, MOTOR = 0xff2f4f7a, MOTOR_END = 0xff5a6068, SHAFT = 0xffc9cdd2, LEAD = 0xff4b4e53,
-            TANK = 0xff3a3f45, STRAP = 0xff1e2024, CAP = 0xffc9a227, CYLINDER = 0xff2b2d31, JACKET = 0xffd8dbde;
+            TANK = 0xff3a3f45, STRAP = 0xff1e2024, CAP = 0xffc9a227, CYLINDER = 0xff2b2d31, JACKET = 0xffd8dbde, VALVE = 0xffb3261e;
 
     /** B-series chord over diameter times blades over expanded area ratio, at r/R 0.2 to 1 (Kuiper 1992, table 2.1). */
     private static final double[] B_CHORD = {1.662, 1.882, 2.050, 2.152, 2.187, 2.144, 1.970, 1.582, 0.0};
@@ -106,8 +106,17 @@ public final class PartLooks {
                 out.add(DetailKit.mesh(DetailKit.Part.CAR_SEAT, true), Orientation.IDENTITY, new Vec3d(0.03, -0.27, 0));
             }
         });
+        // 0.26: the tower crane's boxes (by name) as its slewing unit, jibs, ballast and cab; other boxes as crates
         Looks.register(BoxDesign.class, new PartRenderer() {
-            @Override public void mesh(Part part, PartMesh out) { crate(out, ((BoxDesign) part.design()).sizeM()); }
+            @Override public void mesh(Part part, PartMesh out) {
+                BoxDesign d = (BoxDesign) part.design();
+                if (!MachineLooks.towerCrane(d, out)) { crate(out, d.sizeM()); }
+            }
+
+            @Override public void animate(Part part, dev.mcmod.aerocore.neoforge.vehicle.PartVehicle entity, String partId, int firstRotor, float partialTick,
+                                          com.mojang.blaze3d.vertex.PoseStack stack, dev.mcmod.aerocore.neoforge.client.PartLayers layers, int light, Drawn drawn) {
+                MachineLooks.towerCraneAnimate((BoxDesign) part.design(), entity, stack, layers, light, drawn);
+            }
         });
         Looks.register(MotorDesign.class, new PartRenderer() {
             @Override public void mesh(Part part, PartMesh out) { motor(out, part.mass().massKg()); }
@@ -179,6 +188,36 @@ public final class PartLooks {
         out.finish(Finishes.STAINLESS).cylinder(new Vec3d(l * 0.98, 0, 0), new Vec3d(l + 0.06, 0, 0), 0.025, 0.025, 12, STOCK);
         if (cryo) {
             for (double x : new double[]{-0.5 * straight, 0.5 * straight}) { out.cylinder(new Vec3d(x - 0.012, 0, 0), new Vec3d(x + 0.012, 0, 0), r * 1.02, r * 1.02, 28, FRAME); }
+            // 2026-11-22 (Blender): the saddles under it, the vacuum jacket's port, the valve box and its pipes at the end, the relief valves
+            out.finish(Finishes.PAINT);
+            for (double x : new double[]{-0.5 * straight, 0.5 * straight}) {
+                out.hexahedron(new Vec3d[]{new Vec3d(x - 0.04, -r, -0.6 * r), new Vec3d(x + 0.04, -r, -0.6 * r), new Vec3d(x + 0.04, -0.7 * r, -0.75 * r), new Vec3d(x - 0.04, -0.7 * r, -0.75 * r),
+                        new Vec3d(x - 0.04, -r, 0.6 * r), new Vec3d(x + 0.04, -r, 0.6 * r), new Vec3d(x + 0.04, -0.7 * r, 0.75 * r), new Vec3d(x - 0.04, -0.7 * r, 0.75 * r)}, FRAME);
+            }
+            out.finish(Finishes.STAINLESS);
+            out.cylinder(new Vec3d(-0.3 * straight, 0.97 * r, 0), new Vec3d(-0.3 * straight, r + 0.04, 0), 0.03, 0.03, 12, STOCK);
+            Vec3d box = new Vec3d(l + 0.06, 0, 0);
+            out.box(box.add(new Vec3d(0, -0.08, -0.07)), box.add(new Vec3d(0.08, 0.08, 0.07)), STOCK);
+            for (double z : new double[]{-0.035, 0.035}) {
+                out.tube(List.of(box.add(new Vec3d(0.04, 0.08, z)), box.add(new Vec3d(0.04, 0.14, z)), box.add(new Vec3d(-0.04, 0.18, z)), new Vec3d(0.6 * l, r + 0.04, z)), 0.012, null, STOCK, null, 8, false);
+            }
+            for (double z : new double[]{-0.04, 0.04}) {
+                out.cylinder(box.add(new Vec3d(0.02, 0.08, z)), box.add(new Vec3d(0.02, 0.16, z)), 0.01, 0.01, 8, STOCK);
+                out.finish(Finishes.PAINT).cylinder(box.add(new Vec3d(0.02, 0.16, z)), box.add(new Vec3d(0.02, 0.19, z)), 0.016, 0.012, 8, VALVE).finish(Finishes.STAINLESS);
+            }
+        } else {
+            // 2026-11-22 (Blender): the valve on its boss with its hand wheel, the end boss behind, two straps with their lugs
+            out.finish(Finishes.BRASS);
+            Vec3d valve = new Vec3d(l + 0.06, 0, 0);
+            out.box(valve.add(new Vec3d(0, -0.025, -0.025)), valve.add(new Vec3d(0.06, 0.025, 0.025)), CAP);
+            out.cylinder(valve.add(new Vec3d(0.03, 0.025, 0)), valve.add(new Vec3d(0.03, 0.06, 0)), 0.008, 0.008, 8, CAP);
+            out.finish(Finishes.PAINT).tube(MeshBuilder.circle(valve.add(new Vec3d(0.03, 0.065, 0)), Vec3d.Y, 0.03, 12), 0.005, null, VALVE, null, 6, true);
+            out.finish(Finishes.STAINLESS).cylinder(new Vec3d(-l * 0.98, 0, 0), new Vec3d(-l - 0.025, 0, 0), 0.03, 0.03, 12, STOCK);
+            out.finish(Finishes.RUBBER);
+            for (double x : new double[]{-0.5 * straight, 0.5 * straight}) {
+                out.cylinder(new Vec3d(x - 0.02, 0, 0), new Vec3d(x + 0.02, 0, 0), r * 1.015, r * 1.015, 28, STRAP);
+                out.box(new Vec3d(x - 0.02, -r - 0.03, -0.03), new Vec3d(x + 0.02, -r + 0.01, 0.03), STRAP);
+            }
         }
         out.finish(null);
     }

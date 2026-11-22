@@ -93,7 +93,8 @@ public final class Plans {
                 StructurePlanner.container(s, pieces, works);
                 at = Station.ASSEMBLY_ROOM;
             }
-            default -> pieces.addAll(PartPlanner.simple(d));
+            // 0.26: the heavy machinery's parts (MachinePlanner)
+            default -> pieces.addAll(dev.mcmod.hdfv.assembly.Room.machinePart(d) ? MachinePlanner.of(d) : PartPlanner.simple(d));
         }
         double kg = 0;
         int count = 0;

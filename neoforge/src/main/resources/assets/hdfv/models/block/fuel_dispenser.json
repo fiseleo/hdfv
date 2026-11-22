@@ -12,6 +12,8 @@
     "dark_steel": "hdfv:block/machine/dark_steel",
     "plastic": "hdfv:block/machine/plastic",
     "steel": "hdfv:block/machine/steel",
-    "rubber": "hdfv:block/machine/rubber"
+    "rubber": "hdfv:block/machine/rubber",
+    "label": "hdfv:block/machine/label",
+    "hazard": "hdfv:block/machine/hazard"
   }
 }

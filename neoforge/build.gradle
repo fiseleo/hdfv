@@ -178,7 +178,7 @@ def verifyReleaseJar = tasks.register('verifyReleaseJar') {
     doLast {
         def names = new java.util.zip.ZipFile(jarFile.get().asFile).withCloseable { zip -> zip.entries().findAll { !it.directory }.collect { it.name } }
         def development = names.findAll {
-            it ==~ /.*\/(AutoShot|DevWindow|\w*Dev\w*Commands|\w*GameTests?|ClipCheck|TestCars|SoundBench|OilFieldCommands|HdfvDev)(\$.*)?\.class/ ||
+            it ==~ /.*\/(AutoShot|DevWindow|\w*Dev\w*Commands|\w*GameTests?|ClipCheck|TestCars|TestMachines|SoundBench|OilFieldCommands|HdfvDev)(\$.*)?\.class/ ||
                     it.startsWith('data/hdfv/structure/')
         }
         if (development) { throw new GradleException("Development code in the release JAR: ${development}") }

@@ -4,11 +4,23 @@ Kd 1.000000 1.000000 1.000000
 d 1.000000
 map_Kd #dark_steel
 
+newmtl paint_yellow
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #paint_yellow
+
 newmtl insulation
 Ka 0.000000 0.000000 0.000000
 Kd 1.000000 1.000000 1.000000
 d 1.000000
 map_Kd #insulation
+
+newmtl steel
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #steel
 
 newmtl paint_blue
 Ka 0.000000 0.000000 0.000000
@@ -16,17 +28,23 @@ Kd 1.000000 1.000000 1.000000
 d 1.000000
 map_Kd #paint_blue
 
+newmtl paint_grey
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #paint_grey
+
 newmtl frost
 Ka 0.000000 0.000000 0.000000
 Kd 1.000000 1.000000 1.000000
 d 1.000000
 map_Kd #frost
 
-newmtl steel
+newmtl paint_red
 Ka 0.000000 0.000000 0.000000
 Kd 1.000000 1.000000 1.000000
 d 1.000000
-map_Kd #steel
+map_Kd #paint_red
 
 newmtl panel
 Ka 0.000000 0.000000 0.000000

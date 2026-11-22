@@ -27,7 +27,17 @@ public final class Dashboard {
     public record Readings(double speedMps, double rpm, Box box, Transfer transfer, Map<String, Double> controls, double fuelShare, boolean engineRunning) {}
 
     /** 0.19: TURN_LEFT, TURN_RIGHT (the indicators' arrows, first in the row; they flash with the lamps, LampRules). */
-    public enum Lamp { HANDBRAKE, MODE, CENTRE_LOCK, REAR_LOCK, FRONT_LOCK, AUTO_CLUTCH, LOW_FUEL, ENGINE, RIDE_HEIGHT, TRAILER, TURN_LEFT, TURN_RIGHT }
+    public enum Lamp { HANDBRAKE, MODE, CENTRE_LOCK, REAR_LOCK, FRONT_LOCK, AUTO_CLUTCH, LOW_FUEL, ENGINE, RIDE_HEIGHT, TRAILER, TURN_LEFT, TURN_RIGHT,
+        /** 0.26: a machine's work mode, its blade floating, its hydraulic pressure, what its hold carries, the hook's load, the load moment limiter. */
+        WORK, FLOAT, PRESSURE, BULK, HOOK, LOAD_MOMENT }
+
+    /**
+     * 0.26: the machine readouts the server writes into the controls (WorldWork): the highest circuit pressure (Pa), the
+     * bulk carried (loose m^3), the hook's load (kg) and the load moment limiter's share of the rated moment (warning
+     * from LMI_WARN, cut-out at 1).
+     */
+    public static final String HUD_PRESSURE = "hud.pressure", HUD_BULK = "hud.bulk_m3", HUD_HOOK = "hud.hook_kg", HUD_LMI = "hud.lmi";
+    public static final double LMI_WARN = 0.9;
 
     /** A lamp lit (blinking while the car has not yet done what was asked, as a range change waiting for it to stop), and its label. */
     public record Lit(Lamp lamp, String label, boolean blinking) {}
@@ -95,7 +105,22 @@ public final class Dashboard {
         if (kit.fifthWheel() && coupling > 0.5) { out.add(new Lit(Lamp.TRAILER, "TRL", coupling > 1.5)); }
         if (r.fuelShare() >= 0 && r.fuelShare() < LOW_FUEL) { out.add(new Lit(Lamp.LOW_FUEL, "", false)); }
         if (kit.piston() && !r.engineRunning()) { out.add(new Lit(Lamp.ENGINE, "", false)); }
+        work(c, out);
         return out;
+    }
+
+    /** 0.26: a machine's lamps and readouts from its channels (nothing for a vehicle without them). */
+    static void work(Map<String, Double> c, List<Lit> out) {
+        if (c.getOrDefault(WorkInputs.MODE, 0.0) > 0.5) { out.add(new Lit(Lamp.WORK, "WORK", false)); }
+        if (c.getOrDefault("float", 0.0) > 0.5) { out.add(new Lit(Lamp.FLOAT, "FLT", false)); }
+        double p = c.getOrDefault(HUD_PRESSURE, 0.0);
+        if (p > 1e5) { out.add(new Lit(Lamp.PRESSURE, Math.round(p / 1e5) + " bar", false)); }
+        double bulk = c.getOrDefault(HUD_BULK, 0.0);
+        if (bulk > 0.005) { out.add(new Lit(Lamp.BULK, String.format(java.util.Locale.ROOT, "%.1f m³", bulk), false)); }
+        double hook = c.getOrDefault(HUD_HOOK, 0.0);
+        if (hook > 1) { out.add(new Lit(Lamp.HOOK, String.format(java.util.Locale.ROOT, "%.1f t", hook / 1000), false)); }
+        double lmi = c.getOrDefault(HUD_LMI, 0.0);
+        if (lmi > 0.005) { out.add(new Lit(Lamp.LOAD_MOMENT, "LMI " + Math.round(100 * lmi) + "%", lmi >= LMI_WARN)); }
     }
 
     /** The drive mode the driver's channels ask for (the first when they match none). */

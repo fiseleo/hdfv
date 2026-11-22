@@ -30,6 +30,9 @@ helicopters and boats; the physics is [AeroCore](https://github.com/fiseleo/aero
   kits put them right, and a part past 80 % is replaced by a new one.
 - **Load it.** Boots, beds and holds carry cargo that weighs; roof boxes, bed boxes and containers you design;
   crates, lockers, parts racks and a cargo loader.
+- **Dig it.** Heavy machinery from parts you design: tracks, drums, hydraulic booms and rams, buckets, blades and 30-odd
+  other work tools. Machines really dig the world and carry what they dig by weight; roll it, pave it, lift with cranes
+  and a tower crane; asphalt and concrete plants; an open-air heavy yard to build them in.
 - **Hear it.** Every sound is synthesized from the running engine or machine.
 
 ## Getting started
@@ -45,7 +48,7 @@ every recipe and machining step is there too.
 | --- | --- |
 | Minecraft | 1.21.1 |
 | NeoForge | 21.1.252 or newer (21.1.x) |
-| AeroCore | 0.42.x (required) |
+| AeroCore | 0.43.x (required) |
 | JEI | optional: recipes and information pages |
 | Create | optional: some materials by Create's crushing, mixing and pressing |
 | Java | 21 |

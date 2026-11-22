@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:moss_block",
+      "required": false
+    },
+    {
+      "id": "minecraft:rooted_dirt",
+      "required": false
+    },
+    {
+      "id": "minecraft:farmland",
+      "required": false
+    },
+    {
+      "id": "minecraft:dirt_path",
+      "required": false
+    }
+  ]
+}

@@ -226,6 +226,7 @@ public final class RecordEditor {
         if (t == String.class && c.getName().equals("fuel") && owner == dev.mcmod.hdfv.part.FuelTankDesign.class) { return List.copyOf(dev.mcmod.hdfv.fluid.FuelGrades.fluids()); }
         if (t == String.class && c.getName().equals("fuel") && owner == dev.mcmod.hdfv.part.body.BodySettingsDesign.class) { return List.copyOf(dev.mcmod.hdfv.fluid.FuelGrades.ambient()); }
         if (t == String.class && c.getName().equals("oilGrade")) { return EngineOil.GRADES.stream().map(EngineOil::grade).toList(); }
+        if (t == String.class && c.getName().equals("circuit")) { return dev.mcmod.hdfv.part.machine.HydraulicPumpDesign.CIRCUITS; }   // 0.26
         if (t == String.class && c.getName().equals("fuel") && (owner == dev.mcmod.hdfv.part.engine.RamControlDesign.class
                 || owner == dev.mcmod.hdfv.part.engine.ScramControlDesign.class)) { return dev.mcmod.hdfv.part.engine.RamControlDesign.FUELS; }
         if (t == String.class && c.getName().equals("fuel") && owner == dev.mcmod.hdfv.part.engine.PulseControlDesign.class) { return dev.mcmod.hdfv.part.engine.PulseControlDesign.FUELS; }

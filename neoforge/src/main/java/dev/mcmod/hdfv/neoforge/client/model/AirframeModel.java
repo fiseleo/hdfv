@@ -131,7 +131,45 @@ public final class AirframeModel {
         }
         if (!stickers.isEmpty()) { dev.mcmod.hdfv.look.Decals.wingFixed(fixed, loft, stickers, strips); }
         fixed.finish(pen);
-        if (highlight == null) { fittings(w, loft, fixed, skin); }
+        if (highlight == null) { fittings(w, loft, fixed, skin); panelLines(loft, fixed, skin, surfaces); }
+    }
+
+    /**
+     * 2026-11-22 (checked in Blender, the skin was bare): the upper skin's panel lines, a shade darker than the skin at
+     * detail 1: along the front spar (15 % chord) and the rear spar (62 %, or ahead of the deepest control surface's
+     * hinge), and across them at every rib bay of about 0.6 m.
+     */
+    private static void panelLines(WingSurface loft, PartMesh fixed, int skin, List<WingSurfaceDesign> surfaces) {
+        double rear = 0.62;
+        for (WingSurfaceDesign s : surfaces) { rear = Math.min(rear, 1 - s.chordFraction() - 0.04); }
+        if (rear < 0.25) { return; }
+        int line = Shapes.mix(skin, 0xff3a3d42, 0.35);
+        Vec3d up = new Vec3d(0, 0.0015, 0);
+        fixed.detail(1);
+        for (int side : loft.sides()) {
+            for (double c : new double[]{0.15, rear}) {
+                List<Vec3d> a = new ArrayList<>(), b = new ArrayList<>();
+                for (int k = 0; k <= 12; k++) {
+                    double eta = 0.02 + 0.96 * k / 12;
+                    a.add(loft.point(eta, c, 1, side).add(up));
+                    b.add(loft.point(eta, c + 0.006, 1, side).add(up));
+                }
+                fixed.sheet(a, b, line, true);
+            }
+            double span = loft.point(1, 0.3, 0.5, side).subtract(loft.point(0, 0.3, 0.5, side)).length();
+            int bays = Math.max(2, (int) (span / 0.6));
+            for (int r = 1; r < bays; r++) {
+                double eta = (double) r / bays;
+                List<Vec3d> a = new ArrayList<>(), b = new ArrayList<>();
+                for (int k = 0; k <= 6; k++) {
+                    double c = 0.15 + (rear - 0.15) * k / 6;
+                    a.add(loft.point(eta, c, 1, side).add(up));
+                    b.add(loft.point(eta + 0.003, c, 1, side).add(up));
+                }
+                fixed.sheet(a, b, line, true);
+            }
+        }
+        fixed.detail(0);
     }
 
     /** 0.22: an end wall over a section outline from a chord fraction to the trailing edge (upper and lower paired), facing a way. */

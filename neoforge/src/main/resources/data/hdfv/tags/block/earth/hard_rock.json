@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "minecraft:basalt",
+      "required": false
+    },
+    {
+      "id": "minecraft:smooth_basalt",
+      "required": false
+    },
+    {
+      "id": "minecraft:blackstone",
+      "required": false
+    },
+    {
+      "id": "minecraft:end_stone",
+      "required": false
+    }
+  ]
+}

@@ -84,7 +84,7 @@ DEFAULTS = [
     ('minecraft:turtle_helmet', 2.5), ('minecraft:elytra', 2), ('minecraft:shield', 16), ('minecraft:bow', 0.3), ('minecraft:crossbow', 11),
     ('minecraft:fishing_rod', 0.3), ('minecraft:shears', 20), ('minecraft:flint_and_steel', 10), ('minecraft:arrow', 0.1), ('minecraft:trident', 20),
     # iron goods and redstone (their ingots, and what else is in them)
-    ('#c:buckets', 30), ('#minecraft:anvil', 310), ('#minecraft:rails', 0.5), ('minecraft:rail', 0.4), ('minecraft:iron_bars', 0.4),
+    ('#c:buckets', 30), ('#minecraft:anvil', 310), ('#minecraft:rails', 0.5), ('minecraft:rail', 0.4), ('minecraft:iron_bars', 0.4), ('minecraft:chain', 12.2),
     ('minecraft:iron_door', 20), ('minecraft:iron_trapdoor', 40), ('minecraft:heavy_weighted_pressure_plate', 20), ('minecraft:light_weighted_pressure_plate', 20),
     ('minecraft:cauldron', 70), ('minecraft:hopper', 58), ('minecraft:minecart', 50), ('minecraft:chest_minecart', 58), ('minecraft:hopper_minecart', 108),
     ('minecraft:furnace_minecart', 210), ('minecraft:tnt_minecart', 66), ('minecraft:compass', 41), ('minecraft:clock', 41), ('minecraft:lantern', 1),
@@ -125,6 +125,9 @@ HDFV = {
     'honing_stones': 1,           # a set of six small stones
     'brass_wire_spool': 5,        # a 5 kg spool (Consumable)
     'oil_seep': 15, 'creative_power': 10,
+    # 0.26: the worksite's blocks, on the loose and solid blocks' scale (dirt 15, stone 20: a hundredth of a real cubic metre)
+    'loose_fill': 15, 'blasted_rock': 20, 'compacted_base': 17, 'hot_asphalt': 18, 'fresh_concrete': 20, 'reclaimed_asphalt': 15,
+    'pile': 25, 'tunnel_lining': 22,
 }
 for _ore in ('bauxite', 'ilmenite', 'nickel', 'chromite', 'magnesite', 'tin', 'zinc', 'garnet'):
     HDFV[_ore + '_ore'] = 20

@@ -27,3 +27,21 @@ Ka 0.000000 0.000000 0.000000
 Kd 1.000000 1.000000 1.000000
 d 1.000000
 map_Kd #paint_red
+
+newmtl paint_grey
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #paint_grey
+
+newmtl paint_green
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #paint_green
+
+newmtl cast_iron
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #cast_iron

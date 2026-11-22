@@ -4,7 +4,7 @@ What each upload needs. Accounts, uploads and pushes are done by the user; each 
 
 ## Before
 
-- [ ] AeroCore 0.42.0 is published on the same platform (hdfv depends on it).
+- [ ] AeroCore 0.43.0 is published on the same platform (hdfv depends on it).
 - [ ] `.\dev.ps1 :core:test :neoforge:runGameTestServer build` passes; `verifyReleaseJar` passes.
 - [ ] The release test (AeroCore `scripts/release-test/release_test.py`): server base, jei, create; client base, jei;
       multiplayer. No suspicious lines.
@@ -28,7 +28,7 @@ What each upload needs. Accounts, uploads and pushes are done by the user; each 
 | Gallery | `%USERPROFILE%\.mcmod\release\hdfv\gallery\*.png` |
 | Version | 0.25.0, release type **Beta**, loader NeoForge, game version 1.21.1 |
 | Changelog | release/notes-0.25.0.md |
-| Dependencies | AeroCore (required, version 0.42.0), JEI (optional), Create (optional) |
+| Dependencies | AeroCore (required, version 0.43.0), JEI (optional), Create (optional) |
 
 ## CurseForge
 

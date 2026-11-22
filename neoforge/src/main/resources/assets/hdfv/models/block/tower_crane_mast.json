@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "neoforge:obj",
+  "model": "hdfv:models/block/machine/tower_crane_mast.obj",
+  "flip_v": true,
+  "textures": {
+    "particle": "hdfv:block/machine/paint_yellow",
+    "paint_yellow": "hdfv:block/machine/paint_yellow"
+  }
+}

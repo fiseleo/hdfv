@@ -436,6 +436,28 @@ public final class GasTurbineModel {
         n.add(new double[]{nacelleEnd, exitInner * 1.02});
         lathe(casing(), n, null, 56, nacelle, false);
         casing().tube(PartMesh.circle(new Vec3d(lip - lipWall / 2, 0, 0), Vec3d.X, r * 1.02 + lipWall / 2, 56), lipWall / 2 * 1.05, null, c("inlet", Shapes.machined(0xffc9ccd0)), null, 8, true);
+        // 2026-11-22 (checked in Blender, the cowl was bare): the cowls' joints (the inlet cowl's and the fan cowl's), the fan
+        // cowl doors' hinge line on top and their latch line under, off the bottom past the gearbox, with three latches
+        int seam = c("inlet", Shapes.mix(NACELLE, 0xff3a3d42, 0.6));
+        double xIn = face + 0.4 * inletLength, xFan = fanEnd - 0.4 * fanLength, rs = outer + 0.0015 * r;
+        casing().detail(1);
+        for (double x : new double[]{xIn - 0.02 * r, xFan + 0.02 * r}) {
+            casing().lathe(new Vec3d(x + 0.004 * r, 0, 0), new Vec3d(x - 0.004 * r, 0, 0), new double[]{0, 0, 1, 1, 0}, new double[]{0.99 * outer, rs, rs, 0.99 * outer, 0.99 * outer},
+                    null, 56, seam, true);
+        }
+        for (double deg : new double[]{90, -100}) {
+            double a = Math.toRadians(deg);
+            Vec3d d = new Vec3d(0, Math.sin(a), Math.cos(a));
+            Orientation along = Orientation.rotationVector(Vec3d.X.scale(Math.PI / 2 - a));   // its y along d, its z round the cowl
+            casing().box(new Vec3d(0.5 * (xIn + xFan), 0, 0).add(d.scale(outer)), new Vec3d(0.5 * (xIn - xFan) - 0.02 * r, 0.0025 * r, 0.004 * r), along, seam);
+            if (deg < 0) {
+                for (int k = 1; k <= 3; k++) {
+                    double x = xFan + (xIn - xFan) * k / 4;
+                    casing().box(new Vec3d(x, 0, 0).add(d.scale(outer + 0.003 * r)), new Vec3d(0.025 * r, 0.004 * r, 0.012 * r), along, c("inlet", BLACK));
+                }
+            }
+        }
+        casing().detail(0);
         // the accessory gearbox under the fan case
         double box = 0.06 * r;
         double ax0 = face - 0.2 * fanLength, ax1 = fanEnd - 0.6 * fanLength;

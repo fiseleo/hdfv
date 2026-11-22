@@ -239,7 +239,7 @@ public final class DashboardHud {
     private static int lampWidth(Font font, Dashboard.Lit lit) {
         return switch (lit.lamp()) {
             case TURN_LEFT, TURN_RIGHT -> 11;
-            case MODE, AUTO_CLUTCH, RIDE_HEIGHT, TRAILER -> (int) Math.ceil(font.width(label(lit)) * 0.75f) + 7;
+            case MODE, AUTO_CLUTCH, RIDE_HEIGHT, TRAILER, WORK, FLOAT, PRESSURE, BULK, HOOK, LOAD_MOMENT -> (int) Math.ceil(font.width(label(lit)) * 0.75f) + 7;
             case CENTRE_LOCK, REAR_LOCK, FRONT_LOCK -> 19;
             default -> 14;
         };
@@ -255,7 +255,7 @@ public final class DashboardHud {
                 icon(g, ICON_HAND, x, y, red);
                 tiny(g, font, x + 6, y + 3, "P", red);
             }
-            case MODE, AUTO_CLUTCH -> {
+            case MODE, AUTO_CLUTCH, WORK, FLOAT, PRESSURE, BULK, HOOK -> {
                 // a text badge: the drive mode, or A for the automatic clutch
                 int width = lampWidth(font, lit) - 2;
                 g.fill(x, y + 1, x + width, y + 11, 0xC0101418);
@@ -290,6 +290,13 @@ public final class DashboardHud {
                     }
                     g.fill(left ? x + 5 : x + 2, y + 5, left ? x + 9 : x + 6, y + 8, green);
                 }
+            }
+            case LOAD_MOMENT -> {
+                // 0.26: the load moment limiter, amber; red and flashing from its warning share
+                int width = lampWidth(font, lit) - 2, colour = lit.blinking() ? (turnOn ? red : amber) : amber;
+                g.fill(x, y + 1, x + width, y + 11, 0xC0101418);
+                g.renderOutline(x, y + 1, width, 10, colour);
+                tiny(g, font, x + width / 2f, y + 3.5f, label(lit), colour);
             }
             case LOW_FUEL -> icon(g, ICON_FUEL, x, y, amber);
             case ENGINE -> icon(g, ICON_ENGINE, x, y, amber);

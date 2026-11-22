@@ -1,0 +1,178 @@
+world AeroCore 026 QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.26 redraw, groups 2 to 4 (the user: 「把所有模型用blender 重畫」): the seven redrawn machine blocks set in a row on the dirt field
+# and shot from the front, then the design screen of each redrawn gearbox, transfer case, the turbofan, ladder frames, hydrogen
+# tanks and the seaplane wing (a shot and its world model exported to %USERPROFILE%\.mcmod\exports for Blender). Tags r2-*.
+mark r2 world start
+wait 30
+cmd gamemode spectator @p
+cmd time set 6000
+cmd weather clear
+clouds off
+cmd tp @p 352 180 160 facing 352 153 215
+wait 100
+cmd kill @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=74,dy=50,dz=90]
+wait 40
+cmd fill 320 150 180 384 152 250 minecraft:dirt
+cmd fill 320 153 180 384 175 250 minecraft:air
+wait 20
+cmd setblock 330 153 205 hdfv:assembly_bench
+cmd setblock 333 153 205 hdfv:alloy_furnace
+cmd setblock 336 153 205 hdfv:battery
+cmd setblock 339 153 205 hdfv:engine_stand
+cmd setblock 342 153 205 hdfv:hydrogen_liquefier
+cmd setblock 345 153 205 hdfv:fuel_dispenser
+cmd setblock 348 153 205 hdfv:air_separation_unit
+wait 60
+cmd tp @p 339 156.5 197 facing 339 153.5 205
+wait 60
+shot r2-blocks
+cmd tp @p 333 155 200.5 facing 333 153.6 205
+wait 40
+shot r2-blocks-left
+cmd tp @p 342 155 200.5 facing 342 153.6 205
+wait 40
+shot r2-blocks-middle
+cmd tp @p 348 155 200.5 facing 348 153.6 205
+wait 40
+shot r2-blocks-right
+cmd tp @p 354 156 209 facing 346 153.6 205
+wait 40
+shot r2-blocks-back
+cmd fill 328 153 205 352 154 205 minecraft:air
+client hdfvdev design five_speed_manual overview
+wait 60
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 30
+gui r2-design-five_speed_manual
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 10
+client hdfvdev design six_speed_automatic overview
+wait 60
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 30
+gui r2-design-six_speed_automatic
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 10
+client hdfvdev design seven_speed_dual_clutch overview
+wait 60
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 30
+gui r2-design-seven_speed_dual_clutch
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 10
+client hdfvdev design belt_cvt overview
+wait 60
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 30
+gui r2-design-belt_cvt
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 10
+client hdfvdev design part_time_case overview
+wait 60
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 30
+gui r2-design-part_time_case
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 10
+client hdfvdev design on_demand_coupling overview
+wait 60
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 30
+gui r2-design-on_demand_coupling
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 10
+client hdfvdev design business_turbofan overview
+wait 60
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 30
+gui r2-design-business_turbofan
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 10
+client hdfvdev design truck_ladder_frame overview
+wait 60
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 30
+gui r2-design-truck_ladder_frame
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 10
+client hdfvdev design tractor_6x4_frame overview
+wait 60
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 30
+gui r2-design-tractor_6x4_frame
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 10
+client hdfvdev design hydrogen_cylinder overview
+wait 60
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 30
+gui r2-design-hydrogen_cylinder
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 10
+client hdfvdev design liquid_hydrogen_tank overview
+wait 60
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 30
+gui r2-design-liquid_hydrogen_tank
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 10
+client hdfvdev design seaplane_wing overview
+wait 60
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 30
+gui r2-design-seaplane_wing
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 10
+mark r2 world end
+quit

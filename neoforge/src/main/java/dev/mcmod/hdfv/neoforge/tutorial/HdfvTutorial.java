@@ -110,6 +110,7 @@ public final class HdfvTutorial {
             case CAR_FACTORY -> "car";
             case HANGAR -> "aircraft";
             case SHIPYARD -> "boat";
+            case HEAVY_YARD -> "car";   // 0.26: a machine counts as a car on the road (it is driven)
         };
     }
 

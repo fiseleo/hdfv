@@ -1,0 +1,456 @@
+world AeroCore 026 QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.26, every machine part redrawn in Blender (the user: 「把所有模型用blender 重畫」), group 1 of 4: the test machines
+# that carry the redrawn parts, in four batches of five on the dirt field (each batch cleared before the next, as 16 at once
+# lag the integrated server): a camera on each from the front left. Tags r1<batch>-<machine>.
+mark r1 world start
+wait 30
+cmd gamemode spectator @p
+cmd time set 6000
+cmd weather clear
+clouds off
+cmd tp @p 352 180 160 facing 352 153 215
+wait 100
+# --- batch a: tools hung on excavators, the dozer's ripper, the forklift and the telehandler
+cmd kill @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=74,dy=50,dz=90]
+wait 40
+cmd fill 320 150 180 384 152 250 minecraft:dirt
+cmd fill 320 153 180 384 175 250 minecraft:air
+wait 20
+cmd execute positioned 326 153 215 rotated -90 0 run hdfv dev drive spawn hammer
+cmd execute positioned 340 153 215 rotated -90 0 run hdfv dev drive spawn grapple
+cmd execute positioned 354 153 215 rotated -90 0 run hdfv dev drive spawn compactor
+cmd execute positioned 368 153 215 rotated 90 0 run hdfv dev drive spawn dozer
+cmd execute positioned 334 153 235 rotated -90 0 run hdfv dev drive spawn forklift
+cmd execute positioned 352 153 235 rotated -90 0 run hdfv dev drive spawn telehandler
+cmd tp @p 322 159 205 facing 334 154 216
+wait 1400
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control travel_brake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control brake 1
+wait 100
+shot r1a-discard
+cmd tp @p 334 156.5 208 facing 330.5 154.5 215
+wait 40
+shot r1a-hammer
+cmd tp @p 348 156.5 208 facing 344.5 154.5 215
+wait 40
+shot r1a-grapple
+cmd tp @p 362 156.5 208 facing 358.5 154 215
+wait 40
+shot r1a-compactor
+cmd tp @p 361 156 220 facing 365.5 153.6 215
+wait 40
+shot r1a-ripper
+cmd tp @p 340 156 228 facing 335 154 235
+wait 40
+shot r1a-forklift
+cmd tp @p 360 157 227 facing 354.5 154.5 235
+wait 40
+shot r1a-telehandler
+# --- batch b: the truck crane (outriggers, telescopic boom, winch), work platform, pump truck, mixer, water truck, sweeper
+cmd kill @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=74,dy=50,dz=90]
+wait 40
+cmd execute positioned 326 153 215 rotated -90 0 run hdfv dev drive spawn truckcrane
+cmd execute positioned 344 153 215 rotated -90 0 run hdfv dev drive spawn workplatform
+cmd execute positioned 362 153 215 rotated -90 0 run hdfv dev drive spawn pumptruck
+cmd execute positioned 330 153 235 rotated -90 0 run hdfv dev drive spawn mixertruck
+cmd execute positioned 346 153 235 rotated -90 0 run hdfv dev drive spawn watertruck
+cmd execute positioned 362 153 235 rotated -90 0 run hdfv dev drive spawn sweeper
+cmd tp @p 322 159 205 facing 334 154 216
+wait 1400
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control travel_brake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control brake 1
+wait 100
+shot r1b-discard
+cmd tp @p 334 157.5 206 facing 327 154.5 215
+wait 40
+shot r1b-truckcrane
+cmd tp @p 321 156 210 facing 325 153.6 214.5
+wait 40
+shot r1b-truckcrane-jack
+cmd tp @p 352 157.5 207 facing 345 155 215
+wait 40
+shot r1b-workplatform
+cmd tp @p 370 158 206 facing 362 155 215
+wait 40
+shot r1b-pumptruck
+cmd tp @p 337 157 227 facing 330 154.5 235
+wait 40
+shot r1b-mixertruck
+cmd tp @p 352 156 228 facing 346 153.8 235
+wait 40
+shot r1b-watertruck
+cmd tp @p 368 156 228 facing 362 153.8 235
+wait 40
+shot r1b-sweeper
+# --- batch c: the cold planer (milling drum, conveyor), paver (hopper, screed), scraper, snow blower, trencher, drill rig, pile driver
+cmd kill @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=74,dy=50,dz=90]
+wait 40
+cmd execute positioned 326 153 215 rotated -90 0 run hdfv dev drive spawn coldplaner
+cmd execute positioned 344 153 215 rotated -90 0 run hdfv dev drive spawn paver
+cmd execute positioned 362 153 215 rotated -90 0 run hdfv dev drive spawn scraper
+cmd execute positioned 326 153 235 rotated -90 0 run hdfv dev drive spawn snowblower
+cmd execute positioned 340 153 235 rotated -90 0 run hdfv dev drive spawn trencher
+cmd execute positioned 354 153 235 rotated -90 0 run hdfv dev drive spawn drillrig
+cmd execute positioned 370 153 235 rotated -90 0 run hdfv dev drive spawn piledriver
+cmd tp @p 322 159 205 facing 334 154 216
+wait 1400
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control travel_brake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control brake 1
+wait 100
+shot r1c-discard
+cmd tp @p 333 156.5 208 facing 327 153.8 215
+wait 40
+shot r1c-coldplaner
+cmd tp @p 351 156.5 208 facing 344 153.8 215
+wait 40
+shot r1c-paver
+cmd tp @p 337 156 220 facing 342 153.6 215
+wait 40
+shot r1c-paver-screed
+cmd tp @p 371 157 207 facing 363 154 215
+wait 40
+shot r1c-scraper
+cmd tp @p 332 156 229 facing 327 153.8 235
+wait 40
+shot r1c-snowblower
+cmd tp @p 334 156 229 facing 339 153.6 235
+wait 40
+shot r1c-trencher
+cmd tp @p 361 158 228 facing 355 155 235
+wait 40
+shot r1c-drillrig
+cmd tp @p 378 159 228 facing 371 156 235
+wait 40
+shot r1c-piledriver
+# --- batch d: the bucket wheel excavator, roadheader, TBM (cutterhead, erector), wheel loader (centre hinge), articulated truck
+cmd kill @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=74,dy=50,dz=90]
+wait 40
+cmd execute positioned 330 153 205 rotated -90 0 run hdfv dev drive spawn bucketwheel
+cmd execute positioned 366 153 205 rotated -90 0 run hdfv dev drive spawn roadheader
+cmd execute positioned 336 153 238 rotated -90 0 run hdfv dev drive spawn tbm
+cmd execute positioned 358 153 238 rotated -90 0 run hdfv dev drive spawn wheelloader
+cmd execute positioned 374 153 238 rotated -90 0 run hdfv dev drive spawn articulatedtruck
+cmd tp @p 322 159 195 facing 334 154 206
+wait 1400
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control travel_brake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control brake 1
+wait 100
+shot r1d-discard
+cmd tp @p 352 165 188 facing 336 157 205
+wait 40
+shot r1d-bucketwheel
+cmd tp @p 374 157 198 facing 367 154 205
+wait 40
+shot r1d-roadheader
+cmd tp @p 348 159 230 facing 338 155 238
+wait 40
+shot r1d-tbm
+cmd tp @p 350 158 246 facing 337 155 238
+wait 40
+shot r1d-tbm-rear
+cmd tp @p 364 156.5 231 facing 358 154 238
+wait 40
+shot r1d-wheelloader
+cmd tp @p 381 157 231 facing 374 154.2 238
+wait 40
+shot r1d-articulatedtruck
+cmd kill @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=74,dy=50,dz=90]
+wait 40
+# --- groups 2 and 3 before they are redrawn: each sample's world model exported as OBJ (hdfvdev export world, to %USERPROFILE%\.mcmod\exports) for Blender
+client hdfvdev design inline_four overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design v8_ohv overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design generator_diesel overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design model_turbojet overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design business_turbofan overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design turboshaft overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design bomarc_ramjet overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design x43_scramjet overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design lockwood_pulsejet overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design apcp_booster overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design j58 overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design fixed_propeller overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design tail_rotor overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design five_speed_manual overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design six_speed_automatic overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design seven_speed_dual_clutch overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design belt_cvt overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design part_time_case overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design seaplane_wing overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design fin overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design seaplane_fuselage overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design helicopter_fuselage overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design flying_boat_hull overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design seaplane_float overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design runabout_hull overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design sedan_body overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design hatchback_body overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design cab_over_body overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design low_loader_deck overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design pickup_ladder_frame overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design truck_ladder_frame overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design tractor_6x4_frame overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design low_loader_3_frame overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design fifth_wheel_2in overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design landing_legs_24t overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design sports_backbone overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design racer_tube_frame overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design sedan_front_axle overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design sedan_rear_axle overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design offroad_front_axle overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design offroad_rear_axle overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design light_nose_gear overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design light_main_gear overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design hydrogen_cylinder overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design liquid_hydrogen_tank overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design roof_box overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design bed_box overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+client hdfvdev design container_20ft overview
+wait 40
+client hdfvdev export world
+wait 5
+client hdfvdev close
+wait 5
+mark r1 world end
+quit

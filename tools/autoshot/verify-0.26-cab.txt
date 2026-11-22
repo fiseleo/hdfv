@@ -1,0 +1,37 @@
+world AeroCore 026 QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.26 looks, the tower crane's cab moved under the jib's root (the user: "沒看到駕駛室" after verify-0.26-looks.txt):
+# the crane loads with the cab of that run, which the controller no longer finds current and makes anew; then the same
+# cameras as v26d (the overview, the head, the trolley), the cab close from both sides and from below, and from its seat.
+mark v26e world start
+wait 30
+cmd gamemode spectator @p
+cmd time set 6000
+cmd weather clear
+clouds off
+cmd tp @p 392 166 186 facing 406 158 200
+wait 300
+shot v26e-discard
+shot v26e-towercrane
+cmd tp @p 395 166 194 facing 401 163.5 201
+wait 40
+shot v26e-towercrane-head
+cmd tp @p 405 161 196 facing 402 160.5 200.5
+wait 40
+shot v26e-cab-north
+cmd tp @p 405 161 205 facing 402 160.5 200.5
+wait 40
+shot v26e-cab-south
+cmd tp @p 407 156 199 facing 402 161 200.5
+wait 40
+shot v26e-cab-below
+cmd tp @p 404 157 195 facing 409 162 200
+wait 40
+shot v26e-trolley
+cmd tp @p 378 176 170 facing 410 163 200
+wait 40
+shot v26e-towercrane-far
+mark v26e world end
+quit

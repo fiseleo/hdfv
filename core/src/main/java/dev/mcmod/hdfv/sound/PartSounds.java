@@ -49,6 +49,10 @@ import java.util.Locale;
  * <li>Electric motors: 4 poles, an inverter at 4 kHz; the load is the throttle.</li>
  * <li>Gearboxes: a gear's engagement clunks (a manual's louder), a grinding manual rasps; tyres and suspension: a
  *     wheel hitting its bump stop knocks; a retractable leg's motor whines while it folds and locks at the end.</li>
+ * <li>0.26: a hydraulic pump sings at its shaft's speed and the highest circuit pressure the dashboard shows
+ *     (Dashboard.HUD_PRESSURE), relieving when that is within RELIEF_SHARE of its relief; a track clanks at its belt's
+ *     speed (its sprocket's speed times its radius) under the machine's weight, squealing in a turn (the two sprockets'
+ *     difference of speed).</li>
  * </ul>
  */
 final class PartSounds {
@@ -76,6 +80,8 @@ final class PartSounds {
         else if (design instanceof LandingGearDesign g) { leg(s, p, g, seed); }
         else if (design instanceof GearboxDesign g) { gearbox(s, id, g, seed); }
         else if (design instanceof BodyDesign b) { body(s, id, b, seed); }
+        else if (design instanceof dev.mcmod.hdfv.part.machine.HydraulicPumpDesign d) { pump(s, id, d, rotor, seed); }
+        else if (design instanceof dev.mcmod.hdfv.part.machine.TrackDesign d) { tracks(s, id, d, rotor, seed); }
     }
 
     static double diameter(double areaM2) { return Math.sqrt(4 * Math.max(1e-4, areaM2) / Math.PI); }
@@ -126,6 +132,40 @@ final class PartSounds {
             model.set(st);
             dd.append(String.format(Locale.ROOT, "%.0f Hz swing %.0f Pa%s", hz, in.shown(id, PulsejetDesign.SHOWN_AMPLITUDE), lit ? "" : " out"));
             return TurbineNoise.soundPowerDb(spec, st) + (lit ? 10 * Math.log10(Math.max(0.1, in.shown(id, PulsejetDesign.SHOWN_AMPLITUDE) / 20_000)) : 0);
+        }));
+    }
+
+    /** 0.26: a pump's pressure within this share of its relief is relieving. */
+    static final double RELIEF_SHARE = 0.97;
+
+    private static void pump(VehicleSound s, String id, dev.mcmod.hdfv.part.machine.HydraulicPumpDesign d, int rotor, long seed) {
+        dev.mcmod.aerocore.api.acoustics.HydraulicNoise.Spec spec = d.pumpKind() == dev.mcmod.hdfv.part.machine.HydraulicUnit.GEAR
+                ? dev.mcmod.aerocore.api.acoustics.HydraulicNoise.Spec.gear(12, d.reliefPa(), seed)
+                : dev.mcmod.aerocore.api.acoustics.HydraulicNoise.Spec.axialPiston(d.reliefPa(), seed);
+        dev.mcmod.aerocore.api.acoustics.HydraulicNoise model = new dev.mcmod.aerocore.api.acoustics.HydraulicNoise(spec);
+        s.add(new VehicleSound.Source(id, VehicleSound.Group.ENGINES, model, false, (in, dd) -> {
+            double omega = Math.abs(in.rotorSpeed(rotor)), p = Math.min(in.control(dev.mcmod.hdfv.drive.Dashboard.HUD_PRESSURE), d.reliefPa());
+            double flow = d.displacementM3() * omega / (2 * Math.PI);
+            dev.mcmod.aerocore.api.acoustics.HydraulicNoise.State st = new dev.mcmod.aerocore.api.acoustics.HydraulicNoise.State(omega, p, flow,
+                    p >= RELIEF_SHARE * d.reliefPa() ? 1 : 0);
+            model.set(st);
+            dd.append(String.format(Locale.ROOT, "%.0f rad/s %.0f bar", omega, p / 1e5));
+            return dev.mcmod.aerocore.api.acoustics.HydraulicNoise.soundPowerDb(spec, st);
+        }));
+    }
+
+    private static void tracks(VehicleSound s, String id, dev.mcmod.hdfv.part.machine.TrackDesign d, int rotor, long seed) {
+        dev.mcmod.aerocore.api.acoustics.TrackNoise.Spec spec = d.shoe() == dev.mcmod.aerocore.api.vehicle.part.TrackPart.Shoe.RUBBER
+                ? dev.mcmod.aerocore.api.acoustics.TrackNoise.Spec.rubber(d.pitchM(), seed) : dev.mcmod.aerocore.api.acoustics.TrackNoise.Spec.steel(d.pitchM(), seed);
+        dev.mcmod.aerocore.api.acoustics.TrackNoise model = new dev.mcmod.aerocore.api.acoustics.TrackNoise(spec);
+        double weight = d.designMassKg() * 9.80665 / 2;
+        s.add(new VehicleSound.Source(id, VehicleSound.Group.DRIVING, model, false, (in, dd) -> {
+            double left = in.rotorSpeed(rotor) * d.sprocketRadiusM(), right = in.rotorSpeed(rotor + 1) * d.sprocketRadiusM();
+            double belt = 0.5 * (Math.abs(left) + Math.abs(right)), slip = 0.5 * Math.abs(left - right);
+            dev.mcmod.aerocore.api.acoustics.TrackNoise.State st = new dev.mcmod.aerocore.api.acoustics.TrackNoise.State(belt, slip, weight);
+            model.set(st);
+            dd.append(String.format(Locale.ROOT, "%.2f m/s slip %.2f", belt, slip));
+            return dev.mcmod.aerocore.api.acoustics.TrackNoise.soundPowerDb(spec, st);
         }));
     }
 

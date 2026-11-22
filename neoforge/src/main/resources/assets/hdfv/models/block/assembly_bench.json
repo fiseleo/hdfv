@@ -9,6 +9,9 @@
     "steel": "hdfv:block/machine/steel",
     "paint_blue": "hdfv:block/machine/paint_blue",
     "dark_steel": "hdfv:block/machine/dark_steel",
-    "paint_red": "hdfv:block/machine/paint_red"
+    "paint_red": "hdfv:block/machine/paint_red",
+    "paint_grey": "hdfv:block/machine/paint_grey",
+    "paint_green": "hdfv:block/machine/paint_green",
+    "cast_iron": "hdfv:block/machine/cast_iron"
   }
 }

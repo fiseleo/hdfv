@@ -129,6 +129,34 @@ public final class AutoWiring {
             driven.add(rotor.id());
         }
 
+        // 0.26: hydraulic pumps on the nearest engine's power take-off (1:1, as a pump flanged to the engine), the
+        // travel motors to the nearest tracks' sprockets on their side (one a side; +z is right)
+        for (Vehicle.Installed pump : of(parts, p -> p.part().design() instanceof dev.mcmod.hdfv.part.machine.HydraulicPumpDesign)) {
+            if (driven.contains(pump.id())) { continue; }
+            Vehicle.Installed engine = nearest(pump, of(parts, p -> engine(p.part().design())), Set.of());
+            if (engine == null) { continue; }
+            links.add(Connection.Shaft.ports(engine.id(), null, pump.id(), "input", 1, 1));
+            driven.add(pump.id());
+        }
+        Set<String> sprockets = new HashSet<>();
+        List<Vehicle.Installed> tracks = of(parts, p -> p.part().design() instanceof dev.mcmod.hdfv.part.machine.TrackDesign);
+        for (Vehicle.Installed motor : of(parts, p -> p.part().design() instanceof dev.mcmod.hdfv.part.machine.HydraulicMotorDesign m && !m.winch())) {
+            if (driving.contains(motor.id())) { continue; }
+            Vehicle.Installed cutter = cutterOf(v, motor);
+            if (cutter != null) {
+                // a motor nearer a rotating tool than any track turns the tool's cutter
+                links.add(Connection.Shaft.ports(motor.id(), "output", cutter.id(), "cutter", 1, 1));
+                driving.add(motor.id());
+                continue;
+            }
+            Vehicle.Installed track = nearest(motor, tracks, Set.of());
+            if (track == null) { continue; }
+            String side = motor.mount().position().z() > track.mount().position().z() ? "right" : "left";
+            if (!sprockets.add(track.id() + "/" + side)) { continue; }
+            links.add(Connection.Shaft.ports(motor.id(), "output", track.id(), side, 1, 1));
+            driving.add(motor.id());
+        }
+
         // slipstreams
         for (Vehicle.Installed prop : of(parts, p -> p.part().design() instanceof AirPropellerDesign || p.part().design() instanceof PropellerDesign)) {
             Vehicle.Rotor r = firstRotor(v, prop);
@@ -172,6 +200,34 @@ public final class AutoWiring {
                     } : role.equals("collective") ? new Binding(role, "rudder", TAIL_GAIN, TAIL_TRIM) : null;
                 }
                 case AirPropellerDesign a -> null;
+                // 0.26: heavy machinery (WorkInputs' channels)
+                case dev.mcmod.hdfv.part.machine.LinkDesign l -> link(v, p, l, role);
+                case dev.mcmod.hdfv.part.machine.WorkToolDesign w -> tool(p, w, role);
+                case dev.mcmod.hdfv.part.machine.HydraulicMotorDesign m -> switch (role) {
+                    case "command" -> m.winch() ? Binding.of(role, "hoist")
+                            : cutterOf(v, p) != null ? Binding.of(role, toggle(cutterOf(v, p)))
+                            : Binding.of(role, travelSide(v, p) > 0 ? "travel_right" : "travel_left");
+                    case "brake" -> m.winch() ? Binding.of(role, "hoist_brake") : cutterOf(v, p) != null ? null : Binding.of(role, "travel_brake");
+                    case "tension" -> Binding.of(role, dev.mcmod.aerocore.api.vehicle.Coupling.tensionChannel(p.id()));
+                    default -> null;
+                };
+                case dev.mcmod.hdfv.part.machine.TrackDesign t -> switch (role) {
+                    case "brake" -> Binding.of(role, "brake");
+                    // a crawler on travel motors steers by them and is parked by their brakes; one on a transmission by its steering brakes
+                    case "park" -> Binding.of(role, hydrostatic(v) ? "travel_brake" : "handbrake");
+                    case "brake_left" -> hydrostatic(v) ? null : new Binding(role, "steer", 1, 0);
+                    case "brake_right" -> hydrostatic(v) ? null : new Binding(role, "steer", -1, 0);
+                    default -> null;
+                };
+                case dev.mcmod.hdfv.part.machine.DrumDesign r -> switch (role) {
+                    case "brake" -> Binding.of(role, "brake");
+                    case "park" -> Binding.of(role, hydrostatic(v) ? "travel_brake" : "handbrake");
+                    case "vibration" -> Binding.of(role, "vibration");
+                    default -> null;
+                };
+                // an outrigger's jack: its foot always held, down while "jacks" is on
+                case dev.mcmod.hdfv.part.machine.OutriggerDesign o -> role.equals("brake") ? new Binding(role, "brake", 0, 1)
+                        : role.equals("retract") ? new Binding(role, "jacks", -1, 1) : null;
                 // 0.18: a landing leg's foot held by its brake (bound to 1 whatever the channel), drawn up on the landing gear's
                 case dev.mcmod.hdfv.part.truck.LandingLegsDesign l -> role.equals("brake") ? new Binding(role, "brake", 0, 1)
                         : role.equals("retract") ? Binding.of(role, "landing_gear") : Binding.of(role, role);
@@ -195,6 +251,94 @@ public final class AutoWiring {
             if (b != null) { out.add(b); }
         }
         return out;
+    }
+
+    /**
+     * 0.26: a work link's input: its valve on its kind's channel (WorkInputs: a boom, a lattice boom and a loader's arm
+     * on "boom", the loader's arm on "lift" when the machine also has a stick (a backhoe loader), a stick on "stick"
+     * reversed (q up swings its tip out), a telescope, a mast, an outrigger beam, a slewing ring on "swing" (q up turns
+     * left), a centre hinge on "steer" (q up turns left), the knuckle booms on "jib"); float only for a loader's arm;
+     * a tool's "full" and "pushed" from the game's channels of the part ("<id>.full", "<id>.pushed").
+     */
+    static Binding link(Vehicle v, Vehicle.Installed p, dev.mcmod.hdfv.part.machine.LinkDesign l, String role) {
+        return switch (role) {
+            case "command" -> switch (l.linkKind()) {
+                case BOOM, LATTICE -> Binding.of(role, "boom");
+                case LOADER_ARM -> Binding.of(role, has(v, dev.mcmod.hdfv.part.machine.LinkDesign.LinkKind.STICK) ? "lift" : "boom");
+                case STICK -> new Binding(role, "stick", -1, 0);
+                case TELESCOPIC -> Binding.of(role, "telescope");
+                case MAST -> Binding.of(role, "mast");
+                case SLEW_RING -> Binding.of(role, "swing");
+                case ARTICULATION -> Binding.of(role, "steer");
+                case PLATFORM_BOOM, PLACING_BOOM -> Binding.of(role, "jib");
+                case OUTRIGGER_BEAM -> Binding.of(role, "outriggers");
+            };
+            case "float" -> l.linkKind() == dev.mcmod.hdfv.part.machine.LinkDesign.LinkKind.LOADER_ARM ? Binding.of(role, "float") : null;
+            case "full", "pushed" -> Binding.of(role, p.id() + "." + role);
+            default -> null;
+        };
+    }
+
+    /**
+     * 0.26: a work tool's input: its ram on its kind's channel (a bucket's curl on "bucket", a clamshell's or a grapple's
+     * jaws on "aux", a dozer blade's tilt on "blade_tilt", an angling blade's on "blade_angle", a grader's tip and a
+     * conveyor's lift on "tilt", a ripper on "ripper", a scraper's bowl on "bowl", a dump body on "dump", a trencher's
+     * boom on "boom", a platform's rotator on "rotate", an erector on "erector"); "full" and "pushed" from the game.
+     */
+    static Binding tool(Vehicle.Installed p, dev.mcmod.hdfv.part.machine.WorkToolDesign w, String role) {
+        return switch (role) {
+            case "command" -> switch (w.toolKind()) {
+                case BACKHOE_BUCKET, TRENCH_BUCKET, LOADER_BUCKET, FACE_SHOVEL_BUCKET, QUICK_COUPLER -> Binding.of(role, "bucket");
+                case CLAMSHELL, GRAPPLE -> Binding.of(role, "aux");
+                case DOZER_BLADE -> Binding.of(role, w.bladeStyle() == dev.mcmod.hdfv.part.machine.WorkToolDesign.BladeStyle.ANGLE ? "blade_angle" : "blade_tilt");
+                case SNOW_PLOW -> Binding.of(role, "blade_angle");
+                case GRADER_MOLDBOARD, CONVEYOR -> Binding.of(role, "tilt");
+                case RIPPER -> Binding.of(role, "ripper");
+                case SCRAPER_BOWL -> Binding.of(role, "bowl");
+                case DUMP_BODY -> Binding.of(role, "dump");
+                case TRENCHER_CHAIN -> Binding.of(role, "boom");
+                case WORK_PLATFORM -> Binding.of(role, "rotate");
+                case SEGMENT_ERECTOR -> Binding.of(role, "erector");
+                default -> Binding.of(role, "aux");
+            };
+            case "full", "pushed" -> Binding.of(role, p.id() + "." + role);
+            default -> null;
+        };
+    }
+
+    /** 0.26: the rotating tool a hydraulic motor turns: the nearest tool with a cutter when it is nearer than any track (null: it travels). */
+    static Vehicle.Installed cutterOf(Vehicle v, Vehicle.Installed motor) {
+        Vehicle.Installed tool = nearest(motor, of(v.installed(), i -> i.part().design() instanceof dev.mcmod.hdfv.part.machine.WorkToolDesign w && w.cutter() != null), Set.of());
+        if (tool == null) { return null; }
+        Vehicle.Installed track = nearest(motor, of(v.installed(), i -> i.part().design() instanceof dev.mcmod.hdfv.part.machine.TrackDesign), Set.of());
+        if (track == null) { return tool; }
+        return motor.mount().position().subtract(tool.mount().position()).length() < motor.mount().position().subtract(track.mount().position()).length() ? tool : null;
+    }
+
+    /** 0.26: the toggle channel that switches a rotating tool's drive (WorkInputs). */
+    static String toggle(Vehicle.Installed tool) {
+        return switch (((dev.mcmod.hdfv.part.machine.WorkToolDesign) tool.part().design()).toolKind()) {
+            case BROOM -> "broom";
+            case MIXER_DRUM -> "mixer";
+            default -> "cutter";
+        };
+    }
+
+    /** 0.26: whether a vehicle has a link of a kind. */
+    static boolean has(Vehicle v, dev.mcmod.hdfv.part.machine.LinkDesign.LinkKind kind) {
+        return v.installed().stream().anyMatch(i -> i.part().design() instanceof dev.mcmod.hdfv.part.machine.LinkDesign l && l.linkKind() == kind);
+    }
+
+    /** 0.26: whether a vehicle travels on hydraulic motors (it has a motor that is not a winch). */
+    static boolean hydrostatic(Vehicle v) {
+        return v.installed().stream().anyMatch(i -> i.part().design() instanceof dev.mcmod.hdfv.part.machine.HydraulicMotorDesign m && !m.winch());
+    }
+
+    /** 0.26: which side of its nearest track a travel motor is on: +1 right (+z), -1 left. */
+    static int travelSide(Vehicle v, Vehicle.Installed motor) {
+        Vehicle.Installed track = nearest(motor, of(v.installed(), i -> i.part().design() instanceof dev.mcmod.hdfv.part.machine.TrackDesign), Set.of());
+        double z = track == null ? 0 : track.mount().position().z();
+        return motor.mount().position().z() > z ? 1 : -1;
     }
 
     /** Whether an axle is the frontmost of two or more with a locking differential. */

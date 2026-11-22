@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "hdfv:block/asphalt_plant_controller"
+    },
+    "facing=east": {
+      "model": "hdfv:block/asphalt_plant_controller",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hdfv:block/asphalt_plant_controller",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hdfv:block/asphalt_plant_controller",
+      "y": 270
+    }
+  }
+}

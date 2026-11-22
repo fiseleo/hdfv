@@ -161,7 +161,8 @@ public final class RoomControllerBlockEntity extends BlockEntity implements Menu
     public RoomScan.Scan scan() {
         if (level == null) { return null; }
         Direction f = getBlockState().getValue(RoomControllerBlock.FACING);
-        scan = RoomScan.scan(new WorldGrid(level), worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), f.getStepX(), f.getStepZ());
+        scan = room == Room.HEAVY_YARD ? yardScan(f)
+                : RoomScan.scan(new WorldGrid(level), worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), f.getStepX(), f.getStepZ());
         riveter = riveterAt(scan);
         AssemblyPlan p = plan();
         List<RoomRules.Problem> problems = RoomRules.check(room, scan, p);
@@ -200,6 +201,33 @@ public final class RoomControllerBlockEntity extends BlockEntity implements Menu
         return scan;
     }
 
+    /** 0.26: how far from the yard a crane vehicle may stand and lift for it, m; the share of its hook's rating it lifts across the yard (a rule). */
+    public static final double YARD_CRANE_REACH_M = 32, YARD_CRANE_SHARE = 0.5;
+
+    /**
+     * 0.26: the heavy yard (RoomScan.yard), its crane cells with those of the crane vehicles parked beside it: a vehicle
+     * within YARD_CRANE_REACH_M of the yard with a hook lifts YARD_CRANE_SHARE of the largest hook's rating (a crane
+     * lifts its rating only at its least radius; across a yard about half of it).
+     */
+    private RoomScan.Scan yardScan(Direction f) {
+        RoomScan.Scan s = RoomScan.yard(new WorldGrid(level), worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), f.getStepX(), f.getStepZ());
+        if (!s.closed()) { return s; }
+        double kg = 0;
+        net.minecraft.world.phys.AABB area = new net.minecraft.world.phys.AABB(s.minX(), s.minY() - 2, s.minZ(), s.maxX() + 1, s.maxY() + 8, s.maxZ() + 1)
+                .inflate(YARD_CRANE_REACH_M);
+        for (dev.mcmod.aerocore.neoforge.vehicle.PartVehicle v : level.getEntitiesOfClass(dev.mcmod.aerocore.neoforge.vehicle.PartVehicle.class, area)) {
+            if (v.blueprint() == null || v.getUUID().equals(building)) { continue; }
+            double hook = 0;
+            for (var e : v.blueprint().parts()) {
+                if (e.design() instanceof dev.mcmod.hdfv.part.machine.HookDesign h) { hook = Math.max(hook, h.ratedLoadKg()); }
+            }
+            kg += YARD_CRANE_SHARE * hook;
+        }
+        int extra = (int) Math.floor(kg / RoomRules.CRANE_KG_PER_CELL);
+        return extra == 0 ? s : new RoomScan.Scan(s.closed(), s.leakX(), s.leakY(), s.leakZ(), s.cells(), s.minX(), s.minY(), s.minZ(), s.maxX(), s.maxY(), s.maxZ(),
+                s.floorMissing(), s.doors(), s.craneCells() + extra, s.slipwayCells(), s.stations(), s.storage());
+    }
+
     /** The room's problems from the last scan (keys). */
     public List<String> problemKeys() {
         return report.getList("Problems", Tag.TAG_COMPOUND).stream().map(t -> ((CompoundTag) t).getString("Key")).toList();
@@ -220,6 +248,7 @@ public final class RoomControllerBlockEntity extends BlockEntity implements Menu
 
     /** Opens or closes the door the vehicle leaves by (scanning first if need be). */
     public boolean toggleDoor() {
+        if (room == Room.HEAVY_YARD) { return false; }   // 0.26: a yard has no door
         if (scan == null) { scan(); }
         RoomScan.Door door = scan == null ? null : RoomRules.door(scan, plan());
         if (door == null || level == null) { return false; }
@@ -351,6 +380,13 @@ public final class RoomControllerBlockEntity extends BlockEntity implements Menu
     public Component launch() {
         HdfvVehicle v = vehicle();
         if (v == null || !finished()) { return Component.translatable("hdfv.build.not_done"); }
+        if (room == Room.HEAVY_YARD) {
+            // 0.26: a machine built in the open yard is driven off from where it stands
+            v.setRoom(null);
+            building = null;
+            changed();
+            return null;
+        }
         if (scan == null) { scan(); }
         AssemblyPlan p = plan();
         RoomScan.Door door = scan == null ? null : RoomRules.door(scan, p);

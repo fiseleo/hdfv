@@ -34,6 +34,7 @@ import java.util.List;
  * <li>topSpeedMps: the speed at the engine's red line in the highest gear that is not an overdrive (ratio 0.95 or more; a CVT at
  *     1:1) on the driven wheels: the speedometer's reach (overdrives are not reached at the red line), 0 when unknown.</li>
  * <li>0.18: fifthWheel: it has a fifth wheel (the coupling key does something).</li>
+ * <li>0.26: a machine on tracks or drums (no axle) is a car too: the car keys and the work keys (WorkInputs) are its driver's.</li>
  * </ul>
  */
 public record CarKit(boolean car, boolean steers, boolean handbrake, String gearboxId, Gearboxes.Kind gearbox, int forwardGears, boolean autoClutch,
@@ -73,6 +74,7 @@ public record CarKit(boolean car, boolean steers, boolean handbrake, String gear
             if (bound(b, "handbrake")) { handbrake = true; }
             if (bound(b, "ride_height")) { ride = true; }
             if (d instanceof dev.mcmod.hdfv.part.truck.FifthWheelDesign) { fifth = true; }
+            if (d instanceof dev.mcmod.hdfv.part.machine.TrackDesign || d instanceof dev.mcmod.hdfv.part.machine.DrumDesign) { car = true; }
             if (d instanceof AxleDesign a) {
                 car = true;
                 for (Binding x : b) {

@@ -7,6 +7,9 @@
     "particle": "hdfv:block/machine/firebrick",
     "firebrick": "hdfv:block/machine/firebrick",
     "dark_steel": "hdfv:block/machine/dark_steel",
-    "glow": "hdfv:block/machine/glow"
+    "glow": "hdfv:block/machine/glow",
+    "cast_iron": "hdfv:block/machine/cast_iron",
+    "steel": "hdfv:block/machine/steel",
+    "paint_grey": "hdfv:block/machine/paint_grey"
   }
 }

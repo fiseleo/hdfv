@@ -4,9 +4,11 @@
   "model": "hdfv:models/block/machine/battery.obj",
   "flip_v": true,
   "textures": {
-    "particle": "hdfv:block/machine/paint_grey",
+    "particle": "hdfv:block/machine/dark_steel",
+    "dark_steel": "hdfv:block/machine/dark_steel",
     "paint_grey": "hdfv:block/machine/paint_grey",
     "vent": "hdfv:block/machine/vent",
+    "steel": "hdfv:block/machine/steel",
     "gauge": "hdfv:block/machine/gauge",
     "label": "hdfv:block/machine/label",
     "hazard": "hdfv:block/machine/hazard",

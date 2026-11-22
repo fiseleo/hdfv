@@ -470,24 +470,39 @@ def welding_station():
 
 
 def assembly_bench():
-    """A fitter's bench: an oak top on legs with a shelf, a vice on the front corner, a tool board at the back."""
+    """A fitter's bench: an oak top on legs with a shelf, a vice on the front corner, a tool board at the back with its
+    tools, a red tool case; 2026-11-22 (redrawn): a bank of three drawers under the top on the right with their pulls,
+    and a bench grinder (motor and two wheels in their guards) at the back right."""
     m = Model()
     m.box((0, 11, 0.5), (16, 13, 12.5), 'wood')
     m.legs(1, 1.5, 15, 12.5, 0, 11, 1.5, 'wood')
     m.box((1, 2, 1.5), (15, 3, 12.5), 'wood')
     m.box((0.5, 13, 12.5), (15.5, 16, 14), 'wood')
-    for x, h in ((2, 2.4), (5, 1.8), (8.5, 2.6), (12, 2)):
+    for x, h in ((2, 2.4), (5, 1.8), (8.5, 2.6)):
         m.box((x, 15.6 - h, 12), (x + 1, 15.6, 12.5), 'steel')
     m.box((1.5, 13, 0.5), (5.5, 14.5, 3.5), 'paint_blue')
     m.box((2, 13, 0), (5, 14.2, 0.5), 'dark_steel')
     m.tube((1.5, 13.6, -0.2), (5.5, 13.6, -0.2), 0.25, 6, 'steel')
-    m.box((8, 13, 3), (12, 13.6, 6), 'paint_red')
-    m.box((8.3, 13.6, 3.3), (11.7, 14.2, 5.7), 'paint_red')
+    m.box((6.5, 13, 3), (10, 13.6, 6), 'paint_red')
+    m.box((6.8, 13.6, 3.3), (9.7, 14.2, 5.7), 'paint_red')
+    # the drawers under the top on the right, their pulls
+    m.box((9.5, 4.5, 1.6), (14.5, 10.8, 11), 'paint_grey')
+    for y in (5, 7, 9):
+        m.box((9.8, y, 1.4), (14.2, y + 1.7, 1.6), 'paint_grey')
+        m.box((11.3, y + 0.7, 1.1), (12.7, y + 1.0, 1.4), 'steel')
+    # the bench grinder: its motor between two wheels in their guards
+    m.box((11, 13, 9), (15, 13.6, 11.5), 'dark_steel')
+    m.tube((11.5, 14.8, 10.2), (14.5, 14.8, 10.2), 1.2, 10, 'paint_green')
+    for x in (10.6, 15.4):
+        m.tube((x - 0.35, 14.8, 10.2), (x + 0.35, 14.8, 10.2), 1.5, 12, 'cast_iron')
+        m.box((x - 0.5, 14.2, 9.1), (x + 0.5, 16, 11.3), 'paint_green')
     return m
 
 
 def alloy_furnace(lit=False):
-    """A brick furnace bound with iron bands, its arched mouth to the front, a tapering stack."""
+    """A brick furnace bound with iron bands, its arched mouth to the front, a tapering stack; 2026-11-22 (redrawn): the
+    mouth's iron frame and its hinged door swung open beside it, the blower on the right blowing into the hearth through
+    its duct, a fuel hopper on the left."""
     m = Model()
     m.rbox((1, 0, 1), (15, 12, 15), 1, 'firebrick')
     for y in (3.5, 9):
@@ -496,23 +511,46 @@ def alloy_furnace(lit=False):
     m.box((4, 1.5, 0.5), (12, 6.5, 1), mouth)
     m.tube((8, 6.5, 0.5), (8, 6.5, 1), 4, 16, mouth)
     m.box((3, 1, 0.6), (13, 1.5, 1), 'dark_steel')
+    for x in (3.3, 12.7):
+        m.box((x - 0.4, 1, 0.3), (x + 0.4, 10.5, 0.9), 'dark_steel')
+    m.box((2.9, 10.3, 0.3), (13.1, 11, 0.9), 'dark_steel')
+    m.box((0.4, 1.5, -0.6), (0.9, 7.5, 3.5), 'cast_iron')
+    m.tube((13, 5, 0.6), (13.6, 5, 0.6), 0.35, 6, 'steel')
+    # the blower on the right and its duct, the fuel hopper on the left
+    m.tube((15.2, 3.2, 10), (16, 3.2, 10), 2.2, 12, 'paint_grey')
+    m.box((15.1, 0, 8.5), (16, 1.2, 11.5), 'dark_steel')
+    m.tube((15.2, 3.2, 10), (15.2, 3.2, 6), 0.8, 8, 'dark_steel')
+    m.box((0, 8, 5), (1, 11.5, 11), 'dark_steel')
+    m.box((-0.0, 11.5, 4.5), (1.2, 12.5, 11.5), 'dark_steel')
     m.vcyl(8, 9, 12, 15.4, 4.6, 2.6, 16, 'firebrick', caps=(False, False))
     m.vcyl(8, 9, 15.4, 16, 3, 3, 16, 'dark_steel')
     return m
 
 
 def battery():
-    """A battery cabinet: a grey case with a vented door, a charge gauge and data plate, terminals on top."""
+    """A battery cabinet: a grey case with a charge gauge and data plate, terminals on top; 2026-11-22 (redrawn): on its
+    plinth, two doors (the seam between them, a vent and a handle each), the hazard strip, the cooling fan's grille on
+    the right, each terminal's cable to the gland at the back."""
     m = Model()
-    m.rbox((1, 0, 2), (15, 15, 15), 0.5, 'paint_grey')
-    m.box((2, 1, 1.6), (14, 9, 2), 'vent')
+    m.box((1, 0, 2), (15, 1, 15), 'dark_steel')
+    m.rbox((1, 1, 2), (15, 15, 15), 0.5, 'paint_grey')
+    m.box((7.85, 1.5, 1.6), (8.15, 14, 2), 'dark_steel')
+    for x0 in (2, 8.6):
+        m.box((x0, 2, 1.6), (x0 + 5.4, 7, 2), 'vent')
+    for x in (6.8, 9.2):
+        m.box((x - 0.3, 7.5, 1.2), (x + 0.3, 10, 1.6), 'steel')
     m.box((3, 10.5, 1.6), (6, 13.5, 2), 'gauge')
-    m.box((8, 11, 1.6), (13, 13, 2), 'label')
-    m.box((1, 14.5, 1.6), (15, 15, 2), 'hazard')
+    m.box((9.5, 11, 1.6), (13.5, 13, 2), 'label')
+    m.box((1, 14.2, 1.6), (15, 14.8, 2), 'hazard')
+    m.box((15, 5.5, 6), (15.3, 10.5, 11), 'vent')
+    m.ring((15.25, 8, 8.5), 2.6, 0.3, 'x', 16, 4, 'dark_steel')
     for x, mat in ((5, 'paint_red'), (11, 'plastic')):
         m.vcyl(x, 8.5, 15, 15.6, 1.4, 1.4, 10, mat)
         m.vcyl(x, 8.5, 15.6, 16, 0.6, 0.6, 8, 'copper')
-    m.tube((5, 15.8, 8.5), (5, 15.8, 13), 0.3, 6, 'rubber')
+    m.vcyl(8, 13.5, 15, 15.8, 1.2, 1.2, 10, 'dark_steel')
+    m.tube((5, 15.8, 8.5), (7.2, 15.6, 13.3), 0.3, 6, 'paint_red')
+    m.tube((11, 15.8, 8.5), (8.8, 15.6, 13.3), 0.3, 6, 'rubber')
+    m.tube((8, 15.8, 13.5), (8, 15.8, 15.6), 0.45, 6, 'rubber')
     return m
 
 
@@ -614,6 +652,18 @@ def engine_stand():
     m.box((4, 6, 0.6), (12, 12, 1), 'panel')
     m.box((4, 6, 1), (12, 12, 1.5), 'paint_grey')
     m.box((2, 1.5, 7), (13, 2.5, 9), 'hazard')
+    # 2026-11-22 (redrawn): rubber mounts on the bed plate, the cable tray along the right rail, the fuel and coolant lines
+    # up the back post with their quick couplings, the cooling water's hose reel at the back
+    for x in (3.5, 12.5):
+        for z in (3.5, 12.5):
+            m.vcyl(x, z, 16, 16.6, 0.9, 0.7, 8, 'rubber')
+    m.box((14.5, 9, 2), (15.8, 10, 14), 'dark_steel')
+    m.box((14.6, 10, 2), (15.7, 10.3, 14), 'paint_yellow')
+    for z, mat in ((13.6, 'paint_red'), (14.4, 'paint_blue')):
+        m.tube((8, 1.5, z), (8, 14, z), 0.3, 6, mat)
+        m.vcyl(8, z, 14, 14.6, 0.5, 0.5, 6, 'brass')
+    m.ring((4.5, 8, 15.2), 2.2, 0.6, 'z', 14, 6, 'paint_green')
+    m.tube((4.5, 8, 14.6), (4.5, 8, 15.8), 0.6, 8, 'dark_steel')
     return m
 
 
@@ -681,17 +731,38 @@ def tank(kind):
 
 
 def hydrogen_liquefier():
-    """A cold box: insulated white panels, the compressor on its skid, a heat exchanger column, piping and a panel."""
+    """A cold box: insulated white panels, the compressor on its skid, a heat exchanger column, piping and a panel;
+    2026-11-22 (redrawn): the skid's beams, the compressor's motor and flywheel guard, a valve with its handwheel on
+    the line to the column, the column's frosted bands, the ladder up the cold box's side, its vent stack and the
+    relief valve on top."""
     m = Model()
-    m.box((0.5, 0, 0.5), (15.5, 1, 15.5), 'dark_steel')
-    m.box((1, 1, 6), (15, 15, 15), 'insulation')
-    m.vcyl(4, 3.5, 1, 9, 2.5, 2.5, 14, 'paint_blue')
-    m.tube((4, 5, 1), (4, 5, 6), 1.2, 10, 'paint_blue')
-    m.vcyl(11, 3.5, 1, 14, 1.8, 1.8, 12, 'frost')
-    m.tube((4, 9, 3.5), (11, 12, 3.5), 0.5, 6, 'steel')
+    m.box((0.5, 0, 0.5), (15.5, 0.6, 15.5), 'dark_steel')
+    for z in (1, 14):
+        m.box((0.5, 0.6, z), (15.5, 1.2, z + 1), 'paint_yellow')
+    m.box((1, 1.2, 6), (15, 15, 15), 'insulation')
+    for y in (5, 10):
+        m.box((0.8, y, 5.8), (15.2, y + 0.4, 15.2), 'steel')
+    m.vcyl(4, 3.5, 1.2, 9, 2.5, 2.5, 14, 'paint_blue')
+    m.vcyl(4, 3.5, 9, 9.8, 1.6, 1.6, 12, 'dark_steel')
+    m.tube((4, 5, 1.2), (4, 5, 6), 1.2, 10, 'paint_blue')
+    m.box((0.6, 1.2, 0.6), (2.2, 5.5, 3.5), 'paint_grey')
+    m.vcyl(11, 3.5, 1.2, 14, 1.8, 1.8, 12, 'frost')
+    for y in (4, 8, 12):
+        m.vcyl(11, 3.5, y, y + 0.5, 2.0, 2.0, 12, 'steel')
+    m.tube((4, 9.4, 3.5), (11, 12, 3.5), 0.5, 6, 'steel')
+    m.box((7, 10.2, 3.0), (8, 11.2, 4.0), 'paint_red')
+    m.wheel((7.5, 11.9, 3.5), 'x', 0.9, 0.18, 3, 'paint_red')
     m.tube((11, 14, 3.5), (11, 14, 6), 0.5, 6, 'steel')
     m.box((6, 2, 5.6), (10, 6, 6), 'panel')
     m.box((2, 10, 5.6), (5, 13, 6), 'gauge')
+    # the ladder up the right side, the vent stack and the relief valve on top
+    for z in (9, 11.5):
+        m.tube((15.4, 1.2, z), (15.4, 15.5, z), 0.2, 5, 'steel')
+    for k in range(5):
+        y = 3 + 2.6 * k
+        m.tube((15.4, y, 9), (15.4, y, 11.5), 0.15, 5, 'steel')
+    m.vcyl(3, 13, 15, 16, 0.5, 0.5, 8, 'steel')
+    m.vcyl(13, 8, 15, 15.6, 0.7, 0.7, 8, 'paint_red')
     return m
 
 
@@ -708,6 +779,15 @@ def fuel_dispenser():
     m.tube((13.6, 6.5, 5.6), (13.9, 5.6, 4.6), 0.3, 6, 'steel')
     m.tube((13.4, 8.4, 9), (13.8, 3, 12), 0.45, 6, 'rubber')
     m.tube((13.8, 3, 12), (13, 1.2, 13.5), 0.45, 6, 'rubber')
+    # 2026-11-22 (redrawn): the other side's nozzle and hose, the lit sign on top, the kerb's hazard edge, the door seam
+    m.box((2, 5, 7), (3.2, 9, 10), 'dark_steel')
+    m.tube((2.4, 8.6, 8.5), (2.4, 6.5, 10.4), 0.5, 6, 'plastic')
+    m.tube((2.4, 6.5, 10.4), (2.1, 5.6, 11.4), 0.3, 6, 'steel')
+    m.tube((2.6, 8.4, 7), (2.2, 3, 4), 0.45, 6, 'rubber')
+    m.tube((2.2, 3, 4), (3, 1.2, 2.5), 0.45, 6, 'rubber')
+    m.box((4.5, 16, 6), (11.5, 16.01, 10), 'label')
+    m.box((2, 0.8, 2), (14, 1, 2.3), 'hazard')
+    m.box((7.9, 2.2, 3.55), (8.1, 7.8, 3.65), 'dark_steel')
     return m
 
 
@@ -832,6 +912,19 @@ def air_separation_unit():
     m.tube((2.5, 11.5, 3.5), (7.7, 11.5, 3.5), 0.35, 6, 'steel')
     m.box((9, 3, 6.6), (14, 7, 7), 'panel')
     m.box((10, 9, 6.6), (13, 12, 7), 'gauge')
+    # 2026-11-22 (redrawn): the cold box's frame bands, its ladder on the left face, the relief valve on its front, a
+    # valve with its handwheel on the frosted line, the cylinders' chain bar
+    for y in (5, 10.5):
+        m.box((8.3, y, 6.8), (15.2, y + 0.4, 15.2), 'steel')
+    for z in (9, 11):
+        m.tube((8.1, 1, z), (8.1, 15.5, z), 0.18, 5, 'steel')
+    for k in range(5):
+        m.tube((8.1, 3 + 2.6 * k, 9), (8.1, 3 + 2.6 * k, 11), 0.14, 5, 'steel')
+    m.tube((13.5, 14.5, 7), (13.5, 14.5, 6.2), 0.35, 6, 'steel')
+    m.vcyl(13.5, 6.2, 14.5, 15.6, 0.5, 0.5, 8, 'paint_red')
+    m.box((5.5, 9.5, 8.5), (6.5, 10.5, 9.5), 'brass')
+    m.wheel((6, 10.5, 8), 'z', 0.8, 0.16, 3, 'paint_red')
+    m.tube((1.3, 7.5, 2.2), (8.5, 7.5, 2.2), 0.12, 4, 'steel')
     return m
 
 

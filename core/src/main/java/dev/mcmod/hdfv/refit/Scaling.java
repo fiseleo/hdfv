@@ -59,7 +59,14 @@ public final class Scaling {
             Map.entry("designAltitudeM", 0.0), Map.entry("kickUpX", 1.0), Map.entry("neckX", 1.0), Map.entry("dValueKn", 2.0), Map.entry("crankTimeS", 0.0), Map.entry("maxPowerW", 2.0), Map.entry("flapSpringNmPerRad", 3.0),
             Map.entry("reedFrequencyHz", -1.0), Map.entry("TyreDesign.pressurePa", 1.0), Map.entry("TyreDesign.ratedPressurePa", 1.0),
             Map.entry("StrutDesign.extendedPressurePa", 1.0), Map.entry("BrakeDesign.maxPressurePa", 1.0),
-            Map.entry("Point.y", 1.0), Map.entry("Point.z", 1.0), Map.entry("OnBody.x", 1.0), Map.entry("LampSpec.x", 1.0), Map.entry("GearsetDesign.forwardRatios", 0.0));
+            Map.entry("Point.y", 1.0), Map.entry("Point.z", 1.0), Map.entry("OnBody.x", 1.0), Map.entry("LampSpec.x", 1.0), Map.entry("GearsetDesign.forwardRatios", 0.0),
+            // 0.26: the machines (a drum's frequency as a shaft's speed; pins are lengths; ratios, resistances and the jack's time stay)
+            Map.entry("DrumDesign.frequencyHz", -1.0), Map.entry("HookDesign.dampingRatio", 0.0), Map.entry("HydraulicMotorDesign.reductionRatio", 0.0),
+            Map.entry("HydraulicPumpDesign.powerLimitW", 2.0), Map.entry("LinkDesign.basePinXM", 1.0), Map.entry("LinkDesign.basePinYM", 1.0),
+            Map.entry("LinkDesign.basePinZM", 1.0), Map.entry("LinkDesign.rodPinXM", 1.0), Map.entry("LinkDesign.rodPinYM", 1.0), Map.entry("LinkDesign.rodPinZM", 1.0),
+            Map.entry("LinkDesign.freeFriction", 3.0), Map.entry("LinkDesign.slewRatio", 0.0), Map.entry("OutriggerDesign.extensionTimeS", 0.0),
+            Map.entry("TrackDesign.internalResistance", 0.0), Map.entry("TrackDesign.lateralResistance", 0.0),
+            Map.entry("WorkToolDesign.beltSpeedMps", 0.0), Map.entry("WorkToolDesign.impactEnergyJ", 3.0));
 
     /** Parameters without a unit that are ratios, shares, coefficients, counts of a kind, times or speeds: they stay. */
     static final Set<String> DIMENSIONLESS = Set.of("ackermann", "areaRatio", "aspectRatio", "axialTipRatio", "axleAt", "backPressureFactor",

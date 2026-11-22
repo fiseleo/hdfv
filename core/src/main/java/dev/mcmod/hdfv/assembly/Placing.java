@@ -69,6 +69,39 @@ public final class Placing {
             case SeatDesign s -> List.of("m2_bottom", "m\\d+_bottom");
             case BodyDesign b -> cab(b) ? List.of("cab", "body") : List.of("body");
             case dev.mcmod.hdfv.part.StorageBoxDesign s -> List.of("m\\d+_top");   // 0.25: on a module's or a deck's top (storageBox orders them)
+            // 0.26: heavy machinery: tracks and drums under the frame, pumps at the engine, motors at the sprockets or the winch, links on the
+            // points their kind goes on (a boom at its foot, a stick at a tip, a telescope in a nest, the house on a slewing ring)
+            case dev.mcmod.hdfv.part.machine.TrackDesign t -> List.of("tracks", "undercarriage", "m\\d+_bottom");
+            case dev.mcmod.hdfv.part.machine.DrumDesign r -> List.of("drum", "front_axle", "axle_\\d+", "rear_axle");
+            case dev.mcmod.hdfv.part.machine.OutriggerDesign o -> List.of("outrigger_\\d+", "tip");
+            case dev.mcmod.hdfv.part.machine.HydraulicPumpDesign h -> List.of("pump", "engine_bay", "m\\d+_engine");
+            case dev.mcmod.hdfv.part.machine.HydraulicMotorDesign h -> h.winch() ? List.of("winch") : List.of("travel_\\d+", "travel");
+            case dev.mcmod.hdfv.part.machine.LinkDesign l -> switch (l.linkKind()) {
+                case BOOM, LATTICE -> List.of("boom_foot", "upper");
+                case STICK, PLATFORM_BOOM, PLACING_BOOM -> List.of("tip");
+                case TELESCOPIC, MAST -> List.of("nest", "mast");
+                case SLEW_RING -> List.of("slew", "m\\d+_top");
+                case ARTICULATION -> List.of("hinge");
+                case LOADER_ARM -> List.of("lift_arm");
+                case OUTRIGGER_BEAM -> List.of("outrigger_box_\\d+");
+            };
+            case dev.mcmod.hdfv.part.machine.HookDesign h -> List.of();   // hung from the boom by the game
+            case dev.mcmod.hdfv.part.machine.OperatorCabDesign c -> List.of("cab", "upper", "m\\d+_top");   // on a house or a frame, standing on the point
+            case dev.mcmod.hdfv.part.machine.EngineHoodDesign e -> List.of("hood", "upper", "m\\d+_top");   // the same, behind the point
+            case dev.mcmod.hdfv.part.machine.WorkToolDesign w -> switch (w.toolKind()) {
+                case DOZER_BLADE, GRADER_MOLDBOARD, SNOW_PLOW -> List.of("blade", "tip");
+                case RIPPER -> List.of("ripper", "tip");
+                case DUMP_BODY -> List.of("body", "m\\d+_top");
+                case SCRAPER_BOWL -> List.of("bowl", "tip");
+                case CONVEYOR -> List.of("conveyor", "head", "tip");
+                case PAVER_HOPPER -> List.of("hopper", "front");
+                case SCREED -> List.of("screed", "rear");
+                case MIXER_DRUM -> List.of("mixer", "m\\d+_top");
+                case SPRAY_BAR -> List.of("rear", "front");
+                case MILLING_DRUM, CUTTERHEAD -> List.of("drum", "front");
+                case CLAMSHELL, PILE_HAMMER -> List.of("coupler", "tip", "hoist");
+                default -> List.of("coupler", "tip");
+            };
             default -> List.of();
         };
     }
@@ -99,6 +132,8 @@ public final class Placing {
             case TransferCaseDesign t -> Mount.at(new Vec3d(-1.0, -0.1, 0));
             case SeatDesign s -> Mount.at(new Vec3d(0.2, 0.35, 0));
             case BodyDesign b when cab(b) -> Mount.at(new Vec3d(-b.shape().lengthM(), CAB_RAISE_M - lowestBottom(b), 0));
+            case dev.mcmod.hdfv.part.machine.OperatorCabDesign c -> Mount.at(new Vec3d(0, 0.5 * c.heightM(), 0));   // its floor on the point
+            case dev.mcmod.hdfv.part.machine.EngineHoodDesign e -> Mount.at(new Vec3d(-0.5 * e.lengthM(), 0.5 * e.heightM(), 0));   // its front edge over the point, its bottom on it
             default -> Mount.ORIGIN;
         };
     }

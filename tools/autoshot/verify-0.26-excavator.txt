@@ -1,0 +1,80 @@
+world AeroCore 026 QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.26 verification, run 2 (after verify-0.26-machines.txt): the pad cleared of the sixteen machines (they lagged the
+# integrated server 36 s), the excavator alone, worked slowly with long waits so the server keeps up; the tower crane's
+# hook (wired since run 1) under its trolley.
+mark v26b world start
+wait 30
+cmd gamemode spectator @p
+cmd time set 6000
+cmd weather clear
+clouds off
+cmd tp @p 352 180 160 facing 352 153 215
+wait 100
+cmd kill @e[type=aerocore:part_vehicle,x=310,y=60,z=170,dx=110,dy=130,dz=90]
+wait 40
+cmd fill 320 150 180 384 152 250 minecraft:dirt
+cmd fill 320 153 180 384 175 250 minecraft:air
+wait 20
+cmd execute positioned 326 153 200 rotated -90 0 run hdfv dev drive spawn excavator
+cmd tp @p 322 159 190 facing 334 154 201
+wait 1200
+cmd execute positioned 330 154 200 run aerocore vehicle control travel_brake 1
+cmd execute positioned 330 154 200 run aerocore vehicle control throttle 1
+wait 100
+shot v26b-discard
+shot v26b-excavator
+cmd execute positioned 330 154 200 run aerocore vehicle info
+# --- boom up 3 s
+cmd execute positioned 330 154 200 run aerocore vehicle control boom 1
+wait 60
+cmd execute positioned 330 154 200 run aerocore vehicle control boom 0
+wait 20
+shot v26b-boom-up
+cmd execute positioned 330 154 200 run aerocore vehicle info
+# --- slew left 6 s
+cmd execute positioned 330 154 200 run aerocore vehicle control swing 1
+wait 120
+cmd execute positioned 330 154 200 run aerocore vehicle control swing 0
+wait 20
+shot v26b-slewed
+cmd execute positioned 330 154 200 run aerocore vehicle control swing -1
+wait 120
+cmd execute positioned 330 154 200 run aerocore vehicle control swing 0
+# --- stick out and bucket open, boom down into the dirt, crowd and curl, boom up
+cmd execute positioned 330 154 200 run aerocore vehicle control stick -1
+cmd execute positioned 330 154 200 run aerocore vehicle control bucket -1
+wait 60
+cmd execute positioned 330 154 200 run aerocore vehicle control stick 0
+cmd execute positioned 330 154 200 run aerocore vehicle control bucket 0
+cmd execute positioned 330 154 200 run aerocore vehicle control boom -1
+wait 100
+shot v26b-boom-down
+cmd execute positioned 330 154 200 run aerocore vehicle control boom -0.5
+cmd execute positioned 330 154 200 run aerocore vehicle control stick 1
+cmd execute positioned 330 154 200 run aerocore vehicle control bucket 1
+wait 60
+shot v26b-digging
+wait 60
+cmd execute positioned 330 154 200 run aerocore vehicle control stick 0
+cmd execute positioned 330 154 200 run aerocore vehicle control bucket 0
+cmd execute positioned 330 154 200 run aerocore vehicle control boom 1
+wait 60
+cmd execute positioned 330 154 200 run aerocore vehicle control boom 0
+wait 20
+shot v26b-loaded
+cmd execute positioned 330 154 200 run aerocore vehicle info
+cmd execute positioned 330 154 200 run aerocore vehicle control bucket -1
+wait 80
+cmd execute positioned 330 154 200 run aerocore vehicle control bucket 0
+wait 20
+shot v26b-dumped
+cmd execute positioned 330 154 200 run aerocore vehicle info
+# --- the tower crane and its hook
+cmd tp @p 392 166 186 facing 406 158 200
+wait 200
+shot v26b-towercrane
+mark v26b world end
+quit

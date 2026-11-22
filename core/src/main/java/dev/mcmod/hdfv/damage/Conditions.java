@@ -70,10 +70,11 @@ public final class Conditions {
     // the names (AeroCore's for its runtime parts, hdfv's own engines' and tanks')
     public static final String TYRES = AxlePart.TYRES, BRAKES = AxlePart.BRAKES, SUSPENSION = AxlePart.SUSPENSION, STRUT = LegPart.STRUT,
             GEARS = TransmissionPart.GEARS, CLUTCH = TransmissionPart.CLUTCH, MOTOR = MotorPart.MOTOR, STRUCTURE = "structure", BLADES = "blades",
-            ENGINE = "engine", ANCILLARIES = "ancillaries", HOT_SECTION = "hot_section", TANK = "tank";
+            ENGINE = "engine", ANCILLARIES = "ancillaries", HOT_SECTION = "hot_section", TANK = "tank",
+            TRACKS = dev.mcmod.aerocore.api.vehicle.part.TrackPart.TRACKS;
 
     /** Every condition name there is, in the order screens list them. */
-    public static final List<String> NAMES = List.of(STRUCTURE, ENGINE, HOT_SECTION, ANCILLARIES, MOTOR, GEARS, CLUTCH, BLADES, TYRES, BRAKES, SUSPENSION, STRUT, TANK);
+    public static final List<String> NAMES = List.of(STRUCTURE, ENGINE, HOT_SECTION, ANCILLARIES, MOTOR, GEARS, CLUTCH, BLADES, TYRES, BRAKES, SUSPENSION, STRUT, TANK, TRACKS);
 
     /** The language key of a condition's name ("hdfv.condition.tyres"). */
     public static String key(String condition) { return "hdfv.condition." + condition; }
@@ -155,7 +156,7 @@ public final class Conditions {
      * are eight times that, and LAVA_FACTOR more for its heat).
      */
     public static final Map<String, Double> FIRE = Map.of(ANCILLARIES, 0.025, TYRES, 0.03, TANK, 0.02, STRUCTURE, 0.004, MOTOR, 0.02, BLADES, 0.004,
-            SUSPENSION, 0.004, STRUT, 0.004, BRAKES, 0.01);
+            SUSPENSION, 0.004, STRUT, 0.004, BRAKES, 0.01, TRACKS, 0.004);
     public static final double LAVA_FACTOR = 2;
 
     /** Walls where a design gives none (mm): suspension arms and struts, an engine's sheet-metal ancillaries, a marine propeller's blades. */
@@ -171,6 +172,9 @@ public final class Conditions {
     public static Profile of(PartDesign design, MassProperties mass) {
         double reach = reach(mass);
         return switch (design) {
+            // 0.26: crawler tracks (links, pins and rollers; a rubber band burns)
+            case dev.mcmod.hdfv.part.machine.TrackDesign t -> profile(List.of(new Hit(TRACKS, 1)), RUNNING_GEAR,
+                    t.shoe() == dev.mcmod.aerocore.api.vehicle.part.TrackPart.Shoe.RUBBER ? Material.RUBBER : Material.STEEL, reach, t.framePlateM() * 1000, TRACKS);
             case AxleDesign a -> profile(List.of(new Hit(SUSPENSION, 1), new Hit(TYRES, 0.25), new Hit(BRAKES, 0.15)), RUNNING_GEAR, Material.STEEL, reach, ARM_WALL_MM, SUSPENSION);
             case LandingGearDesign g -> profile(List.of(new Hit(STRUT, 1), new Hit(TYRES, 0.25), new Hit(BRAKES, 0.15)), RUNNING_GEAR, Material.ALLOY_STEEL, reach, ARM_WALL_MM, STRUT);
             case GearboxDesign g -> profile(List.of(new Hit(GEARS, 1), new Hit(CLUTCH, 0.3)), GEARCASE, Material.ALUMINIUM, reach, 0, null);

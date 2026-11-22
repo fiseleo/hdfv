@@ -50,9 +50,15 @@ class ConditionsTest {
     static final Set<String> WITH = Set.of("hdfv:axle", "hdfv:landing_gear", "hdfv:manual_gearbox", "hdfv:automatic", "hdfv:dual_clutch", "hdfv:cvt", "hdfv:transfer_case",
             "hdfv:electric_motor", "hdfv:wing", "hdfv:control_surface", "hdfv:air_propeller", "hdfv:rotor", "hdfv:propeller", "hdfv:body", "hdfv:chassis",
             "hdfv:piston_engine", "hdfv:jet_engine", "hdfv:turbofan", "hdfv:turboprop", "hdfv:turboshaft", "hdfv:turbo_ramjet", "hdfv:ramjet", "hdfv:scramjet",
-            "hdfv:pulsejet", "hdfv:solid_rocket", "hdfv:fuel_tank", "hdfv:storage_box");
+            "hdfv:pulsejet", "hdfv:solid_rocket", "hdfv:fuel_tank", "hdfv:storage_box", "hdfv:track");
     static final Set<String> WITHOUT = Set.of("hdfv:float", "hdfv:hull", "hdfv:planing_hull", "hdfv:box", "hdfv:ballast", "hdfv:seat", "hdfv:fifth_wheel",
-            "hdfv:landing_legs", "hdfv:component");
+            "hdfv:landing_legs", "hdfv:component",
+            // 0.26: the machines' parts other than tracks wear nothing yet (drums, outriggers, hydraulics, links, hooks)
+            "hdfv:drum", "hdfv:outrigger", "hdfv:hydraulic_pump", "hdfv:hydraulic_motor", "hdfv:link", "hdfv:hook", "hdfv:work_tool",
+            // 2026-11-22: a machine's cab is a box as the crates are (its glass does not break yet)
+            "hdfv:operator_cab",
+            // 2026-11-22: an engine hood is sheet metal over the engine (it dents nothing yet)
+            "hdfv:engine_hood");
 
     /** Every design the game offers or the samples carry, by type. */
     static Map<String, List<PartDesign>> designs() {

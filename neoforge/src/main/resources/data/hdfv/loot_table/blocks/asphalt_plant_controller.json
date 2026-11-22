@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "hdfv:asphalt_plant_controller"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "hdfv:blocks/asphalt_plant_controller"
+}

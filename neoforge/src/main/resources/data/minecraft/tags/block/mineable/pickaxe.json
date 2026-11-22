@@ -225,6 +225,15 @@
     "hdfv:parts_rack",
     "hdfv:shipping_container",
     "hdfv:repair_shop_controller",
-    "hdfv:cargo_loader"
+    "hdfv:cargo_loader",
+    "hdfv:blasted_rock",
+    "hdfv:pile",
+    "hdfv:tunnel_lining",
+    "hdfv:heavy_yard_controller",
+    "hdfv:asphalt_plant_controller",
+    "hdfv:concrete_plant_controller",
+    "hdfv:tower_crane_mast",
+    "hdfv:tower_crane_top",
+    "hdfv:tower_crane_controller"
   ]
 }

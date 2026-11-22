@@ -564,6 +564,9 @@
     "minecraft:iron_bars": {
       "kg": 0.4
     },
+    "minecraft:chain": {
+      "kg": 12.2
+    },
     "minecraft:iron_door": {
       "kg": 20
     },
@@ -753,6 +756,9 @@
     "hdfv:asphalt": {
       "kg": 16.2
     },
+    "hdfv:asphalt_plant_controller": {
+      "kg": 245
+    },
     "hdfv:asphalt_ramp_2": {
       "kg": 8.12
     },
@@ -791,6 +797,9 @@
     },
     "hdfv:blank_blueprint": {
       "kg": 0.06
+    },
+    "hdfv:blasted_rock": {
+      "kg": 20
     },
     "hdfv:blueprint": {
       "kg": 0.01
@@ -858,8 +867,14 @@
     "hdfv:column_top": {
       "kg": 20
     },
+    "hdfv:compacted_base": {
+      "kg": 17
+    },
     "hdfv:composite_oven": {
       "kg": 61
+    },
+    "hdfv:concrete_plant_controller": {
+      "kg": 115
     },
     "hdfv:concrete_ramp_2": {
       "kg": 10.9
@@ -1035,6 +1050,9 @@
     "hdfv:foundry": {
       "kg": 206
     },
+    "hdfv:fresh_concrete": {
+      "kg": 20
+    },
     "hdfv:fuel_dispenser": {
       "kg": 52
     },
@@ -1098,6 +1116,9 @@
     "hdfv:heavy_cable": {
       "kg": 3.25
     },
+    "hdfv:heavy_yard_controller": {
+      "kg": 143
+    },
     "hdfv:hobbing_head": {
       "kg": 24
     },
@@ -1115,6 +1136,9 @@
     },
     "hdfv:horsehead": {
       "kg": 25
+    },
+    "hdfv:hot_asphalt": {
+      "kg": 18
     },
     "hdfv:hss_tool_set": {
       "kg": 12
@@ -1172,6 +1196,9 @@
     },
     "hdfv:line_shaft": {
       "kg": 2
+    },
+    "hdfv:loose_fill": {
+      "kg": 15
     },
     "hdfv:lube_extractor": {
       "kg": 58
@@ -1233,6 +1260,9 @@
     "hdfv:parts_rack": {
       "kg": 57
     },
+    "hdfv:pile": {
+      "kg": 25
+    },
     "hdfv:planer": {
       "kg": 120
     },
@@ -1274,6 +1304,9 @@
     },
     "hdfv:ram_machine": {
       "kg": 113
+    },
+    "hdfv:reclaimed_asphalt": {
+      "kg": 15
     },
     "hdfv:reed_set": {
       "kg": 4
@@ -1428,6 +1461,15 @@
     "hdfv:tower_console": {
       "kg": 20.8
     },
+    "hdfv:tower_crane_controller": {
+      "kg": 97.2
+    },
+    "hdfv:tower_crane_mast": {
+      "kg": 11.6
+    },
+    "hdfv:tower_crane_top": {
+      "kg": 45.2
+    },
     "hdfv:tower_floor": {
       "kg": 13.5
     },
@@ -1451,6 +1493,9 @@
     },
     "hdfv:trunnion": {
       "kg": 106
+    },
+    "hdfv:tunnel_lining": {
+      "kg": 22
     },
     "hdfv:turning_spindle": {
       "kg": 54

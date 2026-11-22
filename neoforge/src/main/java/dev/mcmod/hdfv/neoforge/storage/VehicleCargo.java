@@ -178,6 +178,7 @@ public final class VehicleCargo {
         List<Hold> made = new ArrayList<>();
         for (int k = 0; k < vehicle.holds().size(); k++) {
             Vehicle.Hold h = vehicle.holds().get(k);
+            if (dev.mcmod.hdfv.neoforge.worksite.BulkCargo.bulk(h)) { continue; }   // 0.26: bulk holds carry loose material (BulkCargo), not items
             int slots = CargoRules.slots(holder(vehicle, k), h.hold());
             NonNullList<ItemStack> was = old.remove(h.id()), now = NonNullList.withSize(slots, ItemStack.EMPTY);
             if (was != null) {
@@ -281,7 +282,9 @@ public final class VehicleCargo {
                 if (!l.get(i).isEmpty()) { taker.accept(l.get(i)); l.set(i, ItemStack.EMPTY); }
             }
         }
-        if (v.vehicle() != null && v.vehicleState() != null) { for (int k = 0; k < v.holdCount(); k++) { v.setHold(k, 0); } }
+        if (v.vehicle() != null && v.vehicleState() != null) {
+            for (int k = 0; k < v.holdCount(); k++) { if (!dev.mcmod.hdfv.neoforge.worksite.BulkCargo.bulk(v.vehicle().holds().get(k))) { v.setHold(k, 0); } }
+        }
     }
 
     /** Takes the stacks of the holds of a part (by its id) out, to a taker (a part cast off: where it fell). */

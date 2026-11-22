@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "hdfv:block/room_controller_top",
+    "front": "hdfv:block/concrete_plant_controller_front",
+    "side": "hdfv:block/room_controller_side"
+  }
+}

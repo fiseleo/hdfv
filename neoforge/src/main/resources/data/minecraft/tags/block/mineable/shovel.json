@@ -1,6 +1,11 @@
 {
   "values": [
     "hdfv:oil_seep",
-    "hdfv:airfield_turf"
+    "hdfv:airfield_turf",
+    "hdfv:loose_fill",
+    "hdfv:compacted_base",
+    "hdfv:hot_asphalt",
+    "hdfv:fresh_concrete",
+    "hdfv:reclaimed_asphalt"
   ]
 }

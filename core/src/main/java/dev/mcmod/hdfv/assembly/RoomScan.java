@@ -126,6 +126,61 @@ public final class RoomScan {
         return new Scan(true, 0, 0, 0, inside.size(), minX, minY, minZ, maxX, maxY, maxZ, missing, doors, crane.size(), slipway.size(), cells(stations), cells(storage));
     }
 
+    /**
+     * 0.26: the open heavy yard in front of a controller at (x, y, z) facing (fx, fz) into it: the floor cells joined
+     * to the one in front (the assembly floor under air, side to side), within REACH and MAX_CELLS. Its height is the
+     * least clear height over it, up to HEIGHT or the gantry crane's rails; the crane cells are the rails over it; the
+     * welding stations and the storage stand beside it. A yard has no walls or doors: its "door" is the far edge,
+     * away from the controller (the way a finished machine drives off), and floorMissing counts the yard's cells under
+     * a roof (a yard is open to the sky). Not closed when there is no floor in front of the controller.
+     */
+    public static Scan yard(Grid g, int x, int y, int z, int fx, int fz) {
+        int sx = x + fx, sz = z + fz;
+        if (g.at(sx, y, sz) != Cell.AIR || g.at(sx, y - 1, sz) != Cell.FLOOR) {
+            return new Scan(false, sx, y, sz, 0, 0, 0, 0, 0, 0, 0, 0, List.of(), 0, 0, List.of(), List.of());
+        }
+        Set<Long> inside = new HashSet<>();
+        ArrayDeque<int[]> queue = new ArrayDeque<>();
+        inside.add(key(sx, y, sz));
+        queue.add(new int[]{sx, y, sz});
+        int minX = sx, minZ = sz, maxX = sx, maxZ = sz, clear = HEIGHT, roofed = 0;
+        Set<Long> crane = new HashSet<>(), stations = new HashSet<>(), storage = new HashSet<>();
+        while (!queue.isEmpty()) {
+            int[] c = queue.poll();
+            minX = Math.min(minX, c[0]); minZ = Math.min(minZ, c[2]);
+            maxX = Math.max(maxX, c[0]); maxZ = Math.max(maxZ, c[2]);
+            // what is over it: open sky, a gantry crane's rail, or a roof
+            for (int h = 0; h < HEIGHT; h++) {
+                Cell over = g.at(c[0], y + h, c[2]);
+                if (over == Cell.AIR) { continue; }
+                if (over == Cell.CRANE) { crane.add(key(c[0], y + h, c[2])); clear = Math.min(clear, h); }
+                else if (h == 0 && (over == Cell.CONTROLLER || over == Cell.WELDING_STATION || over == Cell.STORAGE)) { continue; }
+                else { roofed++; clear = Math.min(clear, h); }
+                break;
+            }
+            for (int[] s : SIDES) {
+                if (s[1] != 0) { continue; }
+                int nx = c[0] + s[0], nz = c[2] + s[2];
+                long k = key(nx, y, nz);
+                if (inside.contains(k)) { continue; }
+                Cell cell = g.at(nx, y, nz);
+                if (cell == Cell.WELDING_STATION) { stations.add(k); continue; }
+                if (cell == Cell.STORAGE) { storage.add(k); continue; }
+                if (cell != Cell.AIR || g.at(nx, y - 1, nz) != Cell.FLOOR) { continue; }
+                if (Math.abs(nx - x) > REACH || Math.abs(nz - z) > REACH || inside.size() >= MAX_CELLS) { continue; }
+                inside.add(k);
+                queue.add(new int[]{nx, y, nz});
+            }
+        }
+        int maxY = y + Math.max(clear, 1) - 1;
+        // the far edge, away from the controller
+        Door edge = fx != 0
+                ? new Door(fx > 0 ? maxX + 1 : minX - 1, y, minZ, fx > 0 ? maxX + 1 : minX - 1, maxY, maxZ, fx, 0, true, false, true)
+                : new Door(minX, y, fz > 0 ? maxZ + 1 : minZ - 1, maxX, maxY, fz > 0 ? maxZ + 1 : minZ - 1, 0, fz, true, false, true);
+        return new Scan(true, 0, 0, 0, inside.size() * (maxY - y + 1), minX, y, minZ, maxX, maxY, maxZ, roofed, List.of(edge), crane.size(), 0,
+                cells(stations), cells(storage));
+    }
+
     private static Door door(Grid g, List<Long> patch, Set<Long> inside) {
         int x0 = Integer.MAX_VALUE, y0 = x0, z0 = x0, x1 = Integer.MIN_VALUE, y1 = x1, z1 = x1;
         for (long c : patch) {

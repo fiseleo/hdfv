@@ -30,6 +30,8 @@ public final class HdfvConfig {
     private static final ModConfigSpec.BooleanValue GIVE_HANDBOOK, WELCOME;
     private static final ModConfigSpec.DoubleValue ITEM_MASS_SCALE, BUCKET_LITRES;
     private static final ModConfigSpec.BooleanValue DAMAGE, OCCUPANT_INJURY, EXPLOSIONS;
+    /** 0.26: whether machines dig, push, pave and pile blocks. */
+    private static final ModConfigSpec.BooleanValue EDIT_WORLD;
     private static final ModConfigSpec.DoubleValue COLLISION_SCALE, WEAR_SCALE, ATTACK_SCALE, CORROSION_SCALE;
     /** The default: items weigh what the rules and the hdfv:item_mass data map say. */
     public static final double DEFAULT_ITEM_MASS_SCALE = 1.0;
@@ -102,12 +104,18 @@ public final class HdfvConfig {
         OCCUPANT_INJURY = b.comment("Whether those aboard are hurt by crashes and by their vehicle burning").define("occupantInjury", true);
         EXPLOSIONS = b.comment("Whether a burning or blasted vehicle's fuel explodes (it hurts whoever is near and breaks no blocks)").define("explosions", true);
         b.pop();
+        b.push("worksite");
+        EDIT_WORLD = b.comment("Whether heavy machinery changes blocks (0.26: digging, pushing, grading, rolling, paving, milling, piling; protection mods can still refuse a block)")
+                .define("editWorld", true);
+        b.pop();
         SPEC = b.build();
     }
 
     /** Whether a player joining for the first time gets the handbook, and the welcome (0.24). */
     public static boolean giveHandbook() { return !SPEC.isLoaded() || GIVE_HANDBOOK.get(); }
     public static boolean welcome() { return !SPEC.isLoaded() || WELCOME.get(); }
+    /** 0.26: whether machines change blocks. */
+    public static boolean editWorld() { return !SPEC.isLoaded() || EDIT_WORLD.get(); }
 
     /** What the mass of every item is multiplied by (0.25; 0: weightless). */
     public static double itemMassScale() { return SPEC.isLoaded() ? ITEM_MASS_SCALE.get() : DEFAULT_ITEM_MASS_SCALE; }

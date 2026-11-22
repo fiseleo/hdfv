@@ -9,7 +9,9 @@ import java.util.List;
  * (lengthwise, as an aircraft is towed out or a boat slides down the ways), a crane for parts too heavy to lift by
  * hand, a welding station if anything is welded or riveted; a hangar's door opens onto a clear apron, a shipyard's
  * onto water down a slipway, a car factory's at ground level; and (0.8) a vehicle whose engines burn fuel has a tank.
- * Problems carry a key ("hdfv.room.problem.<key>") and
+ * 0.26: the heavy yard (RoomScan.yard) is open: it must be found (a floor in front of its controller), open to the sky
+ * over all of it, hold the machine, and have rails or a crane beside it for the heavy parts; a small machine may be
+ * built in a car factory, a car in the yard (Room.builds). Problems carry a key ("hdfv.room.problem.<key>") and
  * the numbers for its message.
  */
 public final class RoomRules {
@@ -36,14 +38,15 @@ public final class RoomRules {
     /** The room's problems for a vehicle (null: the room alone, before a vehicle is laid out in it). */
     public static List<Problem> check(Room room, RoomScan.Scan s, AssemblyPlan p) {
         List<Problem> out = new ArrayList<>();
-        if (!s.closed()) { out.add(new Problem("open", s.leakX(), s.leakY(), s.leakZ())); return out; }
-        if (p != null && room != p.room()) { out.add(new Problem("wrong_room", p.room().name().toLowerCase(java.util.Locale.ROOT))); }
-        if (s.floorMissing() > 0) { out.add(new Problem("floor", s.floorMissing())); }
+        boolean yard = room == Room.HEAVY_YARD;
+        if (!s.closed()) { out.add(yard ? new Problem("yard_floor") : new Problem("open", s.leakX(), s.leakY(), s.leakZ())); return out; }
+        if (p != null && !room.builds(p.room(), massKg(p))) { out.add(new Problem("wrong_room", p.room().name().toLowerCase(java.util.Locale.ROOT))); }
+        if (s.floorMissing() > 0) { out.add(yard ? new Problem("yard_roof", s.floorMissing()) : new Problem("floor", s.floorMissing())); }
         RoomScan.Door door = door(s, p);
         if (door == null) {
             out.add(new Problem("no_door"));
         } else if (p != null) {
-            if (!fits(door, p)) { out.add(new Problem("door_small", door.widthM(), door.heightM(), ceil(p.widthM()), ceil(p.heightM()))); }
+            if (!yard && !fits(door, p)) { out.add(new Problem("door_small", door.widthM(), door.heightM(), ceil(p.widthM()), ceil(p.heightM()))); }
             // the vehicle stands lengthwise to the door
             int along = door.outX() != 0 ? s.lengthX() : s.widthZ(), across = door.outX() != 0 ? s.widthZ() : s.lengthX();
             if (along < p.lengthM() || across < p.widthM() || s.heightY() < p.heightM()) {
@@ -58,11 +61,12 @@ public final class RoomRules {
                     if (!door.waterOutside()) { out.add(new Problem("water", RoomScan.WATER)); }
                 }
                 case CAR_FACTORY -> { if (door.minY() != s.minY() || !door.groundOutside()) { out.add(new Problem("door_ground")); } }
+                case HEAVY_YARD -> { }
             }
         }
         if (p == null) { return out; }
         if (p.needsCrane() && s.craneCells() * CRANE_KG_PER_CELL < p.heaviestKg()) {
-            out.add(new Problem("crane", Math.round(p.heaviestKg()), Math.round(s.craneCells() * CRANE_KG_PER_CELL)));
+            out.add(new Problem(yard ? "yard_crane" : "crane", Math.round(p.heaviestKg()), Math.round(s.craneCells() * CRANE_KG_PER_CELL)));
         }
         if (p.needsWelding() && s.weldingStations() == 0) { out.add(new Problem("welding_station")); }
         out.addAll(vehicle(p));
@@ -90,6 +94,16 @@ public final class RoomRules {
         // 0.18: a fifth wheel off the frame, a trailer's kingpin without landing legs, an engine up in a cab-over cab
         for (ChassisRules.TruckIssue t : p.truck()) { out.add(new Problem(t.key(), t.parts())); }
         return out;
+    }
+
+    /** 0.26: a planned vehicle's mass, kg: its finished parts' and the stock of what the room builds (for Room.builds). */
+    public static double massKg(AssemblyPlan p) {
+        double kg = 0;
+        for (AssemblyPlan.Need n : p.parts()) {
+            try { kg += n.count() * n.design().compile().mass().massKg(); } catch (RuntimeException e) { }
+        }
+        for (double stock : p.stockKg().values()) { kg += stock; }
+        return kg;
     }
 
     private static int ceil(double m) { return (int) Math.ceil(m - 1e-9); }

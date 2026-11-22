@@ -14,6 +14,7 @@
     "brass": "hdfv:block/machine/brass",
     "paint_green": "hdfv:block/machine/paint_green",
     "panel": "hdfv:block/machine/panel",
-    "gauge": "hdfv:block/machine/gauge"
+    "gauge": "hdfv:block/machine/gauge",
+    "paint_red": "hdfv:block/machine/paint_red"
   }
 }

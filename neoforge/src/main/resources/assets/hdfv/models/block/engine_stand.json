@@ -11,6 +11,11 @@
     "soot": "hdfv:block/machine/soot",
     "panel": "hdfv:block/machine/panel",
     "paint_grey": "hdfv:block/machine/paint_grey",
-    "hazard": "hdfv:block/machine/hazard"
+    "hazard": "hdfv:block/machine/hazard",
+    "rubber": "hdfv:block/machine/rubber",
+    "paint_yellow": "hdfv:block/machine/paint_yellow",
+    "brass": "hdfv:block/machine/brass",
+    "paint_blue": "hdfv:block/machine/paint_blue",
+    "paint_green": "hdfv:block/machine/paint_green"
   }
 }

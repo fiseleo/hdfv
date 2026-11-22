@@ -23,6 +23,7 @@ public final class HdfvDev {
         @SubscribeEvent static void register(RegisterGameTestsEvent event) {
             if (!Boolean.getBoolean("hdfv.gametests")) { return; }
             event.register(dev.mcmod.hdfv.neoforge.vehicle.VehicleGameTests.class);
+            event.register(dev.mcmod.hdfv.neoforge.worksite.MachineryGameTests.class);   // 0.26
             event.register(dev.mcmod.hdfv.neoforge.vehicle.AircraftGameTests.class);
             event.register(dev.mcmod.hdfv.neoforge.design.DesignGameTests.class);
             event.register(dev.mcmod.hdfv.neoforge.material.MaterialGameTests.class);

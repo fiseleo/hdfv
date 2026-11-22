@@ -1,0 +1,177 @@
+world AeroCore 026 QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.26 verification (tools/autoshot/README.md): the 0.25 QA save copied to AeroCore 026 QA. On a dirt pad in the
+# air (x 320-384, z 180-250, top at y 153): sixteen test machines (/hdfv dev drive spawn), the excavator working
+# (boom up, slew, stick out, boom down, crowd and curl through the dirt, dump), the cranes' hooks, a tower crane and an
+# asphalt plant beside the pad (x 398-404), then the design screen's new parts.
+mark v26 world start
+wait 30
+gui v26-join
+cmd gamemode spectator @p
+cmd gamerule doDaylightCycle false
+cmd gamerule doWeatherCycle false
+cmd time set 6000
+cmd weather clear
+clouds off
+client hdfvdev lang en_us
+# --- the pad: stone, three layers of dirt, clear air over it
+cmd tp @p 352 180 160 facing 352 153 215
+wait 60
+cmd kill @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=100,dy=50,dz=90]
+cmd fill 320 149 180 384 149 250 minecraft:stone
+cmd fill 320 150 180 384 152 250 minecraft:dirt
+cmd fill 320 153 180 384 175 250 minecraft:air
+cmd fill 386 149 180 410 175 250 minecraft:air
+wait 20
+# --- the machines, facing east (+x), four rows
+cmd execute positioned 326 153 190 rotated -90 0 run hdfv dev drive spawn excavator
+cmd execute positioned 341 153 190 rotated -90 0 run hdfv dev drive spawn wheelloader
+cmd execute positioned 356 153 190 rotated -90 0 run hdfv dev drive spawn dozer
+cmd execute positioned 371 153 190 rotated -90 0 run hdfv dev drive spawn backhoe
+cmd execute positioned 326 153 206 rotated -90 0 run hdfv dev drive spawn dumptruck
+cmd execute positioned 341 153 206 rotated -90 0 run hdfv dev drive spawn roller
+cmd execute positioned 356 153 206 rotated -90 0 run hdfv dev drive spawn paver
+cmd execute positioned 371 153 206 rotated -90 0 run hdfv dev drive spawn coldplaner
+cmd execute positioned 326 153 222 rotated -90 0 run hdfv dev drive spawn truckcrane
+cmd execute positioned 344 153 222 rotated -90 0 run hdfv dev drive spawn crawlercrane
+cmd execute positioned 361 153 222 rotated -90 0 run hdfv dev drive spawn telehandler
+cmd execute positioned 374 153 222 rotated -90 0 run hdfv dev drive spawn forklift
+cmd execute positioned 326 153 238 rotated -90 0 run hdfv dev drive spawn workplatform
+cmd execute positioned 341 153 238 rotated -90 0 run hdfv dev drive spawn piledriver
+cmd execute positioned 356 153 238 rotated -90 0 run hdfv dev drive spawn mixertruck
+cmd execute positioned 371 153 238 rotated -90 0 run hdfv dev drive spawn tbm
+# --- the tower crane east of the pad: a stone base, the controller facing north, power under it, 8 mast sections, the slewing unit
+cmd fill 398 152 196 404 152 204 minecraft:stone
+cmd fill 399 153 199 401 153 201 minecraft:smooth_stone
+cmd setblock 400 152 199 hdfv:creative_power
+cmd setblock 400 153 199 hdfv:tower_crane_controller[facing=north]
+cmd fill 400 154 200 400 161 200 hdfv:tower_crane_mast
+cmd setblock 400 162 200 hdfv:tower_crane_top
+# --- the asphalt plant south of it: iron blocks, the controller facing north, the burner behind, the hopper above, power under
+cmd fill 398 152 214 404 152 222 minecraft:stone
+cmd fill 399 153 216 401 155 218 minecraft:iron_block
+cmd setblock 400 152 216 hdfv:creative_power
+cmd setblock 400 153 216 hdfv:asphalt_plant_controller[facing=north]
+cmd setblock 400 153 217 minecraft:blast_furnace
+cmd setblock 400 154 216 minecraft:hopper
+# --- every machine braked while the tables build
+wait 1600
+cmd execute as @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=100,dy=50,dz=90] at @s run aerocore vehicle control travel_brake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=100,dy=50,dz=90] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=100,dy=50,dz=90] at @s run aerocore vehicle control brake 1
+wait 200
+shot v26-discard
+shot v26-lineup
+cmd tp @p 352 168 255 facing 352 153 205
+wait 40
+shot v26-lineup-rear
+mark v26 vehicles
+cmd execute as @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=100,dy=50,dz=90] run data get entity @s Pos
+wait 10
+# --- close-ups: the excavator, the loader, the dozer, the cranes with their hooks, the roads machines
+cmd tp @p 324 157 183 facing 333 154 190
+wait 40
+shot v26-excavator
+cmd tp @p 340 157 182 facing 348 154 190
+wait 40
+shot v26-wheelloader
+cmd tp @p 355 157 182 facing 363 154 190
+wait 40
+shot v26-dozer
+cmd tp @p 322 162 212 facing 335 158 222
+wait 40
+shot v26-truckcrane
+cmd tp @p 340 162 212 facing 352 158 222
+wait 40
+shot v26-crawlercrane
+cmd tp @p 338 157 198 facing 350 154 206
+wait 40
+shot v26-roller-paver
+cmd tp @p 388 172 185 facing 400 160 205
+wait 40
+shot v26-towercrane
+cmd tp @p 392 158 208 facing 400 154 217
+wait 40
+shot v26-asphalt-plant
+# --- the excavator works: throttle, boom up, slew left and back, stick out, boom down, crowd and curl, boom up, dump
+cmd tp @p 322 158 182 facing 334 154 192
+cmd execute positioned 330 154 190 run aerocore vehicle control throttle 1
+cmd execute positioned 330 154 190 run aerocore vehicle control travel_brake 1
+cmd execute positioned 330 154 190 run aerocore vehicle control boom 1
+wait 50
+cmd execute positioned 330 154 190 run aerocore vehicle control boom 0
+wait 10
+shot v26-excavator-boom-up
+cmd execute positioned 330 154 190 run aerocore vehicle control swing 1
+wait 80
+cmd execute positioned 330 154 190 run aerocore vehicle control swing 0
+wait 10
+shot v26-excavator-slewed
+cmd execute positioned 330 154 190 run aerocore vehicle control swing -1
+wait 80
+cmd execute positioned 330 154 190 run aerocore vehicle control swing 0
+cmd execute positioned 330 154 190 run aerocore vehicle control stick -1
+cmd execute positioned 330 154 190 run aerocore vehicle control bucket -1
+wait 40
+cmd execute positioned 330 154 190 run aerocore vehicle control stick 0
+cmd execute positioned 330 154 190 run aerocore vehicle control bucket 0
+cmd execute positioned 330 154 190 run aerocore vehicle control boom -1
+wait 90
+cmd execute positioned 330 154 190 run aerocore vehicle control boom -0.5
+cmd execute positioned 330 154 190 run aerocore vehicle control stick 1
+cmd execute positioned 330 154 190 run aerocore vehicle control bucket 1
+wait 50
+shot v26-excavator-digging
+wait 50
+cmd execute positioned 330 154 190 run aerocore vehicle control stick 0
+cmd execute positioned 330 154 190 run aerocore vehicle control bucket 0
+cmd execute positioned 330 154 190 run aerocore vehicle control boom 1
+wait 50
+cmd execute positioned 330 154 190 run aerocore vehicle control boom 0
+wait 10
+shot v26-excavator-loaded
+cmd execute positioned 330 154 190 run aerocore vehicle control bucket -1
+wait 60
+cmd execute positioned 330 154 190 run aerocore vehicle control bucket 0
+wait 30
+shot v26-excavator-dumped
+cmd execute positioned 330 154 190 run aerocore vehicle info
+wait 10
+# --- the design screen's new parts
+client hdfvdev design excavator_boom overview
+wait 140
+client hdfvdev page overview
+wait 20
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 40
+gui v26-design-boom
+client hdfvdev close
+wait 10
+client hdfvdev design excavator_bucket_1m3 overview
+wait 140
+client hdfvdev page overview
+wait 20
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 40
+gui v26-design-bucket
+client hdfvdev close
+wait 10
+client hdfvdev design excavator_tracks_20t overview
+wait 140
+client hdfvdev page overview
+wait 20
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 40
+gui v26-design-tracks
+client hdfvdev close
+wait 10
+mark v26 world end
+quit

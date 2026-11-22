@@ -39,6 +39,7 @@ public final class Hdfv {
         dev.mcmod.hdfv.neoforge.road.HdfvRoads.register(modBus);
         dev.mcmod.hdfv.neoforge.storage.HdfvStorage.register(modBus);
         dev.mcmod.hdfv.neoforge.storage.HdfvCargo.register(modBus);
+        dev.mcmod.hdfv.neoforge.worksite.HdfvWorksite.register(modBus);   // 0.26
         dev.mcmod.hdfv.neoforge.repair.HdfvRepair.register(modBus);
         dev.mcmod.hdfv.neoforge.damage.VehicleDamage.register(modBus);
         dev.mcmod.hdfv.neoforge.tutorial.HdfvTutorial.register(modBus);

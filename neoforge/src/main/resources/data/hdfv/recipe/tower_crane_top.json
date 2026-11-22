@@ -1,0 +1,28 @@
+{
+  "type": "hdfv:assembling",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "hdfv:steel_plate"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:chain"
+      },
+      "count": 2
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:iron_bars"
+      },
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "hdfv:tower_crane_top",
+    "count": 1
+  },
+  "seconds": 722
+}

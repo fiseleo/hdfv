@@ -1,0 +1,54 @@
+world AeroCore 026 QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.26, the test crawler crane on a 100 t crane's crawlers and counterweights (TestMachines.craneBase, 2026-11-22;
+# before, on the 20 t excavator's tracks, it fell onto its boom): the machines of verify-0.26-hoods.txt at its cameras
+# (before: v26g-*), the crane from behind (its counterweight and crawlers), and the dragline on the same base behind
+# the row camera.
+mark v26h world start
+wait 30
+cmd gamemode spectator @p
+cmd time set 6000
+cmd weather clear
+clouds off
+cmd tp @p 352 180 160 facing 352 153 215
+wait 100
+cmd kill @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=74,dy=50,dz=90]
+wait 40
+cmd fill 320 150 180 384 152 250 minecraft:dirt
+cmd fill 320 153 180 384 175 250 minecraft:air
+wait 20
+cmd execute positioned 326 153 200 rotated -90 0 run hdfv dev drive spawn excavator
+cmd execute positioned 341 153 218 rotated -90 0 run hdfv dev drive spawn wheelloader
+cmd execute positioned 356 153 218 rotated -90 0 run hdfv dev drive spawn roller
+cmd execute positioned 352 153 200 rotated -90 0 run hdfv dev drive spawn crawlercrane
+cmd execute positioned 326 153 244 rotated -90 0 run hdfv dev drive spawn dragline
+cmd tp @p 322 159 190 facing 334 154 201
+wait 1400
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control travel_brake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=60] at @s run aerocore vehicle control brake 1
+wait 100
+shot v26h-discard
+shot v26h-excavator
+cmd tp @p 360 157 194 facing 356 153.3 199.2
+wait 40
+shot v26h-crawlercrane
+cmd tp @p 352 168 232 facing 352 154 206
+wait 40
+shot v26h-row
+# --- the crane from behind and its side: counterweight, crawlers, the boom up at 30 degrees
+cmd tp @p 341 158 207 facing 350 154.5 200
+wait 40
+shot v26h-crawlercrane-rear
+cmd tp @p 362 160 182 facing 360 158 200
+wait 40
+shot v26h-crawlercrane-side
+# --- the dragline: the same base, its bucket hung from the boom's tip
+cmd tp @p 340 162 268 facing 338 158 244
+wait 40
+shot v26h-dragline
+wait 20
+mark v26h world end
+quit

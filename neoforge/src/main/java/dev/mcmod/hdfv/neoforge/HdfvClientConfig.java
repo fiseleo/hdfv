@@ -28,6 +28,7 @@ public final class HdfvClientConfig {
     private static final ModConfigSpec.BooleanValue DOPPLER, DISTANCE, REVERB, BOOMS, FAR;
     private static final ModConfigSpec.EnumValue<dev.mcmod.hdfv.airport.AviationUnits.System> AVIATION_UNITS;
     private static final ModConfigSpec.BooleanValue RADIO_CHAT;
+    private static final ModConfigSpec.EnumValue<dev.mcmod.hdfv.drive.WorkInputs.Pattern> PATTERN;
 
     static {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
@@ -35,6 +36,8 @@ public final class HdfvClientConfig {
         HUD = b.comment("Draw the dashboard (speed and engine dials, gear, lamps) while driving a car").define("dashboard", true);
         UNITS = b.comment("The speedometer's units").defineEnum("units", Units.KMH);
         AUTO_CLUTCH = b.comment("A manual gearbox's clutch works by itself (the clutch key still presses it)").define("autoClutch", true);
+        PATTERN = b.comment("0.26: an excavator's joystick pattern in work mode (ISO: the stick on the left stick, the boom on the right; SAE: swapped)")
+                .defineEnum("joystickPattern", dev.mcmod.hdfv.drive.WorkInputs.Pattern.ISO);
         b.pop();
         b.comment("Sound (0.19): hdfv's volumes in percent, on top of Minecraft's categories (vehicles: Friendly Creatures, machines: Blocks)")
                 .translation("hdfv.configuration.sound").push("sound");
@@ -62,6 +65,8 @@ public final class HdfvClientConfig {
     public static boolean dashboard() { return !SPEC.isLoaded() || HUD.get(); }
     public static boolean mph() { return SPEC.isLoaded() && UNITS.get() == Units.MPH; }
     public static boolean autoClutch() { return !SPEC.isLoaded() || AUTO_CLUTCH.get(); }
+    /** 0.26: the excavator joystick pattern of work mode. */
+    public static dev.mcmod.hdfv.drive.WorkInputs.Pattern joystickPattern() { return SPEC.isLoaded() ? PATTERN.get() : dev.mcmod.hdfv.drive.WorkInputs.Pattern.ISO; }
 
     private static double percent(ModConfigSpec.IntValue v) { return SPEC.isLoaded() ? v.get() / 100.0 : 1; }
 

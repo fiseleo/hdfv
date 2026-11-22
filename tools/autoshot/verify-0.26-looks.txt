@@ -1,0 +1,116 @@
+world AeroCore 026 QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.26 looks (MachineLooks redrawn from the Blender layouts, the rams drawn, the crane's blocks from
+# tools/blender/crane_blocks.py): the excavator run of verify-0.26-excavator.txt again with the same cameras (before:
+# v26c-*, after: v26d-*), then four more machines close, the tower crane (its cab made anew with its named parts: the
+# pad's kill takes the old one) and its head, trolley and hook.
+mark v26d world start
+wait 30
+cmd gamemode spectator @p
+cmd time set 6000
+cmd weather clear
+clouds off
+cmd tp @p 352 180 160 facing 352 153 215
+wait 100
+cmd kill @e[type=aerocore:part_vehicle,x=310,y=60,z=170,dx=110,dy=130,dz=90]
+wait 40
+cmd fill 320 150 180 384 152 250 minecraft:dirt
+cmd fill 320 153 180 384 175 250 minecraft:air
+wait 20
+cmd execute positioned 326 153 200 rotated -90 0 run hdfv dev drive spawn excavator
+cmd tp @p 322 159 190 facing 334 154 201
+wait 1200
+cmd execute positioned 330 154 200 run aerocore vehicle control travel_brake 1
+cmd execute positioned 330 154 200 run aerocore vehicle control throttle 1
+wait 100
+shot v26d-discard
+shot v26d-excavator
+# --- boom up 3 s
+cmd execute positioned 330 154 200 run aerocore vehicle control boom 1
+wait 60
+cmd execute positioned 330 154 200 run aerocore vehicle control boom 0
+wait 20
+shot v26d-boom-up
+cmd tp @p 329 156 193 facing 332 155.5 200
+wait 30
+shot v26d-rams-close
+cmd tp @p 322 159 190 facing 334 154 201
+# --- slew left 6 s
+cmd execute positioned 330 154 200 run aerocore vehicle control swing 1
+wait 120
+cmd execute positioned 330 154 200 run aerocore vehicle control swing 0
+wait 20
+shot v26d-slewed
+cmd execute positioned 330 154 200 run aerocore vehicle control swing -1
+wait 120
+cmd execute positioned 330 154 200 run aerocore vehicle control swing 0
+# --- stick out and bucket open, boom down into the dirt, crowd and curl, boom up, dump
+cmd execute positioned 330 154 200 run aerocore vehicle control stick -1
+cmd execute positioned 330 154 200 run aerocore vehicle control bucket -1
+wait 60
+cmd execute positioned 330 154 200 run aerocore vehicle control stick 0
+cmd execute positioned 330 154 200 run aerocore vehicle control bucket 0
+cmd execute positioned 330 154 200 run aerocore vehicle control boom -1
+wait 100
+shot v26d-boom-down
+cmd execute positioned 330 154 200 run aerocore vehicle control boom -0.5
+cmd execute positioned 330 154 200 run aerocore vehicle control stick 1
+cmd execute positioned 330 154 200 run aerocore vehicle control bucket 1
+wait 60
+shot v26d-digging
+wait 60
+cmd execute positioned 330 154 200 run aerocore vehicle control stick 0
+cmd execute positioned 330 154 200 run aerocore vehicle control bucket 0
+cmd execute positioned 330 154 200 run aerocore vehicle control boom 1
+wait 60
+cmd execute positioned 330 154 200 run aerocore vehicle control boom 0
+wait 20
+shot v26d-loaded
+cmd execute positioned 330 154 200 run aerocore vehicle control bucket -1
+wait 80
+cmd execute positioned 330 154 200 run aerocore vehicle control bucket 0
+wait 20
+shot v26d-dumped
+cmd execute positioned 330 154 200 run aerocore vehicle info
+# --- four more machines in a row south of it, braked once their tables are built
+cmd execute positioned 326 153 218 rotated -90 0 run hdfv dev drive spawn dozer
+cmd execute positioned 341 153 218 rotated -90 0 run hdfv dev drive spawn roller
+cmd execute positioned 356 153 218 rotated -90 0 run hdfv dev drive spawn dumptruck
+cmd execute positioned 371 153 218 rotated -90 0 run hdfv dev drive spawn wheelloader
+cmd tp @p 352 168 232 facing 352 154 216
+wait 1400
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=210,dx=64,dy=40,dz=20] at @s run aerocore vehicle control travel_brake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=210,dx=64,dy=40,dz=20] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=210,dx=64,dy=40,dz=20] at @s run aerocore vehicle control brake 1
+wait 100
+shot v26d-row
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=210,dx=64,dy=40,dz=20] run data get entity @s Pos
+cmd tp @p 337 156 212 facing 330 154 218
+wait 40
+shot v26d-dozer
+cmd tp @p 350 156 212 facing 344 154 218
+wait 40
+shot v26d-roller
+cmd tp @p 352 161 210 facing 360 155 218
+wait 40
+shot v26d-dumptruck
+cmd tp @p 381 156 212 facing 375 154 218
+wait 40
+shot v26d-wheelloader
+# --- the tower crane: the earlier camera, its head close, the trolley and hook from below
+cmd tp @p 392 166 186 facing 406 158 200
+wait 200
+shot v26d-towercrane
+cmd tp @p 395 166 194 facing 401 163.5 201
+wait 40
+shot v26d-towercrane-head
+cmd tp @p 404 157 195 facing 409 162 200
+wait 40
+shot v26d-trolley
+cmd tp @p 378 176 170 facing 410 163 200
+wait 40
+shot v26d-towercrane-far
+mark v26d world end
+quit

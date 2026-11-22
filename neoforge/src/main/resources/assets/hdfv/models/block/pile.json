@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "hdfv:block/pile_top",
+    "side": "hdfv:block/pile_side"
+  }
+}

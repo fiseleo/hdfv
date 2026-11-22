@@ -171,6 +171,13 @@
   - 儲物三種都要：載具上的儲物（車身的貨艙）、可設計的儲物箱零件、工坊的儲物方塊；貨物算重量。
   - 「一版做完」。H4 的七台範例車使用者在 0.14 已說不補，按鍵與 HUD 在 0.14 做完，這版只補試算圖與坡道方塊。
   - 計畫：本機計畫檔 `inherited-questing-rossum.md`（P1～P6）。
+- 0.26.0（2026-11-21；AeroCore 0.43）：重型機械。使用者 2026-11-21「加入重型機械」（土方與開挖、道路與鋪築、起重與吊裝、礦業與重載運輸，
+  另貼中文維基「重型動力機械」），選擇：
+  - 真的改方塊；挖起的是散料（方塊種類＋m³，照真實密度算重、鬆方膨脹佔容積；草→泥土、石頭→圓石、礦石保留），倒在地上堆回方塊。
+  - 工作裝置由玩家設計＋中等液壓；履帶與鉸接照物理（含壓路機鋼輪）；塔吊是多方塊、汽車式與履帶式起重機是載具；吊鉤吊方塊、載具。
+  - 一版做完；只加範例零件，整台測試機只在 `TestMachines` 與 `/hdfv dev drive spawn`；維基的四類機種都加。
+  - 操作：行駛／作業切換，作業時移動鍵＋方向鍵是兩支搖桿（預設 ISO，可換 SAE），按越久閥開越大；新的露天重機組裝場；新的瀝青與混凝土拌合廠。
+  - 計畫：本機計畫檔 `staged-strolling-parrot.md`（AeroCore A1～A9、hdfv H1～H19）；進度在共用筆記資料夾的 `heavy-machinery-0.26-handover-2026-11-21.md`。
 - 下一步：未定。
 
 ## 固定開發基底
@@ -285,6 +292,10 @@ py -3 tools/zh_cn.py         # 0.24：改過 zh_tw（語言檔或手冊）之後
 | `core/.../part/StorageBoxDesign` | 0.25 儲物箱零件 `hdfv:storage_box`（車頂箱、貨斗箱、20 呎貨櫃；長寬高、壁厚、材料；一個貨艙；設計畫面分類 STORAGE）；模型 `client/model/StorageBoxModel` |
 | `core/.../damage/`、`neoforge/.../damage/` | 0.25 損壞：`Conditions`（每種零件的狀況項目、撞擊分配、韌性、伸及、腐蝕的金屬與壁厚、`REPLACE_FROM` 0.8）、`Impacts`（撞擊、爆炸、攻擊 → 各項目的損壞；乘員受傷）、`Wearings`（由設計數字算 AeroCore 零件的 `Wearing`）、`EngineWear`（hdfv 自己的引擎與油箱）、`Elements`（腐蝕、泡水、火、油箱爆炸）、`DamagePace`（遊戲的時間尺度）；`VehicleDamage`（四種來源、報廢規則、狀態畫面的互動）、`VehicleConditions`（讀取與警示）、`client/VehicleStatusScreen`（分頁：狀況、修理、貨物）；設定 `damage.*`；`/hdfv vehicle condition [set|repair]`；`tools/damage_assets.py`；GameTest `damage/DamageGameTests` |
 | `core/.../repair/`、`neoforge/.../repair/` | 0.25 修理：`RepairJob`（每項的修法：原地修、換件、換整個零件、原地重做；料、工時、電、回收）、`Repairs`（規則表）、`RepairRules`（房間與載具的條件、報廢順序）、`FieldRepair`（急修工具組、補胎片的限制）；`HdfvRepair`、`RepairShopBlock(Entity)`、`RepairShopMenu`、`RepairNetwork`、`FieldKitItem`、`FieldKits`；畫面 `client/RepairShopScreen`、`client/RepairTab`；標準件 `friction_lining`；`tools/repair_assets.py`；GameTest `repair/RepairShopGameTests` |
+| `core/.../part/machine/` | 0.26 機械零件：`TrackDesign`、`DrumDesign`、`OutriggerDesign`、`HydraulicPumpDesign`、`HydraulicMotorDesign`（行走與捲揚機）、`LinkDesign`（動臂、斗桿、舉升臂、伸縮、桁架、門架、迴轉環、鉸接、作業臂、支腿梁）、`HookDesign`、`WorkToolDesign`（33 種）、`OperatorCabDesign`（機械駕駛室，2026-11-22）、`EngineHoodDesign`（引擎蓋，2026-11-22）、`MachineRules`（油缸、截面、減速機的規則）、`SampleMachinery`、`SampleTools` |
+| `core/.../drive/WorkInputs`、`assembly/Room`（`HEAVY_YARD`）、`manufacture/MachinePlanner` | 0.26 作業模式的按鍵、重機組裝場、機械零件的工序 |
+| `neoforge/.../worksite/` | 0.26 改世界：`EarthMaterials`（方塊→材料、標籤 `hdfv:earth/*`）、`WorldWork`（切削、推土、傾倒、碾壓、散料的冷卻與凝結、儀表讀數）、`WorkRules`（不切削的工具）、`Piles`、`BulkCargo`、`DigProgress`、`Cranes`（吊鉤與吊掛）、`PlantBlockEntity`（拌合廠）、`TowerCraneBlockEntity`、`HdfvWorksite`（方塊與登記） |
+| `neoforge/.../client/MachineLooks`、`tools/blender/crane_blocks.py` | 0.26 機械零件與塔吊上部結構的外觀（形狀先用 MCP for Blender 擺過，再由程式依設計數字產生；液壓油缸是移動件）；塔吊標準節與迴轉機構固定段的方塊 OBJ（`BlockModelTest`） |
 | `release/` | 0.24 發布頁的文字（`page.md` 三語、`summary.txt`、各版的 `notes-*.md`、`checklist.md`）；圖示與截圖在本機 `%USERPROFILE%\.mcmod\release\hdfv` |
 
 hdfv 的遊戲 JAR 包含 core；執行時不要再放 AeroCore 的 physics JAR（AeroCore 遊戲 JAR 已含同樣的套件，重複會讓模組層衝突）。
@@ -916,6 +927,68 @@ hdfv 的遊戲 JAR 包含 core；執行時不要再放 AeroCore 的 physics JAR�
   - AutoShot、開發視窗（第 2 個螢幕、不搶焦點）、`/aerocoredev` 是 AeroCore 的 `aerocore_devtools` mod（`aerocore-devtools-1.21.1`，
     `devRuntimeOnly`），開發 run 一起載入；它不會發布，也不能被正式程式依賴。
   - `build` 會跑 `verifyReleaseJar`：發布的 JAR 出現開發用類別、GameTest 結構，或少了授權檔，就失敗。
+- 重型機械（0.26；物理與公式在 AeroCore 0.43 的 docs/MACHINERY.md、EARTHMOVING.md）：
+  - 機械零件都在 `part/machine` 套件：`Room.machinePart` 依套件判斷（分到重機組裝場、設計畫面最少參數數的例外）。新的機械零件放在這個套件。
+  - 機械駕駛室 `OperatorCabDesign`（`hdfv:operator_cab`，2026-11-22，使用者問「挖土機有駕駛室嗎」後要加）：設計畫面「機體」分類；
+    長寬高、前窗後傾角、防護（一般、ROPS、ROPS＋FOPS）、車門側。編譯成 AeroCore 的 `BoxPart`（封閉、方塊阻力、接觸球），座椅是另一個零件裝在裡面；
+    質量由骨架鋼管、FOPS 護頂、雙層鈑件、地板、玻璃與內裝加總（範例：20 噸挖土機 ROPS 0.71 t、小挖 0.33 t、裝載機 ROPS＋FOPS 1.08 t）。
+    損壞表列為「不磨損」（`ConditionsTest.WITHOUT`）。新零件種類要登記的地方：`HdfvParts`、`Designs`（種類、範例、數字）、`Placing`、`MachinePlanner`、
+    `tools/machinery_lang_parts.py`（跑 `machinery_assets.py` 再跑 `zh_cn.py`）、`MachineLooks`；`ScaleTest`、`DesignEditorTest`、`ManufactureTest`、`ConditionsTest` 會抓漏。
+    測試機：上部在迴轉環上的機械（挖土機一系、履帶吊、拉鏟、斗輪挖掘機）在 `powerUnit` 裡把駕駛室包在座椅外（左前、動臂旁；吊車往後 0.15 m 避開吊臂根部），
+    輪式裝載機與壓路機用 `loaderCab`。推土機等座椅在車架上的沒加（測試座椅本身卡在履帶裡）。
+    上部的駕駛室地板在座椅下 `SEAT_FLOOR_M`（2026-11-22 前誤放在迴轉環上 0.32 m，座墊離地板只剩 0.08 m）。
+  - 引擎蓋 `EngineHoodDesign`（`hdfv:engine_hood`，2026-11-22，使用者：「引擎那邊應該要有殻才對」）：「機體」分類；長寬高、頂面往格柵端降低多少、
+    尾端圓角（平面上的後角，挖土機的尾巴）、格柵（兩側百葉、後端、前端）、排氣管高度。編譯成不封閉的 `BoxPart`（沒有底，泡水不給浮力；可以站上去），
+    罩住的引擎、泵、油箱與配重仍是各自的零件。質量由骨架槽鋼、2 mm 鈑件、百葉、隔音內襯、排氣管與鉸鏈扣件加總（範例：20 噸挖土機 0.46 t、
+    小挖 0.12 t、裝載機 0.30 t）。登記處和駕駛室相同；`Placing` 放在點的後方（前緣在點上）。zh_cn 由 `zh_cn.py` 轉：它把「葉門」轉成「也门」，
+    所以 zh_tw 寫「左右兩側百葉」。測試機：上部機械的引擎蓋前緣在駕駛室後 0.03 m、底在迴轉環上 `HOUSE_HOOD_BOTTOM_M`（油底殼下），
+    罩住引擎、泵、配重與移到引擎後右側的油箱（所有上部都是同一台 11.9 L 柴油，所以小挖也用 20 噸的引擎蓋）；
+    裝載機與壓路機用 `loaderHood`（壓路機的引擎從 −1.9 移到 −2.3，原本散熱器伸進駕駛室）。履帶吊的絞盤也在引擎蓋裡，鋼索從頂上出去。
+  - 測試履帶吊與拉鏟的底座 `TestMachines.craneBase`（2026-11-22，使用者看到履帶吊在世界裡一放下就倒在吊臂上）：
+    - 原本的問題：它站在 20 噸挖土機的履帶上，只有 8 t 配重，30 m 格子吊臂（7.6 t）把合重心推到迴轉中心前 2.36 m。
+      履帶前端只到 1.83 m，所以一放下就往前倒；拉鏟的重心在 4.5 m，更前面。
+    - 改成 100 噸級吊車的履帶 `CRANE_TRACKS`，數字照 Kobelco CKE900G 型錄：驅動輪到引導輪 5.44 m、800 mm 平板履帶板、伸出時軌距 4.33 m、
+      設計重量 90 t（算出接地壓力 101 kPa，和型錄相同）。滾輪數、節距、驅動輪半徑是假設的。
+    - 配重也照 CKE900G：下部車體 14.4 t，上部 31.9 t。上部的 8 t 照舊在引擎蓋下，其餘 23.9 t 橫著掛在引擎蓋後，尾部迴轉半徑約 4.4 m。
+    - 兩台都重約 87～89 t。`CraneStabilityTest` 檢查兩件事：
+      - 吊臂從 0° 仰到 82°、每 15° 迴轉一次，重心都在最外滾輪的傾覆線內至少 0.5 m（AeroCore `Stability`）。
+      - 離線放下 8 秒保持水平、沒有移動。
+    - 離線的地面只有履帶與輪子會接觸（鏟斗、吊臂碰不到地），所以要判斷站不站得住，看履帶或輪子撐的範圍。
+      同一天的探測裡，小挖、礦用電鏟、挖土裝載機、吊卡車（支腿）、伸縮臂叉車、泵車、吹雪機、斗輪挖掘機、懸臂掘進機、TBM 離線也會翻。
+      它們在世界裡可能是靠工具撐著地，沒有逐台確認。
+  - 全部重畫（2026-11-22，使用者：「把所有模型用blender 重畫」，四組都要）：
+    - 做法：先在 Blender 擺原型，和舊形狀並排比較，再寫回程式；模型仍照設計的數字產生，建置不依賴 Blender。
+      - 原型用 MeshBuilder 的 Python 仿本，寫法和 Java 一樣，可以逐行搬回。
+      - 非機械零件的舊模型，用 AutoShot 的 `client hdfvdev design <範例> overview` 加 `client hdfvdev export world` 匯出成 OBJ，再匯入 Blender。
+      - 機械零件沒有設計畫面預覽，在世界裡生成測試機來看。
+    - 機械（`MachineLooks`）：泵、行走減速機、捲揚機、支腿、迴轉環、門架、支腿梁、中央鉸接、伸縮臂、布料臂的輸送管、
+      高空作業臂的拖鏈，以及鏟斗、推土鏟、車斗以外的所有工作裝置，各有自己的函式。工作點、碰撞與質量沒有動。
+      - 破碎錘與打樁錘的錘尖在 y = −l，平板夯的底在 y = −h。
+      - 快速接頭沒有裝在任何測試機上，世界裡沒看過。
+    - 其他：
+      - 變速箱與分動箱（`GearboxModel` 的外殼；剖視的齒輪不變）。
+      - 渦扇短艙的接縫與搭扣。
+      - 梯形車架的橫樑螺栓與角板、彈簧吊架、拖鉤。
+      - 氫氣瓶與液氫儲槽的配件（`PartLooks.tank`）、機翼上表面的接縫線（`AirframeModel.panelLines`）。
+      - 七種機器方塊：改 `tools/blender/machines.py` 再跑 `scripts\blender.ps1 machines`。只有改到的方塊檔案會被重寫，每塊仍不超過 800 面。
+    - 活塞引擎、噴射家族、車身、機身、船殼、車軸、起落架與其他方塊，在 Blender 檢查過，0.11～0.22 的細節已經夠，沒有改。
+  - 作業通道的名稱與正負號在 `WorkInputs` 的類別說明；`AutoWiring.link`／`tool` 依種類綁定。新種類要同時決定通道與正負號（正：升、收、捲入、左轉、伸出）。
+  - 工具回饋走通道 `<零件>.full`、`<零件>.pushed`（`WorldWork.feedback`）；儀表讀數 `hud.*`（`Dashboard.HUD_*`）由伺服器寫進控制通道。
+  - 液壓泵要有轉速感測（`HydraulicPumpDesign.SENSE_LOW/HIGH`），否則小引擎在泵的負載下起動不了或熄火。
+  - 改世界一律經 `WorldWork.may`（保護區、`BreakEvent`）與伺服器設定 `worksite.editWorld`。
+  - 塔吊的駕駛室是每 tick 放回原位的載具（`TowerCraneBlockEntity`），吊鉤用 AeroCore 的 `HangPart` 從外面給錨點。
+  - 外觀（2026-11-22，使用者要的「看得出是桁架臂、標準節和駕駛室」）：
+    - 做法：先用 MCP for Blender 在開著的 Blender 裡照範例零件的尺寸擺形狀、看截圖（暫存腳本不進倉庫），定案後寫進 `MachineLooks`，
+      由設計的數字產生（鏟斗照 `WorkToolDesign.chord()` 的拋物線，和容量同一條；履帶照惰輪、驅動輪、支重輪、托輪的凸包排履帶板）。建置不需要 Blender。
+    - 油缸：連桿（`LinkDesign` 轉動、`RAM`）與工具（`WorkToolDesign.ramGeometry()`）的油缸烘成移動件 1 缸筒、2 活塞桿、3 底座支架，
+      `animate` 每格依關節值放：缸筒從底座銷（掛載處座標，用 −q 轉回零件座標）指向活塞桿銷。關節值讀 `PartVehicle.pose()`（伺服器上一次送的，
+      不內插：比畫出的姿勢慢不到一 tick，底座銷差 2 cm 內），不另建 `VehiclePose`。底座支架是從底座銷垂直拉到掛載處 x 軸的撐板
+      （動臂座、斗桿上的耳板）；範例鏟斗的油缸底座解出來離斗桿 1.8 m，撐板就有那麼長，照物理畫。
+    - 塔吊上部是駕駛室載具裡依名稱畫的 `BoxDesign`（`TowerCraneBlockEntity.SLEWING_UNIT`、`JIB`、`COUNTER_JIB`、`BALLAST`、`CABIN`）；
+      駕駛室掛在吊臂根部正下方、標準節前面（前緣在小車最小半徑 2.5 m 之內、頂在小車下緣之下）；最初放在吊臂旁邊時從常用視角被迴轉機構擋住，使用者說「沒看到駕駛室」。
+      舊存檔的駕駛室由 `current()` 認出來重做：逐一比對 `cabBlueprint()` 每個零件的 id、名稱、尺寸與掛載位置（1 mm 內）；GameTest 檢查存檔讀回的藍圖仍是最新的
+      （否則控制台會每 tick 重做駕駛室）。小車是吊臂的移動件，位置由控制通道 `crane.trolley`（半徑）送到客戶端。
+    - 標準節與迴轉機構固定段是 `tools/blender/crane_blocks.py` 產生的方塊 OBJ（`scripts/blender.ps1 crane_blocks`）；`machinery_assets.py` 不再寫它們的方塊模型。
 - 損壞、修理、儲物（0.25；物理與公式在 AeroCore 0.42 的 docs/CONDITION.md）：
   - 狀況只放在 AeroCore 的 `VehicleState.used`（依零件 id 與項目名稱）。不要為了損壞在既有零件加內部狀態或顯示值：AeroCore 在內部狀態數量改變時
     整台重設，0.24 的存檔會失去引擎溫度、檔位這些。設計與藍圖 JSON 也不加參數（`Wearing` 在編譯時由既有的設計數字算），工件雜湊與零件快取才不變。
@@ -989,6 +1062,34 @@ hdfv 的遊戲 JAR 包含 core；執行時不要再放 AeroCore 的 physics JAR�
 
 | 版本 | 日期／電腦 | JUnit（core） | GameTest | 客戶端 |
 | --- | --- | --- | --- | --- |
+| 0.26.0 | 2026-11-21，原開發機；AeroCore 0.43.0 | 479 全過（新增 34：零件設計 `UndercarriageDesignTest` 6、`WorkEquipmentDesignTest` 5、`WorkToolTest` 9、`WorkInputsTest` 8、`MachineDriveTest` 6（挖土機的接線、站穩、動臂與迴轉、履帶行走、在格子地形挖土進斗、39 台測試機都能組成並站在地上）） | 182 全過（新增 `MachineryGameTests` 4：挖土機在世界裡挖土進斗、液壓錘碎石與平板夯壓實、瀝青拌合廠把熱拌料倒進前方的卡車、塔吊組成並有駕駛室與吊鉤） | AutoShot 兩輪（使用者同意，`AeroCore 026 QA`＝0.25 的 QA 世界複本；計畫 `tools/autoshot/verify-0.26-machines.txt`、`verify-0.26-excavator.txt`）：16 台測試機、塔吊、瀝青拌合廠、設計畫面（鏟斗 1.24 m³、961 kg）都畫得出來。找到並修掉：鏟斗躺地的挖土機一升動臂被甩上天（AeroCore 的關節驅動：接觸只擋不推）、塔吊吊鉤沒接線自由落下（吊鉤藍圖改用自動接線）。第三輪（同一份挖土機計畫）確認：升動臂後車速 0.06 m/s、鏟斗在世界裡挖到 0.6 m³、塔吊吊鉤掛在小車下。仍有：16 台機械讓整合伺服器卡 36 秒（效能未處理）。外觀（2026-11-22，原開發機；`build`、`:core:test` 480 全過、GameTest 182 全過）：形狀先用 MCP for Blender 擺過、Blender 前後對照；AutoShot 第四輪（使用者同意，`tools/autoshot/verify-0.26-looks.txt`，鏡頭同第三輪，改前 `v26c-*`、改後 `v26d-*`；對照圖在本機 `%USERPROFILE%\.mcmod\screenshots\looks-0.26`）：挖土機的彎動臂、油缸隨動臂升降與挖掘、鏟斗、逐片履帶，壓路機鋼輪與機架，塔吊的桁架標準節、迴轉機構、三角桁架吊臂與小車、平衡臂走道與配重、玻璃駕駛室（舊駕駛室被清掉後照新藍圖重做）都畫得出來。使用者看了說「沒看到駕駛室」（它在吊臂旁、被迴轉機構擋住，又和白色電氣櫃很像）：
+駕駛室移到吊臂根部正下方、改成黃色車身與黑框玻璃，電氣櫃改灰色；`build`、GameTest 182 全過（加了存檔讀回仍是最新的檢查），AutoShot 第五輪
+（使用者同意，`verify-0.26-cab.txt`，`v26e-*`）：全景、頭部、南北兩側與下方都看得到駕駛室，舊佈局的駕駛室載入後被重做。之後才補的地板窗（原本被地板蓋住）只建置過、沒再截圖。使用者問「挖土機有駕駛室嗎」後加了機械駕駛室零件 `OperatorCabDesign`：`build`、`:core:test` 484 全過
+（新增 `OperatorCabDesignTest` 4：範例質量、防護的重量、編譯成封閉方塊、檢查）、GameTest 182 全過；AutoShot 第六輪（使用者同意，`verify-0.26-cabs.txt`，`v26f-*`，
+挖土機鏡頭同 `v26d-excavator`）：挖土機、履帶吊的駕駛室在上部左前方，裝載機（有 FOPS 護頂）與壓路機的在座椅外，設計畫面「機體／機械駕駛室」顯示 709.2 kg、
+玻璃 5.115 m²、沒有問題（機械零件在設計畫面本來就沒有 3D 預覽，動臂也是）。照物理畫、看起來怪的：範例鏟斗油缸的底座解在斗桿外 1.8 m（撐板很長）；測試推土機的推架起始 −35°、鏟刀沒有掛載旋轉，所以鏟刀前傾躺在地上（改前就是這樣）。使用者說「引擎那邊應該要有殻才對」後加了引擎蓋零件 `EngineHoodDesign`：
+`build`、`:core:test` 488 全過（新增 `EngineHoodDesignTest` 4：範例質量、頂面與尾端的形狀、編譯成方塊、檢查）、GameTest 182 全過（記錄中仍有 0.25 那次被接住的 NPE）；
+形狀先在 Blender 擺過（本機 `blender-hood*.png`）；AutoShot 第七輪（使用者同意，`verify-0.26-hoods.txt`，`v26g-*`，鏡頭同 `v26f-*`，對照圖 `engine-hood-*.png`）：
+挖土機的引擎、泵、油箱與配重被圓尾的引擎蓋罩住（兩側百葉、走道扶手、排氣管），裝載機與壓路機的在駕駛室後（後端格柵），履帶吊的罩住絞盤，
+設計畫面顯示 457.6 kg、百葉 1.547 m²、沒有問題。看到但不是這次造成的：履帶吊在第六、七輪都側傾著（吊臂躺地）。
+查了之後（同日）：不是側傾，是一放下就往前倒在吊臂上，第一輪的全景就已如此。原因是 20 噸挖土機的履帶只配 8 t 配重，重心在履帶前端外 0.5 m。
+履帶吊與拉鏟改用 100 噸級吊車的底座 `craneBase`（CKE900G 的履帶與配重，約 87～89 t）：`build`、`:core:test` 490 全過
+（新增 `CraneStabilityTest` 2：吊臂 0～82°、每 15° 迴轉，重心至少在傾覆線內 1.04 m，拉鏟 1.24 m；離線放下 8 秒保持水平）、GameTest 182 全過；
+AutoShot 第八輪（使用者同意，`verify-0.26-crane.txt`，`v26h-*`，`crawlercrane`、`row` 鏡頭同 `v26g-*`，對照圖 `crawler-crane-*.png`）：履帶吊與拉鏟都水平站著、吊臂仰 30°、吊鉤掛在臂端。
+拉鏟的鏟斗貼在臂端滑輪下（自由鉸接停在限位），改前就是這樣，沒處理。
+使用者說「把所有模型用blender 重畫」並選了四組。同日的結果：
+- 機械零件與工作裝置重畫：Blender 原型、新舊對照在本機 `blender-redraw-*.png`。
+- 變速箱與分動箱、短艙、車架、氫氣瓶、機翼加了細節，七個機器方塊重產。
+- `build`、`:core:test` 490 全過、GameTest 182 全過。
+- AutoShot 第九輪（使用者同意，`verify-0.26-redraw1.txt`，`r1*-*`，四批約 25 台測試機）：
+  - 破碎錘、抓斗爪齒、鬆土器彎齒、攪拌筒、作業平台、螺旋鑽、料斗與熨平板、打樁錘、鏟運斗、TBM 刀盤、斗輪、輪式裝載機等都畫得出來。
+  - 吹雪機與清掃車的鏡頭拍到背面，沒看到工具。
+  - 斗輪挖掘機也往前倒（離線探測已知）。
+  - 同輪匯出第二、三組 47 個範例的改前 OBJ。
+- AutoShot 第十輪（使用者同意，`verify-0.26-redraw2.txt`，`r2-*`）：
+  - 七個方塊放在空地上拍正面。
+  - 12 個設計畫面截圖並匯出改後 OBJ，在 Blender 與改前並排看過。
+- 未驗證：快速接頭（不在任何測試機上）、重畫的機械零件的設計畫面（本來就沒有預覽）、作業模式的手感、聲音實際聽起來、多人同步 |
 | 0.25.0 | 2026-11-13，原開發機；AeroCore 0.42.0 | 445 全過（新增 54：`TransferBenchTest` 7、`GearboxBenchTest` 1、`RoadAssetsTest` 3、`RampDriveTest` 2、`StorageAssetsTest` 4、`ConditionsTest` 5（含範例轎車撞牆的校準）、`WearTest` 8（煞車片、輪胎、引擎、熱段的壽命）、`ElementsTest` 3、`RepairTest` 10、`RepairRecipesTest` 1、`StorageBoxTest` 5、`CargoRulesTest` 4、`RecipeRulesTest` 1；`FuelTest.aBodysFuelIsInItsTanks` 的直升機機體 2074.35 → 1954.35 kg（設計載重不再算進車重）） | 178 全過（新增 36：`RoadGameTests` 3（轎車 D 檔爬上 1:4 柏油坡停在上一層）、`StorageGameTests` 7、`AssemblyGameTests` 2（組裝室從儲物方塊取料、拆車的貨退回）、`DamageGameTests` 7（15 m/s 撞牆車身 26.7 %、存讀不變、步行速度沒事、設定關掉沒事、TNT、乘員受傷、岩漿、泡水、報廢、指令）、`RepairShopGameTests` 8、`CargoGameTests` 6（後車廂 200 kg 車尾低 4.55 cm、選單、存讀、裝卸台、掉落、車頂箱）、`RefitShopGameTests` 1（貨艙變小時多的退回）、`TutorialGameTests` 2）；記錄中 `DamageGameTests.thoseAboardAreHurtByAHardCrashOnly` 有一次被接住的 NPE（沒有連線的玩家受傷時原版送封包），測試照過 | 2026-11-13 使用者同意後 AutoShot（第 2 個螢幕；`tools/autoshot/verify-0.25-*.txt`，世界 `AeroCore 025 QA` 是 0.24 正式版測試的 `AeroCore Production QA` 的複本）6 輪：0.24 存檔載入沒有錯誤，17 台舊載具每項 0 %；試算圖、儲物箱零件的 3D、坡道、四種儲物方塊與畫面（頁尾質量、物品提示的質量）、撞牆後的狀況與煙、狀態畫面三個分頁、儀表警示燈、修理廠畫面、車頂箱轎車與載貨櫃的半拖車、騎乘按 E 打開貨艙、裝卸台、手冊四篇與四個新進度（英、繁）、JEI 頁都看過。截圖修掉的版面問題：貨物與修理分頁的行換行、修理廠按鈕寬度與「還有 n 項」、整數數量不帶小數、設計畫面與藍圖提示顯示原始類型 id、半寬圖的軸標題重疊、分動箱兩張模式圖改上下排、起落架與輪胎圖的英文標題縮短；修完 445／178 全過。開發用指令（dev 原始碼集）：`hdfvdev status|mouse|hover|click|scroll|drag|lang|jei|advancements`、測試車 `roofbox`、`containersemi`。FPS：排列場景 108（30.3 萬面、送出 4.54 ms，伺服器 tick 86 ms、約 21 台載具），貨物場景 119～120（伺服器 tick 13.6～13.9 ms）。未修：繁中 JEI 說明在數字前後的空格提早換行（JEI 以空格斷行）、1:8 與 1:4 坡道的物品圖示幾乎一樣、撞車的煙淡、滴油在截圖裡看不出、漏油徽章閃爍沒拍到、英文 JEI 頁（JEI 啟動時固定語言）。未驗證：多人同步；修理廠完成時給附近玩家的進度 |
 | 0.24.0 | 2026-10-21，原開發機；AeroCore 0.41.0 | 391 全過（新增 6：`HandbookTest`（三種語言的篇目與結構一樣；引用的物品、進度、配方、圖都存在；圖 320×180）、`LangParityTest`（三份語言檔的鍵與順序一樣、zh_cn 沒有繁體專用字）；core 的 `test` 把 mod 的資源與 `tools/**/*.json` 列為輸入，只改資源也會重跑） | 142 全過（新增 `TutorialGameTests` 4：教學的進度都載入、`hdfv:milestone` 給等著它的進度、新玩家只拿到一次手冊、手冊引用的物品與配方存在），裝著 Create 6.0.11 | 開發客戶端 AutoShot（`tools/autoshot/release-0.24.txt`、`release-0.24-lang.txt`，QA 世界的複本 `AeroCore Release QA`）：0.23 的世界打開後舊玩家拿到手冊與歡迎訊息；手冊三種語言、進度、JEI 說明頁；第一輪手冊在 hdfv 自訂配方上 `/ by zero` 崩潰，已修。正式版 NeoForge 21.1.252 的乾淨環境（AeroCore `scripts/release-test/release_test.py`，`production-0.24.txt`、`production-mp-0.24.txt`）：伺服器只有兩個 mod、加 JEI、加 JEI 與 Create 都起得來、沒有可疑的行；客戶端有 JEI、沒有 JEI 都正常（歡迎、轎車、手冊、JEI）；多人連線拿到手冊、進度同步。0.22 的比較場景：機器 115～116、停車 113～114、塔台 119 FPS（0.22：114、111、119），整合伺服器 tick 54～57 ms（0.22 同場景 58～70 ms）。未驗證：裝 Create 的正式版客戶端；改裝、烤漆、卡車、高速、船的手冊圖沒有拍 |
 | 0.23.0 | 2026-10-20，原開發機；AeroCore 0.40.0 | 385 全過（新增 10：`ComponentRouteTest` 4（每種標準件一個工件、質量等於設計、那一級的機器做得到；圖紙是自己種類的範例；路線等於 `routes-0.23-components.json`；名稱都在）、`RecipeRulesTest` 3（每個配方的產物都做得出來；階段錨點的順序；組裝台的工時是零件的規則、中間件的質量等於它的料）、`MetallurgyRecipesTest` 2（每批的 kWh 對 AeroCore 2 % 內；每 kg 的電在工廠的範圍）、`RefiningTest.theReformerMakesMethanolOfLpgAndWater`；`DesignEditorTest` 的參數數量下限對只有種類的標準件是 1） | 138 全過，裝著 Create 6.0.11（載入 3154 個配方，沒有解析錯誤；新增 `RecipeGameTests` 7：組裝台用鑄鍛件組出第一台車床、少一個鑄齒輪時組不出、鍛壓機軋板只在成品與料頭都放得下時開工、車床退回切屑、電弧爐與電解槽吃電出料、漏斗進出合金爐、Create 的配方有載入、遊戲中的科技樹涵蓋每個產物） | 未開客戶端：JEI 的組裝、電爐、電解頁與物品提示的截圖，以及用 0.22 的 QA 存檔在 0.23 開，都等使用者同意再做 |

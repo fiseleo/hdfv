@@ -24,7 +24,7 @@ import java.util.List;
 public final class ChassisModel {
     private ChassisModel() {}
 
-    static final int PAINT = 0xff1f2226, BRACKET = 0xff34383d, RUBBER = 0xff141516;
+    static final int PAINT = 0xff1f2226, BRACKET = 0xff34383d, RUBBER = 0xff141516, HOOK = 0xffb3261e;
 
     /** The design screen's model: the frame with a page's members lit ("frame": the rails; "stationN": that station's). */
     public static EngineModel build(ChassisDesign d, String highlight) { return EngineModel.of(mesh(d, highlight)); }
@@ -61,6 +61,41 @@ public final class ChassisModel {
             // a ladder's channels open toward the middle
             int mirror = rail && a.z() > 0 ? -1 : 1;
             member(out, frame, i, trimA, trimB, section, h, w, t, mirror, colour);
+            if (ladder && !rail) {
+                // 2026-11-22 (Blender): a crossmember bolted through the rail's web at each end: a gusset inside the channel,
+                // six bolt heads on the web's outside
+                double rh = layout.railHeightM, rw = f.railWidthM();
+                for (Vec3d end : new Vec3d[]{a, b}) {
+                    double side = Math.signum(end.z()) == 0 ? 1 : Math.signum(end.z()), web = end.z() + side * rw / 2;
+                    out.box(new Vec3d(end.x() - 0.5 * w - 0.05, end.y() - 0.38 * rh, web - side * 0.012 - 0.004), new Vec3d(end.x() + 0.5 * w + 0.05, end.y() + 0.38 * rh, web - side * 0.012 + 0.004), colour);
+                    out.detail(1);
+                    for (double dx : new double[]{-0.5 * w - 0.025, 0.5 * w + 0.025}) for (double dy : new double[]{-0.28 * rh, 0, 0.28 * rh}) {
+                        Vec3d bolt = new Vec3d(end.x() + dx, end.y() + dy, web);
+                        out.cylinder(bolt, bolt.add(new Vec3d(0, 0, side * 0.009)), 0.009, 0.009, 6, BRACKET);
+                    }
+                    out.detail(0);
+                }
+            }
+        }
+        if (ladder) {
+            // 2026-11-22 (Blender): a tow hook under each rail's front end
+            double front = Double.NEGATIVE_INFINITY;
+            for (int i = 0; i < frame.memberCount(); i++) {
+                if (layout.members.get(i).role() != ChassisLayout.Role.RAIL) { continue; }
+                front = Math.max(front, Math.max(frame.position(frame.member(i).a()).x(), frame.position(frame.member(i).b()).x()));
+            }
+            for (int i = 0; i < frame.memberCount(); i++) {
+                if (layout.members.get(i).role() != ChassisLayout.Role.RAIL) { continue; }
+                for (Vec3d end : new Vec3d[]{frame.position(frame.member(i).a()), frame.position(frame.member(i).b())}) {
+                    if (end.x() < front - 1e-6) { continue; }
+                    double bottom = end.y() - layout.railHeightM / 2;
+                    Vec3d c = new Vec3d(end.x() - 0.06, bottom - 0.03, end.z());
+                    out.box(new Vec3d(end.x() - 0.14, bottom - 0.02, end.z() - 0.025), new Vec3d(end.x() - 0.02, bottom, end.z() + 0.025), BRACKET);
+                    List<Vec3d> hook = new ArrayList<>();
+                    for (int k = 0; k <= 8; k++) { double ang = Math.PI * (1.0 - k / 8.0) - Math.PI / 2; hook.add(c.add(new Vec3d(0.06 + 0.035 * Math.cos(ang), 0.035 * Math.sin(ang) - 0.01, 0))); }
+                    out.tube(hook, 0.012, null, HOOK, null, 8, false);
+                }
+            }
         }
         // the fittings at the stations
         for (int i = 0; i < d.stations().size(); i++) {
@@ -75,9 +110,23 @@ public final class ChassisModel {
                 switch (s.kind()) {
                     case AXLE -> {
                         if (tubes) { break; }
-                        // spring hangers a little ahead of and behind the axle, a bump stop over it
+                        // spring hangers a little ahead of and behind the axle (2026-11-22, Blender: two plates and their pin,
+                        // a shackle hanging from the rear one), a bump stop over it
                         for (double dx : new double[]{-0.3, 0.3}) {
-                            out.box(new Vec3d(at.x() + dx - 0.025, bottom - 0.09, at.z() - width / 2), new Vec3d(at.x() + dx + 0.025, bottom, at.z() + width / 2), bracket);
+                            double x = at.x() + dx;
+                            for (double sz : new double[]{-1, 1}) {
+                                double z = at.z() + sz * (width / 2 - 0.004);
+                                out.hexahedron(new Vec3d[]{new Vec3d(x - 0.04, bottom, z - 0.004), new Vec3d(x + 0.04, bottom, z - 0.004), new Vec3d(x + 0.022, bottom - 0.1, z - 0.004),
+                                        new Vec3d(x - 0.022, bottom - 0.1, z - 0.004), new Vec3d(x - 0.04, bottom, z + 0.004), new Vec3d(x + 0.04, bottom, z + 0.004),
+                                        new Vec3d(x + 0.022, bottom - 0.1, z + 0.004), new Vec3d(x - 0.022, bottom - 0.1, z + 0.004)}, bracket);
+                            }
+                            out.cylinder(new Vec3d(x, bottom - 0.08, at.z() - width / 2 - 0.012), new Vec3d(x, bottom - 0.08, at.z() + width / 2 + 0.012), 0.013, 0.013, 8, BRACKET);
+                            if (dx < 0) {
+                                for (double sz : new double[]{-1, 1}) {
+                                    double z = at.z() + sz * (width / 2 + 0.008);
+                                    out.box(new Vec3d(x - 0.012, bottom - 0.15, z - 0.004), new Vec3d(x + 0.012, bottom - 0.07, z + 0.004), bracket);
+                                }
+                            }
                         }
                         out.cylinder(new Vec3d(at.x(), bottom, at.z()), new Vec3d(at.x(), bottom - 0.05, at.z()), 0.03, 0.022, 10, rubber);
                     }
@@ -144,7 +193,7 @@ public final class ChassisModel {
     }
 
     /** The rotation taking the x, y and z axes to three orthonormal ones (a right-handed set). */
-    static Orientation orientation(Vec3d x, Vec3d y, Vec3d z) {
+    public static Orientation orientation(Vec3d x, Vec3d y, Vec3d z) {
         double m00 = x.x(), m10 = x.y(), m20 = x.z(), m01 = y.x(), m11 = y.y(), m21 = y.z(), m02 = z.x(), m12 = z.y(), m22 = z.z();
         double trace = m00 + m11 + m22, qw, qx, qy, qz;
         if (trace > 0) {

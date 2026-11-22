@@ -47,7 +47,7 @@ public final class Designs {
     public static final String DESIGN_PAGE = "design";
 
     /** The groups the design screen sorts kinds of part into (0.6: the user asked for categories). */
-    public enum Category { ENGINE, AIR, BODY, WATER, LAND, STORAGE, OTHER, COMPONENT }
+    public enum Category { ENGINE, AIR, BODY, WATER, LAND, STORAGE, OTHER, COMPONENT, UNDERCARRIAGE, WORK }
 
     /**
      * A kind of part one can design: its id (for translations: hdfv.kind.<id>), category, and a new design of it to
@@ -94,6 +94,14 @@ public final class Designs {
             new Kind("propeller", Category.WATER, () -> new PropellerDesign("screw", 0.35, 4, 0.70, 1.4, 0.18, 0.1,
                     dev.mcmod.aerocore.api.vehicle.MassSpec.solid(dev.mcmod.aerocore.api.vehicle.Material.BRONZE))),
             new Kind("storage_box", Category.STORAGE, dev.mcmod.hdfv.part.StorageBoxDesign::roofBox),   // 0.25
+            // 0.26: heavy machinery
+            new Kind("track", Category.UNDERCARRIAGE, dev.mcmod.hdfv.part.machine.TrackDesign::standard), new Kind("drum", Category.UNDERCARRIAGE, dev.mcmod.hdfv.part.machine.DrumDesign::standard),
+            new Kind("outrigger", Category.UNDERCARRIAGE, dev.mcmod.hdfv.part.machine.OutriggerDesign::standard),
+            new Kind("hydraulic_pump", Category.WORK, dev.mcmod.hdfv.part.machine.HydraulicPumpDesign::standard), new Kind("hydraulic_motor", Category.WORK, dev.mcmod.hdfv.part.machine.HydraulicMotorDesign::standard),
+            new Kind("link", Category.WORK, dev.mcmod.hdfv.part.machine.LinkDesign::standard), new Kind("hook", Category.WORK, dev.mcmod.hdfv.part.machine.HookDesign::standard),
+            new Kind("work_tool", Category.WORK, dev.mcmod.hdfv.part.machine.WorkToolDesign::standard),
+            new Kind("operator_cab", Category.BODY, dev.mcmod.hdfv.part.machine.OperatorCabDesign::standard),   // a machine's cab (2026-11-22)
+            new Kind("engine_hood", Category.BODY, dev.mcmod.hdfv.part.machine.EngineHoodDesign::standard),   // a machine's engine hood (2026-11-22)
             new Kind("box", Category.OTHER, () -> new BoxDesign("box", new dev.mcmod.aerocore.api.Vec3d(1, 0.5, 1), 1.05, true, 2, dev.mcmod.aerocore.api.vehicle.MassSpec.given(100))),
             new Kind("ballast", Category.OTHER, () -> new BallastDesign("ballast", 100)),
             new Kind("fuel_tank", Category.OTHER, () -> dev.mcmod.hdfv.part.FuelTankDesign.car("gasoline")),
@@ -111,7 +119,7 @@ public final class Designs {
     /** The kind id of a standard component. */
     public static String componentKind(dev.mcmod.hdfv.part.component.Component c) { return "component_" + c.id(); }
 
-    public static final List<Sample> SAMPLES = withComponentSamples(List.of(new Sample("inline_four", "piston_engine", SampleEngines::inlineFour),
+    public static final List<Sample> SAMPLES = withComponentSamples(withToolSamples(List.of(new Sample("inline_four", "piston_engine", SampleEngines::inlineFour),
             new Sample("inline_four_sohc", "piston_engine", SampleEngines::inlineFourSohc), new Sample("v8_ohv", "piston_engine", SampleEngines::vEightOhv),
             new Sample("turbo_diesel", "piston_engine", SampleEngines::turboDiesel), new Sample("generator_diesel", "piston_engine", SampleEngines::generatorDiesel),
             new Sample("turbojet", "jet_engine", SampleEngines::turbojet), new Sample("model_turbojet", "jet_engine", SampleEngines::modelTurbojet),
@@ -162,7 +170,44 @@ public final class Designs {
             // 0.25: storage boxes
             new Sample("roof_box", "storage_box", dev.mcmod.hdfv.part.StorageBoxDesign::roofBox),
             new Sample("bed_box", "storage_box", dev.mcmod.hdfv.part.StorageBoxDesign::bedBox),
-            new Sample("container_20ft", "storage_box", dev.mcmod.hdfv.part.StorageBoxDesign::container20)));
+            new Sample("container_20ft", "storage_box", dev.mcmod.hdfv.part.StorageBoxDesign::container20),
+            // 0.26: heavy machinery
+            new Sample("excavator_tracks_20t", "track", dev.mcmod.hdfv.part.machine.SampleMachinery::excavatorTracks20t),
+            new Sample("dozer_tracks_d6", "track", dev.mcmod.hdfv.part.machine.SampleMachinery::dozerTracksD6),
+            new Sample("mini_excavator_tracks", "track", dev.mcmod.hdfv.part.machine.SampleMachinery::miniExcavatorTracks),
+            new Sample("roller_drum_11t", "drum", dev.mcmod.hdfv.part.machine.SampleMachinery::rollerDrum11t),
+            new Sample("padfoot_drum_11t", "drum", dev.mcmod.hdfv.part.machine.SampleMachinery::padfootDrum11t),
+            new Sample("tandem_drum", "drum", dev.mcmod.hdfv.part.machine.SampleMachinery::tandemDrum),
+            new Sample("outrigger", "outrigger", dev.mcmod.hdfv.part.machine.SampleMachinery::outrigger),
+            new Sample("excavator_pump", "hydraulic_pump", dev.mcmod.hdfv.part.machine.SampleMachinery::excavatorPump),
+            new Sample("pilot_pump", "hydraulic_pump", dev.mcmod.hdfv.part.machine.SampleMachinery::pilotPump),
+            new Sample("travel_motor", "hydraulic_motor", dev.mcmod.hdfv.part.machine.SampleMachinery::travelMotor),
+            new Sample("hoist_winch", "hydraulic_motor", dev.mcmod.hdfv.part.machine.SampleMachinery::hoistWinch),
+            new Sample("excavator_boom", "link", dev.mcmod.hdfv.part.machine.SampleMachinery::excavatorBoom),
+            new Sample("excavator_stick", "link", dev.mcmod.hdfv.part.machine.SampleMachinery::excavatorStick),
+            new Sample("loader_arm", "link", dev.mcmod.hdfv.part.machine.SampleMachinery::loaderArm),
+            new Sample("crane_boom_section", "link", dev.mcmod.hdfv.part.machine.SampleMachinery::craneBoomSection),
+            new Sample("lattice_boom", "link", dev.mcmod.hdfv.part.machine.SampleMachinery::latticeBoom),
+            new Sample("mast_stage", "link", dev.mcmod.hdfv.part.machine.SampleMachinery::mastStage),
+            new Sample("swing_ring", "link", dev.mcmod.hdfv.part.machine.SampleMachinery::swingRing),
+            new Sample("articulation_hinge", "link", dev.mcmod.hdfv.part.machine.SampleMachinery::articulationHinge),
+            new Sample("platform_boom", "link", dev.mcmod.hdfv.part.machine.SampleMachinery::platformBoom),
+            new Sample("placing_boom", "link", dev.mcmod.hdfv.part.machine.SampleMachinery::placingBoom),
+            new Sample("outrigger_beam", "link", dev.mcmod.hdfv.part.machine.SampleMachinery::outriggerBeam),
+            new Sample("crane_hook_40t", "hook", dev.mcmod.hdfv.part.machine.SampleMachinery::craneHook40t),
+            new Sample("excavator_cab", "operator_cab", dev.mcmod.hdfv.part.machine.SampleMachinery::excavatorCab),
+            new Sample("mini_excavator_cab", "operator_cab", dev.mcmod.hdfv.part.machine.SampleMachinery::miniExcavatorCab),
+            new Sample("loader_cab", "operator_cab", dev.mcmod.hdfv.part.machine.SampleMachinery::loaderCab),
+            new Sample("excavator_hood", "engine_hood", dev.mcmod.hdfv.part.machine.SampleMachinery::excavatorHood),
+            new Sample("mini_excavator_hood", "engine_hood", dev.mcmod.hdfv.part.machine.SampleMachinery::miniExcavatorHood),
+            new Sample("loader_hood", "engine_hood", dev.mcmod.hdfv.part.machine.SampleMachinery::loaderHood))));
+
+    /** 0.26: the work tools' samples (SampleTools) after the machines' parts. */
+    private static List<Sample> withToolSamples(List<Sample> parts) {
+        List<Sample> out = new java.util.ArrayList<>(parts);
+        out.addAll(dev.mcmod.hdfv.part.machine.SampleTools.designSamples());
+        return List.copyOf(out);
+    }
 
     /** 0.23: each standard component's drawing is a sample too (a blueprint in the creative tab), after the parts'. */
     private static List<Sample> withComponentSamples(List<Sample> parts) {
@@ -553,6 +598,68 @@ public final class Designs {
                 out.add(new Figure("mass", s.massKg(), "kg"));
                 out.add(new Figure("ratedLoad", s.ratedLoadKg(), "kg"));
                 out.add(new Figure("dragArea", s.frontalAreaM2() * s.dragCoefficient(), "m²"));
+            } else if (d instanceof dev.mcmod.hdfv.part.machine.WorkToolDesign w) {
+                out.addAll(w.figures());
+            } else if (d instanceof dev.mcmod.hdfv.part.machine.TrackDesign t) {
+                // 0.26: heavy machinery
+                out.add(new Figure("mass", t.massKg(), "kg"));
+                out.add(new Figure("groundPressure", t.groundPressurePa() / 1000, "kPa"));
+                out.add(new Figure("beltLength", t.beltLengthM(), "m"));
+                out.add(new Figure("shoesPerSide", t.shoesPerSide(), ""));
+                out.add(new Figure("turningMoment", t.turningMomentNm() / 1000, "kN·m"));
+            } else if (d instanceof dev.mcmod.hdfv.part.machine.DrumDesign r) {
+                out.add(new Figure("mass", r.massKg(), "kg"));
+                out.add(new Figure("dynamicForce", r.dynamicForceN() / 1000, "kN"));
+                out.add(new Figure("eccentricMoment", r.eccentricKgM(), "kg·m"));
+                out.add(new Figure("linearLoad", r.linearLoadNPerM() / 1000, "N/mm"));
+            } else if (d instanceof dev.mcmod.hdfv.part.machine.HydraulicPumpDesign p) {
+                out.add(new Figure("mass", p.massKg(), "kg"));
+                if (!invalid) {
+                    out.add(new Figure("ratedFlow", p.ratedFlowM3PerS() * 60000, "L/min"));
+                    out.add(new Figure("maxTorque", p.maxTorqueNm(), "N·m"));
+                    out.add(new Figure("cornerPower", p.cornerPowerW() / 1000, "kW"));
+                }
+            } else if (d instanceof dev.mcmod.hdfv.part.machine.HydraulicMotorDesign m) {
+                out.add(new Figure("mass", m.massKg(), "kg"));
+                if (!invalid) {
+                    out.add(new Figure("maxTorque", m.maxTorqueNm(), "N·m"));
+                    out.add(new Figure("maxOutputSpeed", m.maxOutputRadPerS() * 30 / Math.PI, "rpm"));
+                    out.add(new Figure("maxFlow", m.maxFlowM3PerS() * 60000, "L/min"));
+                    if (m.winch()) {
+                        out.add(new Figure("hookLoad", m.hookLoadN() / 9.80665 / 1000, "t"));
+                        out.add(new Figure("hookSpeed", m.hookSpeedMps(), "m/s"));
+                        out.add(new Figure("ropeLayers", m.ropeLayers(), ""));
+                    }
+                }
+            } else if (d instanceof dev.mcmod.hdfv.part.machine.LinkDesign l) {
+                out.add(new Figure("mass", l.massKg(), "kg"));
+                if (!invalid) {
+                    boolean turning = l.revolute();
+                    if (!(turning && l.endless())) { out.add(new Figure("jointRange", turning ? l.upperDeg() - l.lowerDeg() : l.upperM() - l.lowerM(), turning ? "°" : "m")); }
+                    if (l.actuation() == dev.mcmod.hdfv.part.machine.LinkDesign.Actuation.RAM) {
+                        out.add(new Figure("ramPush", l.cylinder().maxPushN(l.reliefPa()) / 1000, "kN"));
+                        out.add(new Figure("jointEffort", l.ramEffort() / 1000, turning ? "kN·m" : "kN"));
+                    } else if (l.actuation() == dev.mcmod.hdfv.part.machine.LinkDesign.Actuation.SLEW) {
+                        out.add(new Figure("slewTorque", l.slewTorqueNm() / 1000, "kN·m"));
+                        out.add(new Figure("slewSpeed", l.slewRateRadPerS() * 30 / Math.PI, "rpm"));
+                    }
+                }
+            } else if (d instanceof dev.mcmod.hdfv.part.machine.HookDesign h) {
+                out.add(new Figure("mass", h.massKg(), "kg"));
+                out.add(new Figure("ropeCapacity", h.ropeCapacityN() / 9.80665 / 1000, "t"));
+                out.add(new Figure("sheaves", h.sheaves(), ""));
+                out.add(new Figure("sheaveDiameter", h.sheaveDiameterM(), "m"));
+                out.add(new Figure("blockHeight", h.heightM(), "m"));
+            } else if (d instanceof dev.mcmod.hdfv.part.machine.OperatorCabDesign c) {
+                out.add(new Figure("mass", c.massKg(), "kg"));
+                out.add(new Figure("glazing", c.glassM2(), "m²"));
+            } else if (d instanceof dev.mcmod.hdfv.part.machine.EngineHoodDesign e) {
+                out.add(new Figure("mass", e.massKg(), "kg"));
+                out.add(new Figure("louvres", e.grilleM2(), "m²"));
+            } else if (d instanceof dev.mcmod.hdfv.part.machine.OutriggerDesign o) {
+                out.add(new Figure("mass", o.massKg(), "kg"));
+                out.add(new Figure("jackBore", o.jackBoreM() * 1000, "mm"));
+                out.add(new Figure("padPressure", o.padPressurePa() / 1e6, "MPa"));
             } else if (d instanceof dev.mcmod.hdfv.part.drive.TransferCaseDesign t) {
                 out.add(new Figure("mass", t.totalMassKg(), "kg"));
                 if (t.lowRatio() > 1) { out.add(new Figure("lowRange", t.lowRatio(), "")); }

@@ -43,6 +43,7 @@ class DesignEditorTest {
                     : d instanceof dev.mcmod.hdfv.part.FuelTankDesign ? 8
                     : d instanceof dev.mcmod.hdfv.part.truck.FifthWheelDesign || d instanceof dev.mcmod.hdfv.part.truck.LandingLegsDesign
                       || d instanceof dev.mcmod.hdfv.part.StorageBoxDesign ? 5
+                    : dev.mcmod.hdfv.assembly.Room.machinePart(d) ? 5   // 0.26: a hook block has five
                     : d instanceof dev.mcmod.hdfv.part.component.ComponentDesign ? 1 : 40;   // 0.23: a standard component is only which one
             assertTrue(count >= least, sample.id() + ": " + count + " parameters");
         }

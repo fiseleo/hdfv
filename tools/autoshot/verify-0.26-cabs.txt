@@ -1,0 +1,65 @@
+world AeroCore 026 QA
+monitor 2
+size 1280 720
+wait 100
+# hdfv 0.26, the operator cab (OperatorCabDesign; the user asked "挖土機有駕駛室嗎"): the excavator at the camera of
+# verify-0.26-looks.txt (before: v26d-excavator), its cab close, a wheel loader, a roller and a crawler crane with theirs,
+# then the design screen's excavator cab.
+mark v26f world start
+wait 30
+cmd gamemode spectator @p
+cmd time set 6000
+cmd weather clear
+clouds off
+cmd tp @p 352 180 160 facing 352 153 215
+wait 100
+cmd kill @e[type=aerocore:part_vehicle,x=310,y=140,z=170,dx=74,dy=50,dz=90]
+wait 40
+cmd fill 320 150 180 384 152 250 minecraft:dirt
+cmd fill 320 153 180 384 175 250 minecraft:air
+wait 20
+cmd execute positioned 326 153 200 rotated -90 0 run hdfv dev drive spawn excavator
+cmd execute positioned 341 153 218 rotated -90 0 run hdfv dev drive spawn wheelloader
+cmd execute positioned 356 153 218 rotated -90 0 run hdfv dev drive spawn roller
+cmd execute positioned 352 153 200 rotated -90 0 run hdfv dev drive spawn crawlercrane
+cmd tp @p 322 159 190 facing 334 154 201
+wait 1400
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=40] at @s run aerocore vehicle control travel_brake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=40] at @s run aerocore vehicle control handbrake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=40] at @s run aerocore vehicle control brake 1
+cmd execute as @e[type=aerocore:part_vehicle,x=320,y=140,z=190,dx=64,dy=40,dz=40] run data get entity @s Pos
+wait 100
+shot v26f-discard
+shot v26f-excavator
+cmd tp @p 334 156 195.5 facing 330.2 153.2 199.2
+wait 40
+shot v26f-excavator-cab
+cmd tp @p 327 156 194.5 facing 330.2 153.2 199.2
+wait 40
+shot v26f-excavator-cab-rear
+cmd tp @p 349 156 213 facing 344.5 153.6 218
+wait 40
+shot v26f-wheelloader
+cmd tp @p 364 156 213 facing 359.5 153.4 218
+wait 40
+shot v26f-roller
+cmd tp @p 360 157 194 facing 356 153.3 199.2
+wait 40
+shot v26f-crawlercrane
+cmd tp @p 352 168 232 facing 352 154 206
+wait 40
+shot v26f-row
+# --- the design screen's excavator cab
+client hdfvdev design excavator_cab overview
+wait 140
+client hdfvdev page overview
+wait 20
+client hdfvdev enlarge on
+wait 10
+client hdfvdev view -35 20
+wait 40
+gui v26f-design-cab
+client hdfvdev close
+wait 10
+mark v26f world end
+quit

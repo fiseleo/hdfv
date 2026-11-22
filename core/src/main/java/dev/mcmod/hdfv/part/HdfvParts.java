@@ -56,6 +56,17 @@ public final class HdfvParts {
         PartTypes.register(dev.mcmod.hdfv.part.component.ComponentDesign.TYPE, dev.mcmod.hdfv.part.component.ComponentDesign::read);
         // 0.25: the storage box (roof box, bed box, container)
         PartTypes.register(StorageBoxDesign.TYPE, StorageBoxDesign::read);
+        // 0.26: heavy machinery (undercarriage, hydraulics, work links, hooks)
+        PartTypes.register(dev.mcmod.hdfv.part.machine.TrackDesign.TYPE, dev.mcmod.hdfv.part.machine.TrackDesign::read);
+        PartTypes.register(dev.mcmod.hdfv.part.machine.DrumDesign.TYPE, dev.mcmod.hdfv.part.machine.DrumDesign::read);
+        PartTypes.register(dev.mcmod.hdfv.part.machine.OutriggerDesign.TYPE, dev.mcmod.hdfv.part.machine.OutriggerDesign::read);
+        PartTypes.register(dev.mcmod.hdfv.part.machine.OperatorCabDesign.TYPE, dev.mcmod.hdfv.part.machine.OperatorCabDesign::read);   // 2026-11-22
+        PartTypes.register(dev.mcmod.hdfv.part.machine.EngineHoodDesign.TYPE, dev.mcmod.hdfv.part.machine.EngineHoodDesign::read);   // 2026-11-22
+        PartTypes.register(dev.mcmod.hdfv.part.machine.HydraulicPumpDesign.TYPE, dev.mcmod.hdfv.part.machine.HydraulicPumpDesign::read);
+        PartTypes.register(dev.mcmod.hdfv.part.machine.HydraulicMotorDesign.TYPE, dev.mcmod.hdfv.part.machine.HydraulicMotorDesign::read);
+        PartTypes.register(dev.mcmod.hdfv.part.machine.LinkDesign.TYPE, dev.mcmod.hdfv.part.machine.LinkDesign::read);
+        PartTypes.register(dev.mcmod.hdfv.part.machine.HookDesign.TYPE, dev.mcmod.hdfv.part.machine.HookDesign::read);
+        PartTypes.register(dev.mcmod.hdfv.part.machine.WorkToolDesign.TYPE, dev.mcmod.hdfv.part.machine.WorkToolDesign::read);
         registered = true;
     }
 }

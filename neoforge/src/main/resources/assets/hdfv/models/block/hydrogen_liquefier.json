@@ -6,10 +6,13 @@
   "textures": {
     "particle": "hdfv:block/machine/dark_steel",
     "dark_steel": "hdfv:block/machine/dark_steel",
+    "paint_yellow": "hdfv:block/machine/paint_yellow",
     "insulation": "hdfv:block/machine/insulation",
-    "paint_blue": "hdfv:block/machine/paint_blue",
-    "frost": "hdfv:block/machine/frost",
     "steel": "hdfv:block/machine/steel",
+    "paint_blue": "hdfv:block/machine/paint_blue",
+    "paint_grey": "hdfv:block/machine/paint_grey",
+    "frost": "hdfv:block/machine/frost",
+    "paint_red": "hdfv:block/machine/paint_red",
     "panel": "hdfv:block/machine/panel",
     "gauge": "hdfv:block/machine/gauge"
   }

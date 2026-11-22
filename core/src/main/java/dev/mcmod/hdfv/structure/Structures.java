@@ -389,6 +389,51 @@ public final class Structures {
     /** Whether a formed machine's drive is the NC drive (0.17): it runs without an operator. */
     public static boolean numerical(Pattern.Match m) { return m.has(NC_DRIVE); }
 
+
+    // ---------------------------------------------------------------- 0.26: the asphalt and concrete batching plants
+
+    public static final String ASPHALT_PLANT = "asphalt_plant", CONCRETE_PLANT = "concrete_plant";
+
+    /**
+     * 0.26: an asphalt plant, 3 by 3 and 3 high of iron blocks (its silo, frame and drum), the controller in the middle of
+     * the bottom's front, a blast furnace behind it (the drum's burner), a hopper over the controller (the discharge).
+     */
+    public static final Pattern ASPHALT_PLANT_PATTERN = Pattern.builder(ASPHALT_PLANT)
+            .layer("bCb", "bfb", "bbb")
+            .layer("bhb", "bbb", "bbb")
+            .layer("bbb", "bbb", "bbb")
+            .controller('C', ASPHALT_PLANT).where('b', "minecraft:iron_block").where('f', "minecraft:blast_furnace").where('h', "minecraft:hopper")
+            .build();
+
+    /**
+     * 0.26: a concrete batching plant, 3 by 3 and 3 high of iron blocks, the controller in the middle of the bottom's
+     * front, a cauldron behind the discharge hopper (the mixer's water), the hopper over the controller.
+     */
+    public static final Pattern CONCRETE_PLANT_PATTERN = Pattern.builder(CONCRETE_PLANT)
+            .layer("bCb", "bbb", "bbb")
+            .layer("bhb", "bcb", "bbb")
+            .layer("bbb", "bbb", "bbb")
+            .controller('C', CONCRETE_PLANT).where('b', "minecraft:iron_block").where('c', "minecraft:cauldron|minecraft:water_cauldron").where('h', "minecraft:hopper")
+            .build();
+
+
+    // ---------------------------------------------------------------- 0.26: the tower crane
+
+    public static final String TOWER_CRANE = "tower_crane", CRANE_MAST = "tower_crane_mast", CRANE_TOP = "tower_crane_top";
+
+    /**
+     * 0.26: a flat-top tower crane: a 3 by 3 base of smooth stone or concrete with the controller at the middle of its
+     * front, a mast of 4 to 60 standard sections over the base's middle, the slewing unit on top (its jib, trolley and
+     * counter-jib are drawn and worked by the controller: TowerCraneBlockEntity).
+     */
+    public static final Pattern TOWER_CRANE_PATTERN = Pattern.builder(TOWER_CRANE)
+            .layer("bCb", "bbb", "bbb")
+            .layer("   ", " m ", "   ")
+            .layer("   ", " t ", "   ")
+            .controller('C', TOWER_CRANE).where('b', "minecraft:smooth_stone|hdfv:apron_concrete|minecraft:stone").where('m', CRANE_MAST).where('t', CRANE_TOP)
+            .repeat(1, 1, 4, 60)
+            .build();
+
     /** Every pattern by name (for the dev command and tests). */
     public static final java.util.Map<String, Pattern> ALL = java.util.Map.ofEntries(java.util.Map.entry("cnc", CNC), java.util.Map.entry("storage_tank", STORAGE_TANK),
             java.util.Map.entry("drilling_rig", DRILLING_RIG), java.util.Map.entry("pump_jack", PUMP_JACK_PATTERN),
@@ -398,5 +443,7 @@ public final class Structures {
             java.util.Map.entry("grinder", GRINDER), java.util.Map.entry("finisher", FINISHER), java.util.Map.entry("gear_cutter", GEAR_CUTTER),
             java.util.Map.entry("ram_machine", RAM_MACHINE), java.util.Map.entry("sawing_machine", SAWING_MACHINE),
             java.util.Map.entry("electro_machine", ELECTRO_MACHINE), java.util.Map.entry("cutting_table", CUTTING_TABLE),
-            java.util.Map.entry("threader", THREADER), java.util.Map.entry("riveter", RIVETER), java.util.Map.entry(TOWER, TOWER_PATTERN));
+            java.util.Map.entry("threader", THREADER), java.util.Map.entry("riveter", RIVETER), java.util.Map.entry(TOWER, TOWER_PATTERN),
+            java.util.Map.entry(ASPHALT_PLANT, ASPHALT_PLANT_PATTERN), java.util.Map.entry(CONCRETE_PLANT, CONCRETE_PLANT_PATTERN),
+            java.util.Map.entry(TOWER_CRANE, TOWER_CRANE_PATTERN));
 }

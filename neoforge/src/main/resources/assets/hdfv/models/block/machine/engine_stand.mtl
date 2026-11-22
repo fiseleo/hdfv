@@ -39,3 +39,33 @@ Ka 0.000000 0.000000 0.000000
 Kd 1.000000 1.000000 1.000000
 d 1.000000
 map_Kd #hazard
+
+newmtl rubber
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #rubber
+
+newmtl paint_yellow
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #paint_yellow
+
+newmtl brass
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #brass
+
+newmtl paint_blue
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #paint_blue
+
+newmtl paint_green
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+d 1.000000
+map_Kd #paint_green
